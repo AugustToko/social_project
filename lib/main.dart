@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/ui/page/profile_one_page.dart';
+import 'package:social_project/ui/page/profile_two_page.dart';
 import 'package:social_project/ui/page/splash_page.dart';
-import 'package:social_project/ui/page/timeline_two_page.dart';
+import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -58,7 +60,8 @@ class App extends StatelessWidget {
         "main": (BuildContext context) => new MyHomePage(),
         UIData.gooeyEdge: (BuildContext context) => new GooeyEdgePage(),
         UIData.timeLine: (BuildContext context) => new TimelineTwoPage(),
-        UIData.timeLine: (BuildContext context) => new ProfileOnePage(),
+        UIData.profile: (BuildContext context) => new ProfileTwoPage(),
+        UIData.commentDetail: (BuildContext context) => new CommentPage(),
       },
     );
   }

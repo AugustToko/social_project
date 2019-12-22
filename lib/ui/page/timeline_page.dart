@@ -30,6 +30,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         });
   }
 
+  /// 按钮栏
   Widget actionRow(Post post) => Padding(
         padding: const EdgeInsets.only(right: 50.0), // 图标间距
         child: Row(
@@ -73,6 +74,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
       );
 
+  /// card 右侧
   Widget rightColumn(Post post) => Expanded(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 4.0),
@@ -143,7 +145,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           return Card(
             child: InkWell(
               onTap: () {
-                LogUtils.d("Click card", "");
+                Navigator.pushNamed(context, UIData.commentDetail, arguments: "Comment Detail Page");
               },
               child: Container(
                 child: Padding(
@@ -154,7 +156,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                     children: <Widget>[
                       InkWell(
                         onTap: () {
-
+                          Navigator.pushNamed(context, UIData.profile);
                         },
                         child: CircleAvatar(
                             radius: 25.0,
