@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/model/post.dart';
 import 'package:social_project/ui/page/search_page.dart';
-import 'package:social_project/ui/widgets/common_drawer.dart';
+import 'package:social_project/ui/widgets/user_account_drawer.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -120,11 +120,27 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
               ),
               post.messageImage != null
                   ? Material(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        post.messageImage,
-                        gaplessPlayback: true,
-                        fit: BoxFit.cover,
+                      child: Stack(
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: FadeInImage.assetNetwork(
+                              placeholder: "assets/images/Slider-Yellow.png",
+                              image: post.messageImage,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          // TODO: 可否使用 {Ink.image} ?
+                          // 在图像上使用水波
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(onTap: () {
+                                _showAlertDialog();
+                              }),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : Container(),
@@ -137,6 +153,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
       );
 
+  /// 列表
   Widget bodyList(List<Post> posts) => ListView.builder(
         controller: scrollController,
         itemCount: posts.length,
@@ -145,7 +162,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           return Card(
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, UIData.commentDetail, arguments: "Comment Detail Page");
+                Navigator.pushNamed(context, UIData.commentDetail,
+                    arguments: "Comment Detail Page");
               },
               child: Container(
                 child: Padding(
@@ -154,15 +172,25 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, UIData.profile);
-                        },
-                        child: CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage: NetworkImage(
-                              post.personImage,
-                            )),
+                      Stack(
+                        children: <Widget>[
+                          CircleAvatar(
+                              radius: 25.0,
+                              backgroundImage: NetworkImage(
+                                post.personImage,
+                              )),
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, UIData.profile);
+                                },
+                                customBorder: CircleBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       rightColumn(post),
                     ],
@@ -197,20 +225,14 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabs = [
+      _renderTab(new Text("电影")),
+      _renderTab(new Text("图书")),
+      _renderTab(new Text("我的"))
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("Tweet"),
-        actions: <Widget>[
-          new IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(context: context, delegate: SearchBarDelegate());
-              })
-        ],
-      ),
       body: bodyData(),
-      drawer: CommonDrawer(),
       floatingActionButton: StreamBuilder<bool>(
         stream: postBloc.fabVisible,
         initialData: true,
@@ -226,6 +248,37 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _renderTab(text) {
+    //返回一个标签
+    return new Tab(
+        child: new Container(
+      padding: new EdgeInsets.only(top: 6),
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center, //竖直方向居中
+
+        crossAxisAlignment: CrossAxisAlignment.center, //水平方向居中
+
+        children: <Widget>[text],
+      ),
+    ));
+  }
+
+  _showAlertDialog() {
+    showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Building'),
+        content: Text("放大图片"),
+        semanticLabel: 'Label',
+        actions: <Widget>[
+          FlatButton(
+              onPressed: () => Navigator.pop(context), child: Text('Close')),
+        ],
       ),
     );
   }

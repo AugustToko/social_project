@@ -47,6 +47,9 @@ class UIData {
   // 开发者名称
   static const String developerName = "Crypto Studio";
 
+  /// 开发者邮箱
+  static const String developerEmail = "1461796308@qq.com";
+
   //fonts
   static const String quickFont = "Quicksand";
   static const String ralewayFont = "Raleway";

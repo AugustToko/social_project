@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
     isFirst.then((val) {
       Future.delayed(Duration(seconds: 1), () {
         Navigator.pushReplacementNamed(
-            context, val == null || val ? UIData.gooeyEdge : UIData.timeLine);
+            context, val == null || val ? UIData.gooeyEdge : UIData.homeRoute);
       });
     });
 

@@ -19,7 +19,9 @@ class _CommentPageState extends State<CommentPage> {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Text("Comment Detail Here!"),
+      body: Center(
+        child: Text("Comment Detail Here!"),
+      ),
     );
   }
 }
