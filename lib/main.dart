@@ -20,30 +20,39 @@ class App extends StatelessWidget {
 
   /// 亮色主题
   static var themeData = ThemeData(
-    primarySwatch: Colors.blue,
+    primarySwatch: Colors.grey,
+    primaryColor: Colors.grey.shade50,
     scaffoldBackgroundColor: Colors.grey.shade50,
     backgroundColor: Colors.grey.shade50,
     textTheme: TextTheme(
       // TextField输入文字颜色
       title: ThemeUtil.textLight,
       body1: ThemeUtil.textLight,
-      subtitle: TextStyle(color: Colors.grey),
+      // 用于 Drawer 中选项文字
+      body2: ThemeUtil.textLight,
+      subtitle: ThemeUtil.subtitle,
+      button: ThemeUtil.textLight,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade50),
+    canvasColor: Colors.grey.shade50,
   );
 
   /// 深色主题
   static var darkThemeData = ThemeData(
-    primarySwatch: Colors.blue,
+    primarySwatch: Colors.grey,
+    primaryColor: Colors.grey.shade900,
     scaffoldBackgroundColor: Colors.grey.shade900,
     backgroundColor: Colors.grey.shade900,
     textTheme: TextTheme(
       // TextField输入文字颜色
       title: ThemeUtil.textDark,
       body1: ThemeUtil.textDark,
-      subtitle: TextStyle(color: Colors.grey.shade800),
+      body2: ThemeUtil.textDark,
+      subtitle: ThemeUtil.subtitle,
+      button: ThemeUtil.textDark,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade900),
+    canvasColor: Colors.grey.shade900,
   );
 
   // This widget is the root of your application.

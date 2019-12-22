@@ -3,6 +3,7 @@ import 'package:social_project/ui/page/content_page.dart';
 
 import 'empty_page.dart';
 
+/// 仅带有一个 BottomNavigationBar
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -13,22 +14,18 @@ class HomePage extends StatefulWidget {
 class _IndexState extends State<HomePage> {
   final List<BottomNavigationBarItem> _bottomNavItems = [
     BottomNavigationBarItem(
-      backgroundColor: Colors.blue,
       icon: Icon(Icons.home),
       title: Text("Home"),
     ),
     BottomNavigationBarItem(
-      backgroundColor: Colors.green,
       icon: Icon(Icons.search),
       title: Text("Search"),
     ),
     BottomNavigationBarItem(
-      backgroundColor: Colors.amber,
       icon: Icon(Icons.message),
       title: Text("Message"),
     ),
     BottomNavigationBarItem(
-      backgroundColor: Colors.red,
       icon: Icon(Icons.person),
       title: Text("Profile"),
     ),

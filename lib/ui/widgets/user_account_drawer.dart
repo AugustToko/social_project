@@ -23,8 +23,9 @@ class UserAccountDrawer extends StatelessWidget {
               children: <Widget>[
                 Positioned.fill(
                     child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"))),
+                  backgroundImage: NetworkImage(
+                      "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
+                )),
                 Positioned.fill(
                   child: Material(
                     color: Colors.transparent,
@@ -46,8 +47,9 @@ class UserAccountDrawer extends StatelessWidget {
                 children: <Widget>[
                   Positioned.fill(
                       child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"))),
+                    backgroundImage: NetworkImage(
+                        "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
+                  )),
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
@@ -65,8 +67,9 @@ class UserAccountDrawer extends StatelessWidget {
                 children: <Widget>[
                   Positioned.fill(
                       child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"))),
+                    backgroundImage: NetworkImage(
+                        "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
+                  )),
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
@@ -84,8 +87,9 @@ class UserAccountDrawer extends StatelessWidget {
                 children: <Widget>[
                   Positioned.fill(
                       child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"))),
+                    backgroundImage: NetworkImage(
+                        "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
+                  )),
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
@@ -100,6 +104,34 @@ class UserAccountDrawer extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+          new ClipRect(
+            child: new ListTile(
+              leading: new CircleAvatar(child: new Text("A")),
+              title: new Text('Drawer item A'),
+              onTap: () => {},
+            ),
+          ),
+          new ClipRect(
+            child: new ListTile(
+              leading: new CircleAvatar(child: new Text("B")),
+              title: new Text('Drawer item B'),
+              onTap: () => {},
+            ),
+          ),
+          new ClipRect(
+            child: new ListTile(
+              leading: new CircleAvatar(child: new Text("B")),
+              title: new Text('Drawer item B'),
+              onTap: () => {},
+            ),
+          ),
+          new ClipRect(
+            child: new ListTile(
+              leading: new CircleAvatar(child: new Text("B")),
+              title: new Text('Drawer item B'),
+              onTap: () => {},
+            ),
           ),
           new ListTile(
             title: Text(
