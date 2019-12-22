@@ -120,6 +120,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
               ),
               post.messageImage != null
                   ? Material(
+                      color: Colors.transparent,
                       child: Stack(
                         children: <Widget>[
                           ClipRRect(
