@@ -1,0 +1,82 @@
+name: social_project
+description: Social project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+#  shared:
+#    path: ../_shared/
+
+  cupertino_icons: ^0.1.2
+  font_awesome_flutter:
+  http: ^0.12.0+1
+  rxdart: ^0.21.0
+  flutter_masked_text: ^0.8.0
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^0.5.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - images/
+    - assets/images/
+    - locale/i18n_en.json
+    - locale/i18n_hi.json
+
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          style: normal
+        - asset: assets/fonts/Quicksand_Bold.otf
+          weight: 700
+
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
+          style: normal
+        - asset: assets/fonts/Raleway-Medium.ttf
+
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-Regular.ttf
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-LightItalic.ttf
+          style: italic
+          weight: 300
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-SemiboldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/gooey_edge/Open-Sans/OpenSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+    - family: DMSerifDisplay
+      fonts:
+        - asset: assets/fonts/gooey_edge/DM-Serif-Display/DMSerifDisplay-Regular.ttf
+        - asset: assets/fonts/gooey_edge/DM-Serif-Display/DMSerifDisplay-Italic.ttf
+          style: italic
