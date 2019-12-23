@@ -1,202 +1,156 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/sample/empty_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
+import 'package:social_project/ui/page/timeline_page.dart';
 
-@Deprecated("直接使用 [HomePage]")
 class TabBarWidgetPage extends StatefulWidget {
-  //底部模式
-  static const int BOTTOM_TAB = 1;
-
-  //顶部模式
-  static const int TOP_TAB = 2;
-
-  final int type;
-
-  //标题集合
-  final List<Widget> tabItems;
-
-  //页面集合
-  final List<Widget> tabViews;
-  final Color backgroundColor;
-
-  //指示器颜色
-  final Color indicatorColor;
-  final Widget title;
-
   //抽屉widget
   final Widget drawer;
-  final ValueChanged<int> onPageChanged;
 
-  TabBarWidgetPage(
-      {Key key,
-      this.type,
-      this.tabItems,
-      this.tabViews,
-      this.backgroundColor,
-      this.indicatorColor,
-      this.title,
-      this.drawer,
-      this.onPageChanged})
-      : super(key: key);
+  TabBarWidgetPage({
+    Key key,
+    this.drawer,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return new _TabBarState(this.tabViews, this.indicatorColor, this.title,
-        this.drawer, this.onPageChanged);
+    return _TabBarState(this.drawer);
   }
 }
 
-//创建State对象，存储TabBarWidget的内部逻辑和变化状态
-//with表示扩展，SingleTickerProviderStateMixin是一个扩展（混合）类，它没有构造函数，只能继承自Object。
-//一个类可以有多个扩展类，扩展类可以实现方法，接口不能实现方法，只能在实现类里面实现，继承只能是单继承，这就是扩展的好处。
-//当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
+/// 创建State对象，存储TabBarWidget的内部逻辑和变化状态
+/// with表示扩展，SingleTickerProviderStateMixin是一个扩展（混合）类，它没有构造函数，只能继承自Object。
+/// 一个类可以有多个扩展类，扩展类可以实现方法，接口不能实现方法，只能在实现类里面实现，继承只能是单继承，这就是扩展的好处。
+/// 当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
 class _TabBarState extends State<TabBarWidgetPage>
     with SingleTickerProviderStateMixin {
-  final List<Widget> _tabViews;
-  final Color _indicatorColor;
-  final Widget _title;
   final Widget _drawer;
-  final ValueChanged<int> _onPageChanged;
 
   ScrollController _scrollViewController;
 
-  _TabBarState(this._tabViews, this._indicatorColor, this._title, this._drawer,
-      this._onPageChanged)
-      : super();
+  _TabBarState(
+    this._drawer,
+  ) : super();
 
   //标签控制器，主要是管理标签的行为，比如移动或者跳转到哪一个标签
   TabController _tabController;
-
-  //页面控制器，主要是控制着页面的行为，比如跳转到哪一个页面
-//  PageController _pageController;
-
-//  Choice _selectedChoice = choices[0]; // The app's "state".
-
-//  void _select(Choice choice) {
-//     Causes the app to rebuild with the new _selectedChoice.
-//    setState(() {
-//      _selectedChoice = choice;
-//    });
-//  }
 
   //初始化方法，当有状态widget已创建，就会为之创建一个state对象，就会调用initState方法
   @override
   void initState() {
     super.initState();
-    _tabController =
-        new TabController(length: 1, vsync: this);
-    _scrollViewController = new ScrollController();
-//    _pageController = new PageController(initialPage: 0, keepPage: true);
+    _tabController = TabController(length: 4, vsync: this);
+    _scrollViewController = ScrollController();
   }
 
   //资源释放
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _tabController.dispose();
-//    _pageController.dispose();
     _scrollViewController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     //这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
-    return new Scaffold(
+    return Scaffold(
       //抽屉界面
       drawer: _drawer,
-//      //一个放在屏幕顶端的高度合适的控件，即标题栏，典型的应用就是放在Scaffold中使用。
-//      appBar: new AppBar(
-////        //背景
-////        flexibleSpace: Container(
-////          decoration: BoxDecoration(
-////            gradient: LinearGradient(
-////              colors: [Colors.cyan, Colors.blue, Colors.blueAccent],
-////            ),
-////          ),
-////        ),
-//        //名称
-//        title: _title,
-//        //Material 设计的控件，用来展示一行标签，通过它，标签控制器和标签进行了绑定
-//        bottom: new TabBar(
-//          //持有的标签
-//          tabs: widget.tabItems,
-//          //控制标签行为的控制器
+//      body:  NestedScrollView(
+//        controller: _scrollViewController,
+//        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+//          return <Widget>[
+//             SliverAppBar(
+//              title:  Text("Social Project"),
+//              pinned: true,
+//              floating: true,
+//              forceElevated: innerBoxIsScrolled,
+//              bottom:  TabBar(
+//                tabs: <Tab>[
+//                   Tab(text: "Time line"),
+//                   Tab(text: "Time line2"),
+//                ],
+//                controller: _tabController,
+//              ),
+//              actions: <Widget>[
+//                 IconButton(
+//                    icon: Icon(Icons.search),
+//                    tooltip: 'Search',
+//                    onPressed: () {
+//                      showSearch(
+//                        context: context,
+//                        delegate: SearchBarDelegate(),
+//                      );
+//                    }),
+//                // overflow menu
+//                PopupMenuButton<Choice>(
+//                  onSelected: (val) {},
+//                  itemBuilder: (BuildContext context) {
+//                    return choices.skip(2).map((Choice choice) {
+//                      return PopupMenuItem<Choice>(
+//                        value: choice,
+//                        child: Text(choice.title),
+//                      );
+//                    }).toList();
+//                  },
+//                ),
+//              ],
+//            ),
+//          ];
+//        },
+//        body:  TabBarView(
+//          children: <Widget>[
+//            TimelineTwoPage(),
+//            EmptyPage(),
+//          ],
 //          controller: _tabController,
-//          //指示器
-//          indicatorColor: _indicatorColor,
-//          //标签点击事件
-//          onTap: (index) {
-//            //点击标签切换页面
-//            _pageController.jumpToPage(index);
-//          },
 //        ),
 //      ),
-//      //表示一个可以一页一页滚动的列表，每一个页面都和view窗口的大小一样
-//      //通过这个类，页面控制器和页面进行了绑定
-//      body: new PageView(
-//        //页面控制器
-//        controller: _pageController,
-//        //具体的页面集合
-//        children: _tabViews,
-//        //页面滑动触发回调
-//        onPageChanged: (index) {
-//          //标签进行相应的改变
-//          _tabController.animateTo(index);
-//          //一个监听回调
-//          _onPageChanged?.call(index);
-//        },
-//      ),
-
-      body: new NestedScrollView(
-        controller: _scrollViewController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            new SliverAppBar(
-              title: new Text("TITLE"),
-              pinned: true,
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-              bottom: new TabBar(
-                tabs: <Tab>[
-                  new Tab(text: "STATISTICS"),
-//                  new Tab(text: "HISTORY"),
-                ],
-                controller: _tabController,
-              ),
-              actions: <Widget>[
-                new IconButton(
-                    icon: Icon(Icons.search),
-                    tooltip: 'Search',
-                    onPressed: () {
-                      showSearch(
-                          context: context, delegate: SearchBarDelegate());
-                    }),
-                // overflow menu
-                PopupMenuButton<Choice>(
-                  onSelected: (val){},
-                  itemBuilder: (BuildContext context) {
-                    return choices.skip(2).map((Choice choice) {
-                      return PopupMenuItem<Choice>(
-                        value: choice,
-                        child: Text(choice.title),
-                      );
-                    }).toList();
-                  },
-                ),
-              ],
-            ),
-          ];
-        },
-        body: new TabBarView(
-          children: <Widget>[
-            EmptyPage()
-//            new StatisticsPage(),
-//            new HistoryPage(),
+      appBar: AppBar(
+        title: Text("Social Project"),
+        bottom: TabBar(
+          tabs: <Tab>[
+            Tab(text: "Time line"),
+            Tab(text: "Time line 2"),
+            Tab(text: "Time line 3"),
+            Tab(text: "Time line 4"),
           ],
           controller: _tabController,
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              tooltip: 'Search',
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: SearchBarDelegate(),
+                );
+              }),
+          // overflow menu
+          PopupMenuButton<Choice>(
+            onSelected: (val) {},
+            itemBuilder: (BuildContext context) {
+              return choices.skip(2).map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Text(choice.title),
+                );
+              }).toList();
+            },
+          ),
+        ],
+      ),
+      body: TabBarView(
+        children: <Widget>[
+          TimelineTwoPage(),
+          SampleHomePage(),
+          SampleHomePage(),
+          SampleHomePage(),
+        ],
+        controller: _tabController,
       ),
     );
   }

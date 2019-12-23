@@ -10,7 +10,6 @@ class CommentPage extends StatefulWidget {
 
 class _CommentPageState extends State<CommentPage> {
 
-
   @override
   Widget build(BuildContext context) {
     final String title = ModalRoute.of(context).settings.arguments;

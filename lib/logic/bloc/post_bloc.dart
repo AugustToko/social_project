@@ -4,11 +4,11 @@ import 'package:social_project/logic/viewmodel/post_view_model.dart';
 import 'package:social_project/model/post.dart';
 
 class PostBloc {
-  final PostViewModel postViewModel = PostViewModel();
+  /// 默认值
+  final PostViewModel defaultPostViewModel = PostViewModel();
   final postController = StreamController<List<Post>>();
   final fabController = StreamController<bool>();
   final fabVisibleController = StreamController<bool>();
-
   Sink<bool> get fabSink => fabController.sink;
 
   Stream<List<Post>> get postItems => postController.stream;
@@ -16,7 +16,7 @@ class PostBloc {
   Stream<bool> get fabVisible => fabVisibleController.stream;
 
   PostBloc() {
-    postController.add(postViewModel.getPosts());
+    postController.add(defaultPostViewModel.getPosts());
     fabController.stream.listen(onScroll);
   }
 

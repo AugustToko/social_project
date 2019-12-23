@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
+import 'package:social_project/logic/viewmodel/post_view_model.dart';
 import 'package:social_project/model/post.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -15,12 +16,15 @@ class TimelineTwoPage extends StatefulWidget {
 }
 
 class TimelineTwoPageState extends State<TimelineTwoPage> {
-  ScrollController scrollController;
-  PostBloc postBloc;
+  PostBloc _postBloc;
+
+  ScrollController _listController;
+
+  List<Post> _posts = [];
 
   Widget bodyData() {
     return StreamBuilder<List<Post>>(
-        stream: postBloc.postItems,
+        stream: _postBloc.postItems,
         builder: (context, snapshot) {
           return snapshot.hasData
               ? bodyList(snapshot.data)
@@ -157,87 +161,120 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       );
 
   /// 列表
-  Widget bodyList(List<Post> posts) => ListView.builder(
-        controller: scrollController,
-        itemCount: posts.length,
-        itemBuilder: (context, i) {
-          Post post = posts[i];
-          return Card(
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, UIData.commentDetail,
-                    arguments: "Comment Detail Page");
-              },
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Stack(
+  Widget bodyList(List<Post> posts) {
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        new GlobalKey<RefreshIndicatorState>();
+
+    return RefreshIndicator(
+      key: _refreshIndicatorKey,
+      child: Scrollbar(
+        child: ListView.builder(
+          controller: _listController,
+          itemCount: posts.length + 1,
+          itemBuilder: (context, i) {
+            if (i < posts.length) {
+              final Post post = posts[i];
+              return Card(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, UIData.commentDetail,
+                        arguments: "Comment Detail Page");
+                  },
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          CircleAvatar(
-                              radius: 25.0,
-                              backgroundImage: NetworkImage(
-                                post.personImage,
-                              )),
-                          Positioned.fill(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(context, UIData.profile);
-                                },
-                                customBorder: CircleBorder(),
+                          Stack(
+                            children: <Widget>[
+                              CircleAvatar(
+                                  radius: 25.0,
+                                  backgroundImage: NetworkImage(
+                                    post.personImage,
+                                  )),
+                              Positioned.fill(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, UIData.profile);
+                                    },
+                                    customBorder: CircleBorder(),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
+                          rightColumn(post),
                         ],
                       ),
-                      rightColumn(post),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        },
-      );
+              );
+            } else {
+              return Card(
+                child: Center(
+                  child: Text("Load more."),
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      onRefresh: _pullToRefresh,
+    );
+  }
+
+  Future<Null> _pullToRefresh() async {
+    final PostViewModel postViewModel = PostViewModel();
+    _posts.addAll(postViewModel.getPosts());
+    _postBloc.postController.add(_posts);
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-    scrollController = ScrollController();
-    postBloc = PostBloc();
-    scrollController.addListener(() {
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) postBloc.fabSink.add(false);
-      if (scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) postBloc.fabSink.add(true);
+    // TODO: 默认值
+    _postBloc = PostBloc();
+    _posts.addAll(_postBloc.defaultPostViewModel.getPosts());
+
+    _listController = ScrollController();
+    _listController.addListener(() {
+      if (_listController.position.userScrollDirection ==
+          ScrollDirection.reverse) _postBloc.fabSink.add(false);
+      if (_listController.position.userScrollDirection ==
+          ScrollDirection.forward) _postBloc.fabSink.add(true);
+
+//      var maxScroll = _listController.position.maxScrollExtent;
+//      var pixels = _listController.position.pixels;
+//
+//      if (maxScroll == pixels) {
+//        setState(() {
+//          LogUtils.d("TimeLine", "Loading more...");
+//        });
+//      }
     });
+
+    super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    postBloc?.dispose();
+    _postBloc?.dispose();
+    _listController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> tabs = [
-      _renderTab(new Text("电影")),
-      _renderTab(new Text("图书")),
-      _renderTab(new Text("我的"))
-    ];
-
     return Scaffold(
       body: bodyData(),
       floatingActionButton: StreamBuilder<bool>(
-        stream: postBloc.fabVisible,
+        stream: _postBloc.fabVisible,
         initialData: true,
         builder: (context, snapshot) => AnimatedOpacity(
           duration: Duration(milliseconds: 200),
@@ -253,21 +290,6 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
       ),
     );
-  }
-
-  _renderTab(text) {
-    //返回一个标签
-    return new Tab(
-        child: new Container(
-      padding: new EdgeInsets.only(top: 6),
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center, //竖直方向居中
-
-        crossAxisAlignment: CrossAxisAlignment.center, //水平方向居中
-
-        children: <Widget>[text],
-      ),
-    ));
   }
 
   _showAlertDialog() {
