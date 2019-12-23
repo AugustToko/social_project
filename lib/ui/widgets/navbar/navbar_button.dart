@@ -97,11 +97,14 @@ class _NavbarButtonState extends State<NavbarButton>
 //      ),
 //    );
 
+    var paddingV = 8.0;
+    var paddingH = 4.0;
+
 //    Wrap btn in GestureDetector so we can listen to taps
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: 16, bottom: 16, right: 4, left: 4),
+          padding: EdgeInsets.only(top: paddingV, bottom: paddingV, right: paddingH, left: paddingH),
           //Wrap in an animated container, so changes to width & color automatically animate into place
           child: AnimatedContainer(
             alignment: Alignment.center,
@@ -124,10 +127,10 @@ class _NavbarButtonState extends State<NavbarButton>
         ),
         // 修复点击水波
         Positioned.fill(
-          bottom: 16,
-          top: 16,
-          left: 4,
-          right: 4,
+          bottom: paddingV,
+          top: paddingV,
+          left: paddingH,
+          right: paddingH,
           child: Material(
             color: Colors.transparent,
             child: InkWell(

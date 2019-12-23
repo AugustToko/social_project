@@ -32,9 +32,7 @@ class ContentPage extends StatelessWidget {
         ],
         backgroundColor: Theme.of(context).primaryColor,
         indicatorColor: Theme.of(context).indicatorColor,
-      ), onWillPop: () {
-
-    },
+      ), onWillPop: ()=> null,
     );
   }
 

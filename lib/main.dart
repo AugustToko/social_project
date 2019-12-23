@@ -25,7 +25,7 @@ class App extends StatelessWidget {
 
   /// 亮色主题
   static var themeData = ThemeData(
-    primarySwatch: Colors.grey,
+    primarySwatch: Colors.blue,
     primaryColor: Colors.grey.shade50,
     scaffoldBackgroundColor: Colors.grey.shade50,
     backgroundColor: Colors.grey.shade50,
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
       headline: ThemeUtil.textLight,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade50),
-    canvasColor: Colors.grey.shade50,
+//    canvasColor: Colors.grey.shade50,
     dialogTheme: DialogTheme(
       backgroundColor: Colors.grey.shade50,
     ),
@@ -69,13 +69,14 @@ class App extends StatelessWidget {
       headline: ThemeUtil.textDark,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade900),
-    canvasColor: Colors.grey.shade900,
+//    canvasColor: Colors.grey.shade900,
     dialogTheme: DialogTheme(
       backgroundColor: Colors.grey.shade900,
     ),
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.grey.shade900,
     ),
+
   );
 
   // This widget is the root of your application.

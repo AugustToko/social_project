@@ -31,7 +31,8 @@ class NavBar extends StatelessWidget {
     // 创建一个包含一行的容器，然后将btn小部件添加到该行中
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        // navBar 背景颜色
+        color: Theme.of(context).backgroundColor,
         // 在我们的导航栏中添加一些阴影，使用 2 可获得更好的效果
         boxShadow: [
           BoxShadow(blurRadius: 16, color: Colors.black12),
@@ -39,7 +40,7 @@ class NavBar extends StatelessWidget {
         ],
       ),
       alignment: Alignment.center,
-      height: 80,
+      height: 64,
       // 裁剪小部件行，以抑制动画期间可能发生的任何溢出错误
       child: ClippedView(
         child: Row(

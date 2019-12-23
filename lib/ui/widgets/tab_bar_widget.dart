@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/sample/empty_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 
+@Deprecated("直接使用 [HomePage]")
 class TabBarWidgetPage extends StatefulWidget {
   //底部模式
   static const int BOTTOM_TAB = 1;
@@ -57,6 +59,8 @@ class _TabBarState extends State<TabBarWidgetPage>
   final Widget _drawer;
   final ValueChanged<int> _onPageChanged;
 
+  ScrollController _scrollViewController;
+
   _TabBarState(this._tabViews, this._indicatorColor, this._title, this._drawer,
       this._onPageChanged)
       : super();
@@ -65,24 +69,25 @@ class _TabBarState extends State<TabBarWidgetPage>
   TabController _tabController;
 
   //页面控制器，主要是控制着页面的行为，比如跳转到哪一个页面
-  PageController _pageController;
+//  PageController _pageController;
 
-  Choice _selectedChoice = choices[0]; // The app's "state".
+//  Choice _selectedChoice = choices[0]; // The app's "state".
 
-  void _select(Choice choice) {
-    // Causes the app to rebuild with the new _selectedChoice.
-    setState(() {
-      _selectedChoice = choice;
-    });
-  }
+//  void _select(Choice choice) {
+//     Causes the app to rebuild with the new _selectedChoice.
+//    setState(() {
+//      _selectedChoice = choice;
+//    });
+//  }
 
   //初始化方法，当有状态widget已创建，就会为之创建一个state对象，就会调用initState方法
   @override
   void initState() {
     super.initState();
     _tabController =
-        new TabController(length: widget.tabItems.length, vsync: this);
-    _pageController = new PageController(initialPage: 0, keepPage: true);
+        new TabController(length: 1, vsync: this);
+    _scrollViewController = new ScrollController();
+//    _pageController = new PageController(initialPage: 0, keepPage: true);
   }
 
   //资源释放
@@ -91,7 +96,8 @@ class _TabBarState extends State<TabBarWidgetPage>
     // TODO: implement dispose
     super.dispose();
     _tabController.dispose();
-    _pageController.dispose();
+//    _pageController.dispose();
+    _scrollViewController.dispose();
   }
 
   @override
@@ -100,67 +106,97 @@ class _TabBarState extends State<TabBarWidgetPage>
     return new Scaffold(
       //抽屉界面
       drawer: _drawer,
-      //一个放在屏幕顶端的高度合适的控件，即标题栏，典型的应用就是放在Scaffold中使用。
-      appBar: new AppBar(
-        //背景
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.cyan, Colors.blue, Colors.blueAccent],
+//      //一个放在屏幕顶端的高度合适的控件，即标题栏，典型的应用就是放在Scaffold中使用。
+//      appBar: new AppBar(
+////        //背景
+////        flexibleSpace: Container(
+////          decoration: BoxDecoration(
+////            gradient: LinearGradient(
+////              colors: [Colors.cyan, Colors.blue, Colors.blueAccent],
+////            ),
+////          ),
+////        ),
+//        //名称
+//        title: _title,
+//        //Material 设计的控件，用来展示一行标签，通过它，标签控制器和标签进行了绑定
+//        bottom: new TabBar(
+//          //持有的标签
+//          tabs: widget.tabItems,
+//          //控制标签行为的控制器
+//          controller: _tabController,
+//          //指示器
+//          indicatorColor: _indicatorColor,
+//          //标签点击事件
+//          onTap: (index) {
+//            //点击标签切换页面
+//            _pageController.jumpToPage(index);
+//          },
+//        ),
+//      ),
+//      //表示一个可以一页一页滚动的列表，每一个页面都和view窗口的大小一样
+//      //通过这个类，页面控制器和页面进行了绑定
+//      body: new PageView(
+//        //页面控制器
+//        controller: _pageController,
+//        //具体的页面集合
+//        children: _tabViews,
+//        //页面滑动触发回调
+//        onPageChanged: (index) {
+//          //标签进行相应的改变
+//          _tabController.animateTo(index);
+//          //一个监听回调
+//          _onPageChanged?.call(index);
+//        },
+//      ),
+
+      body: new NestedScrollView(
+        controller: _scrollViewController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            new SliverAppBar(
+              title: new Text("TITLE"),
+              pinned: true,
+              floating: true,
+              forceElevated: innerBoxIsScrolled,
+              bottom: new TabBar(
+                tabs: <Tab>[
+                  new Tab(text: "STATISTICS"),
+//                  new Tab(text: "HISTORY"),
+                ],
+                controller: _tabController,
+              ),
+              actions: <Widget>[
+                new IconButton(
+                    icon: Icon(Icons.search),
+                    tooltip: 'Search',
+                    onPressed: () {
+                      showSearch(
+                          context: context, delegate: SearchBarDelegate());
+                    }),
+                // overflow menu
+                PopupMenuButton<Choice>(
+                  onSelected: (val){},
+                  itemBuilder: (BuildContext context) {
+                    return choices.skip(2).map((Choice choice) {
+                      return PopupMenuItem<Choice>(
+                        value: choice,
+                        child: Text(choice.title),
+                      );
+                    }).toList();
+                  },
+                ),
+              ],
             ),
-          ),
-        ),
-        actions: <Widget>[
-          new IconButton(
-              icon: Icon(Icons.search),
-              tooltip: 'Search',
-              onPressed: () {
-                showSearch(context: context, delegate: SearchBarDelegate());
-              }),
-          // overflow menu
-          PopupMenuButton<Choice>(
-            onSelected: _select,
-            itemBuilder: (BuildContext context) {
-              return choices.skip(2).map((Choice choice) {
-                return PopupMenuItem<Choice>(
-                  value: choice,
-                  child: Text(choice.title),
-                );
-              }).toList();
-            },
-          ),
-        ],
-        //名称
-        title: _title,
-        //Material 设计的控件，用来展示一行标签，通过它，标签控制器和标签进行了绑定
-        bottom: new TabBar(
-          //持有的标签
-          tabs: widget.tabItems,
-          //控制标签行为的控制器
-          controller: _tabController,
-          //指示器
-          indicatorColor: _indicatorColor,
-          //标签点击事件
-          onTap: (index) {
-            //点击标签切换页面
-            _pageController.jumpToPage(index);
-          },
-        ),
-      ),
-      //表示一个可以一页一页滚动的列表，每一个页面都和view窗口的大小一样
-      //通过这个类，页面控制器和页面进行了绑定
-      body: new PageView(
-        //页面控制器
-        controller: _pageController,
-        //具体的页面集合
-        children: _tabViews,
-        //页面滑动触发回调
-        onPageChanged: (index) {
-          //标签进行相应的改变
-          _tabController.animateTo(index);
-          //一个监听回调
-          _onPageChanged?.call(index);
+          ];
         },
+        body: new TabBarView(
+          children: <Widget>[
+            EmptyPage()
+//            new StatisticsPage(),
+//            new HistoryPage(),
+          ],
+          controller: _tabController,
+        ),
       ),
     );
   }
