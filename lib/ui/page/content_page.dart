@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_project/ui/page/empty_page.dart';
+import 'package:social_project/ui/page/sample/empty_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/widgets/tab_bar_widget.dart';
