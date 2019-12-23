@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _IndexState extends State<HomePage> {
   List<NavBarItemData> _navBarItems;
+
   int _selectedNavIndex = 0;
 
   List<Widget> _viewsByIndex;
@@ -51,11 +52,11 @@ class _IndexState extends State<HomePage> {
   Widget build(BuildContext context) {
     var accentColor = _navBarItems[_selectedNavIndex].selectedColor;
 
-    //Display the correct child view for the current index
+    // Display the correct child view for the current index
     var contentView =
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
 
-    //Wrap our custom navbar + contentView with the app Scaffold
+    // Wrap our custom navbar + contentView with the app Scaffold
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -75,9 +76,9 @@ class _IndexState extends State<HomePage> {
   }
 
   void _handleNavBtnTapped(int index) {
-    //Save the new index and trigger a rebuild
+    // Save the new index and trigger a rebuild
     setState(() {
-      //This will be passed into the NavBar and change it's selected state, also controls the active content page
+      // This will be passed into the NavBar and change it's selected state, also controls the active content page
       _selectedNavIndex = index;
     });
   }
