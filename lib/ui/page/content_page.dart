@@ -20,10 +20,10 @@ class ContentPage extends StatelessWidget {
     ];
     //一个控件，可以监听返回键
     return new WillPopScope(
-      child: new TabBarWidget(
+      child: new TabBarWidgetPage(
         drawer: UserAccountDrawer(),
         title: Text("Social Project"),
-        type: TabBarWidget.TOP_TAB,
+        type: TabBarWidgetPage.TOP_TAB,
         tabItems: tabs,
         tabViews: [
           TimelineTwoPage(),

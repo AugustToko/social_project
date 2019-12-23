@@ -3,6 +3,7 @@ import 'package:social_project/ui/page/content_page.dart';
 
 import 'empty_page.dart';
 
+/// [HomePage]
 /// 仅带有一个 BottomNavigationBar
 class HomePage extends StatefulWidget {
   @override
@@ -53,10 +54,12 @@ class _IndexState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavItems,
         currentIndex: _currentIndex,
-        type: BottomNavigationBarType.shifting,
         onTap: (index) {
           _changePage(index);
         },
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
       ),
     );
   }

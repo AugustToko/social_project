@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/temp/overflowmenu.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
@@ -13,6 +14,10 @@ import 'env.dart';
 
 void main() => runApp(App());
 
+//void main() {
+//  runApp(BasicAppBarSample());
+//}
+
 class App extends StatelessWidget {
   static String _pkg = "gooey_edge";
 
@@ -24,17 +29,26 @@ class App extends StatelessWidget {
     primaryColor: Colors.grey.shade50,
     scaffoldBackgroundColor: Colors.grey.shade50,
     backgroundColor: Colors.grey.shade50,
+    appBarTheme: AppBarTheme(elevation: 0.0),
     textTheme: TextTheme(
-      // TextField输入文字颜色
       title: ThemeUtil.textLight,
       body1: ThemeUtil.textLight,
+      subhead: ThemeUtil.textLight,
       // 用于 Drawer 中选项文字
       body2: ThemeUtil.textLight,
       subtitle: ThemeUtil.subtitle,
       button: ThemeUtil.textLight,
+      // for [AboutListTile]
+      headline: ThemeUtil.textLight,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade50),
     canvasColor: Colors.grey.shade50,
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey.shade50,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: Colors.grey.shade50,
+    ),
   );
 
   /// 深色主题
@@ -43,16 +57,25 @@ class App extends StatelessWidget {
     primaryColor: Colors.grey.shade900,
     scaffoldBackgroundColor: Colors.grey.shade900,
     backgroundColor: Colors.grey.shade900,
+    appBarTheme: AppBarTheme(elevation: 0.0),
     textTheme: TextTheme(
-      // TextField输入文字颜色
       title: ThemeUtil.textDark,
+      subhead: ThemeUtil.textDark,
       body1: ThemeUtil.textDark,
       body2: ThemeUtil.textDark,
       subtitle: ThemeUtil.subtitle,
       button: ThemeUtil.textDark,
+      // for [AboutListTile]
+      headline: ThemeUtil.textDark,
     ),
     cardTheme: CardTheme(color: Colors.grey.shade900),
     canvasColor: Colors.grey.shade900,
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey.shade900,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: Colors.grey.shade900,
+    ),
   );
 
   // This widget is the root of your application.

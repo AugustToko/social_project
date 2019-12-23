@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/search_page.dart';
 
-class TabBarWidget extends StatefulWidget {
+class TabBarWidgetPage extends StatefulWidget {
   //底部模式
   static const int BOTTOM_TAB = 1;
 
@@ -25,7 +25,7 @@ class TabBarWidget extends StatefulWidget {
   final Widget drawer;
   final ValueChanged<int> onPageChanged;
 
-  TabBarWidget(
+  TabBarWidgetPage(
       {Key key,
       this.type,
       this.tabItems,
@@ -49,7 +49,7 @@ class TabBarWidget extends StatefulWidget {
 //with表示扩展，SingleTickerProviderStateMixin是一个扩展（混合）类，它没有构造函数，只能继承自Object。
 //一个类可以有多个扩展类，扩展类可以实现方法，接口不能实现方法，只能在实现类里面实现，继承只能是单继承，这就是扩展的好处。
 //当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
-class _TabBarState extends State<TabBarWidget>
+class _TabBarState extends State<TabBarWidgetPage>
     with SingleTickerProviderStateMixin {
   final int _type;
   final List<Widget> _tabViews;
@@ -67,6 +67,15 @@ class _TabBarState extends State<TabBarWidget>
 
   //页面控制器，主要是控制着页面的行为，比如跳转到哪一个页面
   PageController _pageController;
+
+  Choice _selectedChoice = choices[0]; // The app's "state".
+
+  void _select(Choice choice) {
+    // Causes the app to rebuild with the new _selectedChoice.
+    setState(() {
+      _selectedChoice = choice;
+    });
+  }
 
   //初始化方法，当有状态widget已创建，就会为之创建一个state对象，就会调用initState方法
   @override
@@ -89,7 +98,7 @@ class _TabBarState extends State<TabBarWidget>
   @override
   Widget build(BuildContext context) {
     //标签在顶部
-    if (this._type == TabBarWidget.TOP_TAB) {
+    if (this._type == TabBarWidgetPage.TOP_TAB) {
       //这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
       return new Scaffold(
         //抽屉界面
@@ -105,11 +114,18 @@ class _TabBarState extends State<TabBarWidget>
                 onPressed: () {
                   showSearch(context: context, delegate: SearchBarDelegate());
                 }),
-            IconButton(
-              icon: Icon(Icons.more_horiz),
-              tooltip: 'More',
-              onPressed: () => debugPrint('More button is pressed'),
-            )
+            // overflow menu
+            PopupMenuButton<Choice>(
+              onSelected: _select,
+              itemBuilder: (BuildContext context) {
+                return choices.skip(2).map((Choice choice) {
+                  return PopupMenuItem<Choice>(
+                    value: choice,
+                    child: Text(choice.title),
+                  );
+                }).toList();
+              },
+            ),
           ],
           //名称
           title: _title,
@@ -173,3 +189,19 @@ class _TabBarState extends State<TabBarWidget>
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Car', icon: Icons.directions_car),
+  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
+  const Choice(title: 'Boat', icon: Icons.directions_boat),
+  const Choice(title: 'Bus', icon: Icons.directions_bus),
+  const Choice(title: 'Train', icon: Icons.directions_railway),
+  const Choice(title: 'Walk', icon: Icons.directions_walk),
+];

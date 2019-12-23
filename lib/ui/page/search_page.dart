@@ -135,16 +135,16 @@ class _SearchItemState extends State<SearchItem> {
   Widget build(BuildContext context) {
     return Container(
       child: InkWell(
+        customBorder:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Chip(
           label: Text(widget.title),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        onTap: () {
-          print(widget.title);
-        },
+        onTap: () {},
       ),
-      color: Colors.white,
+      color: Colors.transparent,
     );
   }
 }

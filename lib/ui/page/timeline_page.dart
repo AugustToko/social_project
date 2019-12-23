@@ -3,8 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/model/post.dart';
-import 'package:social_project/ui/page/search_page.dart';
-import 'package:social_project/ui/widgets/user_account_drawer.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -136,9 +134,13 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                           Positioned.fill(
                             child: Material(
                               color: Colors.transparent,
-                              child: InkWell(onTap: () {
-                                _showAlertDialog();
-                              }),
+                              child: InkWell(
+                                onTap: () {
+                                  _showAlertDialog();
+                                },
+                                customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0)),
+                              ),
                             ),
                           ),
                         ],
