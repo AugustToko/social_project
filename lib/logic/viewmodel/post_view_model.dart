@@ -11,8 +11,7 @@ class PostViewModel {
             address: "China",
             likesCount: 100,
             commentsCount: 10,
-            message:
-                "如果你还不清楚发生了什么事情，请：《离职补偿变敲诈勒索 华为前员工被拘251天...",
+            message: "如果你还不清楚发生了什么事情，请：《离职补偿变敲诈勒索 华为前员工被拘251天...",
             personImage:
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             messageImage:
@@ -35,8 +34,7 @@ class PostViewModel {
             address: "China",
             likesCount: 50,
             commentsCount: 5,
-            message:
-                " 蔚然一直崇尚“技术无国界”，但gitlab似乎并不这么认为，其公开对中国及俄罗斯...",
+            message: " 蔚然一直崇尚“技术无国界”，但gitlab似乎并不这么认为，其公开对中国及俄罗斯...",
             personImage:
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "2h ago"),

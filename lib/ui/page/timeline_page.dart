@@ -229,6 +229,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
     );
   }
 
+  /// TimeLine 刷新操作
+  /// TODO: 待完善
   Future<Null> _pullToRefresh() async {
     final PostViewModel postViewModel = PostViewModel();
     _posts.addAll(postViewModel.getPosts());
@@ -237,7 +239,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
 
   @override
   void initState() {
-    // TODO: 默认值
+    // TODO: 默认值待完善
     _postBloc = PostBloc();
     _posts.addAll(_postBloc.defaultPostViewModel.getPosts());
 
@@ -248,14 +250,16 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       if (_listController.position.userScrollDirection ==
           ScrollDirection.forward) _postBloc.fabSink.add(true);
 
-//      var maxScroll = _listController.position.maxScrollExtent;
-//      var pixels = _listController.position.pixels;
-//
-//      if (maxScroll == pixels) {
-//        setState(() {
-//          LogUtils.d("TimeLine", "Loading more...");
-//        });
-//      }
+      // TODO: 上拉加载新内容
+      // TODO: 上拉加载新内容时保持滚动位置
+      var maxScroll = _listController.position.maxScrollExtent;
+      var pixels = _listController.position.pixels;
+
+      if (maxScroll == pixels) {
+        final PostViewModel postViewModel = PostViewModel();
+        _posts.addAll(postViewModel.getPosts());
+        _postBloc.postController.add(_posts);
+      }
     });
 
     super.initState();
