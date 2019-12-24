@@ -29,4 +29,7 @@ class PostCommentType {
   static const int DEFAULT = 0;
   static const int AUDIO = 1;
   static const int VIDEO = 3;
+  static const int IMAGE = 4;
+  static const int TEXT = 5;
+  static const int TEXT_IMAGE = 6;
 }

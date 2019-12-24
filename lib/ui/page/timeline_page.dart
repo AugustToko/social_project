@@ -120,6 +120,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
               SizedBox(
                 height: 10.0,
               ),
+              // 放置图片
               post.messageImage != null
                   ? Material(
                       color: Colors.transparent,
@@ -160,6 +161,27 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
       );
 
+  Widget buildDefaultCard() {
+    return Card();
+  }
+
+  Widget buildVideoCard() {
+    return Card();
+  }
+
+
+  Widget buildAudioCard() {
+    return Card();
+  }
+
+  Widget buildImageCard() {
+    return Card();
+  }
+
+  Widget buildTextCard() {
+    return Card();
+  }
+
   /// 列表
   Widget bodyList(List<Post> posts) {
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -174,6 +196,33 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           itemBuilder: (context, i) {
             if (i < posts.length) {
               final Post post = posts[i];
+
+//              switch (post.commentType) {
+//                case PostCommentType.DEFAULT: {
+//                  return buildDefaultCard();
+//                }
+//                break;
+//                case PostCommentType.AUDIO: {
+//                  return buildAudioCard();
+//                }
+//                break;
+//                case PostCommentType.VIDEO: {
+//                  return buildVideoCard();
+//                }
+//                break;
+//                case PostCommentType.IMAGE: {
+//                  return buildImageCard();
+//                }
+//                break;
+//                case PostCommentType.TEXT: {
+//                  return buildTextCard();
+//                }
+//                break;
+//                default: {
+//                  return buildTextCard();
+//                }
+//              }
+
               return Card(
                 child: InkWell(
                   onTap: () {
@@ -187,6 +236,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          // LEFT
                           Stack(
                             children: <Widget>[
                               CircleAvatar(
@@ -208,6 +258,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                               ),
                             ],
                           ),
+                          // RIGHT
                           rightColumn(post),
                         ],
                       ),
