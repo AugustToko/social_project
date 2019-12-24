@@ -1,12 +1,15 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/logic/viewmodel/post_view_model.dart';
 import 'package:social_project/model/post.dart';
+import 'package:social_project/utils/assets_manager.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:video_player/video_player.dart';
 
 class TimelineTwoPage extends StatefulWidget {
   @override
@@ -19,6 +22,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   PostBloc _postBloc;
 
   ScrollController _listController;
+
+  List<ChangeNotifier> needDispose = [];
 
   List<Post> _posts = [];
 
@@ -108,50 +113,22 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  post.message,
-                  style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontFamily: UIData.quickFont),
-                ),
-              ),
+              post.message == null
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        post.message,
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontFamily: UIData.quickFont),
+                      ),
+                    ),
               SizedBox(
                 height: 10.0,
               ),
               // 放置图片
-              post.messageImage != null
-                  ? Material(
-                      color: Colors.transparent,
-                      child: Stack(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: FadeInImage.assetNetwork(
-                              placeholder: "assets/images/Slider-Yellow.png",
-                              image: post.messageImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          // TODO: 可否使用 {Ink.image} ?
-                          // 在图像上使用水波
-                          Positioned.fill(
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  _showAlertDialog();
-                                },
-                                customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
+              checkPost(post),
               SizedBox(
                 height: 20.0,
               ),
@@ -161,25 +138,95 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
       );
 
-  Widget buildDefaultCard() {
+  Widget checkPost(final Post post) {
+    switch (post.postPreviewType) {
+      case PostCommentType.AUDIO:
+        {
+          return _buildAudioCard(post);
+        }
+        break;
+      case PostCommentType.IMAGE:
+        {
+          return _buildImageCard(post);
+        }
+        break;
+      case PostCommentType.VIDEO:
+        {
+          return _buildVideoCard(post);
+        }
+        break;
+      default:
+        {
+          return Container();
+        }
+    }
+  }
+
+  Widget _buildVideoCard(final Post post) {
+    final videoPlayerController = VideoPlayerController.network(
+        'https://blog.geek-cloud.top/wp-content/uploads/2017/07/01.mp4');
+
+    final chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
+
+    needDispose.add(videoPlayerController);
+    needDispose.add(chewieController);
+
+    final playerWidget = Chewie(
+      controller: chewieController,
+    );
+
+    return _uCard(playerWidget);
+  }
+
+  Widget _buildAudioCard(final Post post) {
     return Card();
   }
 
-  Widget buildVideoCard() {
-    return Card();
+  Widget _buildImageCard(final Post post) {
+    if (post.messageImage == null) return Container();
+    return _uCard(FadeInImage.assetNetwork(
+      placeholder: AssetsManager.IMAGE_PLACE_HOLDER,
+      image: post.messageImage,
+      fit: BoxFit.cover,
+    ));
   }
 
+  /// 通用组件
+  Widget _uCard(final Widget child, {bool overrideClick = false}) {
+    List<Widget> widgets = [];
+    widgets.add(ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: child,
+    ));
 
-  Widget buildAudioCard() {
-    return Card();
-  }
+    if (overrideClick) {
+      // TODO: 可否使用 {Ink.image} ?
+      // 在图像上使用水波
+      widgets.add(Positioned.fill(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              _showAlertDialog();
+            },
+            customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
+          ),
+        ),
+      ));
+    }
 
-  Widget buildImageCard() {
-    return Card();
-  }
-
-  Widget buildTextCard() {
-    return Card();
+    return Material(
+      color: Colors.transparent,
+      child: Stack(
+        children: widgets,
+      ),
+    );
   }
 
   /// 列表
@@ -196,33 +243,6 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           itemBuilder: (context, i) {
             if (i < posts.length) {
               final Post post = posts[i];
-
-//              switch (post.commentType) {
-//                case PostCommentType.DEFAULT: {
-//                  return buildDefaultCard();
-//                }
-//                break;
-//                case PostCommentType.AUDIO: {
-//                  return buildAudioCard();
-//                }
-//                break;
-//                case PostCommentType.VIDEO: {
-//                  return buildVideoCard();
-//                }
-//                break;
-//                case PostCommentType.IMAGE: {
-//                  return buildImageCard();
-//                }
-//                break;
-//                case PostCommentType.TEXT: {
-//                  return buildTextCard();
-//                }
-//                break;
-//                default: {
-//                  return buildTextCard();
-//                }
-//              }
-
               return Card(
                 child: InkWell(
                   onTap: () {
@@ -321,6 +341,9 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
     // TODO: implement dispose
     _postBloc?.dispose();
     _listController?.dispose();
+    needDispose.forEach((item) {
+      item?.dispose();
+    });
     super.dispose();
   }
 

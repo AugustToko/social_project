@@ -7,7 +7,7 @@ class PostViewModel {
 
   getPosts() => <Post>[
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.IMAGE,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 100,
@@ -19,7 +19,7 @@ class PostViewModel {
                 "https://cdn.pixabay.com/photo/2018/03/09/16/32/woman-3211957_1280.jpg",
             postTime: "Just Now"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 123,
@@ -32,7 +32,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "5h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 50,
@@ -42,7 +42,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "2h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 23,
@@ -55,7 +55,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "3h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 35,
@@ -68,7 +68,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "1d ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 100,
@@ -81,7 +81,7 @@ class PostViewModel {
                 "https://cdn.pixabay.com/photo/2018/03/09/16/32/woman-3211957_1280.jpg",
             postTime: "Just Now"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 50,
@@ -92,7 +92,18 @@ class PostViewModel {
                 "https://cdn.pixabay.com/photo/2013/07/18/20/24/brad-pitt-164880_960_720.jpg",
             postTime: "2h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.VIDEO,
+            personName: "Geek Cloud",
+            address: "China",
+            likesCount: 50,
+            commentsCount: 5,
+            message:
+                "Video test...",
+            personImage:
+                "https://cdn.pixabay.com/photo/2013/07/18/20/24/brad-pitt-164880_960_720.jpg",
+            postTime: "2h ago"),
+        Post(
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 23,
@@ -105,7 +116,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "3h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 123,
@@ -118,7 +129,7 @@ class PostViewModel {
                 "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4",
             postTime: "5h ago"),
         Post(
-            commentType: PostCommentType.DEFAULT,
+            postPreviewType: PostCommentType.DEFAULT,
             personName: "Geek Cloud",
             address: "China",
             likesCount: 35,

@@ -1,5 +1,5 @@
 class Post {
-  int commentType = 0;
+  int postPreviewType = PostCommentType.DEFAULT;
   String personName;
   String personImage;
   String address;
@@ -11,7 +11,7 @@ class Post {
   List<String> photos;
 
   Post({
-    this.commentType,
+    this.postPreviewType,
     this.personName,
     this.personImage,
     this.address,
@@ -24,12 +24,14 @@ class Post {
   });
 }
 
-/// 帖子类型
+/// 帖子预览类型
 class PostCommentType {
+  /// 默认为文本类型
   static const int DEFAULT = 0;
   static const int AUDIO = 1;
   static const int VIDEO = 3;
   static const int IMAGE = 4;
-  static const int TEXT = 5;
+  /// 文本类型无需更多其它内容
+  static const int TEXT = DEFAULT;
   static const int TEXT_IMAGE = 6;
 }
