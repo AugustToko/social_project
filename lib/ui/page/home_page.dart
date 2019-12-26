@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:social_project/ui/page/content_page.dart';
+import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/sample/content/gallery_page.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
-import 'package:social_project/ui/page/sample/content/likes_page.dart';
 import 'package:social_project/ui/page/sample/content/save_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
 
@@ -41,7 +41,7 @@ class _IndexState extends State<HomePage> {
       ContentPage(),
       GalleryPage(),
       SampleHomePage(),
-      SampleLikesPage(),
+      LoginTwoPage(),
       SampleSavePage(),
     ];
 
@@ -50,8 +50,6 @@ class _IndexState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = _navBarItems[_selectedNavIndex].selectedColor;
-
     // Display the correct child view for the current index
     var contentView =
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
@@ -76,9 +74,7 @@ class _IndexState extends State<HomePage> {
   }
 
   void _handleNavBtnTapped(int index) {
-    // Save the new index and trigger a rebuild
     setState(() {
-      // This will be passed into the NavBar and change it's selected state, also controls the active content page
       _selectedNavIndex = index;
     });
   }

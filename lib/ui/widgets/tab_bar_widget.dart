@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/sample/empty_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
@@ -146,7 +147,7 @@ class _TabBarState extends State<TabBarWidgetPage>
       body: TabBarView(
         children: <Widget>[
           TimelineTwoPage(),
-          SampleHomePage(),
+          PhotoViewDemo(),
           SampleHomePage(),
           SampleHomePage(),
         ],

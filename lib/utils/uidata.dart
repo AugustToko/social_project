@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
+import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/profile_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 
@@ -24,6 +25,9 @@ class UIData {
   /// [CommentPage]
   static const String commentDetail = "/commentDetail";
 
+  /// [LoginTwoPage]
+  static const String loginRoute = "/login";
+
   static const String profileOneRoute = "/View Profile";
   static const String profileTwoRoute = "/Profile 2";
   static const String notFoundRoute = "/No Search Result";
@@ -36,7 +40,6 @@ class UIData {
   static const String paymentOneRoute = "/Credit Card";
   static const String paymentTwoRoute = "/Payment Success";
   static const String loginOneRoute = "/Login With OTP";
-  static const String loginTwoRoute = "/Login 2";
   static const String dashboardOneRoute = "/Dashboard 1";
   static const String dashboardTwoRoute = "/Dashboard 2";
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/uidata.dart';
 
+import '../../main.dart';
 import 'about_tile.dart';
 
 /// 显示用户账户的 Drawer
@@ -34,7 +35,7 @@ class UserAccountDrawer extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, UIData.profile);
+                            Navigator.pushNamed(context, App.login ? UIData.profile : UIData.login);
                           },
                           customBorder: CircleBorder(),
                         ),

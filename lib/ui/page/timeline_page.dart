@@ -1,12 +1,11 @@
 import 'package:chewie/chewie.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:like_button/like_button.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
-import 'package:social_project/logic/viewmodel/post_view_model.dart';
 import 'package:social_project/model/post.dart';
-import 'package:social_project/utils/assets_manager.dart';
-import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:video_player/video_player.dart';
@@ -38,48 +37,48 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   }
 
   /// 按钮栏
-  Widget actionRow(Post post) => Padding(
-        padding: const EdgeInsets.only(right: 50.0), // 图标间距
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.comment,
-                size: 15.0,
-                color: Colors.grey,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.retweet,
-                size: 15.0,
-                color: Colors.grey,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.heart,
-                size: 15.0,
-                color: Colors.grey,
-              ),
-              onPressed: () {
-                LogUtils.d("Click heart", "");
-              },
-            ),
-            IconButton(
-              icon: Icon(
-                FontAwesomeIcons.share,
-                size: 15.0,
-                color: Colors.grey,
-              ),
-              onPressed: () {},
-            ),
-          ],
+  Widget actionRow(Post post) {
+    const double iconSize = 18.0;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.comment,
+              color: isClicked ? Colors.deepPurpleAccent : Colors.grey,
+              size: iconSize,
+            );
+          },
         ),
-      );
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.retweet,
+              color: isClicked ? Colors.deepOrange : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+        LikeButton(
+          likeCount: 999,
+          size: iconSize,
+        ),
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.share,
+              color: isClicked ? Colors.blue : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+      ],
+    );
+  }
 
   /// card 右侧
   Widget rightColumn(Post post) => Expanded(
@@ -130,7 +129,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
               // 放置图片
               checkPost(post),
               SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
               actionRow(post),
             ],
@@ -189,11 +188,22 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
 
   Widget _buildImageCard(final Post post) {
     if (post.messageImage == null) return Container();
-    return _uCard(FadeInImage.assetNetwork(
-      placeholder: AssetsManager.IMAGE_PLACE_HOLDER,
-      image: post.messageImage,
-      fit: BoxFit.cover,
-    ));
+    return _uCard(
+//        FadeInImage.assetNetwork(
+//          placeholder: AssetsManager.IMAGE_PLACE_HOLDER,
+//          image: post.messageImage,
+//          fit: BoxFit.cover,
+//          imageScale: 0.1,
+//        ),
+        ExtendedImage.network(
+          post.messageImage,
+          fit: BoxFit.cover,
+          cache: true,
+          scale: 0.5,
+          clearMemoryCacheIfFailed: true,
+          //cancelToken: cancellationToken,
+        ),
+        overrideClick: false);
   }
 
   /// 通用组件
@@ -303,9 +313,9 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   /// TimeLine 刷新操作
   /// TODO: 待完善
   Future<Null> _pullToRefresh() async {
-    final PostViewModel postViewModel = PostViewModel();
-    _posts.addAll(postViewModel.getPosts());
-    _postBloc.postController.add(_posts);
+//    final PostViewModel postViewModel = PostViewModel();
+//    _posts.addAll(postViewModel.getPosts());
+//    _postBloc.postController.sink.add(_posts);
   }
 
   @override
@@ -323,14 +333,14 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
 
       // TODO: 上拉加载新内容
       // TODO: 上拉加载新内容时保持滚动位置
-      var maxScroll = _listController.position.maxScrollExtent;
-      var pixels = _listController.position.pixels;
-
-      if (maxScroll == pixels) {
-        final PostViewModel postViewModel = PostViewModel();
-        _posts.addAll(postViewModel.getPosts());
-        _postBloc.postController.add(_posts);
-      }
+//      var maxScroll = _listController.position.maxScrollExtent;
+//      var pixels = _listController.position.pixels;
+//
+//      if (maxScroll == pixels) {
+//        final PostViewModel postViewModel = PostViewModel();
+//        _posts.addAll(postViewModel.getPosts());
+//        _postBloc.postController.add(_posts);
+//      }
     });
 
     super.initState();
