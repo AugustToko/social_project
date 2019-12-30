@@ -6,10 +6,10 @@ Social project.
 艺术交流地带
 包括但不限于 音乐、绘画、游戏、文章、影视、code
 
-<img src="./screenshots/Screenshot_1577669768.png" hspace="10">
-<img src="./screenshots/Screenshot_1577669772.png" hspace="10">
-<img src="./screenshots/Screenshot_1577669775.png" hspace="10">
-<img src="./screenshots/Screenshot_1577669784.png" hspace="10">
+<img src="./screenshots/Screenshot_1577669768.png" hspace="10" width="720" height="1280">
+<img src="./screenshots/Screenshot_1577669772.png" hspace="10" width="720" height="1280">
+<img src="./screenshots/Screenshot_1577669775.png" hspace="10"  width="720" height="1280">
+<img src="./screenshots/Screenshot_1577669784.png" hspace="10"  width="720" height="1280">
 
 ## Getting Started
 
