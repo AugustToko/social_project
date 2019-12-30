@@ -15,6 +15,7 @@ class CropImage extends StatelessWidget {
   final TuChongItem tuChongItem;
   final bool knowImageSize;
   final int index;
+
   CropImage({
     @required this.index,
     @required this.tuChongItem,
@@ -129,6 +130,7 @@ class CropImage extends StatelessWidget {
             );
           }
 
+          // （图片放大浏览）
           widget = GestureDetector(
             child: widget,
             onTap: () {

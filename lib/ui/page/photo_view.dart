@@ -195,12 +195,13 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                 child: buildTagsWidget(item),
                               ),
                               // 图片区域
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: PicGridView(
-                                  tuChongItem: item,
-                                ),
+//                              ClipRRect(
+//                                borderRadius: BorderRadius.circular(8.0),
+//                                child:
+                              PicGridView(
+                                tuChongItem: item,
                               ),
+//                              ),
                               // 操作按钮区域
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
