@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:share/share.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/model/post.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -36,6 +37,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         });
   }
 
+  /// TODO: 按钮按下的操作逻辑及count数据填充
   /// 按钮栏
   Widget actionRow(Post post) {
     const double iconSize = 18.0;
@@ -44,6 +46,13 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       children: <Widget>[
         LikeButton(
           likeCount: 999,
+          onTap: (bool val){
+            Navigator.pushNamed(
+              context,
+              UIData.sendPage,
+            );
+            return Future.value(true);
+          },
           likeBuilder: (bool isClicked) {
             return Icon(
               FontAwesomeIcons.comment,
@@ -68,6 +77,11 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
         LikeButton(
           likeCount: 999,
+          onTap: (bool val){
+            //TODO: Share库 支持平台问题
+            Share.share("This is a test action by Social Project");
+            return Future.value(true);
+          },
           likeBuilder: (bool isClicked) {
             return Icon(
               FontAwesomeIcons.share,
@@ -256,8 +270,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
               return Card(
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, UIData.commentDetail,
-                        arguments: "Comment Detail Page");
+                    Navigator.pushNamed(context, UIData.commentDetail);
                   },
                   child: Container(
                     child: Padding(
@@ -368,7 +381,12 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           duration: Duration(milliseconds: 200),
           opacity: snapshot.data ? 1.0 : 0.0,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                UIData.sendPage,
+              );
+            },
             backgroundColor: Colors.white,
             child: CustomPaint(
               child: Container(),

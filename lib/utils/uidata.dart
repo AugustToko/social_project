@@ -6,6 +6,7 @@ import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/profile_one_page.dart';
+import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 
 // TODO: 清理
@@ -27,6 +28,9 @@ class UIData {
 
   /// [LoginTwoPage]
   static const String loginRoute = "/login";
+
+  /// [SendPage]
+  static const String sendPage = "/sendPage";
 
   static const String profileOneRoute = "/View Profile";
   static const String profileTwoRoute = "/Profile 2";

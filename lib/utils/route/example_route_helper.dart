@@ -5,6 +5,7 @@
 
 import 'package:flutter/widgets.dart';
 
+@Deprecated("none")
 class FFNavigatorObserver extends NavigatorObserver {
   final ShowStatusBarChange showStatusBarChange;
   final RouteChange routeChange;

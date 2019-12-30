@@ -9,18 +9,18 @@ import 'navbar.dart';
 
 // Handle the transition between selected and de-deselected, by animating it's own width,
 // and modifying the color/visibility of some child widgets
-class NavbarButton extends StatefulWidget {
+class NavBarButton extends StatefulWidget {
   final NavBarItemData data;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const NavbarButton(this.data, this.isSelected, {@required this.onTap});
+  const NavBarButton(this.data, this.isSelected, {@required this.onTap});
 
   @override
-  _NavbarButtonState createState() => _NavbarButtonState();
+  _NavBarButtonState createState() => _NavBarButtonState();
 }
 
-class _NavbarButtonState extends State<NavbarButton>
+class _NavBarButtonState extends State<NavBarButton>
     with SingleTickerProviderStateMixin {
   AnimationController _iconAnimController;
   bool _wasSelected;
@@ -45,8 +45,8 @@ class _NavbarButtonState extends State<NavbarButton>
   @override
   Widget build(BuildContext context) {
     _startAnimIfSelectedChanged(widget.isSelected);
-    //Create our main button, a Row, with an icon and some text
-    //Inject the data from our widget.data property
+    // Create our main button, a Row, with an icon and some text
+    // Inject the data from our widget.data property
     var content = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

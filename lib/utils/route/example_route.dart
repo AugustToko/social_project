@@ -5,6 +5,7 @@ import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
 import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/profile_two_page.dart';
+import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 
 import '../uidata.dart';
@@ -67,6 +68,14 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: LoginTwoPage(),
         showStatusBar: false,
         routeName: UIData.login,
+        pageRouteType: PageRouteType.transparent,
+      );
+      break;
+    case UIData.sendPage:
+      return RouteResult(
+        widget: SendPage(),
+        showStatusBar: true,
+        routeName: UIData.sendPage,
         pageRouteType: PageRouteType.transparent,
       );
       break;

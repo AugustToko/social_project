@@ -12,11 +12,10 @@ class _CommentPageState extends State<CommentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final String title = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text("Comment Detail Page"),
       ),
       body: Center(
         child: Text("Comment Detail Here!"),

@@ -413,6 +413,13 @@ packages:
       url: "https://pub.flutter-io.cn/"
     source: hosted
     version: "0.0.5"
+  share:
+    dependency: "direct main"
+    description:
+      name: share
+      url: "https://pub.flutter-io.cn/"
+    source: hosted
+    version: "0.6.3+5"
   shared:
     dependency: "direct main"
     description:
