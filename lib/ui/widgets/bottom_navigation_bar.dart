@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated("废弃")
 class HomeBottomNavigationBar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => HomeBottomNavigationBarState();
 }
 
+@Deprecated("废弃")
 class HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
   final _bottomNavigationColor = Colors.blue;
   int _currentIndex = 0;

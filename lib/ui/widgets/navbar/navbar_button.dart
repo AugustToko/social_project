@@ -104,7 +104,8 @@ class _NavbarButtonState extends State<NavbarButton>
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: paddingV, bottom: paddingV, right: paddingH, left: paddingH),
+          padding: EdgeInsets.only(
+              top: paddingV, bottom: paddingV, right: paddingH, left: paddingH),
           //Wrap in an animated container, so changes to width & color automatically animate into place
           child: AnimatedContainer(
             alignment: Alignment.center,
@@ -115,8 +116,9 @@ class _NavbarButtonState extends State<NavbarButton>
             duration: Duration(milliseconds: (700 / _animScale).round()),
             //Use BoxDecoration top create a rounded container
             decoration: BoxDecoration(
-              color:
-                  widget.isSelected ? widget.data.selectedColor : Colors.white,
+              color: widget.isSelected
+                  ? widget.data.selectedColor
+                  : Theme.of(context).backgroundColor,
               borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
             //Wrap the row in a ClippedView to suppress any overflow errors if we momentarily exceed the screen size
@@ -136,7 +138,8 @@ class _NavbarButtonState extends State<NavbarButton>
             child: InkWell(
               onTap: widget.onTap,
               customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24.0)),
+                borderRadius: BorderRadius.circular(24.0),
+              ),
             ),
           ),
         ),
