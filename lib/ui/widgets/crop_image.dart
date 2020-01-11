@@ -48,9 +48,9 @@ class CropImage extends StatelessWidget {
       }
     }
 
-    return ExtendedImage(
-        //if you don't want to resize image to reduce the memory
-        //use ExtendedImage.network(imageItem.imageUrl)
+    return InkWell(child: ExtendedImage(
+      //if you don't want to resize image to reduce the memory
+      //use ExtendedImage.network(imageItem.imageUrl)
         image: imageItem.createResizeImage(),
         //fit: BoxFit.fill,
         //height: 200.0,
@@ -66,20 +66,20 @@ class CropImage extends StatelessWidget {
                 child: CircularProgressIndicator(
                   strokeWidth: 2.0,
                   valueColor:
-                      AlwaysStoppedAnimation(Theme.of(context).primaryColor),
+                  AlwaysStoppedAnimation(Theme.of(context).primaryColor),
                 ),
               );
               break;
             case LoadState.completed:
-              //if you can't konw image size before build,
-              //you have to handle crop when image is loaded.
-              //so maybe your loading widget size will not the same
-              //as image actual size, set returnLoadStateChangedWidget=true,so that
-              //image will not to be limited by size which you set for ExtendedImage first time.
+            //if you can't konw image size before build,
+            //you have to handle crop when image is loaded.
+            //so maybe your loading widget size will not the same
+            //as image actual size, set returnLoadStateChangedWidget=true,so that
+            //image will not to be limited by size which you set for ExtendedImage first time.
               state.returnLoadStateChangedWidget = !knowImageSize;
 
-              ///if you don't want override completed widget
-              ///please return null or state.completedWidget
+              /// if you don't want override completed widget
+              /// please return null or state.completedWidget
               //return null;
               //return state.completedWidget;
               widget = Hero(
@@ -101,9 +101,11 @@ class CropImage extends StatelessWidget {
                       bottom: 0.0,
                       left: 0.0,
                       right: 0.0,
-                      child: Text(
-                        "load image failed, click to reload",
-                        textAlign: TextAlign.center,
+                      child: Center(
+                        child: Text(
+                          "load image failed, click to reload",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     )
                   ],
@@ -146,7 +148,7 @@ class CropImage extends StatelessWidget {
           );
 
           return widget;
-        });
+        }),);
   }
 
   Widget buildImage(ui.Image image, double num300, double num400) {

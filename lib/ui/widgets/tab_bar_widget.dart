@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
-import 'package:social_project/ui/page/sample/empty_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 
@@ -114,7 +113,8 @@ class _TabBarState extends State<TabBarWidgetPage>
         bottom: TabBar(
           tabs: <Tab>[
             Tab(text: "Time line"),
-            Tab(text: "Time line 2"),
+            Tab(text: "TuChong"),
+
             Tab(text: "Time line 3"),
             Tab(text: "Time line 4"),
           ],
@@ -164,6 +164,7 @@ class Choice {
   final IconData icon;
 }
 
+// TODO: Sample Menus
 const List<Choice> choices = const <Choice>[
   const Choice(title: 'Car', icon: Icons.directions_car),
   const Choice(title: 'Bicycle', icon: Icons.directions_bike),

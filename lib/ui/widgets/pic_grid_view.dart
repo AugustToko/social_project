@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:social_project/utils/screen_util.dart';
+import 'package:social_project/utils/theme_util.dart';
 
 import 'crop_image.dart';
 import '../../model/tuchong/tu_chong_source.dart';
 
 const int maxPicGridViewCount = 9;
 
-/// TODO: 启用圆角
 /// Grid view to show picture
 class PicGridView extends StatelessWidget {
   final TuChongItem tuChongItem;
@@ -27,10 +27,13 @@ class PicGridView extends StatelessWidget {
       if (tuChongItem.images.length == 1) {
         return Padding(
           padding: EdgeInsets.all(margin),
-          child: CropImage(
-            index: 0,
-            tuChongItem: tuChongItem,
-            knowImageSize: true,
+          child: ClipRRect(
+            borderRadius: ThemeUtil.clipRRectBorderRadius,
+            child: CropImage(
+              index: 0,
+              tuChongItem: tuChongItem,
+              knowImageSize: true,
+            ),
           ),
         );
       }
@@ -40,25 +43,28 @@ class PicGridView extends StatelessWidget {
         totalWidth = size / 3 * 2;
         rowCount = 2;
       }
+
       return Container(
         margin: EdgeInsets.all(margin),
         width: totalWidth,
-        child: GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: rowCount,
-              crossAxisSpacing: 2.0,
-              mainAxisSpacing: 2.0),
-          itemBuilder: (s, index) {
-            return CropImage(
-              index: index,
-              tuChongItem: tuChongItem,
-              knowImageSize: true,
-            );
-          },
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: tuChongItem.images.length.clamp(1, maxPicGridViewCount),
-          padding: EdgeInsets.all(0.0),
+        child: ClipRRect(
+          borderRadius: ThemeUtil.clipRRectBorderRadius,
+          child: GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: rowCount,
+                crossAxisSpacing: 2.0,
+                mainAxisSpacing: 2.0),
+            itemBuilder: (s, index) {
+              return CropImage(
+                index: index,
+                tuChongItem: tuChongItem,
+                knowImageSize: true,
+              );
+            },
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: tuChongItem.images.length.clamp(1, maxPicGridViewCount),
+          ),
         ),
       );
     });

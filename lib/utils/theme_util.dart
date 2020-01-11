@@ -12,4 +12,6 @@ class ThemeUtil {
   static var backgroundDarkColor = Colors.grey.shade900;
   @Deprecated("Use [Colors.grey.shade50]")
   static var backgroundLightColor = Colors.grey.shade50;
+
+  static var clipRRectBorderRadius = BorderRadius.circular(8.0);
 }

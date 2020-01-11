@@ -4,9 +4,9 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:share/share.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
 import 'package:social_project/ui/page/photo_view.dart';
-import 'package:social_project/utils/theme_util.dart';
 
 /// For [PhotoViewDemo]
 class ItemBuilder {
@@ -88,85 +88,86 @@ class ItemBuilder {
 //  }
 }
 
-Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index) {
-  final double fontSize = 12.0;
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      AspectRatio(
-        aspectRatio: item.imageSize.width / item.imageSize.height,
-        child: Stack(
-          children: <Widget>[
-            ExtendedImage.network(
-              item.imageUrl,
-              shape: BoxShape.rectangle,
-              border:
-                  Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-              loadStateChanged: (value) {
-                if (value.extendedImageLoadState == LoadState.loading) {
-                  return Container(
-                    alignment: Alignment.center,
-                    color: Colors.grey.withOpacity(0.8),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.0,
-                      valueColor:
-                          AlwaysStoppedAnimation(Theme.of(c).primaryColor),
-                    ),
-                  );
-                }
-                return null;
-              },
-            ),
-            Positioned(
-              top: 5.0,
-              right: 5.0,
-              child: Container(
-                padding: EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.6),
-                  border: Border.all(
-                      color: Colors.grey.withOpacity(0.4), width: 1.0),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5.0),
-                  ),
-                ),
-                child: Text(
-                  "${index + 1}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: fontSize, color: Colors.white),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-      SizedBox(
-        height: 5.0,
-      ),
-      buildTagsWidget(item),
-      SizedBox(
-        height: 5.0,
-      ),
-      buildBottomWidget(item),
-    ],
-  );
-}
+//Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index) {
+//  final double fontSize = 12.0;
+//  return Column(
+//    crossAxisAlignment: CrossAxisAlignment.start,
+//    children: <Widget>[
+//      AspectRatio(
+//        aspectRatio: item.imageSize.width / item.imageSize.height,
+//        child: Stack(
+//          children: <Widget>[
+//            ExtendedImage.network(
+//              item.imageUrl,
+//              shape: BoxShape.rectangle,
+//              border:
+//                  Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
+//              borderRadius: BorderRadius.all(
+//                Radius.circular(10.0),
+//              ),
+//              loadStateChanged: (value) {
+//                if (value.extendedImageLoadState == LoadState.loading) {
+//                  return Container(
+//                    alignment: Alignment.center,
+//                    color: Colors.grey.withOpacity(0.8),
+//                    child: CircularProgressIndicator(
+//                      strokeWidth: 2.0,
+//                      valueColor:
+//                          AlwaysStoppedAnimation(Theme.of(c).primaryColor),
+//                    ),
+//                  );
+//                }
+//                return null;
+//              },
+//            ),
+//            Positioned(
+//              top: 5.0,
+//              right: 5.0,
+//              child: Container(
+//                padding: EdgeInsets.all(3.0),
+//                decoration: BoxDecoration(
+//                  color: Colors.grey.withOpacity(0.6),
+//                  border: Border.all(
+//                      color: Colors.grey.withOpacity(0.4), width: 1.0),
+//                  borderRadius: BorderRadius.all(
+//                    Radius.circular(5.0),
+//                  ),
+//                ),
+//                child: Text(
+//                  "${index + 1}",
+//                  textAlign: TextAlign.center,
+//                  style: TextStyle(fontSize: fontSize, color: Colors.white),
+//                ),
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//      SizedBox(
+//        height: 5.0,
+//      ),
+//      buildTagsWidget(item),
+//      SizedBox(
+//        height: 5.0,
+//      ),
+//      buildBottomWidget(item),
+//    ],
+//  );
+//}
 
 /// 标签
-Widget buildTagsWidget(TuChongItem item) {
+Widget buildTagsWidget(TuChongItem item, BuildContext context) {
   final fontSize = 12.0;
   return Wrap(
       runSpacing: 5.0,
       spacing: 5.0,
       children: item.tags.map<Widget>((tag) {
-        final color = item.tagColors[item.tags.indexOf(tag)];
+        // TODO: 是否需要标签颜色
+//        final color = item.tagColors[item.tags.indexOf(tag)];
         return Container(
           padding: EdgeInsets.all(3.0),
           decoration: BoxDecoration(
-            color: color,
+            color: Theme.of(context).backgroundColor,
             border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
             borderRadius: BorderRadius.all(
               Radius.circular(5.0),
@@ -174,12 +175,8 @@ Widget buildTagsWidget(TuChongItem item) {
           ),
           child: Text(
             tag,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-                fontSize: fontSize,
-                color: color.computeLuminance() < 0.5
-                    ? Colors.white
-                    : Colors.black),
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: fontSize),
           ),
         );
       }).toList());
@@ -261,6 +258,67 @@ Widget buildBottomWidget(TuChongItem item, {bool showAvatar = true}) {
             : LikeCountAnimationType.none,
         onTap: (bool isLiked) {
           return onLikeButtonTap(isLiked, item);
+        },
+      ),
+      SizedBox(
+        width: 20.0,
+      ),
+      LikeButton(
+        likeCount: 999,
+        countBuilder: (int count, bool clicked, String text) {
+          var color = clicked ? Colors.blue : Colors.grey;
+          Widget result;
+          if (count == 0) {
+            result = Text(
+              "Retweet",
+              style: TextStyle(color: color, fontSize: fontSize),
+            );
+          } else
+            result = Text(
+              count >= 1000 ? (count / 1000.0).toStringAsFixed(1) + "k" : text,
+              style: TextStyle(color: color, fontSize: fontSize),
+            );
+          return result;
+        },
+        likeBuilder: (bool isClicked) {
+          return Icon(
+            FontAwesomeIcons.retweet,
+            color: isClicked ? Colors.deepOrange : Colors.grey,
+            size: iconSize,
+          );
+        },
+      ),
+      SizedBox(
+        width: 20.0,
+      ),
+      LikeButton(
+        likeCount: 999,
+        countBuilder: (int count, bool clicked, String text) {
+          var color = clicked ? Colors.blue : Colors.grey;
+          Widget result;
+          if (count == 0) {
+            result = Text(
+              "Share",
+              style: TextStyle(color: color, fontSize: fontSize),
+            );
+          } else
+            result = Text(
+              count >= 1000 ? (count / 1000.0).toStringAsFixed(1) + "k" : text,
+              style: TextStyle(color: color, fontSize: fontSize),
+            );
+          return result;
+        },
+        onTap: (bool val) {
+          //TODO: Share库 支持平台问题
+          Share.share("This is a test action by Social Project");
+          return Future.value(true);
+        },
+        likeBuilder: (bool isClicked) {
+          return Icon(
+            FontAwesomeIcons.share,
+            color: isClicked ? Colors.blue : Colors.grey,
+            size: iconSize,
+          );
         },
       ),
     ],

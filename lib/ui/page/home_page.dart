@@ -32,8 +32,8 @@ class _IndexState extends State<HomePage> {
       NavBarItemData("Home", OMIcons.home, 110, Color(0xff01b87d)),
       NavBarItemData("Search", OMIcons.search, 110, Color(0xff594ccf)),
       NavBarItemData("Message", OMIcons.message, 115, Color(0xff09a8d9)),
-      NavBarItemData("Profile", OMIcons.person, 100, Color(0xffcf4c7a)),
       NavBarItemData("Saved", OMIcons.save, 105, Color(0xfff2873f)),
+      NavBarItemData("Profile", OMIcons.person, 100, Color(0xffcf4c7a)),
     ];
 
     //Create the views which will be mapped to the indices for our nav btns
@@ -41,8 +41,8 @@ class _IndexState extends State<HomePage> {
       ContentPage(),
       GalleryPage(),
       SampleHomePage(),
-      LoginTwoPage(),
       SampleSavePage(),
+      LoginTwoPage(),
     ];
 
     super.initState();

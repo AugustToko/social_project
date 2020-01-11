@@ -46,7 +46,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       children: <Widget>[
         LikeButton(
           likeCount: 999,
-          onTap: (bool val){
+          onTap: (bool val) {
             Navigator.pushNamed(
               context,
               UIData.sendPage,
@@ -77,7 +77,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         ),
         LikeButton(
           likeCount: 999,
-          onTap: (bool val){
+          onTap: (bool val) {
             //TODO: Share库 支持平台问题
             Share.share("This is a test action by Social Project");
             return Future.value(true);
@@ -110,12 +110,6 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                     RichText(
                       maxLines: 1,
                       text: TextSpan(children: [
-                        // 无法自动适应颜色模式切换
-//                        TextSpan(
-//                            text: "${post.personName}  ",
-//                            style: App.isDarkMode(context)
-//                                ? ThemeUtil.textDark
-//                                : ThemeUtil.textLight),
                         TextSpan(
                             text: "@${post.address} · ",
                             style: ThemeUtil.subtitle),
@@ -223,10 +217,12 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   /// 通用组件
   Widget _uCard(final Widget child, {bool overrideClick = false}) {
     List<Widget> widgets = [];
-    widgets.add(ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: child,
-    ));
+    widgets.add(
+      ClipRRect(
+        borderRadius: ThemeUtil.clipRRectBorderRadius,
+        child: child,
+      ),
+    );
 
     if (overrideClick) {
       // TODO: 可否使用 {Ink.image} ?

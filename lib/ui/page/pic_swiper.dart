@@ -39,7 +39,7 @@ class _PicSwiperState extends State<PicSwiper>
 //
 //    return _cancelToken;
 //  }
-  List<double> doubleTapScales = <double>[1.0, 2.0];
+  final List<double> doubleTapScales = <double>[1.0, 2.0];
   GlobalKey<ExtendedImageSlidePageState> slidePagekey =
       GlobalKey<ExtendedImageSlidePageState>();
   int currentIndex;
@@ -245,7 +245,7 @@ class MySwiperPlugin extends StatelessWidget {
           child: Container(
             height: 50.0,
             width: double.infinity,
-            color: Colors.grey.withOpacity(0.2),
+            color: Theme.of(context).backgroundColor,
             child: Row(
               children: <Widget>[
                 Container(

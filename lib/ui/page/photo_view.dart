@@ -4,11 +4,11 @@
 ///
 
 import 'dart:async';
-import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:loading_more_list/loading_more_list.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
 import 'package:social_project/misc/photo_view_page_item_builder.dart';
@@ -18,6 +18,8 @@ import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
 import 'package:social_project/utils/screen_util.dart';
+import 'package:social_project/utils/theme_util.dart';
+import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:ff_annotation_route/ff_annotation_route.dart';
@@ -33,9 +35,11 @@ class PhotoViewDemo extends StatefulWidget {
 
 class _PhotoViewDemoState extends State<PhotoViewDemo> {
   MyExtendedMaterialTextSelectionControls
-      _myExtendedMaterialTextSelectionControls;
-  final String _attachContent =
-      "[love]Extended text help you to build rich text quickly. any special text you will have with extended text.It's my pleasure to invite you to join \$FlutterCandies\$ if you want to improve flutter .[love] if you meet any problem, please let me konw @zmtzawqlp .[sun_glasses]";
+  _myExtendedMaterialTextSelectionControls;
+
+  /// TODO: Sample Text, 演示富文本使用方法
+//  final String _attachContent =
+//      "[love]Extended text help you to build rich text quickly. any special text you will have with extended text.It's my pleasure to invite you to join \$FlutterCandies\$ if you want to improve flutter .[love] if you meet any problem, please let me konw @zmtzawqlp .[sun_glasses]";
 
   @override
   void initState() {
@@ -98,8 +102,9 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                           title = "Image$index";
                         }
 
+                        // 内容文本
                         var content = item.content ?? (item.excerpt ?? title);
-                        content += this._attachContent;
+//                        content += this._attachContent;
 
                         return Card(
                           child: Column(
@@ -111,35 +116,26 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                 child: Row(
                                   children: <Widget>[
                                     // 头像
-                                    ExtendedImage.network(
-                                      item.avatarUrl,
-                                      width: 40.0,
-                                      height: 40.0,
-                                      shape: BoxShape.circle,
-                                      //enableLoadState: false,
-                                      border: Border.all(
-                                          color: Colors.grey.withOpacity(0.4),
-                                          width: 1.0),
-                                      loadStateChanged: (state) {
-                                        if (state.extendedImageLoadState ==
-                                            LoadState.completed) {
-                                          return null;
-                                        }
-                                        return Image.asset("assets/avatar.jpg");
-                                      },
-                                    ),
+                                    avatar(item.avatarUrl),
                                     SizedBox(
                                       width: margin,
                                     ),
                                     // 用户名
-                                    Text(
-                                      title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil.instance.setSp(34),
-                                      ),
-                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text("$title  "),
+                                        RichText(
+                                          maxLines: 1,
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                                text: "@Location · ",
+                                                style: ThemeUtil.subtitle),
+                                            TextSpan(
+                                                text: "${item.passedTime}", style: ThemeUtil.subtitle)
+                                          ]),
+                                        )
+                                      ],
+                                    )
                                   ],
                                 ),
                               ),
@@ -148,19 +144,20 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                   content,
                                   // 文本点击
                                   onSpecialTextTap: (dynamic parameter) {
+                                    print("content text  clicked!");
                                     if (parameter.startsWith("\$")) {
-                                      launch(
-                                          "https://github.com/fluttercandies");
+                                      showToast("Special text '\$' clicked.", position: ToastPosition.bottom);
+
                                     } else if (parameter.startsWith("@")) {
-                                      launch("mailto:zmtzawqlp@live.com");
+                                      showToast("Special text '@' clicked.", position: ToastPosition.bottom);
                                     }
                                   },
                                   specialTextSpanBuilder:
-                                      MySpecialTextSpanBuilder(),
+                                  MySpecialTextSpanBuilder(),
                                   //overflow: ExtendedTextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: ScreenUtil.instance.setSp(28),
-                                      color: Colors.grey),
+//                                  style: TextStyle(
+//                                      fontSize: ScreenUtil.instance.setSp(28),
+//                                      color: Colors.grey),
                                   maxLines: 10,
                                   overflow: TextOverflow.ellipsis,
                                   overFlowTextSpan: OverFlowTextSpan(
@@ -174,13 +171,14 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
                                               launch(
-                                                  "https://github.com/fluttercandies/extended_text");
+                                                "https://github.com/fluttercandies/extended_text",
+                                              );
                                             })
                                     ],
                                   ),
                                   selectionEnabled: true,
                                   textSelectionControls:
-                                      _myExtendedMaterialTextSelectionControls,
+                                  _myExtendedMaterialTextSelectionControls,
                                 ),
                                 padding: EdgeInsets.only(
                                   left: margin,
@@ -191,8 +189,8 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                               // 标签
                               Padding(
                                 padding:
-                                    EdgeInsets.symmetric(horizontal: margin),
-                                child: buildTagsWidget(item),
+                                EdgeInsets.symmetric(horizontal: margin),
+                                child: buildTagsWidget(item, context),
                               ),
                               // 图片区域
 //                              ClipRRect(
@@ -206,7 +204,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                                 child:
-                                    buildBottomWidget(item, showAvatar: false),
+                                buildBottomWidget(item, showAvatar: false),
                               ),
                               SizedBox(
                                 height: margin,
@@ -257,5 +255,54 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
     return listSourceRepository.refresh().whenComplete(() {
       dateTimeNow = DateTime.now();
     });
+  }
+
+  avatar(String url) {
+    return Stack(
+      children: <Widget>[
+        CircleAvatar(
+            radius: 25.0,
+            backgroundImage: NetworkImage(
+              url,
+            )),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                    context, UIData.profile);
+              },
+              customBorder: CircleBorder(),
+            ),
+          ),
+        ),
+      ],
+    );
+//                                    InkWell(
+//                                      onTap: () {
+//                                        Navigator.pushNamed(
+//                                            context, UIData.profile);
+//                                      },
+//                                      child: ExtendedImage.network(
+//                                        item.avatarUrl,
+//                                        width: 40.0,
+//                                        height: 40.0,
+//                                        shape: BoxShape.circle,
+//                                        //enableLoadState: false,
+//                                        border: Border.all(
+//                                            color: Colors.grey.withOpacity(0.4),
+//                                            width: 1.0),
+//                                        loadStateChanged: (state) {
+//                                          if (state.extendedImageLoadState ==
+//                                              LoadState.completed) {
+//                                            return null;
+//                                          }
+//                                          return Image.asset(
+//                                            "assets/avatar.jpg",
+//                                          );
+//                                        },
+//                                      ),
+//                                    ),
   }
 }
