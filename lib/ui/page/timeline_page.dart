@@ -225,18 +225,20 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       ),
     );
 
-    // TODO: 可否使用 {Ink.image} ?
-    // 在图像上使用水波
-    widgets.add(Positioned.fill(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          customBorder:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+    if (onTap != null) {
+      // TODO: 可否使用 {Ink.image} ?
+      // 在图像上使用水波
+      widgets.add(Positioned.fill(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            customBorder:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          ),
         ),
-      ),
-    ));
+      ));
+    }
 
     return Material(
       color: Colors.transparent,

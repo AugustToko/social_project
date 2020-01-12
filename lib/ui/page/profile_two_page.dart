@@ -8,12 +8,10 @@ class ProfileTwoPage extends StatelessWidget {
   Widget profileHeader() => Container(
         height: deviceSize.height / 4,
         width: double.infinity,
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            color: Colors.black,
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
             child: FittedBox(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -30,11 +28,10 @@ class ProfileTwoPage extends StatelessWidget {
                   ),
                   Text(
                     "Pawan Kumar",
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: TextStyle(fontSize: 20.0),
                   ),
                   Text(
                     "Flutter Developer",
-                    style: TextStyle(color: Colors.white),
                   )
                 ],
               ),
@@ -42,6 +39,7 @@ class ProfileTwoPage extends StatelessWidget {
           ),
         ),
       );
+
   Widget imagesCard() => Container(
         height: deviceSize.height / 6,
         child: Padding(
@@ -62,10 +60,10 @@ class ProfileTwoPage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
                     itemBuilder: (context, i) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                              "https://cdn.pixabay.com/photo/2016/10/31/18/14/ice-1786311_960_720.jpg"),
-                        ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(
+                          "https://cdn.pixabay.com/photo/2016/10/31/18/14/ice-1786311_960_720.jpg"),
+                    ),
                   ),
                 ),
               ),
@@ -135,12 +133,17 @@ class ProfileTwoPage extends StatelessWidget {
           ),
         ),
       );
+
   Widget bodyData() => SingleChildScrollView(
         child: Column(
           children: <Widget>[
             profileHeader(),
             followColumn(deviceSize),
             imagesCard(),
+            postCard(),
+            postCard(),
+            postCard(),
+            postCard(),
             postCard(),
           ],
         ),

@@ -109,6 +109,8 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                         return Card(
                           child: InkWell(
                             onTap: () {
+                              Navigator.pushNamed(
+                                  context, UIData.commentDetail);
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,

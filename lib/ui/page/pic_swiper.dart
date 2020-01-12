@@ -40,7 +40,7 @@ class _PicSwiperState extends State<PicSwiper>
 //    return _cancelToken;
 //  }
   final List<double> doubleTapScales = <double>[1.0, 2.0];
-  GlobalKey<ExtendedImageSlidePageState> slidePagekey =
+  GlobalKey<ExtendedImageSlidePageState> slidePageKey =
       GlobalKey<ExtendedImageSlidePageState>();
   int currentIndex;
   bool _showSwiper = true;
@@ -164,7 +164,7 @@ class _PicSwiperState extends State<PicSwiper>
                 image = GestureDetector(
                   child: image,
                   onTap: () {
-                    slidePagekey.currentState.popPage();
+                    slidePageKey.currentState.popPage();
                     Navigator.pop(context);
                   },
                 );
@@ -205,7 +205,7 @@ class _PicSwiperState extends State<PicSwiper>
         ));
 
     result = ExtendedImageSlidePage(
-      key: slidePagekey,
+      key: slidePageKey,
       child: result,
       slideAxis: SlideAxis.both,
       slideType: SlideType.onlyImage,
