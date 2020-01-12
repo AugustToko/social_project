@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:social_project/ui/page/content_page.dart';
+import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
 import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/sample/content/gallery_page.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
@@ -39,7 +40,7 @@ class _IndexState extends State<HomePage> {
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
       ContentPage(),
-      GalleryPage(),
+      DashboardOnePage(),
       SampleHomePage(),
       SampleSavePage(),
       LoginTwoPage(),

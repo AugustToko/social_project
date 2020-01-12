@@ -35,7 +35,8 @@ class UserAccountDrawer extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, App.login ? UIData.profile : UIData.login);
+                            Navigator.pushNamed(context,
+                                App.login ? UIData.profile : UIData.login);
                           },
                           customBorder: CircleBorder(),
                         ),
@@ -137,6 +138,15 @@ class UserAccountDrawer extends StatelessWidget {
                   leading: new CircleAvatar(child: new Text("B")),
                   title: new Text('Drawer item B'),
                   onTap: () => {},
+                ),
+              ),
+              new ClipRect(
+                child: new ListTile(
+                  leading: new CircleAvatar(child: new Text("S")),
+                  title: new Text('Settings'),
+                  onTap: () {
+                    Navigator.pushNamed(context, UIData.settingsPage);
+                  },
                 ),
               ),
               new ListTile(

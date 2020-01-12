@@ -55,6 +55,7 @@ class App extends StatelessWidget {
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.grey.shade50,
     ),
+    iconTheme: IconThemeData(color: Colors.white)
   );
 
   /// 深色主题
@@ -82,6 +83,7 @@ class App extends StatelessWidget {
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.grey.shade900,
     ),
+      iconTheme: IconThemeData(color: Colors.black)
   );
 
   // This widget is the root of your application.
