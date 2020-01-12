@@ -164,7 +164,7 @@ Widget buildTagsWidget(TuChongItem item, BuildContext context) {
       children: item.tags.map<Widget>((tag) {
         // TODO: 是否需要标签颜色
 //        final color = item.tagColors[item.tags.indexOf(tag)];
-        return Container(
+        return Stack(children: <Widget>[Container(
           padding: EdgeInsets.all(3.0),
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
@@ -178,7 +178,18 @@ Widget buildTagsWidget(TuChongItem item, BuildContext context) {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: fontSize),
           ),
-        );
+        ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  // TODO: 标签按下
+                },
+              ),
+            ),
+          ),
+        ],);
       }).toList());
 }
 

@@ -142,7 +142,7 @@ class _ContentCardState extends State<ContentCard> {
               SharedPreferenceUtil.setBool(
                       SharedPrefsKeys.IS_FIRST_ENTER_APP, false)
                   .whenComplete(() {
-                Navigator.pushReplacementNamed(context, UIData.timeLine);
+                Navigator.pushReplacementNamed(context, UIData.homeRoute);
               });
             },
           ),

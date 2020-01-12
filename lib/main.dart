@@ -6,15 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker_saver/image_picker_saver.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
-import 'package:social_project/ui/page/comment_deatil_page.dart';
-import 'package:social_project/ui/page/gooey_edge_page.dart';
-import 'package:social_project/ui/page/home_page.dart';
-import 'package:social_project/ui/page/login_two_page.dart';
 import 'package:social_project/ui/page/no_route.dart';
-import 'package:social_project/ui/page/profile_two_page.dart';
 import 'package:social_project/ui/page/splash_page.dart';
-import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/screen_util.dart';
@@ -144,9 +137,9 @@ class App extends StatelessWidget {
             case PageRouteType.transparent:
               return Platform.isIOS
                   ? TransparentCupertinoPageRoute(
-                  settings: settings, builder: (c) => page)
+                      settings: settings, builder: (c) => page)
                   : TransparentMaterialPageRoute(
-                  settings: settings, builder: (c) => page);
+                      settings: settings, builder: (c) => page);
 //            return FFTransparentPageRoute(
 //                settings: settings,
 //                pageBuilder: (BuildContext context, Animation<double> animation,
@@ -170,6 +163,7 @@ class App extends StatelessWidget {
     return Theme.of(context).brightness == Brightness.dark;
   }
 
+  /// 退出 APP
   static Future<void> pop() async {
     await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }

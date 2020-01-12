@@ -112,7 +112,7 @@ class _TabBarState extends State<TabBarWidgetPage>
         title: Text("Social Project"),
         bottom: TabBar(
           tabs: <Tab>[
-            Tab(text: "Time line"),
+            Tab(text: "Featured"),
             Tab(text: "TuChong"),
 
             Tab(text: "Time line 3"),

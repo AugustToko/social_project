@@ -37,10 +37,9 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.cryptostudio.social_project"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion  28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,6 +52,37 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    // TODO: Hide key
+    signingConfigs {
+        release4googleplay {
+            storeFile file('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\as\\chenlongcould4googleplay.jks')
+            storePassword '18551348272Chen'
+            keyAlias = 'chenlongcloud'
+            keyPassword '18551348272Chen'
+        }
+
+//        release {
+//            Properties properties = getProperties('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\keystore.properties')
+//            storeFile file('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\as\\chenlongcould.jks')
+//            keyAlias getProperty(properties, 'keyAlias')
+//            storePassword getProperty(properties, 'storePassword')
+//            keyPassword getProperty(properties, 'keyPassword')
+//        }
+
+//        release4GooglePlay {
+//            Properties properties = getProperties('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\keystore.properties')
+//            storeFile file('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\as\\chenlongcould4googleplay.jks')
+//            keyAlias getProperty(properties, 'keyAlias')
+//            storePassword getProperty(properties, 'storePassword')
+//            keyPassword getProperty(properties, 'keyPassword')
+//        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    buildToolsVersion = '29.0.2'
 }
 
 flutter {
@@ -62,6 +92,6 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

@@ -31,7 +31,8 @@ class TuChongSource {
 
     for (var feedListItem in feedList == null ? [] : jsonRes['feedList']) {
       feedList.add(
-          feedListItem == null ? null : new TuChongItem.fromJson(feedListItem));
+        feedListItem == null ? null : new TuChongItem.fromJson(feedListItem),
+      );
     }
   }
 

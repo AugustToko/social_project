@@ -171,7 +171,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
 
   Widget _buildVideoCard(final Post post) {
     final videoPlayerController = VideoPlayerController.network(
-        'https://blog.geek-cloud.top/wp-content/uploads/2017/07/01.mp4');
+        'https://static.weiran.org.cn/video/Stellarium%20%E6%BC%94%E7%A4%BA%E5%9B%9B%E6%98%9F%E8%BF%9E%E7%8F%A0.mp4');
 
     final chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
@@ -187,7 +187,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       controller: chewieController,
     );
 
-    return _uCard(playerWidget);
+    return _uCard(playerWidget, null);
   }
 
   Widget _buildAudioCard(final Post post) {
@@ -210,12 +210,13 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           scale: 0.5,
           clearMemoryCacheIfFailed: true,
           //cancelToken: cancellationToken,
-        ),
-        overrideClick: false);
+        ), () {
+      _showAlertDialog();
+    });
   }
 
   /// 通用组件
-  Widget _uCard(final Widget child, {bool overrideClick = false}) {
+  Widget _uCard(final Widget child, GestureTapCallback onTap) {
     List<Widget> widgets = [];
     widgets.add(
       ClipRRect(
@@ -224,22 +225,18 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
       ),
     );
 
-    if (overrideClick) {
-      // TODO: 可否使用 {Ink.image} ?
-      // 在图像上使用水波
-      widgets.add(Positioned.fill(
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              _showAlertDialog();
-            },
-            customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0)),
-          ),
+    // TODO: 可否使用 {Ink.image} ?
+    // 在图像上使用水波
+    widgets.add(Positioned.fill(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          customBorder:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         ),
-      ));
-    }
+      ),
+    ));
 
     return Material(
       color: Colors.transparent,
@@ -289,7 +286,9 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, UIData.profile);
+                                        context,
+                                        UIData.profile,
+                                      );
                                     },
                                     customBorder: CircleBorder(),
                                   ),

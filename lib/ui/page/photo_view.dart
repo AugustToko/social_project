@@ -35,7 +35,7 @@ class PhotoViewDemo extends StatefulWidget {
 
 class _PhotoViewDemoState extends State<PhotoViewDemo> {
   MyExtendedMaterialTextSelectionControls
-  _myExtendedMaterialTextSelectionControls;
+      _myExtendedMaterialTextSelectionControls;
 
   /// TODO: Sample Text, 演示富文本使用方法
 //  final String _attachContent =
@@ -107,109 +107,109 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
 //                        content += this._attachContent;
 
                         return Card(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(margin),
-                                child: Row(
-                                  children: <Widget>[
-                                    // 头像
-                                    avatar(item.avatarUrl),
-                                    SizedBox(
-                                      width: margin,
-                                    ),
-                                    // 用户名
-                                    Row(
-                                      children: <Widget>[
-                                        Text("$title  "),
-                                        RichText(
-                                          maxLines: 1,
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "@Location · ",
-                                                style: ThemeUtil.subtitle),
-                                            TextSpan(
-                                                text: "${item.passedTime}", style: ThemeUtil.subtitle)
-                                          ]),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                          child: InkWell(
+                            onTap: () {
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(margin),
+                                  child: Row(
+                                    children: <Widget>[
+                                      // 头像
+                                      avatar(item.avatarUrl),
+                                      SizedBox(
+                                        width: margin,
+                                      ),
+                                      // TODO: 超出屏幕宽度
+                                      // 用户名
+                                      Row(
+                                        children: <Widget>[
+                                          Text("$title  "),
+                                          RichText(
+                                            maxLines: 1,
+                                            text: TextSpan(children: [
+                                              TextSpan(
+                                                  text: "@Location · ",
+                                                  style: ThemeUtil.subtitle),
+                                              TextSpan(
+                                                  text: "${item.passedTime}",
+                                                  style: ThemeUtil.subtitle)
+                                            ]),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                child: ExtendedText(
-                                  content,
-                                  // 文本点击
-                                  onSpecialTextTap: (dynamic parameter) {
-                                    print("content text  clicked!");
-                                    if (parameter.startsWith("\$")) {
-                                      showToast("Special text '\$' clicked.", position: ToastPosition.bottom);
-
-                                    } else if (parameter.startsWith("@")) {
-                                      showToast("Special text '@' clicked.", position: ToastPosition.bottom);
-                                    }
-                                  },
-                                  specialTextSpanBuilder:
-                                  MySpecialTextSpanBuilder(),
-                                  //overflow: ExtendedTextOverflow.ellipsis,
+                                Padding(
+                                  child: ExtendedText(
+                                    content,
+                                    // 文本点击
+                                    onSpecialTextTap: (dynamic parameter) {
+                                      print("content text  clicked!");
+                                      if (parameter.startsWith("\$")) {
+                                        showToast("Special text '\$' clicked.",
+                                            position: ToastPosition.bottom);
+                                      } else if (parameter.startsWith("@")) {
+                                        showToast("Special text '@' clicked.",
+                                            position: ToastPosition.bottom);
+                                      }
+                                    },
+                                    specialTextSpanBuilder:
+                                        MySpecialTextSpanBuilder(),
+                                    //overflow: ExtendedTextOverflow.ellipsis,
 //                                  style: TextStyle(
 //                                      fontSize: ScreenUtil.instance.setSp(28),
 //                                      color: Colors.grey),
-                                  maxLines: 10,
-                                  overflow: TextOverflow.ellipsis,
-                                  overFlowTextSpan: OverFlowTextSpan(
-                                    children: <TextSpan>[
-                                      TextSpan(text: '  \u2026  '),
-                                      TextSpan(
-                                          text: "more detail",
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              launch(
-                                                "https://github.com/fluttercandies/extended_text",
-                                              );
-                                            })
-                                    ],
+                                    maxLines: 10,
+                                    overflow: TextOverflow.ellipsis,
+                                    overFlowTextSpan: OverFlowTextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(text: '  \u2026  '),
+                                        TextSpan(
+                                            text: "more detail",
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                launch(
+                                                  "https://github.com/fluttercandies/extended_text",
+                                                );
+                                              })
+                                      ],
+                                    ),
+                                    selectionEnabled: true,
+                                    textSelectionControls:
+                                        _myExtendedMaterialTextSelectionControls,
                                   ),
-                                  selectionEnabled: true,
-                                  textSelectionControls:
-                                  _myExtendedMaterialTextSelectionControls,
+                                  padding: EdgeInsets.only(
+                                    left: margin,
+                                    right: margin,
+                                    bottom: margin,
+                                  ),
                                 ),
-                                padding: EdgeInsets.only(
-                                  left: margin,
-                                  right: margin,
-                                  bottom: margin,
+                                // 标签
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: margin),
+                                  child: buildTagsWidget(item, context),
                                 ),
-                              ),
-                              // 标签
-                              Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: margin),
-                                child: buildTagsWidget(item, context),
-                              ),
-                              // 图片区域
-//                              ClipRRect(
-//                                borderRadius: BorderRadius.circular(8.0),
-//                                child:
-                              PicGridView(
-                                tuChongItem: item,
-                              ),
-//                              ),
-                              // 操作按钮区域
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child:
-                                buildBottomWidget(item, showAvatar: false),
-                              ),
-                              SizedBox(
-                                height: margin,
-                              ),
-                            ],
+                                // 图片区域
+                                PicGridView(
+                                  tuChongItem: item,
+                                ),
+                                // 操作按钮区域
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
+                                  child: buildBottomWidget(item,
+                                      showAvatar: false),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -270,8 +270,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(
-                    context, UIData.profile);
+                Navigator.pushNamed(context, UIData.profile);
               },
               customBorder: CircleBorder(),
             ),
