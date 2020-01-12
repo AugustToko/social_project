@@ -58,6 +58,9 @@ class UIData {
   // 开发者名称
   static const String developerName = "Crypto Studio";
 
+  /// 开发者头像
+  static const String developerAvatar = "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4";
+
   /// 开发者邮箱
   static const String developerEmail = "1461796308@qq.com";
 
@@ -110,6 +113,7 @@ class UIData {
     Colors.blueGrey.shade800,
     Colors.black87,
   ];
+
   static List<Color> kitGradients2 = [
     Colors.cyan.shade600,
     Colors.blue.shade900

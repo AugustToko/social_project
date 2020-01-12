@@ -9,41 +9,39 @@ import 'package:social_project/utils/uidata.dart';
 import 'dashboard_menu_row.dart';
 
 class DashboardOnePage extends StatelessWidget {
-  Size deviceSize;
-
   Widget appBarColumn(BuildContext context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
           child: new Column(
             children: <Widget>[
               new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new IconButton(
-                    icon: new Icon(
-                      defaultTargetPlatform == TargetPlatform.android
-                          ? Icons.arrow_back
-                          : Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => Navigator.canPop(context)
-                        ? Navigator.pop(context)
-                        : null,
-                  ),
+//                  new IconButton(
+//                    icon: new Icon(
+//                      defaultTargetPlatform == TargetPlatform.android
+//                          ? Icons.arrow_back
+//                          : Icons.arrow_back_ios,
+//                      color: Colors.white,
+//                    ),
+//                    onPressed: () => Navigator.canPop(context)
+//                        ? Navigator.pop(context)
+//                        : null,
+//                  ),
                   ProfileTile(
                     title: "Hi, User",
                     subtitle: "Welcome to the Social Project",
                     textColor: Colors.white,
                   ),
-                  new IconButton(
-                    icon: new Icon(
-                      Icons.more_vert,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      print("hi");
-                    },
-                  )
+//                  new IconButton(
+//                    icon: new Icon(
+//                      Icons.more_vert,
+//                      color: Colors.white,
+//                    ),
+//                    onPressed: () {
+//                      print("hi");
+//                    },
+//                  )
                 ],
               ),
             ],
@@ -202,11 +200,11 @@ class DashboardOnePage extends StatelessWidget {
           children: <Widget>[
             appBarColumn(context),
             SizedBox(
-              height: deviceSize.height * 0.01,
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             searchCard(context),
             SizedBox(
-              height: deviceSize.height * 0.01,
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             actionMenuCard(),
 //            SizedBox(
@@ -219,7 +217,6 @@ class DashboardOnePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,

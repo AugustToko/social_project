@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -7,6 +8,7 @@ import 'about_tile.dart';
 
 /// 显示用户账户的 Drawer
 class UserAccountDrawer extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -46,9 +48,12 @@ class UserAccountDrawer extends StatelessWidget {
                 ),
                 // 箭头同标题颜色
                 arrowColor: Theme.of(context).textTheme.title.color,
-                onDetailsPressed: () {
-                  LogUtils.d("onDetailsPressed", "");
-                },
+//                onDetailsPressed: () {
+//                  showMenu<String>(
+//                      context: context,
+//                      position: RelativeRect.fromLTRB(0, 0, 0, 0),
+//                      items: [PopupMenuItem(child: Text("Menu"))]);
+//                },
                 otherAccountsPictures: <Widget>[
                   Stack(
                     children: <Widget>[
@@ -112,44 +117,44 @@ class UserAccountDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-              new ClipRect(
-                child: new ListTile(
-                  leading: new CircleAvatar(child: new Text("A")),
-                  title: new Text('Drawer item A'),
+              ClipRect(
+                child: ListTile(
+                  leading: CircleAvatar(child: Text("A")),
+                  title: Text('Drawer item A'),
                   onTap: () => {},
                 ),
               ),
-              new ClipRect(
-                child: new ListTile(
-                  leading: new CircleAvatar(child: new Text("B")),
-                  title: new Text('Drawer item B'),
+              ClipRect(
+                child: ListTile(
+                  leading: CircleAvatar(child: Text("B")),
+                  title: Text('Drawer item B'),
                   onTap: () => {},
                 ),
               ),
-              new ClipRect(
-                child: new ListTile(
-                  leading: new CircleAvatar(child: new Text("B")),
-                  title: new Text('Drawer item B'),
+              ClipRect(
+                child: ListTile(
+                  leading: CircleAvatar(child: Text("B")),
+                  title: Text('Drawer item B'),
                   onTap: () => {},
                 ),
               ),
-              new ClipRect(
-                child: new ListTile(
-                  leading: new CircleAvatar(child: new Text("B")),
-                  title: new Text('Drawer item B'),
+              ClipRect(
+                child: ListTile(
+                  leading: CircleAvatar(child: Text("B")),
+                  title: Text('Drawer item B'),
                   onTap: () => {},
                 ),
               ),
-              new ClipRect(
-                child: new ListTile(
-                  leading: new CircleAvatar(child: new Text("S")),
-                  title: new Text('Settings'),
+              ClipRect(
+                child: ListTile(
+                  leading: CircleAvatar(child: Text("S")),
+                  title: Text('Settings'),
                   onTap: () {
                     Navigator.pushNamed(context, UIData.settingsPage);
                   },
                 ),
               ),
-              new ListTile(
+              ListTile(
                 title: Text(
                   "Opt 1",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
@@ -158,8 +163,9 @@ class UserAccountDrawer extends StatelessWidget {
                   Icons.person,
                   color: Colors.blue,
                 ),
+                onTap: () {},
               ),
-              new ListTile(
+              ListTile(
                 title: Text(
                   "Opt 2",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
@@ -168,8 +174,9 @@ class UserAccountDrawer extends StatelessWidget {
                   Icons.shopping_cart,
                   color: Colors.green,
                 ),
+                onTap: () {},
               ),
-              new ListTile(
+              ListTile(
                 title: Text(
                   "Opt 3",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
@@ -178,8 +185,9 @@ class UserAccountDrawer extends StatelessWidget {
                   Icons.dashboard,
                   color: Colors.red,
                 ),
+                onTap: () {},
               ),
-              new ListTile(
+              ListTile(
                 title: Text(
                   "Opt 4",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
@@ -188,9 +196,10 @@ class UserAccountDrawer extends StatelessWidget {
                   Icons.timeline,
                   color: Colors.cyan,
                 ),
+                onTap: () {},
               ),
               Divider(),
-              new ListTile(
+              ListTile(
                 title: Text(
                   "Opt 5",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
@@ -199,6 +208,7 @@ class UserAccountDrawer extends StatelessWidget {
                   Icons.settings,
                   color: Colors.brown,
                 ),
+                onTap: () {},
               ),
               Divider(),
               MyAboutTile()

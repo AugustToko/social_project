@@ -97,8 +97,17 @@ class PostViewModel {
             address: "China",
             likesCount: 50,
             commentsCount: 5,
-            message:
-                "Video test...",
+            message: "Video test...",
+            personImage:
+                "https://cdn.pixabay.com/photo/2013/07/18/20/24/brad-pitt-164880_960_720.jpg",
+            postTime: "2h ago"),
+        Post(
+            postPreviewType: PostCommentType.VIDEO,
+            personName: "Geek Cloud",
+            address: "China",
+            likesCount: 50,
+            commentsCount: 5,
+            message: "Video test...",
             personImage:
                 "https://cdn.pixabay.com/photo/2013/07/18/20/24/brad-pitt-164880_960_720.jpg",
             postTime: "2h ago"),

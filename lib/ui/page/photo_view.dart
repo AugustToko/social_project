@@ -13,10 +13,12 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
 import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
+import 'package:social_project/model/menu.dart';
 import 'package:social_project/ui/widgets/pic_grid_view.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
+import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -111,6 +113,20 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, UIData.commentDetail);
+                            },
+                            onLongPress: () {
+                              BottomSheetUtil.showSheetBottom(
+                                  context,
+                                  Menu(
+                                      title: "Title",
+                                      items: [
+                                        "Menu 1",
+                                        "Menu 2",
+                                        "Menu 3",
+                                        "Menu 4",
+                                        "Menu 5",
+                                        "Menu 6",
+                                      ]));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,

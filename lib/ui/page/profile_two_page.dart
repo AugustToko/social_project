@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/profile_one_page.dart';
 import 'package:social_project/ui/widgets/common_scaffold.dart';
+import 'package:social_project/utils/uidata.dart';
 
 class ProfileTwoPage extends StatelessWidget {
   Size deviceSize;
@@ -23,11 +24,11 @@ class ProfileTwoPage extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 40.0,
                       backgroundImage: NetworkImage(
-                          "https://avatars0.githubusercontent.com/u/12619420?s=460&v=4"),
+                          UIData.developerAvatar),
                     ),
                   ),
                   Text(
-                    "Pawan Kumar",
+                    UIData.developerName,
                     style: TextStyle(fontSize: 20.0),
                   ),
                   Text(
@@ -89,7 +90,7 @@ class ProfileTwoPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Pawan Kumar posted a photo",
+                    "${UIData.developerName} posted a photo",
                   ),
                   SizedBox(
                     height: 5.0,

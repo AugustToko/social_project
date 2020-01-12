@@ -6,7 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:share/share.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
+import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/post.dart';
+import 'package:social_project/ui/widgets/about_tile.dart';
+import 'package:social_project/ui/widgets/profile_tile.dart';
+import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:video_player/video_player.dart';
@@ -14,7 +18,7 @@ import 'package:video_player/video_player.dart';
 class TimelineTwoPage extends StatefulWidget {
   @override
   TimelineTwoPageState createState() {
-    return new TimelineTwoPageState();
+    return TimelineTwoPageState();
   }
 }
 
@@ -233,8 +237,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            customBorder:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
           ),
         ),
       ));
@@ -251,7 +255,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   /// 列表
   Widget bodyList(List<Post> posts) {
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-        new GlobalKey<RefreshIndicatorState>();
+        GlobalKey<RefreshIndicatorState>();
 
     return RefreshIndicator(
       key: _refreshIndicatorKey,
@@ -266,6 +270,10 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                 child: InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, UIData.commentDetail);
+                  },
+                  onLongPress: () {
+                    BottomSheetUtil.showSheetBottom(
+                        context, Menu(title: "Title", items: ["data"]));
                   },
                   child: Container(
                     child: Padding(
