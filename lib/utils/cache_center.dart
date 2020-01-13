@@ -10,10 +10,10 @@ class CacheCenter {
 
   static WpUser getUser(int userId) {
     if (!_userCache.containsKey(userId)) {
-      LogUtils.d("CacheCenter", "未匹配到 UserID");
-      return WpUser(name: "User", id: -1, avatarUrls: AvatarUrls(s24: "", s48: "", s96: ""));
+      LogUtils.d("CacheCenter", "未匹配到 UserID: " + userId.toString());
+      return null;
     } else {
-      LogUtils.d("CacheCenter", "匹配到 UserID");
+      LogUtils.d("CacheCenter", "匹配到 UserID: " + userId.toString());
       return _userCache[userId];
     }
   }

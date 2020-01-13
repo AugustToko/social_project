@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:share/share.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/model/menu.dart';
@@ -11,6 +12,7 @@ import 'package:social_project/model/post.dart';
 import 'package:social_project/ui/widgets/about_tile.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
+import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:video_player/video_player.dart';
@@ -273,7 +275,10 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                   },
                   onLongPress: () {
                     BottomSheetUtil.showSheetBottom(
-                        context, Menu(title: "Title", items: ["data"]));
+                        context, null, Menu(title: "Title", items: ["data"]), (i, menu) {
+                      showToast("You clicked ${menu.items[i]}",
+                          position: ToastPosition.bottom);
+                    });
                   },
                   child: Container(
                     child: Padding(

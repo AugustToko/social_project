@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:social_project/model/wordpress/wp_user.dart';
 
 class NetTools {
-  static const String weiranSite = "https://www.weiran.org.cn";
 
   static Future<WpUser> getWpUserInfo(String webSite, int userId) async {
     // 解析 URL

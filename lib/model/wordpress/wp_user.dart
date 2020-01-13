@@ -6,7 +6,6 @@ class WpUser {
   String link;
   String slug;
   AvatarUrls avatarUrls;
-//  List<Null> meta;
   Links lLinks;
 
   WpUser(
@@ -50,9 +49,6 @@ class WpUser {
     if (this.avatarUrls != null) {
       data['avatar_urls'] = this.avatarUrls.toJson();
     }
-//    if (this.meta != null) {
-//      data['meta'] = this.meta.map((v) => v.toJson()).toList();
-//    }
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
@@ -84,7 +80,6 @@ class AvatarUrls {
 
 class Links {
   List<Self> self;
-//  List<Collection> collection;
 
   Links({this.self, /*this.collection*/});
 
@@ -95,12 +90,6 @@ class Links {
         self.add(new Self.fromJson(v));
       });
     }
-//    if (json['collection'] != null) {
-//      collection = new List<Collection>();
-//      json['collection'].forEach((v) {
-//        collection.add(new Collection.fromJson(v));
-//      });
-//    }
   }
 
   Map<String, dynamic> toJson() {
@@ -108,9 +97,6 @@ class Links {
     if (this.self != null) {
       data['self'] = this.self.map((v) => v.toJson()).toList();
     }
-//    if (this.collection != null) {
-//      data['collection'] = this.collection.map((v) => v.toJson()).toList();
-//    }
     return data;
   }
 }

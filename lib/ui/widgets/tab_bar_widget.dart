@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
-import 'package:social_project/ui/page/wp_weiran_page.dart';
+import 'package:social_project/ui/page/wp_page.dart';
 
 class TabBarWidgetPage extends StatefulWidget {
   //抽屉widget
@@ -116,7 +117,7 @@ class _TabBarState extends State<TabBarWidgetPage>
             Tab(text: "Featured"),
             Tab(text: "TuChong"),
 
-            Tab(text: "Time line 3"),
+            Tab(text: "WeiRan"),
             Tab(text: "Time line 4"),
           ],
           controller: _tabController,
@@ -149,7 +150,7 @@ class _TabBarState extends State<TabBarWidgetPage>
         children: <Widget>[
           TimelineTwoPage(),
           PhotoViewDemo(),
-          WPweiranPage(),
+          WordPressPage(WpSource.WeiRan),
           SampleHomePage(),
         ],
         controller: _tabController,

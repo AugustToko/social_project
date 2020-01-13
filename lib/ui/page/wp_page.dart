@@ -1,44 +1,51 @@
 import 'dart:async';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:flutter_html/flutter_html.dart';
 import 'package:loading_more_list/loading_more_list.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
-import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
+import 'package:share/share.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_weiran.dart';
-import 'package:social_project/model/wordpress/wp_weiran_rep.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
-import 'package:social_project/ui/widgets/wp/user_icon.dart';
+import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WPweiranPage extends StatefulWidget {
+class WordPressPage extends StatefulWidget {
+  final WpSource _wpSource;
+
+  WordPressPage(this._wpSource);
+
   @override
-  _WPweiranPageState createState() => _WPweiranPageState();
+  _WordPressPageState createState() => _WordPressPageState(_wpSource);
 }
 
-class _WPweiranPageState extends State<WPweiranPage> {
-  MyExtendedMaterialTextSelectionControls
-      _myExtendedMaterialTextSelectionControls;
+class _WordPressPageState extends State<WordPressPage> {
+  final MyExtendedMaterialTextSelectionControls
+      _myExtendedMaterialTextSelectionControls =
+      MyExtendedMaterialTextSelectionControls();
+
+  WordPressRep listSourceRepository;
+
+  final WpSource _wpSource;
+
+  _WordPressPageState(this._wpSource);
 
   @override
   void initState() {
-    _myExtendedMaterialTextSelectionControls =
-        MyExtendedMaterialTextSelectionControls();
+    listSourceRepository = WordPressRep(WordPressRep.getWpLink(_wpSource));
     super.initState();
   }
 
-  final WPweiranRep listSourceRepository = WPweiranRep();
-
-  //if you can't know image size before build,
-  //you have to handle copy when image is loaded.
+  // if you can't know image size before build,
+  // you have to handle copy when image is loaded.
   bool knowImageSize = true;
   DateTime dateTimeNow = DateTime.now();
 
@@ -75,8 +82,7 @@ class _WPweiranPageState extends State<WPweiranPage> {
                       collectGarbage: (List<int> indexes) {
                         ///collectGarbage
                         indexes.forEach((index) {
-                          final item = listSourceRepository[index];
-
+//                          final item = listSourceRepository[index];
 //                          if (item.hasImage) {
 //                            item.images.forEach((image) {
 //                              image.clearCache();
@@ -92,25 +98,49 @@ class _WPweiranPageState extends State<WPweiranPage> {
 
                         // 内容文本
                         var content = item.content.rendered;
-//                        content += this._attachContent;
+
+                        print(content);
+
+                        // 裁剪内容
+                        // TODO: 裁剪规范，如何使 card 大小适中
+                        var contentSmall = content.substring(
+                            0, content.length < 1050 ? content.length : 1050);
+
+                        contentSmall += "<h2>......</h2>";
 
                         return Card(
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, UIData.commentDetail);
+                              Navigator.pushNamed(context, UIData.wpPostDetail,
+                                  arguments: {
+                                    "content": content,
+                                    "title": title,
+                                  });
                             },
                             onLongPress: () {
                               BottomSheetUtil.showSheetBottom(
                                   context,
+                                  CacheCenter.getUser(item.author),
                                   Menu(title: "Title", items: [
-                                    "Menu 1",
-                                    "Menu 2",
-                                    "Menu 3",
-                                    "Menu 4",
-                                    "Menu 5",
-                                    "Menu 6",
-                                  ]));
+                                    "Open source url",
+                                    "Share",
+                                    "Add to favourite",
+                                    "Hide",
+                                  ]), (i, menu) {
+
+                                    switch (i) {
+                                      case 0: {
+                                        launch(item.link);
+                                      }
+                                      break;
+                                      case 1:
+                                        Share.share(title + ":" + " \r\n" + item.link);
+                                        break;
+                                    }
+
+//                                showToast("You clicked ${menu.items[i]}",
+//                                    position: ToastPosition.bottom);
+                              });
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -121,8 +151,9 @@ class _WPweiranPageState extends State<WPweiranPage> {
                                   child: Row(
                                     children: <Widget>[
                                       // 头像
-                                      WpUserIcon(
+                                      WpUserHeader(
                                         userId: item.author,
+                                        wpSource: _wpSource,
                                       ),
                                       SizedBox(
                                         width: margin,
@@ -146,50 +177,10 @@ class _WPweiranPageState extends State<WPweiranPage> {
                                         title,
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      ExtendedText(
-                                        content,
-                                        // 文本点击
-                                        onSpecialTextTap: (dynamic parameter) {
-                                          print("content text  clicked!");
-                                          if (parameter.startsWith("\$")) {
-                                            showToast(
-                                                "Special text '\$' clicked.",
-                                                position: ToastPosition.bottom);
-                                          } else if (parameter
-                                              .startsWith("@")) {
-                                            showToast(
-                                                "Special text '@' clicked.",
-                                                position: ToastPosition.bottom);
-                                          }
-                                        },
-                                        specialTextSpanBuilder:
-                                            MySpecialTextSpanBuilder(),
-                                        //overflow: ExtendedTextOverflow.ellipsis,
-//                                  style: TextStyle(
-//                                      fontSize: ScreenUtil.instance.setSp(28),
-//                                      color: Colors.grey),
-                                        maxLines: 10,
-                                        overflow: TextOverflow.ellipsis,
-                                        overFlowTextSpan: OverFlowTextSpan(
-                                          children: <TextSpan>[
-                                            TextSpan(text: '  \u2026  '),
-                                            TextSpan(
-                                                text: "More detail",
-                                                style: TextStyle(
-                                                  color: Colors.blue,
-                                                ),
-                                                recognizer:
-                                                    TapGestureRecognizer()
-                                                      ..onTap = () {
-                                                        launch(
-                                                          item.link,
-                                                        );
-                                                      })
-                                          ],
-                                        ),
-                                        selectionEnabled: true,
-                                        textSelectionControls:
-                                            _myExtendedMaterialTextSelectionControls,
+                                      Html(
+                                        data: contentSmall,
+                                        showImages: true,
+                                        linkStyle: TextStyle(),
                                       )
                                     ],
                                   ),

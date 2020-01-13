@@ -6,10 +6,31 @@ import 'dart:convert';
 import 'package:social_project/model/wordpress/wp_weiran.dart';
 import 'package:social_project/utils/log.dart';
 
-class WPweiranRep extends LoadingMoreBase<WPweiran> {
+enum WpSource {
+  BlogGeek,
+  WeiRan
+}
+
+class WordPressRep extends LoadingMoreBase<WPweiran> {
   int pageIndex = 1;
   bool _hasMore = true;
   bool forceRefresh = false;
+
+  static const String baseWeiranUrl = "https://www.weiran.org.cn";
+  static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
+
+  /// 获取第 x 页
+  static const String _posts = "/wp-json/wp/v2/posts?page=";
+
+  /// 获取最新十篇文章
+  static const String _posts2 = "/wp-json/wp/v2/posts";
+
+//  static const String _urlBlogGeekPost = baseBlogGeekUrl + _posts;
+//  static const String _urlWeiranPost = baseWeiranUrl + _posts;
+
+  String url;
+
+  WordPressRep(this.url);
 
   @override
   bool get hasMore => (_hasMore && length < 300) || forceRefresh;
@@ -17,7 +38,7 @@ class WPweiranRep extends LoadingMoreBase<WPweiran> {
   /// 刷新数据
   @override
   Future<bool> refresh([bool clearBeforeRequest = false]) async {
-    _hasMore = false;
+    _hasMore = true;
     pageIndex = 1;
     //force to refresh list when you don't want clear list before request
     //for the case, if your list already has 20 items.
@@ -29,22 +50,26 @@ class WPweiranRep extends LoadingMoreBase<WPweiran> {
 
   @override
   Future<bool> loadData([bool isLoadMoreAction = false]) async {
-    // 解析 URL
-    String url = "https://www.weiran.org.cn/wp-json/wp/v2/posts";
 
     LogUtils.d("LoadData url: ", url);
 
     // 标志位
     bool isSuccess = false;
     try {
-      var result = await HttpClientHelper.get(url);
+      var result =
+          await HttpClientHelper.get(url + _posts + pageIndex.toString());
       var source = WPweiranPostSource.fromJson(json.decode(result.body));
 
-      for (var item in source.feedList) {
-        this.add(item);
+      if (pageIndex == 1) {
+        this.clear();
       }
 
-      _hasMore = false;
+      for (var item in source.feedList) {
+        if (!this.contains(item) && hasMore) this.add(item);
+      }
+
+      _hasMore = source.feedList.length != 0;
+      pageIndex++;
 
       isSuccess = true;
     } catch (exception, stack) {
@@ -53,5 +78,17 @@ class WPweiranRep extends LoadingMoreBase<WPweiran> {
       print(stack);
     }
     return isSuccess;
+  }
+
+  static String getWpLink(WpSource wpSource) {
+    switch (wpSource) {
+      case WpSource.BlogGeek:
+        return baseBlogGeekUrl;
+        break;
+      case WpSource.WeiRan:
+        return baseWeiranUrl;
+        break;
+    }
+    return baseBlogGeekUrl;
   }
 }

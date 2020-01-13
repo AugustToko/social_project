@@ -9,6 +9,7 @@ import 'package:social_project/ui/page/profile_one_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
+import 'package:social_project/ui/page/wp_detail_page.dart';
 
 // TODO: 清理
 class UIData {
@@ -35,6 +36,9 @@ class UIData {
 
   /// [SettingsOnePage]
   static const String settingsPage = "/settings";
+
+  /// [WpDetailPage]
+  static const String wpPostDetail = "/wpDetail";
 
   static const String profileOneRoute = "/View Profile";
   static const String profileTwoRoute = "/Profile 2";
@@ -121,6 +125,7 @@ class UIData {
 
   //randomcolor
   static final Random _random = new Random();
+
 
   /// Returns a random color.
   static Color next() {

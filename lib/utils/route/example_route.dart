@@ -8,6 +8,7 @@ import 'package:social_project/ui/page/profile_two_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
+import 'package:social_project/ui/page/wp_detail_page.dart';
 
 import '../uidata.dart';
 
@@ -61,6 +62,14 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: CommentPage(),
         showStatusBar: false,
         routeName: UIData.commentDetail,
+        pageRouteType: PageRouteType.transparent,
+      );
+      break;
+    case UIData.wpPostDetail:
+      return RouteResult(
+        widget: WpDetailPage(arguments['title'], arguments['content'],),
+        showStatusBar: false,
+        routeName: UIData.wpPostDetail,
         pageRouteType: PageRouteType.transparent,
       );
       break;

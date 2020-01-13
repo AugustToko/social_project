@@ -14,7 +14,7 @@ import 'package:social_project/logic/special_text/my_special_text_span_builder.d
 import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
-import 'package:social_project/model/wordpress/wp_weiran_rep.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/widgets/pic_grid_view.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
@@ -48,12 +48,10 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
   void initState() {
     _myExtendedMaterialTextSelectionControls =
         MyExtendedMaterialTextSelectionControls();
-    listSourceRepository2.loadData();
     super.initState();
   }
 
   final TuChongRepository listSourceRepository = TuChongRepository();
-  final WPweiranRep listSourceRepository2 = WPweiranRep();
 
   //if you can't know image size before build,
   //you have to handle copy when image is loaded.
@@ -120,6 +118,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                             onLongPress: () {
                               BottomSheetUtil.showSheetBottom(
                                   context,
+                                  null,
                                   Menu(
                                       title: "Title",
                                       items: [
@@ -129,7 +128,10 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                         "Menu 4",
                                         "Menu 5",
                                         "Menu 6",
-                                      ]));
+                                      ]), (i, menu) {
+                                showToast("You clicked ${menu.items[i]}",
+                                    position: ToastPosition.bottom);
+                              });
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,

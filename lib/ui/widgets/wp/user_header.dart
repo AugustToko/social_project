@@ -1,37 +1,49 @@
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
-/// 根据 wp 所给 userId 获取 user 头像
-class WpUserIcon extends StatefulWidget {
+/// 根据 wp 所给 userId 获取 user 头像、用户名
+class WpUserHeader extends StatefulWidget {
   static String defaultIcon = "";
 
-  //抽屉widget
   final int userId;
 
-  WpUserIcon({
+  final WpSource wpSource;
+
+  WpUserHeader({
     Key key,
     this.userId,
+    this.wpSource,
   }) : super(key: key);
 
   @override
-  _WpUserIconState createState() => _WpUserIconState(userId);
+  _WpUserHeaderState createState() => _WpUserHeaderState(userId, wpSource);
 }
 
-class _WpUserIconState extends State<WpUserIcon> {
-  int userId;
+class _WpUserHeaderState extends State<WpUserHeader> {
+  final int _userId;
+  final WpSource _wpSource;
 
-  _WpUserIconState(
-    this.userId,
-  ) : super();
+  _WpUserHeaderState(this._userId,
+      this._wpSource,) : super();
 
   @override
   Widget build(BuildContext context) {
-    var tempUser = CacheCenter.getUser(userId);
-
     final double margin = ScreenUtil.instance.setWidth(22);
+
+    var tempUser = CacheCenter.getUser(_userId);
+
+    if (tempUser == null) {
+      NetTools.getWpUserInfo(WordPressRep.getWpLink(_wpSource), _userId)
+          .then((user) {
+        CacheCenter.putUser(_userId, user);
+        setState(() {});
+      });
+    }
 
     var widget = Row(
       children: <Widget>[
@@ -41,9 +53,7 @@ class _WpUserIconState extends State<WpUserIcon> {
             CircleAvatar(
                 radius: 25.0,
                 backgroundImage: NetworkImage(
-                  tempUser == null
-                      ? WpUserIcon.defaultIcon
-                      : tempUser.avatarUrls.s96,
+                    (tempUser == null || tempUser.avatarUrls == null) ? WpUserHeader.defaultIcon : tempUser.avatarUrls.s96
                 )),
             Positioned.fill(
               child: Material(
@@ -63,17 +73,9 @@ class _WpUserIconState extends State<WpUserIcon> {
         ),
         // TODO: 超出屏幕宽度
         // 用户名
-        Text(tempUser.name),
+        Text(tempUser == null ? "User" : tempUser.name),
       ],
     );
-
-    if (tempUser.avatarUrls.s96 == WpUserIcon.defaultIcon) {
-      NetTools.getWpUserInfo(NetTools.weiranSite, userId).then((user) {
-        CacheCenter.putUser(userId, user);
-        setState(() {});
-      });
-    }
-
     return widget;
   }
 }
