@@ -6,10 +6,7 @@ import 'dart:convert';
 import 'package:social_project/model/wordpress/wp_weiran.dart';
 import 'package:social_project/utils/log.dart';
 
-enum WpSource {
-  BlogGeek,
-  WeiRan
-}
+enum WpSource { BlogGeek, WeiRan, MMGal }
 
 class WordPressRep extends LoadingMoreBase<WPweiran> {
   int pageIndex = 1;
@@ -17,6 +14,7 @@ class WordPressRep extends LoadingMoreBase<WPweiran> {
   bool forceRefresh = false;
 
   static const String baseWeiranUrl = "https://www.weiran.org.cn";
+  static const String baseMmgalUrl = "https://www.mmgal.com";
   static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
 
   /// 获取第 x 页
@@ -50,7 +48,6 @@ class WordPressRep extends LoadingMoreBase<WPweiran> {
 
   @override
   Future<bool> loadData([bool isLoadMoreAction = false]) async {
-
     LogUtils.d("LoadData url: ", url);
 
     // 标志位
@@ -58,7 +55,13 @@ class WordPressRep extends LoadingMoreBase<WPweiran> {
     try {
       var result =
           await HttpClientHelper.get(url + _posts + pageIndex.toString());
-      var source = WPweiranPostSource.fromJson(json.decode(result.body));
+
+      var data = result.body;
+      if (url.contains("mmgal")) {
+        data = data.substring(0, data.indexOf("<!--"));
+      }
+
+      var source = WPweiranPostSource.fromJson(json.decode(data));
 
       if (pageIndex == 1) {
         this.clear();
@@ -87,6 +90,9 @@ class WordPressRep extends LoadingMoreBase<WPweiran> {
         break;
       case WpSource.WeiRan:
         return baseWeiranUrl;
+        break;
+      case WpSource.MMGal:
+        return baseMmgalUrl;
         break;
     }
     return baseBlogGeekUrl;

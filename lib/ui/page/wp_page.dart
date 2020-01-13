@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
@@ -9,6 +10,7 @@ import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_weiran.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
@@ -99,7 +101,14 @@ class _WordPressPageState extends State<WordPressPage> {
                         // 内容文本
                         var content = item.content.rendered;
 
-                        print(content);
+                        // 修复图片
+                        if (_wpSource == WpSource.WeiRan) {
+                          content = content.replaceAll(
+                              "weiran-1254802562.file.myqcloud.com/static/weiran_index/wp-content/uploads/",
+                              "static.weiran.org.cn/img/");
+                        }
+
+//                        print(content);
 
                         // 裁剪内容
                         // TODO: 裁剪规范，如何使 card 大小适中
@@ -127,16 +136,17 @@ class _WordPressPageState extends State<WordPressPage> {
                                     "Add to favourite",
                                     "Hide",
                                   ]), (i, menu) {
-
-                                    switch (i) {
-                                      case 0: {
-                                        launch(item.link);
-                                      }
-                                      break;
-                                      case 1:
-                                        Share.share(title + ":" + " \r\n" + item.link);
-                                        break;
+                                switch (i) {
+                                  case 0:
+                                    {
+                                      launch(item.link);
                                     }
+                                    break;
+                                  case 1:
+                                    Share.share(
+                                        title + ":" + " \r\n" + item.link);
+                                    break;
+                                }
 
 //                                showToast("You clicked ${menu.items[i]}",
 //                                    position: ToastPosition.bottom);
@@ -180,7 +190,38 @@ class _WordPressPageState extends State<WordPressPage> {
                                       Html(
                                         data: contentSmall,
                                         showImages: true,
+                                        useRichText: false,
                                         linkStyle: TextStyle(),
+                                        customRender: (node, children) {
+                                          if (node is dom.Element) {
+                                            switch (node.localName) {
+                                              case "video":
+                                                return Text("[Video Here]");
+                                              default:
+                                                return null;
+                                            }
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onImageTap: (url) {
+                                          Navigator.pushNamed(context,
+                                              "fluttercandies://picswiper",
+                                              arguments: {
+                                                "index": 0,
+                                                "pics": [PicSwiperItem(url)],
+                                              });
+                                        },
+                                        onImageError: (p1, p2) {
+                                          print(
+                                              "Image Error---------------start-----------------");
+                                          print(p1);
+                                          print(
+                                              "-----===-------=======------====-----");
+                                          print(p2);
+                                          print(
+                                              "Image Error----------------end----------------");
+                                        },
                                       )
                                     ],
                                   ),
