@@ -3,6 +3,7 @@ import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
+import 'package:social_project/ui/page/wp_weiran_page.dart';
 
 class TabBarWidgetPage extends StatefulWidget {
   //抽屉widget
@@ -148,7 +149,7 @@ class _TabBarState extends State<TabBarWidgetPage>
         children: <Widget>[
           TimelineTwoPage(),
           PhotoViewDemo(),
-          SampleHomePage(),
+          WPweiranPage(),
           SampleHomePage(),
         ],
         controller: _tabController,
