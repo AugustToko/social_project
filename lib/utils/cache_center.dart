@@ -1,3 +1,4 @@
+import 'package:social_project/model/wordpress/wp_login_result.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/log.dart';
 
@@ -8,7 +9,12 @@ class CacheCenter {
 
   static Map<int, WpUser> _userCache = Map();
 
-  static WpUser getUser(int userId) {
+  /// 用作历史记录
+  static Map<String, WpLoginResult> _wpTokenCache = Map();
+
+  static WpLoginResult tokenCache;
+
+  static WpUser getUser(final int userId) {
     if (!_userCache.containsKey(userId)) {
       LogUtils.d("CacheCenter", "未匹配到 UserID: " + userId.toString());
       return null;
@@ -18,7 +24,12 @@ class CacheCenter {
     }
   }
 
-  static void putUser(int userId, WpUser user) {
+  static void putUser(final int userId, final WpUser user) {
     _userCache[userId] = user;
+  }
+
+  static void putToken(final WpLoginResult result) {
+    _wpTokenCache[result.userDisplayName] = result;
+    tokenCache = result;
   }
 }

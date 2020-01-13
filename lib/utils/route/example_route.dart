@@ -3,7 +3,7 @@ import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
-import 'package:social_project/ui/page/login_two_page.dart';
+import 'package:social_project/ui/page/login_page.dart';
 import 'package:social_project/ui/page/profile_two_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
@@ -75,7 +75,7 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.login:
       return RouteResult(
-        widget: LoginTwoPage(),
+        widget: LoginPage(),
         showStatusBar: false,
         routeName: UIData.login,
         pageRouteType: PageRouteType.transparent,

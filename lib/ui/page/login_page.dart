@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/log.dart';
+import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
-class LoginTwoPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
+
+  final userController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
-        child: loginBody(),
+        child: loginBody(context),
       ),
     );
   }
 
-  loginBody() => SingleChildScrollView(
+  loginBody(BuildContext context) => SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[loginHeader(), loginFields()],
+          children: <Widget>[loginHeader(), loginFields(context)],
         ),
       );
 
@@ -43,7 +51,7 @@ class LoginTwoPage extends StatelessWidget {
         ],
       );
 
-  loginFields() => Container(
+  loginFields(BuildContext context) => Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
@@ -53,9 +61,12 @@ class LoginTwoPage extends StatelessWidget {
               child: TextField(
                 maxLines: 1,
                 decoration: InputDecoration(
+                  hintStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
+                  labelStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
                   hintText: "Enter your username",
                   labelText: "Username",
                 ),
+                controller: userController,
               ),
             ),
             Container(
@@ -64,9 +75,12 @@ class LoginTwoPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 decoration: InputDecoration(
+                  hintStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
+                  labelStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
                   hintText: "Enter your password",
                   labelText: "Password",
                 ),
+                controller: passwordController,
               ),
             ),
             SizedBox(
@@ -83,7 +97,17 @@ class LoginTwoPage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Colors.green,
-                onPressed: () {},
+                onPressed: () {
+                  LogUtils.d("LoginPage", "Login Button Pressed!");
+                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
+                    if (wpLoginResult.token != null) {
+                      CacheCenter.putToken(wpLoginResult);
+                      Navigator.pop(context);
+                    } else {
+                      showToast("UserName or Password error!");
+                    }
+                  });
+                },
               ),
             ),
             SizedBox(
