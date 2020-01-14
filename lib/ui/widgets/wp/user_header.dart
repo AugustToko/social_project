@@ -12,70 +12,107 @@ class WpUserHeader extends StatefulWidget {
 
   final int userId;
 
+  /// 选择 Wordpress 源
   final WpSource wpSource;
 
-  WpUserHeader({
-    Key key,
-    this.userId,
-    this.wpSource,
-  }) : super(key: key);
+  final bool showUserName;
+
+  final double radius;
+
+  final bool canClick;
+
+  WpUserHeader(
+      {Key key,
+      this.userId = -1,
+      this.wpSource = WordPressRep.defaultWpSource,
+      this.radius = 25.0,
+      this.canClick = true,
+      this.showUserName = true})
+      : super(key: key);
 
   @override
-  _WpUserHeaderState createState() => _WpUserHeaderState(userId, wpSource);
+  _WpUserHeaderState createState() =>
+      _WpUserHeaderState(userId, wpSource, radius, showUserName, canClick);
 }
 
 class _WpUserHeaderState extends State<WpUserHeader> {
   final int _userId;
   final WpSource _wpSource;
+  final bool showUserName;
+  final double _radius;
+  final bool _canClick;
+  var tempUser = WpUser.defaultUser;
+  final double margin = ScreenUtil.instance.setWidth(22);
 
-  _WpUserHeaderState(this._userId,
-      this._wpSource,) : super();
+  _WpUserHeaderState(
+    this._userId,
+    this._wpSource,
+    this._radius,
+    this.showUserName,
+    this._canClick,
+  ) : super();
+
+  @override
+  void initState() {
+    super.initState();
+    if (_userId != -1) {
+      tempUser = CacheCenter.getUser(_userId);
+      if (tempUser == null) {
+        NetTools.getWpUserInfo(WordPressRep.getWpLink(_wpSource), _userId)
+            .then((user) {
+          if (user != null && _userId >= 0) {
+            CacheCenter.putUser(_userId, user);
+            setState(() {});
+          }
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double margin = ScreenUtil.instance.setWidth(22);
-
-    var tempUser = CacheCenter.getUser(_userId);
-
-    if (tempUser == null) {
-      NetTools.getWpUserInfo(WordPressRep.getWpLink(_wpSource), _userId)
-          .then((user) {
-        CacheCenter.putUser(_userId, user);
-        setState(() {});
-      });
-    }
-
-    var widget = Row(
+    var stack = Stack(
       children: <Widget>[
         // 头像
-        Stack(
-          children: <Widget>[
-            CircleAvatar(
-                radius: 25.0,
-                backgroundImage: NetworkImage(
-                    (tempUser == null || tempUser.avatarUrls == null) ? WpUserHeader.defaultIcon : tempUser.avatarUrls.s96
-                )),
-            Positioned.fill(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, UIData.profile);
-                  },
-                  customBorder: CircleBorder(),
-                ),
-              ),
-            ),
-          ],
+        CircleAvatar(
+            radius: _radius,
+            backgroundImage: NetworkImage(
+                (tempUser == null || tempUser.avatarUrls == null)
+                    ? WpUserHeader.defaultIcon
+                    : tempUser.avatarUrls.s96)),
+      ],
+    );
+
+    var widget = Row(
+      children: <Widget>[stack],
+    );
+
+    if (_canClick) {
+      stack.children.add(Positioned.fill(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, UIData.profile,
+                  arguments: {"wpUserId": _userId});
+            },
+            customBorder: CircleBorder(),
+          ),
         ),
+      ));
+    }
+
+    if (showUserName) {
+      widget.children.addAll([
         SizedBox(
           width: margin,
         ),
         // TODO: 超出屏幕宽度
         // 用户名
-        Text(tempUser == null ? "User" : tempUser.name),
-      ],
-    );
+        Text(tempUser.name),
+      ]);
+    }
+
     return widget;
   }
 }

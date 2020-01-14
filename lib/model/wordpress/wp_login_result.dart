@@ -1,29 +1,59 @@
 class WpLoginResult {
   String token;
+  int userId;
   String userEmail;
   String userNicename;
   String userDisplayName;
+  UserCaps userCaps;
 
   WpLoginResult(
-      {this.token, this.userEmail, this.userNicename, this.userDisplayName});
+      {this.token,
+        this.userId,
+        this.userEmail,
+        this.userNicename,
+        this.userDisplayName,
+        this.userCaps});
 
   WpLoginResult.fromJson(Map<String, dynamic> json) {
     token = json['token'];
+    userId = json['user_id'];
     userEmail = json['user_email'];
     userNicename = json['user_nicename'];
     userDisplayName = json['user_display_name'];
+    userCaps = json['user_caps'] != null
+        ? new UserCaps.fromJson(json['user_caps'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['token'] = this.token;
+    data['user_id'] = this.userId;
     data['user_email'] = this.userEmail;
     data['user_nicename'] = this.userNicename;
     data['user_display_name'] = this.userDisplayName;
+    if (this.userCaps != null) {
+      data['user_caps'] = this.userCaps.toJson();
+    }
     return data;
   }
 }
 
+class UserCaps {
+  bool administrator;
+
+  UserCaps({this.administrator});
+
+  UserCaps.fromJson(Map<String, dynamic> json) {
+    administrator = json['administrator'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['administrator'] = this.administrator;
+    return data;
+  }
+}
 /// -------------------
 
 class WpLoginResultFail {

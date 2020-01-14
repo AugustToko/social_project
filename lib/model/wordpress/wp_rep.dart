@@ -3,15 +3,19 @@ import 'package:loading_more_list/loading_more_list.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:social_project/model/wordpress/wp_weiran.dart';
+import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/utils/log.dart';
 
 enum WpSource { BlogGeek, WeiRan, MMGal }
 
-class WordPressRep extends LoadingMoreBase<WPweiran> {
+class WordPressRep extends LoadingMoreBase<WpPost> {
   int pageIndex = 1;
   bool _hasMore = true;
   bool forceRefresh = false;
+
+  static const WpSource defaultWpSource = WpSource.BlogGeek;
+
+  static WpSource wpSource = defaultWpSource;
 
   static const String baseWeiranUrl = "https://www.weiran.org.cn";
   static const String baseMmgalUrl = "https://www.mmgal.com";
@@ -61,7 +65,7 @@ class WordPressRep extends LoadingMoreBase<WPweiran> {
         data = data.substring(0, data.indexOf("<!--"));
       }
 
-      var source = WPweiranPostSource.fromJson(json.decode(data));
+      var source = WpPostSource.fromJson(json.decode(data));
 
       if (pageIndex == 1) {
         this.clear();

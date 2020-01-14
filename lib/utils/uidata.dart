@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
-import 'package:social_project/ui/page/profile_one_page.dart';
+import 'package:social_project/ui/page/profile/profile_one_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
@@ -29,7 +29,9 @@ class UIData {
   static const String commentDetail = "/commentDetail";
 
   /// [LoginPage]
+  @Deprecated("Use loginPage")
   static const String loginRoute = "/login";
+  static const String loginPage = "/loginPage";
 
   /// [SendPage]
   static const String sendPage = "/sendPage";
@@ -95,7 +97,6 @@ class UIData {
   static const String enter_otp_hint = "4 Digit OTP";
   static const String get_otp = "Get OTP";
   static const String resend_otp = "Resend OTP";
-  static const String login = "Login";
   static const String enter_valid_number = "Enter 10 digit phone number";
   static const String enter_valid_otp = "Enter 4 digit otp";
 

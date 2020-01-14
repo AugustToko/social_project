@@ -5,10 +5,12 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/image_properties.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
+import 'package:social_project/utils/log.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:video_player/video_player.dart';
 
+/// 用于显示 WordPress 文章
 class WpDetailPage extends StatefulWidget {
   WpDetailPage(this.title, this.content);
 
@@ -16,7 +18,9 @@ class WpDetailPage extends StatefulWidget {
   final String title;
 
   @override
-  _WpPageState createState() => _WpPageState(title, content);
+  _WpPageState createState() {
+    return _WpPageState(title, content);
+  }
 }
 
 class _WpPageState extends State<WpDetailPage> {
@@ -85,6 +89,7 @@ class _WpPageState extends State<WpDetailPage> {
                   }
                 },
                 onImageTap: (url) {
+                  LogUtils.d("WpDetailPage", "onImageTap");
                   Navigator.pushNamed(context, "fluttercandies://picswiper",
                       arguments: {
                         "index": 0,

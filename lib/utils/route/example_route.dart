@@ -1,16 +1,19 @@
 import 'package:flutter/widgets.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
-import 'package:social_project/ui/page/profile_two_page.dart';
+import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wp_detail_page.dart';
 
 import '../uidata.dart';
+
+enum NavState { LoginDone }
 
 RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
   switch (name) {
@@ -51,7 +54,7 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.profile:
       return RouteResult(
-        widget: ProfileTwoPage(),
+        widget: ProfilePage(arguments["wpUserId"]),
         showStatusBar: false,
         routeName: UIData.profile,
         pageRouteType: PageRouteType.transparent,
@@ -67,17 +70,20 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.wpPostDetail:
       return RouteResult(
-        widget: WpDetailPage(arguments['title'], arguments['content'],),
+        widget: WpDetailPage(
+          arguments['title'],
+          arguments['content'],
+        ),
         showStatusBar: false,
         routeName: UIData.wpPostDetail,
         pageRouteType: PageRouteType.transparent,
       );
       break;
-    case UIData.login:
+    case UIData.loginPage:
       return RouteResult(
         widget: LoginPage(),
         showStatusBar: false,
-        routeName: UIData.login,
+        routeName: UIData.loginPage,
         pageRouteType: PageRouteType.transparent,
       );
       break;

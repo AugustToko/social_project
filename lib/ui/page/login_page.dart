@@ -4,6 +4,7 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends StatelessWidget {
@@ -99,10 +100,17 @@ class LoginPage extends StatelessWidget {
                 color: Colors.green,
                 onPressed: () {
                   LogUtils.d("LoginPage", "Login Button Pressed!");
-                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
+//                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
+                  NetTools.getWpLoginResult(WordPressRep.getWpLink(WordPressRep.wpSource), "chenlongcould", "18551348272Chen").then((wpLoginResult){
                     if (wpLoginResult.token != null) {
                       CacheCenter.putToken(wpLoginResult);
-                      Navigator.pop(context);
+                      NetTools.getWpUserInfoAuto(wpLoginResult.userId).then((user) {
+                        if (user != null) {
+                          CacheCenter.putUser(wpLoginResult.userId, user);
+                          showToast("Login successful!");
+                          Navigator.pop(context, NavState.LoginDone);
+                        }
+                      });
                     } else {
                       showToast("UserName or Password error!");
                     }

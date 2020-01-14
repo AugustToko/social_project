@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:extended_text/extended_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
@@ -8,7 +9,7 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
-import 'package:social_project/model/wordpress/wp_weiran.dart';
+import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
@@ -80,7 +81,7 @@ class _WordPressPageState extends State<WordPressPage> {
                     }),
                   ),
                   LoadingMoreSliverList(
-                    SliverListConfig<WPweiran>(
+                    SliverListConfig<WpPost>(
                       collectGarbage: (List<int> indexes) {
                         ///collectGarbage
                         indexes.forEach((index) {
@@ -108,7 +109,11 @@ class _WordPressPageState extends State<WordPressPage> {
                               "static.weiran.org.cn/img/");
                         }
 
-//                        print(content);
+                        content = content.replaceAll("[java]", "<code>");
+                        content = content.replaceAll("[/java]", "</code>");
+
+                        content = content.replaceAll("[xml]", "<code>");
+                        content = content.replaceAll("[/xml]", "</code>");
 
                         // 裁剪内容
                         // TODO: 裁剪规范，如何使 card 大小适中
@@ -147,9 +152,6 @@ class _WordPressPageState extends State<WordPressPage> {
                                         title + ":" + " \r\n" + item.link);
                                     break;
                                 }
-
-//                                showToast("You clicked ${menu.items[i]}",
-//                                    position: ToastPosition.bottom);
                               });
                             },
                             child: Column(
@@ -187,44 +189,81 @@ class _WordPressPageState extends State<WordPressPage> {
                                         title,
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      Html(
-                                        data: contentSmall,
-                                        showImages: true,
-                                        useRichText: false,
-                                        linkStyle: TextStyle(),
-                                        customRender: (node, children) {
-                                          if (node is dom.Element) {
-                                            switch (node.localName) {
-                                              case "video":
-                                                return Text("[Video Here]");
-                                              default:
+                                          Html(
+                                            data: contentSmall,
+                                            showImages: true,
+                                            useRichText: false,
+                                            linkStyle: TextStyle(),
+                                            customRender: (node, children) {
+                                              if (node is dom.Element) {
+                                                switch (node.localName) {
+                                                  case "video":
+                                                    return Text("[Video Here]");
+                                                  default:
+                                                    return null;
+                                                }
+                                              } else {
                                                 return null;
-                                            }
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onImageTap: (url) {
-                                          Navigator.pushNamed(context,
-                                              "fluttercandies://picswiper",
-                                              arguments: {
-                                                "index": 0,
-                                                "pics": [PicSwiperItem(url)],
-                                              });
-                                        },
-                                        onImageError: (p1, p2) {
-                                          print(
-                                              "Image Error---------------start-----------------");
-                                          print(p1);
-                                          print(
-                                              "-----===-------=======------====-----");
-                                          print(p2);
-                                          print(
-                                              "Image Error----------------end----------------");
-                                        },
-                                      )
-                                    ],
-                                  ),
+                                              }
+                                            },
+                                            onImageTap: (url) {
+                                              Navigator.pushNamed(context,
+                                                  "fluttercandies://picswiper",
+                                                  arguments: {
+                                                    "index": 0,
+                                                    "pics": [
+                                                      PicSwiperItem(url)
+                                                    ],
+                                                  });
+                                            },
+                                            onImageError: (p1, p2) {
+                                              print(
+                                                  "Image Error---------------start-----------------");
+                                              print(p1);
+                                              print(
+                                                  "-----===-------=======------====-----");
+                                              print(p2);
+                                              print(
+                                                  "Image Error----------------end----------------");
+                                            },
+                                          ),
+//                                          CupertinoButton(
+//                                              child: Material(
+//                                                color: Colors.transparent,
+//                                                child: Ink(
+//                                                  decoration: BoxDecoration(
+//                                                      gradient: LinearGradient(
+//                                                    begin: Alignment.topCenter,
+//                                                    end: Alignment.bottomCenter,
+//                                                    colors: [
+//                                                      Colors.white,
+//                                                      Theme.of(context)
+//                                                          .backgroundColor,
+//                                                    ],
+//                                                  )),
+//                                                  child: Padding(
+//                                                    padding:
+//                                                        const EdgeInsets.all(
+//                                                            0.0),
+//                                                    child: Row(
+//                                                      mainAxisAlignment:
+//                                                          MainAxisAlignment
+//                                                              .center,
+//                                                      children: <Widget>[
+//                                                        Text("Click for more")
+//                                                      ],
+//                                                    ),
+//                                                  ),
+//                                                ),
+//                                              ),
+//                                              onPressed: () {}),
+
+//                                          Image.asset(
+//                                              'assets/images/linear_mask.png',
+//                                              fit: BoxFit.cover,
+//                                              package: App.pkg)
+                                        ],
+                                      ),
                                   padding: EdgeInsets.only(
                                     left: margin,
                                     right: margin,

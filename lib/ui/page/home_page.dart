@@ -2,13 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:social_project/ui/page/content_page.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
-import 'package:social_project/ui/page/login_page.dart';
-import 'package:social_project/ui/page/sample/content/gallery_page.dart';
+import 'package:social_project/ui/page/profile/profile_guest.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/sample/content/save_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
+import 'package:social_project/ui/page/content_page.dart';
+import 'package:social_project/ui/widgets/user_account_drawer.dart';
+
+import '../../main.dart';
 
 /// [HomePage]
 /// 仅带有一个 BottomNavigationBar
@@ -39,11 +42,13 @@ class _IndexState extends State<HomePage> {
 
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
-      ContentPage(),
+      ContentPage(
+        drawer: UserAccountWidget(),
+      ),
       DashboardOnePage(),
       SampleHomePage(),
       SampleSavePage(),
-      LoginPage(),
+      ProfileContent(WordPressRep.wpSource),
     ];
 
     super.initState();
@@ -56,21 +61,43 @@ class _IndexState extends State<HomePage> {
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
 
     // Wrap our custom navbar + contentView with the app Scaffold
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        //Wrap the current page in an AnimatedSwitcher for an easy cross-fade effect
-        child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 350),
-          //Pass the current accent color down as a theme, so our overscroll indicator matches the btn color
-          child: contentView,
+    return WillPopScope(
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          //Wrap the current page in an AnimatedSwitcher for an easy cross-fade effect
+          child: AnimatedSwitcher(
+            duration: Duration(milliseconds: 350),
+            //Pass the current accent color down as a theme, so our overscroll indicator matches the btn color
+            child: contentView,
+          ),
+        ),
+        bottomNavigationBar: NavBar(
+          items: _navBarItems,
+          itemTapped: _handleNavBtnTapped,
+          currentIndex: _selectedNavIndex,
+        ), //Pass our custom navBar into the scaffold
+      ),
+      onWillPop: () => showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Exit Social Project'),
+          content: Text("Sure?"),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('No'),
+            ),
+            FlatButton(
+              onPressed: () async {
+                await App.pop();
+              },
+              child: Text('Exit'),
+            ),
+          ],
         ),
       ),
-      bottomNavigationBar: NavBar(
-        items: _navBarItems,
-        itemTapped: _handleNavBtnTapped,
-        currentIndex: _selectedNavIndex,
-      ), //Pass our custom navBar into the scaffold
     );
   }
 

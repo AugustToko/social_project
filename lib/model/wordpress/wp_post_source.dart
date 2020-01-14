@@ -1,25 +1,25 @@
 import 'dart:convert';
 
-class WPweiranPostSource {
+class WpPostSource {
   int counts;
-  List<WPweiran> feedList;
+  List<WpPost> feedList;
 
-  WPweiranPostSource.fromParams({this.counts, this.feedList});
+  WpPostSource.fromParams({this.counts, this.feedList});
 
-  WPweiranPostSource.fromJson(List<dynamic> json) {
+  WpPostSource.fromJson(List<dynamic> json) {
     feedList = List();
     for (var value in json) {
-      feedList.add(WPweiran.fromJson(value));
+      feedList.add(WpPost.fromJson(value));
     }
     counts = feedList.length;
   }
 
   /// 构造
-  factory WPweiranPostSource(jsonStr) => jsonStr == null
+  factory WpPostSource(jsonStr) => jsonStr == null
       ? null
       : jsonStr is String
-          ? new WPweiranPostSource.fromJson(json.decode(jsonStr))
-          : new WPweiranPostSource.fromJson(jsonStr);
+          ? new WpPostSource.fromJson(json.decode(jsonStr))
+          : new WpPostSource.fromJson(jsonStr);
 
   @override
   String toString() {
@@ -27,7 +27,7 @@ class WPweiranPostSource {
   }
 }
 
-class WPweiran {
+class WpPost {
   int id;
   String date;
   String dateGmt;
@@ -55,7 +55,7 @@ class WPweiran {
 //  List<Null> tags;
   Links lLinks;
 
-  WPweiran(
+  WpPost(
       {this.id,
       this.date,
       this.dateGmt,
@@ -81,7 +81,7 @@ class WPweiran {
 //        this.tags,
       this.lLinks});
 
-  WPweiran.fromJson(Map<String, dynamic> json) {
+  WpPost.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     date = json['date'];
     dateGmt = json['date_gmt'];

@@ -275,7 +275,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                   },
                   onLongPress: () {
                     BottomSheetUtil.showSheetBottom(
-                        context, null, Menu(title: "Title", items: ["data"]), (i, menu) {
+                        context, null, Menu(title: "Title", items: ["data"]),
+                        (i, menu) {
                       showToast("You clicked ${menu.items[i]}",
                           position: ToastPosition.bottom);
                     });
@@ -418,7 +419,9 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
         semanticLabel: 'Label',
         actions: <Widget>[
           FlatButton(
-              onPressed: () => Navigator.pop(context), child: Text('Close')),
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close'),
+          ),
         ],
       ),
     );

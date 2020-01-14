@@ -1,5 +1,7 @@
 import 'package:http_client_helper/http_client_helper.dart';
 import 'package:social_project/model/wordpress/wp_login_result.dart';
+import 'package:social_project/model/wordpress/wp_post_source.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -176,6 +178,23 @@ class NetTools {
     return data;
   }
 
+  static Future<WpUser> getWpUserInfoAuto(int userId) async {
+    // 解析 URL
+    final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
+        "/wp-json/wp/v2/users/" +
+        userId.toString();
+
+    WpUser data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      data = WpUser.fromJson(json.decode(result.body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data;
+  }
+
   static Future<WpLoginResult> getWpLoginResult(
       String webSite, String userName, String password) async {
     // 解析 URL
@@ -211,6 +230,40 @@ class NetTools {
     try {
       var result = await HttpClientHelper.post(url, body: aut);
       data = WpLoginResult.fromJson(json.decode(result.body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data;
+  }
+
+  static Future<WpPostSource> getPosts(
+      final String webSite, final int userId, final int count) async {
+    // 解析 URL
+    final String url =
+        webSite + "/wp-json/wp/v2/posts?author=$userId&per_page=$count";
+
+    WpPostSource data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      data = WpPostSource.fromJson(json.decode(result.body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data;
+  }
+
+  static Future<WpPostSource> getPostsAuto(
+      final int userId, final int count) async {
+    // 解析 URL
+    final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
+        "/wp-json/wp/v2/posts?author=$userId&per_page=$count";
+
+    WpPostSource data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      data = WpPostSource.fromJson(json.decode(result.body));
     } catch (exception, stack) {
       print(exception);
       print(stack);

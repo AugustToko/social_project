@@ -1,4 +1,11 @@
 class WpUser {
+
+  static WpUser defaultUser = WpUser(
+      url: "",
+      name: "User",
+      id: -1,
+      avatarUrls: AvatarUrls(s24: "", s48: "", s96: ""));
+
   int id;
   String name;
   String url;
