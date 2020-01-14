@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/ui/widgets/common_divider.dart';
 import 'package:social_project/ui/widgets/common_scaffold.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
+import 'package:social_project/utils/cache_center.dart';
 
 class ProfileOnePage extends StatelessWidget {
   var deviceSize;
@@ -148,7 +149,7 @@ class ProfileOnePage extends StatelessWidget {
         children: <Widget>[
           profileColumn(),
           CommonDivider(),
-          followColumn(deviceSize),
+//          followColumn(deviceSize),
           CommonDivider(),
           descColumn(),
           CommonDivider(),
@@ -173,27 +174,3 @@ class ProfileOnePage extends StatelessWidget {
   }
 }
 
-Widget followColumn(Size deviceSize) => Container(
-      height: deviceSize.height * 0.13,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          ProfileTile(
-            title: "1.5K",
-            subtitle: "Posts",
-          ),
-          ProfileTile(
-            title: "2.5K",
-            subtitle: "Followers",
-          ),
-          ProfileTile(
-            title: "10K",
-            subtitle: "Comments",
-          ),
-          ProfileTile(
-            title: "1.2K",
-            subtitle: "Following",
-          )
-        ],
-      ),
-    );

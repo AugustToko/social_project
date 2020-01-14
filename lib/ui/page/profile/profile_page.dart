@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
-import 'package:social_project/ui/page/profile/profile_one_page.dart';
+import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -133,6 +135,15 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                       onPressed: () {
                         //TODO: more
+                        Navigator.pushNamed(
+                          context,
+                          UIData.authorPostsPage,
+                          arguments: {
+                            "url":
+                                WordPressRep.getWpLink(WordPressRep.wpSource),
+                            "wpUser": wpUser
+                          },
+                        );
                       },
                     ),
                   ],
@@ -228,7 +239,7 @@ class ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                      Text(content)
+                      Html(data: content)
                     ],
                   ),
                 ],
@@ -240,12 +251,42 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  static Widget followColumn(final Size deviceSize, final int userId) {
+    final WpPostSource source = CacheCenter.getPosts(userId);
+
+    return Container(
+      height: deviceSize.height * 0.13,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          ProfileTile(
+            title:
+                source == null ? "Loading" : source.feedList.length.toString(),
+            subtitle: "Posts",
+          ),
+          ProfileTile(
+            title: "2.5K",
+            subtitle: "Followers",
+          ),
+          ProfileTile(
+            title: "10K",
+            subtitle: "Comments",
+          ),
+          ProfileTile(
+            title: "1.2K",
+            subtitle: "Following",
+          )
+        ],
+      ),
+    );
+  }
+
   /// Body
   Widget bodyData() => SingleChildScrollView(
         child: Column(
           children: <Widget>[
             profileHeader(),
-            followColumn(deviceSize),
+            followColumn(deviceSize, _wpUserId),
             imagesCard(),
             postCard(),
           ],
@@ -255,20 +296,61 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+
+    _destroy = false;
+
     if (_wpUserId != -1) {
+      LogUtils.d("Profile Page", "userId != -1");
+
       NetTools.getWpUserInfoAuto(_wpUserId).then((user) {
         CacheCenter.putUser(_wpUserId, user);
         wpUser = user;
+        if (!_destroy) {
+          setState(() {});
+        }
+      });
 
-        NetTools.getPostsAuto(wpUser.id, 5).then((wpPostsSource) {
+      final WpPostSource wpSource = CacheCenter.getPosts(_wpUserId);
+      if (wpSource == null) {
+        NetTools.getAllPosts(_wpUserId).then((wpPostSource) {
+          CacheCenter.putPosts(_wpUserId, wpPostSource);
           if (!_destroy) {
+            // 更新 followColumn
+            setState(() {});
+          }
+//          final List<WpPost> posts = [];
+//          posts.addAll(wpPostSource.feedList);
+//          posts.removeRange(0, 5);
+//          updateRecentlyPosts(posts);
+        });
+      } else {
+//        final List<WpPost> posts = [];
+//        posts.addAll(wpSource.feedList);
+//        posts.removeRange(0, 5);
+//        updateRecentlyPosts(posts);
+      }
+
+      NetTools.getPostsAuto(wpUser.id, 5).then((wpPostsSource) {
+        if (!_destroy) {
+          setState(() {
             wpPostsSource.feedList.forEach((post) {
               _posts.add(articleCard(post));
             });
-            setState(() {});
-          }
-        });
+          });
+        }
       });
+
+    } else {
+      LogUtils.d("Profile Page", "userId == -1");
+    }
+  }
+
+  void _updateRecentlyPosts(final List<WpPost> posts) {
+    posts.forEach((post) {
+      _posts.add(articleCard(post));
+    });
+    if (!_destroy) {
+      setState(() {});
     }
   }
 

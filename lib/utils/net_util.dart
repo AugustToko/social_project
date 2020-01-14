@@ -270,4 +270,21 @@ class NetTools {
     }
     return data;
   }
+
+  static Future<WpPostSource> getAllPosts(
+      final int userId) async {
+    // 解析 URL
+    final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
+        "/wp-json/wp/v2/posts?author=$userId&per_page=100&page=1";
+
+    WpPostSource data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      data = WpPostSource.fromJson(json.decode(result.body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data;
+  }
 }

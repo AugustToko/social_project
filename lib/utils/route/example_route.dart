@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:social_project/model/wordpress/wp_rep_author_posts.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/home_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
+import 'package:social_project/ui/page/posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
@@ -76,6 +78,17 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         ),
         showStatusBar: false,
         routeName: UIData.wpPostDetail,
+        pageRouteType: PageRouteType.transparent,
+      );
+      break;
+    case UIData.authorPostsPage:
+      return RouteResult(
+        widget: PostsPage(
+          arguments['url'],
+          arguments['wpUser'],
+        ),
+        showStatusBar: false,
+        routeName: UIData.authorPostsPage,
         pageRouteType: PageRouteType.transparent,
       );
       break;

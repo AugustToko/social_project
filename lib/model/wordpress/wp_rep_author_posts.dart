@@ -4,36 +4,19 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_post_source.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/utils/log.dart';
 
-enum WpSource { BlogGeek, WeiRan, MMGal }
-
-class WordPressRep extends LoadingMoreBase<WpPost> {
+/// https://blog.geek-cloud.top/wp-json/wp/v2/posts?author=1
+class AuthorPostsRep extends LoadingMoreBase<WpPost> {
   int pageIndex = 1;
   bool _hasMore = true;
   bool forceRefresh = false;
 
-  static const WpSource defaultWpSource = WpSource.BlogGeek;
-
-  static WpSource wpSource = defaultWpSource;
-
-  static const String baseWeiranUrl = "https://www.weiran.org.cn";
-  static const String baseMmgalUrl = "https://www.mmgal.com";
-  static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
-
-  /// 获取第 x 页
-  static const String _posts = "/wp-json/wp/v2/posts?page=";
-
-  /// 获取最新十篇文章
-  static const String _posts2 = "/wp-json/wp/v2/posts";
-
-//  static const String _urlBlogGeekPost = baseBlogGeekUrl + _posts;
-//  static const String _urlWeiranPost = baseWeiranUrl + _posts;
-
   String url;
-  static const String postsOfAuthorX = "/wp-json/wp/v2/posts?author=";
+  int userId;
 
-  WordPressRep(this.url);
+  AuthorPostsRep(this.url, this.userId);
 
   @override
   bool get hasMore => (_hasMore && length < 300) || forceRefresh;
@@ -59,9 +42,11 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
     bool isSuccess = false;
     try {
       var result =
-          await HttpClientHelper.get(url + _posts + pageIndex.toString());
+          await HttpClientHelper.get(url + WordPressRep.postsOfAuthorX + userId.toString());
 
       var data = result.body;
+
+      // 去除 json 下的注释
       if (url.contains("mmgal")) {
         data = data.substring(0, data.indexOf("<!--"));
       }
@@ -91,15 +76,15 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
   static String getWpLink(WpSource wpSource) {
     switch (wpSource) {
       case WpSource.BlogGeek:
-        return baseBlogGeekUrl;
+        return WordPressRep.baseBlogGeekUrl;
         break;
       case WpSource.WeiRan:
-        return baseWeiranUrl;
+        return WordPressRep.baseWeiranUrl;
         break;
       case WpSource.MMGal:
-        return baseMmgalUrl;
+        return WordPressRep.baseMmgalUrl;
         break;
     }
-    return baseBlogGeekUrl;
+    return WordPressRep.baseBlogGeekUrl;
   }
 }
