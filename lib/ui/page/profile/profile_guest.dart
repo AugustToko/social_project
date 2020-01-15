@@ -68,10 +68,69 @@ class _ProfileContentState extends State<ProfileContent> {
                   }
                 },
                 subtitle: Text(
-                  "View profile",
+                  "查看个人资料",
                   style:
                       TextStyle(color: Theme.of(context).textTheme.title.color),
                 ),
+              ),
+              Divider(),
+              CacheCenter.tokenCache == null
+                  ? Container()
+                  : ListTile(
+                      leading: Icon(
+                        Icons.message,
+                        color: Colors.green,
+                      ),
+                      title: buildText(context, "消息"),
+                      trailing: buildArrowIcon(context, Icons.arrow_right),
+                      onTap: () {
+                        //TODO: 消息
+                      },
+                    ),
+              Divider(),
+              ListTile(
+                leading: Icon(
+                  Icons.share,
+                  color: Colors.cyan,
+                ),
+                title: Text('推荐给好友'),
+                trailing: buildArrowIcon(context, Icons.arrow_right),
+                onTap: () {
+                  //TODO: 推荐给好友
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.thumb_up,
+                  color: Colors.blue,
+                ),
+                title: Text('给 ${UIData.appName} 一个好评'),
+                trailing: buildArrowIcon(context, Icons.arrow_right),
+                onTap: () {
+                  //TODO: 给 ${UIData.appName} 一个好评
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.mail,
+                  color: Colors.orange,
+                ),
+                title: Text('联系我们'),
+                trailing: buildArrowIcon(context, Icons.arrow_right),
+                onTap: () {
+                  //TODO: 联系我们
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  color: Colors.grey,
+                ),
+                title: Text('设置'),
+                trailing: buildArrowIcon(context, Icons.arrow_right),
+                onTap: () {
+                  Navigator.pushNamed(context, UIData.settingsPage);
+                },
               ),
               Divider(),
               CacheCenter.tokenCache == null
@@ -80,19 +139,10 @@ class _ProfileContentState extends State<ProfileContent> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(
-                            Icons.message,
-                            color: Colors.green,
-                          ),
-                          title: buildText(context, "Message"),
-                          trailing: buildArrowIcon(context, Icons.arrow_right),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          leading: Icon(
                             Icons.exit_to_app,
-                            color: Colors.orange,
+                            color: Colors.red,
                           ),
-                          title: buildText(context, "Logout"),
+                          title: buildText(context, "登出"),
                           trailing: buildArrowIcon(context, Icons.arrow_right),
                           onTap: () {
                             DialogUtil.showLogoutDialog(context, () {

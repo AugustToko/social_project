@@ -10,6 +10,7 @@ import 'package:social_project/ui/page/sample/content/save_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
 import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/ui/widgets/user_account_drawer.dart';
+import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 import '../../main.dart';
 
@@ -33,11 +34,11 @@ class _IndexState extends State<HomePage> {
   void initState() {
     //Declare some buttons for our tab bar
     _navBarItems = [
-      NavBarItemData("Home", OMIcons.home, 110, Color(0xff01b87d)),
-      NavBarItemData("Search", OMIcons.search, 110, Color(0xff594ccf)),
-      NavBarItemData("Message", OMIcons.message, 115, Color(0xff09a8d9)),
-      NavBarItemData("Saved", OMIcons.save, 105, Color(0xfff2873f)),
-      NavBarItemData("Profile", OMIcons.person, 100, Color(0xffcf4c7a)),
+      NavBarItemData("首页", OMIcons.home, 110, Color(0xff01b87d)),
+      NavBarItemData("搜索", OMIcons.search, 110, Color(0xff594ccf)),
+      NavBarItemData("消息", OMIcons.message, 115, Color(0xff09a8d9)),
+      NavBarItemData("收藏", OMIcons.save, 105, Color(0xfff2873f)),
+      NavBarItemData("我", OMIcons.person, 100, Color(0xffcf4c7a)),
     ];
 
     //Create the views which will be mapped to the indices for our nav btns
@@ -78,26 +79,7 @@ class _IndexState extends State<HomePage> {
           currentIndex: _selectedNavIndex,
         ), //Pass our custom navBar into the scaffold
       ),
-      onWillPop: () => showDialog(
-        barrierDismissible: true,
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Exit Social Project'),
-          content: Text("Sure?"),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('No'),
-            ),
-            FlatButton(
-              onPressed: () async {
-                await App.exitApp();
-              },
-              child: Text('Exit'),
-            ),
-          ],
-        ),
-      ),
+      onWillPop: () => DialogUtil.showExitDialog(context),
     );
   }
 

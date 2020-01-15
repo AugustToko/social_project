@@ -2,6 +2,7 @@ import 'package:social_project/model/wordpress/wp_login_result.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/log.dart';
+import 'package:social_project/utils/net_util.dart';
 
 /// 缓存中心
 class CacheCenter {
@@ -10,12 +11,13 @@ class CacheCenter {
 
   static Map<int, WpUser> _userCache = Map();
 
+  /// 存储 [NetTools.getAllPosts(userId)]
   static Map<int, WpPostSource> _userPosts = Map();
 
   /// 用作历史记录
-  static Map<String, WpLoginResult> _wpTokenCache = Map();
+  static Map<String, WpLoginResultDone> _wpTokenCache = Map();
 
-  static WpLoginResult tokenCache;
+  static WpLoginResultDone tokenCache;
 
   static WpUser getUser(final int userId) {
     if (!_userCache.containsKey(userId)) {
@@ -31,7 +33,7 @@ class CacheCenter {
     _userCache[userId] = user;
   }
 
-  static void putToken(final WpLoginResult result) {
+  static void putToken(final WpLoginResultDone result) {
     _wpTokenCache[result.userDisplayName] = result;
     tokenCache = result;
   }

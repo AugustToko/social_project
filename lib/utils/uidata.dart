@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
+import 'package:social_project/ui/page/posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_one_page.dart';
 import 'package:social_project/ui/page/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';

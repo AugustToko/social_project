@@ -94,13 +94,13 @@ class ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Photos",
+                      "照片",
                       style: TextStyle(
                           fontWeight: FontWeight.w700, fontSize: 18.0),
                     ),
                     MaterialButton(
                       child: Text(
-                        "More",
+                        "查看更多",
                         style: TextStyle(color: Colors.blue),
                       ),
                       onPressed: () {
@@ -140,13 +140,13 @@ class ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Posts (Latest 5 articles)",
+                      "文章 (显示最新的 5 篇)",
                       style: TextStyle(
                           fontWeight: FontWeight.w700, fontSize: 18.0),
                     ),
                     MaterialButton(
                       child: Text(
-                        "More",
+                        "查看更多",
                         style: TextStyle(color: Colors.blue),
                       ),
                       onPressed: _morePosts,
@@ -188,10 +188,10 @@ class ProfilePageState extends State<ProfilePage> {
               context,
               _wpUser,
               Menu(title: "Title", items: [
-                "Open source url",
-                "Share",
-                "Add to favourite",
-                "Hide",
+                "打开原网站",
+                "分享",
+                "添加到喜欢列表",
+                "隐藏此文章",
               ]), (i, menu) {
             switch (i) {
               case 0:
@@ -276,30 +276,30 @@ class ProfilePageState extends State<ProfilePage> {
               iconSize: iconSize,
               icon: ProfileTile(
                 title: source == null
-                    ? "Loading"
+                    ? "加载中..."
                     : source.feedList.length.toString(),
-                subtitle: "Posts",
+                subtitle: "文章",
               ),
               onPressed: _morePosts),
           IconButton(
               iconSize: iconSize,
               icon: ProfileTile(
                 title: "1.2K",
-                subtitle: "Following",
+                subtitle: "正在关注",
               ),
               onPressed: () {}),
           IconButton(
               iconSize: iconSize,
               icon: ProfileTile(
                 title: "2.5K",
-                subtitle: "Followers",
+                subtitle: "关注者",
               ),
               onPressed: () {}),
           IconButton(
               iconSize: iconSize,
               icon: ProfileTile(
                 title: "10K",
-                subtitle: "Comments",
+                subtitle: "评论",
               ),
               onPressed: () {}),
         ],
@@ -312,7 +312,7 @@ class ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: const Text("Profile Page"),
+              title: Text(_wpUser.name + " 的资料"),
               actions: <Widget>[
                 //TODO: menu
                 PopupMenuButton<Choice>(
@@ -353,6 +353,7 @@ class ProfilePageState extends State<ProfilePage> {
     if (_wpUserId != -1) {
       LogUtils.d("Profile Page", "userId != -1");
 
+      // 更新 _wpUser
       NetTools.getWpUserInfoAuto(_wpUserId).then((user) {
         CacheCenter.putUser(_wpUserId, user);
         _wpUser = user;
@@ -381,7 +382,9 @@ class ProfilePageState extends State<ProfilePage> {
 //        updateRecentlyPosts(posts);
       }
 
-      NetTools.getPostsAuto(_wpUser.id, 5).then((wpPostsSource) {
+      NetTools.getPostsAuto(_wpUserId, 5).then((wpPostsSource) {
+        print("getpostauto id: ${_wpUser.id}");
+        print("getpostauto size: ${wpPostsSource.feedList.length}");
         if (!_destroy) {
           setState(() {
             wpPostsSource.feedList.forEach((post) {
@@ -390,6 +393,7 @@ class ProfilePageState extends State<ProfilePage> {
           });
         }
       });
+
     } else {
       LogUtils.d("Profile Page", "userId == -1");
     }

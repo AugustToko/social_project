@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_user.dart';
+import 'package:social_project/utils/log.dart';
 
 class NetTools {
   /// 此段介绍WP REST API 常用的获取数据（GET）的接口，提交数据因涉及到较为复杂的认证，此篇文章限于篇幅，后面看情况，再计划出一篇专门的WP REST API认证的文章单独介绍。
@@ -195,7 +196,7 @@ class NetTools {
     return data;
   }
 
-  static Future<WpLoginResult> getWpLoginResult(
+  static Future<WpLoginResultDone> getWpLoginResult(
       String webSite, String userName, String password) async {
     // 解析 URL
     final String url = webSite + "/wp-json/jwt-auth/v1/token";
@@ -205,10 +206,10 @@ class NetTools {
       'password': password,
     };
 
-    WpLoginResult data;
+    WpLoginResultDone data;
     try {
       var result = await HttpClientHelper.post(url, body: aut);
-      data = WpLoginResult.fromJson(json.decode(result.body));
+      data = WpLoginResultDone.fromJson(json.decode(result.body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -216,7 +217,7 @@ class NetTools {
     return data;
   }
 
-  static Future<WpLoginResult> getTokenWpUserInfo(
+  static Future<WpLoginResultDone> getTokenWpUserInfo(
       String webSite, String userName, String password) async {
     // 解析 URL
     final String url = webSite + "/wp-json/jwt-auth/v1/token";
@@ -226,10 +227,10 @@ class NetTools {
       'password': password,
     };
 
-    WpLoginResult data;
+    WpLoginResultDone data;
     try {
       var result = await HttpClientHelper.post(url, body: aut);
-      data = WpLoginResult.fromJson(json.decode(result.body));
+      data = WpLoginResultDone.fromJson(json.decode(result.body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -259,6 +260,8 @@ class NetTools {
     // 解析 URL
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
         "/wp-json/wp/v2/posts?author=$userId&per_page=$count";
+
+    LogUtils.d("getPostsAuto", "URL: $url");
 
     WpPostSource data;
     try {

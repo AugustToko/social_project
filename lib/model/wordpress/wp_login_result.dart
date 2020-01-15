@@ -1,4 +1,12 @@
+//TODO: 使用完整的登陆返回数据
 class WpLoginResult {
+  // 成功数据
+  WpLoginResultDone done;
+  // 失败数据
+  WpLoginResultFail fail;
+}
+
+class WpLoginResultDone {
   String token;
   int userId;
   String userEmail;
@@ -6,7 +14,7 @@ class WpLoginResult {
   String userDisplayName;
   UserCaps userCaps;
 
-  WpLoginResult(
+  WpLoginResultDone(
       {this.token,
       this.userId,
       this.userEmail,
@@ -14,7 +22,7 @@ class WpLoginResult {
       this.userDisplayName,
       this.userCaps});
 
-  WpLoginResult.fromJson(Map<String, dynamic> json) {
+  WpLoginResultDone.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     userId = json['user_id'];
     userEmail = json['user_email'];
@@ -57,6 +65,7 @@ class UserCaps {
 
 /// -------------------
 
+/// 错误信息
 class WpLoginResultFail {
   String code;
   String message;

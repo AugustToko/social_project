@@ -7,7 +7,6 @@ import 'package:html/dom.dart' as dom;
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
-import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
@@ -34,9 +33,10 @@ class PostsPage extends StatefulWidget {
 }
 
 class _WordPressPageState extends State<PostsPage> {
-  final MyExtendedMaterialTextSelectionControls
-      _myExtendedMaterialTextSelectionControls =
-      MyExtendedMaterialTextSelectionControls();
+
+//  final MyExtendedMaterialTextSelectionControls
+//      _myExtendedMaterialTextSelectionControls =
+//      MyExtendedMaterialTextSelectionControls();
 
   AuthorPostsRep listSourceRepository;
 
@@ -88,7 +88,7 @@ class _WordPressPageState extends State<PostsPage> {
                   LoadingMoreSliverList(
                     SliverListConfig<WpPost>(
                       collectGarbage: (List<int> indexes) {
-                        ///collectGarbage
+                        ///TODO: collectGarbage
                         indexes.forEach((index) {
 //                          final item = listSourceRepository[index];
 //                          if (item.hasImage) {
@@ -230,41 +230,6 @@ class _WordPressPageState extends State<PostsPage> {
                                               "Image Error----------------end----------------");
                                         },
                                       ),
-//                                          CupertinoButton(
-//                                              child: Material(
-//                                                color: Colors.transparent,
-//                                                child: Ink(
-//                                                  decoration: BoxDecoration(
-//                                                      gradient: LinearGradient(
-//                                                    begin: Alignment.topCenter,
-//                                                    end: Alignment.bottomCenter,
-//                                                    colors: [
-//                                                      Colors.white,
-//                                                      Theme.of(context)
-//                                                          .backgroundColor,
-//                                                    ],
-//                                                  )),
-//                                                  child: Padding(
-//                                                    padding:
-//                                                        const EdgeInsets.all(
-//                                                            0.0),
-//                                                    child: Row(
-//                                                      mainAxisAlignment:
-//                                                          MainAxisAlignment
-//                                                              .center,
-//                                                      children: <Widget>[
-//                                                        Text("Click for more")
-//                                                      ],
-//                                                    ),
-//                                                  ),
-//                                                ),
-//                                              ),
-//                                              onPressed: () {}),
-
-//                                          Image.asset(
-//                                              'assets/images/linear_mask.png',
-//                                              fit: BoxFit.cover,
-//                                              package: App.pkg)
                                     ],
                                   ),
                                   padding: EdgeInsets.only(
@@ -273,22 +238,6 @@ class _WordPressPageState extends State<PostsPage> {
                                     bottom: margin,
                                   ),
                                 ),
-                                // 标签
-//                                Padding(
-//                                  padding:
-//                                      EdgeInsets.symmetric(horizontal: margin),
-//                                  child: buildTagsWidget(item, context),
-//                                ),
-                                // 图片区域
-//                                PicGridView(
-//                                  tuChongItem: item,
-//                                ),
-                                // 操作按钮区域
-//                                Padding(
-//                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-//                                  child: buildBottomWidget(item,
-//                                      showAvatar: false),
-//                                ),
                               ],
                             ),
                           ),

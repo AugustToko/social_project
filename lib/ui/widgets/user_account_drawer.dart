@@ -159,7 +159,7 @@ class UserAccountDrawer extends State<UserAccountWidget> {
                     ? Container()
                     : ListTile(
                         leading: CircleAvatar(child: Icon(Icons.exit_to_app)),
-                        title: Text('Logout'),
+                        title: Text('登出'),
                         onTap: () {
                           DialogUtil.showLogoutDialog(context, () {
                             CacheCenter.tokenCache = null;
@@ -172,35 +172,35 @@ class UserAccountDrawer extends State<UserAccountWidget> {
               ClipRect(
                 child: ListTile(
                   leading: CircleAvatar(child: Icon(Icons.settings)),
-                  title: Text('Settings'),
+                  title: Text('设置'),
                   onTap: () {
                     Navigator.pushNamed(context, UIData.settingsPage);
                   },
                 ),
               ),
-              ListTile(
-                title: Text(
-                  "Opt 4",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-                ),
-                leading: Icon(
-                  Icons.timeline,
-                  color: Colors.cyan,
-                ),
-                onTap: () {},
-              ),
-              Divider(),
-              ListTile(
-                title: Text(
-                  "Opt 5",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-                ),
-                leading: Icon(
-                  Icons.settings,
-                  color: Colors.brown,
-                ),
-                onTap: () {},
-              ),
+//              ListTile(
+//                title: Text(
+//                  "Opt 4",
+//                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+//                ),
+//                leading: Icon(
+//                  Icons.timeline,
+//                  color: Colors.cyan,
+//                ),
+//                onTap: () {},
+//              ),
+//              Divider(),
+//              ListTile(
+//                title: Text(
+//                  "Opt 5",
+//                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+//                ),
+//                leading: Icon(
+//                  Icons.settings,
+//                  color: Colors.brown,
+//                ),
+//                onTap: () {},
+//              ),
               Divider(),
               MyAboutTile()
             ],

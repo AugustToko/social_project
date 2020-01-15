@@ -174,7 +174,7 @@ class _WordPressPageState extends State<WordPressPage> {
                         // 裁剪内容
                         // TODO: 裁剪规范，如何使 card 大小适中
                         var contentSmall = content.substring(
-                            0, content.length < 1050 ? content.length : 1050);
+                            0, content.length < 1500 ? content.length : 1500);
 
                         contentSmall += "<h2>......</h2>";
 
@@ -255,6 +255,9 @@ class _WordPressPageState extends State<WordPressPage> {
                                             switch (node.localName) {
                                               case "video":
                                                 return Text("[Video Here]");
+                                              case "img":
+                                                String imageUrl = node.attributes["data-original"];
+                                                return Image.network(imageUrl);
                                               default:
                                                 return null;
                                             }

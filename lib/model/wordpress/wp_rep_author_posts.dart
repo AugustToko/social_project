@@ -36,13 +36,14 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
 
   @override
   Future<bool> loadData([bool isLoadMoreAction = false]) async {
-    LogUtils.d("LoadData url: ", url);
-
     // 标志位
     bool isSuccess = false;
     try {
+
+      // https://blog.geek-cloud.top/wp-json/wp/v2/posts?author=1&per_page=20&page=1
+
       var result = await HttpClientHelper.get(
-          url + WordPressRep.postsOfAuthorX + userId.toString());
+          url + WordPressRep.postsOfAuthorX + userId.toString() + "&per_page=20&page=$pageIndex");
 
       var data = result.body;
 
@@ -54,14 +55,17 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
       var source = WpPostSource.fromJson(json.decode(data));
 
       if (pageIndex == 1) {
-        this.clear();
+        clear();
       }
 
       for (var item in source.feedList) {
-        if (!this.contains(item) && hasMore) this.add(item);
+        if (!contains(item) && hasMore) add(item);
       }
 
       _hasMore = source.feedList.length != 0;
+
+      print(_hasMore);
+
       pageIndex++;
 
       isSuccess = true;
@@ -71,20 +75,5 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
       print(stack);
     }
     return isSuccess;
-  }
-
-  static String getWpLink(WpSource wpSource) {
-    switch (wpSource) {
-      case WpSource.BlogGeek:
-        return WordPressRep.baseBlogGeekUrl;
-        break;
-      case WpSource.WeiRan:
-        return WordPressRep.baseWeiranUrl;
-        break;
-      case WpSource.MMGal:
-        return WordPressRep.baseMmgalUrl;
-        break;
-    }
-    return WordPressRep.baseBlogGeekUrl;
   }
 }

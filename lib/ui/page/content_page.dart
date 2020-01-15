@@ -117,7 +117,7 @@ class _TabBarState extends State<ContentPage>
         title: Text("Social Project"),
         bottom: TabBar(
           tabs: <Tab>[
-            Tab(text: "Featured"),
+            Tab(child: Text("热门",),),
             Tab(text: "TuChong"),
             Tab(text: "Wordpress"),
             Tab(text: "Time line 4"),
@@ -127,7 +127,7 @@ class _TabBarState extends State<ContentPage>
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
-              tooltip: 'Search',
+              tooltip: '搜索',
               onPressed: () {
                 showSearch(
                   context: context,
@@ -138,7 +138,7 @@ class _TabBarState extends State<ContentPage>
           PopupMenuButton<Choice>(
             onSelected: (val) {},
             itemBuilder: (BuildContext context) {
-              return choices.skip(2).map((Choice choice) {
+              return choices.map((Choice choice) {
                 return PopupMenuItem<Choice>(
                   value: choice,
                   child: Text(choice.title),
@@ -183,8 +183,6 @@ class Choice {
 
 // TODO: Sample Menus
 const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.directions_car),
-  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
   const Choice(title: 'Boat', icon: Icons.directions_boat),
   const Choice(title: 'Bus', icon: Icons.directions_bus),
   const Choice(title: 'Train', icon: Icons.directions_railway),

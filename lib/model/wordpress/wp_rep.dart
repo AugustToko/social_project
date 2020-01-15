@@ -21,6 +21,9 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
   static const String baseMmgalUrl = "https://www.mmgal.com";
   static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
 
+  static const String blogGeekReg = "https://blog.geek-cloud.top/wp-login.php?action=register";
+  static const String blogGeekLostPwd = "https://blog.geek-cloud.top/wp-login.php?action=lostpassword";
+
   /// 获取第 x 页
   static const String _posts = "/wp-json/wp/v2/posts?page=";
 

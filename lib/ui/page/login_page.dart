@@ -6,6 +6,7 @@ import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   final userController = TextEditingController();
@@ -39,14 +40,14 @@ class LoginPage extends StatelessWidget {
             height: 30.0,
           ),
           Text(
-            "Welcome to ${UIData.appName}",
+            "欢迎来到 ${UIData.appName}",
             style: TextStyle(fontWeight: FontWeight.w700, color: Colors.green),
           ),
           SizedBox(
             height: 5.0,
           ),
           Text(
-            "Sign in to continue",
+            "登录以继续",
             style: TextStyle(color: Colors.grey),
           ),
         ],
@@ -62,12 +63,11 @@ class LoginPage extends StatelessWidget {
               child: TextField(
                 maxLines: 1,
                 decoration: InputDecoration(
-                  hintStyle:
-                      TextStyle(color: Theme.of(context).textTheme.title.color),
+                  hintStyle: TextStyle(color: Colors.grey),
                   labelStyle:
                       TextStyle(color: Theme.of(context).textTheme.title.color),
-                  hintText: "Enter your username",
-                  labelText: "Username",
+                  hintText: "输入你的用户名",
+                  labelText: "用户名",
                 ),
                 controller: userController,
               ),
@@ -78,12 +78,11 @@ class LoginPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintStyle:
-                      TextStyle(color: Theme.of(context).textTheme.title.color),
+                  hintStyle: TextStyle(color: Colors.grey),
                   labelStyle:
                       TextStyle(color: Theme.of(context).textTheme.title.color),
-                  hintText: "Enter your password",
-                  labelText: "Password",
+                  hintText: "输入你的密码",
+                  labelText: "密码",
                 ),
                 controller: passwordController,
               ),
@@ -98,7 +97,7 @@ class LoginPage extends StatelessWidget {
                 padding: EdgeInsets.all(12.0),
                 shape: StadiumBorder(),
                 child: Text(
-                  "SIGN IN",
+                  "登陆",
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Colors.green,
@@ -106,31 +105,31 @@ class LoginPage extends StatelessWidget {
                   if (!data["pressed"]) {
                     data["pressed"] = false;
                     LogUtils.d("LoginPage", "Login Button Pressed!");
-//                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
-                    NetTools.getWpLoginResult(
-                            WordPressRep.getWpLink(WordPressRep.wpSource),
-                            "chenlongcould",
-                            "18551348272Chen")
+                    NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl,
+                            userController.text, passwordController.text)
                         .then((wpLoginResult) {
+//                    NetTools.getWpLoginResult(
+//                            WordPressRep.getWpLink(WordPressRep.wpSource),
+//                            "chenlongcould",
+//                            "18551348272Chen2")
+//                        .then((wpLoginResult) {
                       if (wpLoginResult.token != null) {
                         CacheCenter.putToken(wpLoginResult);
                         NetTools.getWpUserInfoAuto(wpLoginResult.userId)
                             .then((user) {
                           if (user != null) {
-                            showToast("Login successful!",
-                                position: ToastPosition.bottom);
+                            showToast("登陆成功!", position: ToastPosition.bottom);
                             CacheCenter.putUser(wpLoginResult.userId, user);
                             Navigator.pop(context, NavState.LoginDone);
                           }
                         });
                       } else {
-                        showToast("UserName or Password error!",
-                            position: ToastPosition.bottom);
+                        showToast("用户名或密码错误!", position: ToastPosition.bottom);
                         data["pressed"] = false;
                       }
                     });
                   } else {
-                    showToast("Login...", position: ToastPosition.bottom);
+                    showToast("登陆中...", position: ToastPosition.bottom);
                   }
                 },
               ),
@@ -138,9 +137,41 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 5.0,
             ),
-            Text(
-              "SIGN UP FOR AN ACCOUNT",
-              style: TextStyle(color: Colors.grey),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    padding: EdgeInsets.all(12.0),
+                    shape: StadiumBorder(),
+                    child: Text(
+                      "注册新账号",
+                      style: TextStyle(color: Theme.of(context).textTheme.title.color),
+                    ),
+                    color: Theme.of(context).backgroundColor,
+                    elevation: 0,
+                    onPressed: () {
+                      launch(WordPressRep.blogGeekReg);
+                    },
+                  ),
+                  SizedBox(width: 50,),
+                  RaisedButton(
+                    padding: EdgeInsets.all(12.0),
+                    shape: StadiumBorder(),
+                    child: Text(
+                      "忘记密码",
+                      style: TextStyle(color: Theme.of(context).textTheme.title.color),
+                    ),
+                    color: Theme.of(context).backgroundColor,
+                    elevation: 0,
+                    onPressed: () {
+                      launch(WordPressRep.blogGeekLostPwd);
+
+                    },
+                  )
+                ],
+              ),
             ),
           ],
         ),
