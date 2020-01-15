@@ -12,7 +12,6 @@ class EmptyPage extends StatefulWidget {
 class _EmptyPageState extends State<EmptyPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
         child: Column(

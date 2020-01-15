@@ -18,6 +18,7 @@ class LabelBelowIcon extends StatelessWidget {
       this.circleColor,
       this.isCircleEnabled = true,
       this.betweenHeight = 5.0});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

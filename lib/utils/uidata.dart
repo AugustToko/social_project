@@ -45,8 +45,6 @@ class UIData {
   /// [PostsPage]
   static const String authorPostsPage = "/authorPostsPage";
 
-  static const String profileOneRoute = "/View Profile";
-  static const String profileTwoRoute = "/Profile 2";
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";
   static const String timelineTwoRoute = "/Tweets";
@@ -68,7 +66,8 @@ class UIData {
   static const String developerName = "Crypto Studio";
 
   /// 开发者头像
-  static const String developerAvatar = "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4";
+  static const String developerAvatar =
+      "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4";
 
   /// 开发者邮箱
   static const String developerEmail = "1461796308@qq.com";
@@ -129,7 +128,6 @@ class UIData {
 
   //randomcolor
   static final Random _random = new Random();
-
 
   /// Returns a random color.
   static Color next() {

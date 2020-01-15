@@ -8,6 +8,7 @@ class DollarText extends SpecialText {
   static const String flag = "\$";
   final int start;
   final BuilderType type;
+
   DollarText(TextStyle textStyle, SpecialTextGestureTapCallback onTap,
       {this.type, this.start})
       : super(flag, flag, textStyle, onTap: onTap);

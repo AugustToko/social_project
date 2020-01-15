@@ -271,8 +271,7 @@ class NetTools {
     return data;
   }
 
-  static Future<WpPostSource> getAllPosts(
-      final int userId) async {
+  static Future<WpPostSource> getAllPosts(final int userId) async {
     // 解析 URL
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
         "/wp-json/wp/v2/posts?author=$userId&per_page=100&page=1";

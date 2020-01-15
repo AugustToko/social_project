@@ -5,6 +5,7 @@ import 'package:social_project/utils/uidata.dart';
 class LoginBackground extends StatelessWidget {
   final showIcon;
   final image;
+
   LoginBackground({this.showIcon = true, this.image});
 
   Widget topHalf(BuildContext context) {

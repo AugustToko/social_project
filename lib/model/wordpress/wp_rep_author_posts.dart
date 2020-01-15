@@ -41,8 +41,8 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
     // 标志位
     bool isSuccess = false;
     try {
-      var result =
-          await HttpClientHelper.get(url + WordPressRep.postsOfAuthorX + userId.toString());
+      var result = await HttpClientHelper.get(
+          url + WordPressRep.postsOfAuthorX + userId.toString());
 
       var data = result.body;
 

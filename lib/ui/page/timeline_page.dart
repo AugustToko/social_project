@@ -9,10 +9,7 @@ import 'package:share/share.dart';
 import 'package:social_project/logic/bloc/post_bloc.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/post.dart';
-import 'package:social_project/ui/widgets/about_tile.dart';
-import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:video_player/video_player.dart';
@@ -217,7 +214,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           clearMemoryCacheIfFailed: true,
           //cancelToken: cancellationToken,
         ), () {
-      _showAlertDialog();
+      showToast("Building...");
     });
   }
 
@@ -385,83 +382,27 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: bodyData(),
-      floatingActionButton: StreamBuilder<bool>(
-        stream: _postBloc.fabVisible,
-        initialData: true,
-        builder: (context, snapshot) => AnimatedOpacity(
-          duration: Duration(milliseconds: 200),
-          opacity: snapshot.data ? 1.0 : 0.0,
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                UIData.sendPage,
-              );
-            },
-            backgroundColor: Colors.white,
-            child: CustomPaint(
-              child: Container(),
-              foregroundPainter: FloatingPainter(),
-            ),
-          ),
-        ),
-      ),
+//      floatingActionButton: StreamBuilder<bool>(
+//        stream: _postBloc.fabVisible,
+//        initialData: true,
+//        builder: (context, snapshot) => AnimatedOpacity(
+//          duration: Duration(milliseconds: 200),
+//          opacity: snapshot.data ? 1.0 : 0.0,
+//          child: FloatingActionButton(
+//            onPressed: () {
+//              Navigator.pushNamed(
+//                context,
+//                UIData.sendPage,
+//              );
+//            },
+//            backgroundColor: Colors.white,
+//            child: CustomPaint(
+//              child: Container(),
+//              foregroundPainter: FloatingPainter(),
+//            ),
+//          ),
+//        ),
+//      ),
     );
   }
-
-  _showAlertDialog() {
-    showDialog(
-      barrierDismissible: true,
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Building'),
-        content: Text("放大图片"),
-        semanticLabel: 'Label',
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FloatingPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint amberPaint = Paint()
-      ..color = Colors.amber
-      ..strokeWidth = 5;
-
-    Paint greenPaint = Paint()
-      ..color = Colors.green
-      ..strokeWidth = 5;
-
-    Paint bluePaint = Paint()
-      ..color = Colors.blue
-      ..strokeWidth = 5;
-
-    Paint redPaint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 5;
-
-    canvas.drawLine(Offset(size.width * 0.27, size.height * 0.5),
-        Offset(size.width * 0.5, size.height * 0.5), amberPaint);
-    canvas.drawLine(
-        Offset(size.width * 0.5, size.height * 0.5),
-        Offset(size.width * 0.5, size.height - (size.height * 0.27)),
-        greenPaint);
-    canvas.drawLine(Offset(size.width * 0.5, size.height * 0.5),
-        Offset(size.width - (size.width * 0.27), size.height * 0.5), bluePaint);
-    canvas.drawLine(Offset(size.width * 0.5, size.height * 0.5),
-        Offset(size.width * 0.5, size.height * 0.27), redPaint);
-  }
-
-  @override
-  bool shouldRepaint(FloatingPainter oldDelegate) => false;
-
-  @override
-  bool shouldRebuildSemantics(FloatingPainter oldDelegate) => false;
 }

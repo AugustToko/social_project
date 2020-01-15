@@ -8,11 +8,11 @@ class WpLoginResult {
 
   WpLoginResult(
       {this.token,
-        this.userId,
-        this.userEmail,
-        this.userNicename,
-        this.userDisplayName,
-        this.userCaps});
+      this.userId,
+      this.userEmail,
+      this.userNicename,
+      this.userDisplayName,
+      this.userCaps});
 
   WpLoginResult.fromJson(Map<String, dynamic> json) {
     token = json['token'];
@@ -54,6 +54,7 @@ class UserCaps {
     return data;
   }
 }
+
 /// -------------------
 
 class WpLoginResultFail {

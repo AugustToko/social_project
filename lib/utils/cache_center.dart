@@ -20,7 +20,7 @@ class CacheCenter {
   static WpUser getUser(final int userId) {
     if (!_userCache.containsKey(userId)) {
       LogUtils.d("CacheCenter", "未匹配到 UserID: " + userId.toString());
-      return null;
+      return WpUser.defaultUser;
     } else {
       LogUtils.d("CacheCenter", "匹配到 UserID: " + userId.toString());
       return _userCache[userId];
@@ -41,7 +41,9 @@ class CacheCenter {
   }
 
   static WpPostSource getPosts(final int userId) {
-    if (!_userPosts.containsKey(userId)) return null;
-    else return _userPosts[userId];
+    if (!_userPosts.containsKey(userId))
+      return null;
+    else
+      return _userPosts[userId];
   }
 }

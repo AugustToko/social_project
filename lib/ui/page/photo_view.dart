@@ -119,16 +119,14 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                               BottomSheetUtil.showSheetBottom(
                                   context,
                                   null,
-                                  Menu(
-                                      title: "Title",
-                                      items: [
-                                        "Menu 1",
-                                        "Menu 2",
-                                        "Menu 3",
-                                        "Menu 4",
-                                        "Menu 5",
-                                        "Menu 6",
-                                      ]), (i, menu) {
+                                  Menu(title: "Title", items: [
+                                    "Menu 1",
+                                    "Menu 2",
+                                    "Menu 3",
+                                    "Menu 4",
+                                    "Menu 5",
+                                    "Menu 6",
+                                  ]), (i, menu) {
                                 showToast("You clicked ${menu.items[i]}",
                                     position: ToastPosition.bottom);
                               });

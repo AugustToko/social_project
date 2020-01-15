@@ -8,10 +8,9 @@ import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends StatelessWidget {
-
   final userController = TextEditingController();
   final passwordController = TextEditingController();
-  final Map<String, bool> data = {"pressed" : false};
+  final Map<String, bool> data = {"pressed": false};
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +62,10 @@ class LoginPage extends StatelessWidget {
               child: TextField(
                 maxLines: 1,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
-                  labelStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
+                  hintStyle:
+                      TextStyle(color: Theme.of(context).textTheme.title.color),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).textTheme.title.color),
                   hintText: "Enter your username",
                   labelText: "Username",
                 ),
@@ -77,8 +78,10 @@ class LoginPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
-                  labelStyle: TextStyle(color: Theme.of(context).textTheme.title.color),
+                  hintStyle:
+                      TextStyle(color: Theme.of(context).textTheme.title.color),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).textTheme.title.color),
                   hintText: "Enter your password",
                   labelText: "Password",
                 ),
@@ -105,20 +108,24 @@ class LoginPage extends StatelessWidget {
                     LogUtils.d("LoginPage", "Login Button Pressed!");
 //                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
                     NetTools.getWpLoginResult(
-                        WordPressRep.getWpLink(WordPressRep.wpSource),
-                        "chenlongcould", "18551348272Chen").then((wpLoginResult) {
+                            WordPressRep.getWpLink(WordPressRep.wpSource),
+                            "chenlongcould",
+                            "18551348272Chen")
+                        .then((wpLoginResult) {
                       if (wpLoginResult.token != null) {
                         CacheCenter.putToken(wpLoginResult);
-                        NetTools.getWpUserInfoAuto(wpLoginResult.userId).then((
-                            user) {
+                        NetTools.getWpUserInfoAuto(wpLoginResult.userId)
+                            .then((user) {
                           if (user != null) {
-                            showToast("Login successful!", position: ToastPosition.bottom);
+                            showToast("Login successful!",
+                                position: ToastPosition.bottom);
                             CacheCenter.putUser(wpLoginResult.userId, user);
                             Navigator.pop(context, NavState.LoginDone);
                           }
                         });
                       } else {
-                        showToast("UserName or Password error!", position: ToastPosition.bottom);
+                        showToast("UserName or Password error!",
+                            position: ToastPosition.bottom);
                         data["pressed"] = false;
                       }
                     });
@@ -140,15 +147,14 @@ class LoginPage extends StatelessWidget {
       );
 
   Widget buildButton(
-      String text,
-      Function onPressed, {
-        Color color = Colors.white,
-      }) {
+    String text,
+    Function onPressed, {
+    Color color = Colors.white,
+  }) {
     return FlatButton(
       color: color,
       child: Text(text),
       onPressed: onPressed,
     );
   }
-
 }

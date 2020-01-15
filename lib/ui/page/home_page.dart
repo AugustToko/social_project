@@ -91,7 +91,7 @@ class _IndexState extends State<HomePage> {
             ),
             FlatButton(
               onPressed: () async {
-                await App.pop();
+                await App.exitApp();
               },
               child: Text('Exit'),
             ),

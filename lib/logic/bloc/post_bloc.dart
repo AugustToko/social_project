@@ -9,6 +9,7 @@ class PostBloc {
   final postController = StreamController<List<Post>>();
   final fabController = StreamController<bool>();
   final fabVisibleController = StreamController<bool>();
+
   Sink<bool> get fabSink => fabController.sink;
 
   Stream<List<Post>> get postItems => postController.stream;

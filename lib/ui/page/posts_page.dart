@@ -35,8 +35,8 @@ class PostsPage extends StatefulWidget {
 
 class _WordPressPageState extends State<PostsPage> {
   final MyExtendedMaterialTextSelectionControls
-  _myExtendedMaterialTextSelectionControls =
-  MyExtendedMaterialTextSelectionControls();
+      _myExtendedMaterialTextSelectionControls =
+      MyExtendedMaterialTextSelectionControls();
 
   AuthorPostsRep listSourceRepository;
 
@@ -216,9 +216,7 @@ class _WordPressPageState extends State<PostsPage> {
                                               "fluttercandies://picswiper",
                                               arguments: {
                                                 "index": 0,
-                                                "pics": [
-                                                  PicSwiperItem(url)
-                                                ],
+                                                "pics": [PicSwiperItem(url)],
                                               });
                                         },
                                         onImageError: (p1, p2) {
@@ -307,31 +305,36 @@ class _WordPressPageState extends State<PostsPage> {
       ),
     );
 
-    return Scaffold(appBar: AppBar(title: Text(_wpUser.name + " 's Posts"),),body: ExtendedTextSelectionPointerHandler(
-      //default behavior
-      // child: result,
-      //custom your behavior
-      builder: (states) {
-        return Listener(
-          child: result,
-          behavior: HitTestBehavior.translucent,
-          onPointerDown: (value) {
-            for (var state in states) {
-              if (!state.containsPosition(value.position)) {
-                //clear other selection
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_wpUser.name + " 's Posts"),
+      ),
+      body: ExtendedTextSelectionPointerHandler(
+        //default behavior
+        // child: result,
+        //custom your behavior
+        builder: (states) {
+          return Listener(
+            child: result,
+            behavior: HitTestBehavior.translucent,
+            onPointerDown: (value) {
+              for (var state in states) {
+                if (!state.containsPosition(value.position)) {
+                  //clear other selection
+                  state.clearSelection();
+                }
+              }
+            },
+            onPointerMove: (value) {
+              //clear other selection
+              for (var state in states) {
                 state.clearSelection();
               }
-            }
-          },
-          onPointerMove: (value) {
-            //clear other selection
-            for (var state in states) {
-              state.clearSelection();
-            }
-          },
-        );
-      },
-    ),);
+            },
+          );
+        },
+      ),
+    );
   }
 
   Future<bool> onRefresh() {

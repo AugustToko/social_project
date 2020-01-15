@@ -45,8 +45,8 @@ class BottomSheetUtil {
         ),
       );
 
-  static void showSheetBottom(BuildContext context, WpUser wpUser, Menu menu,
-      Function(int num, Menu menu) func) {
+  static void showSheetBottom(final BuildContext context, final WpUser wpUser, final Menu menu,
+      final Function(int num, Menu menu) func) {
     showModalBottomSheet(
         context: context,
         builder: (context) => Material(

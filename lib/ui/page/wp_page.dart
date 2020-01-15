@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/dom.dart' as dom;
@@ -11,7 +10,6 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
-import 'package:social_project/model/post.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';

@@ -20,7 +20,9 @@ import '../../main.dart';
 class PicSwiper extends StatefulWidget {
   final int index;
   final List<PicSwiperItem> pics;
+
   PicSwiper({this.index, this.pics});
+
   @override
   _PicSwiperState createState() => _PicSwiperState();
 }
@@ -32,6 +34,7 @@ class _PicSwiperState extends State<PicSwiper>
   AnimationController _animationController;
   Animation<double> _animation;
   Function animationListener;
+
 //  CancellationToken _cancelToken;
 //  CancellationToken get cancelToken {
 //    if (_cancelToken == null || _cancelToken.isCanceled)
@@ -235,7 +238,9 @@ class MySwiperPlugin extends StatelessWidget {
   final List<PicSwiperItem> pics;
   final int index;
   final StreamController<int> reBuild;
+
   MySwiperPlugin(this.pics, this.index, this.reBuild);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
@@ -299,5 +304,6 @@ class MySwiperPlugin extends StatelessWidget {
 class PicSwiperItem {
   String picUrl;
   String des;
+
   PicSwiperItem(this.picUrl, {this.des = ""});
 }

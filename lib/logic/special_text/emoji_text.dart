@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class EmojiText extends SpecialText {
   static const String flag = "[";
   final int start;
+
   EmojiText(TextStyle textStyle, {this.start})
       : super(EmojiText.flag, "]", textStyle);
 
@@ -40,6 +41,7 @@ class EmojiUitl {
   final String _emojiFilePath = "assets";
 
   static EmojiUitl _instance;
+
   static EmojiUitl get instance {
     if (_instance == null) _instance = new EmojiUitl._();
     return _instance;

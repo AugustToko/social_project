@@ -58,12 +58,11 @@ class _WpPageState extends State<WpDetailPage> {
                 customRender: (node, children) {
                   if (node is dom.Element) {
                     switch (node.localName) {
-
                       // 处理 <video>
                       case "video":
                         final videoPlayerController =
                             VideoPlayerController.network(
-                              node.attributes["src"],
+                          node.attributes["src"],
                         );
 
                         final chewieController = ChewieController(

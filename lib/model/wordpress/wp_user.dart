@@ -1,5 +1,4 @@
 class WpUser {
-
   static WpUser defaultUser = WpUser(
       url: "",
       name: "User",
@@ -17,14 +16,14 @@ class WpUser {
 
   WpUser(
       {this.id,
-        this.name,
-        this.url,
-        this.description,
-        this.link,
-        this.slug,
-        this.avatarUrls,
+      this.name,
+      this.url,
+      this.description,
+      this.link,
+      this.slug,
+      this.avatarUrls,
 //        this.meta,
-        this.lLinks});
+      this.lLinks});
 
   WpUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -88,7 +87,10 @@ class AvatarUrls {
 class Links {
   List<Self> self;
 
-  Links({this.self, /*this.collection*/});
+  Links({
+    this.self,
+    /*this.collection*/
+  });
 
   Links.fromJson(Map<String, dynamic> json) {
     if (json['self'] != null) {

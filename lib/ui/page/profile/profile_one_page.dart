@@ -79,6 +79,7 @@ class ProfileOnePage extends StatelessWidget {
           ),
         ),
       );
+
   //column4
   Widget accountColumn() => FittedBox(
         fit: BoxFit.fill,
@@ -173,4 +174,3 @@ class ProfileOnePage extends StatelessWidget {
     return _scaffold();
   }
 }
-

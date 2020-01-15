@@ -31,60 +31,58 @@ class App extends StatelessWidget {
 
   /// 亮色主题
   static var themeData = ThemeData(
-    primarySwatch: Colors.blue,
-    primaryColor: Colors.grey.shade50,
-    scaffoldBackgroundColor: Colors.grey.shade50,
-    backgroundColor: Colors.grey.shade50,
-    appBarTheme: AppBarTheme(elevation: 0.0),
-    textTheme: TextTheme(
-      title: ThemeUtil.textLight,
-      body1: ThemeUtil.textLight,
-      subhead: ThemeUtil.textLight,
-      // 用于 Drawer 中选项文字
-      body2: ThemeUtil.textLight,
-      subtitle: ThemeUtil.subtitle,
-      button: ThemeUtil.textLight,
-      // for [AboutListTile]
-      headline: ThemeUtil.textLight,
-    ),
-    cardTheme: CardTheme(color: Colors.grey.shade50),
-//    canvasColor: Colors.grey.shade50,
-    dialogTheme: DialogTheme(
+      primarySwatch: Colors.blue,
+      primaryColor: Colors.grey.shade50,
+      scaffoldBackgroundColor: Colors.grey.shade50,
       backgroundColor: Colors.grey.shade50,
-    ),
-    popupMenuTheme: PopupMenuThemeData(
-      color: Colors.grey.shade50,
-    ),
-    iconTheme: IconThemeData(color: Colors.white)
-  );
+      appBarTheme: AppBarTheme(elevation: 0.0),
+      textTheme: TextTheme(
+        title: ThemeUtil.textLight,
+        body1: ThemeUtil.textLight,
+        subhead: ThemeUtil.textLight,
+        // 用于 Drawer 中选项文字
+        body2: ThemeUtil.textLight,
+        subtitle: ThemeUtil.subtitle,
+        button: ThemeUtil.textLight,
+        // for [AboutListTile]
+        headline: ThemeUtil.textLight,
+      ),
+      cardTheme: CardTheme(color: Colors.grey.shade50),
+//    canvasColor: Colors.grey.shade50,
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.grey.shade50,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: Colors.grey.shade50,
+      ),
+      iconTheme: IconThemeData(color: Colors.white));
 
   /// 深色主题
   static var darkThemeData = ThemeData(
-    primarySwatch: Colors.grey,
-    primaryColor: Colors.grey.shade900,
-    scaffoldBackgroundColor: Colors.grey.shade900,
-    backgroundColor: Colors.grey.shade900,
-    appBarTheme: AppBarTheme(elevation: 0.0),
-    textTheme: TextTheme(
-      title: ThemeUtil.textDark,
-      subhead: ThemeUtil.textDark,
-      body1: ThemeUtil.textDark,
-      body2: ThemeUtil.textDark,
-      subtitle: ThemeUtil.subtitle,
-      button: ThemeUtil.textDark,
-      // for [AboutListTile]
-      headline: ThemeUtil.textDark,
-    ),
-    cardTheme: CardTheme(color: Colors.grey.shade900),
-//    canvasColor: Colors.grey.shade900,
-    dialogTheme: DialogTheme(
+      primarySwatch: Colors.grey,
+      primaryColor: Colors.grey.shade900,
+      scaffoldBackgroundColor: Colors.grey.shade900,
       backgroundColor: Colors.grey.shade900,
-    ),
-    popupMenuTheme: PopupMenuThemeData(
-      color: Colors.grey.shade900,
-    ),
-      iconTheme: IconThemeData(color: Colors.black)
-  );
+      appBarTheme: AppBarTheme(elevation: 0.0),
+      textTheme: TextTheme(
+        title: ThemeUtil.textDark,
+        subhead: ThemeUtil.textDark,
+        body1: ThemeUtil.textDark,
+        body2: ThemeUtil.textDark,
+        subtitle: ThemeUtil.subtitle,
+        button: ThemeUtil.textDark,
+        // for [AboutListTile]
+        headline: ThemeUtil.textDark,
+      ),
+      cardTheme: CardTheme(color: Colors.grey.shade900),
+//    canvasColor: Colors.grey.shade900,
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.grey.shade900,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: Colors.grey.shade900,
+      ),
+      iconTheme: IconThemeData(color: Colors.black));
 
   // This widget is the root of your application.
   @override
@@ -166,7 +164,7 @@ class App extends StatelessWidget {
   }
 
   /// 退出 APP
-  static Future<void> pop() async {
+  static Future<void> exitApp() async {
     await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 

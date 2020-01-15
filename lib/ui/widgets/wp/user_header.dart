@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:flutter/material.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/utils/widget_default.dart';
 
 /// 根据 wp 所给 userId 获取 user 头像、用户名
 class WpUserHeader extends StatefulWidget {
@@ -41,7 +42,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   final bool showUserName;
   final double _radius;
   final bool _canClick;
-  var tempUser = WpUser.defaultUser;
+  var _wpUser = WpUser.defaultUser;
   final double margin = ScreenUtil.instance.setWidth(22);
 
   _WpUserHeaderState(
@@ -56,12 +57,14 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   void initState() {
     super.initState();
     if (_userId != -1) {
-      tempUser = CacheCenter.getUser(_userId);
-      if (tempUser == null) {
+      _wpUser = CacheCenter.getUser(_userId);
+      if (_wpUser.id == -1) {
         NetTools.getWpUserInfo(WordPressRep.getWpLink(_wpSource), _userId)
             .then((user) {
-          if (user != null && _userId >= 0) {
+              // 检查
+          if (user != null && user.id >= 0) {
             CacheCenter.putUser(_userId, user);
+            _wpUser = user;
             setState(() {});
           }
         });
@@ -70,16 +73,15 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     var stack = Stack(
       children: <Widget>[
         // 头像
-        CircleAvatar(
-            radius: _radius,
-            backgroundImage: NetworkImage(
-                (tempUser == null || tempUser.avatarUrls == null)
-                    ? WpUserHeader.defaultIcon
-                    : tempUser.avatarUrls.s96)),
+        _wpUser.id == -1
+            ? WidgetDefault.defaultCircleAvatar(context)
+            : CircleAvatar(
+                radius: _radius,
+                backgroundImage: NetworkImage(_wpUser.avatarUrls.s96)),
       ],
     );
 
@@ -109,7 +111,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
         ),
         // TODO: 超出屏幕宽度
         // 用户名
-        Text(tempUser.name),
+        Text(_wpUser.name),
       ]);
     }
 

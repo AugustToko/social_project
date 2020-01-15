@@ -16,6 +16,7 @@ class PullToRefreshHeader extends StatelessWidget {
   final PullToRefreshScrollNotificationInfo info;
   final DateTime lastRefreshTime;
   final Color color;
+
   PullToRefreshHeader(this.info, this.lastRefreshTime, {this.color});
 
   @override
@@ -93,7 +94,9 @@ class PullToRefreshHeader extends StatelessWidget {
 
 class RefreshImage extends StatelessWidget {
   final double top;
+
   RefreshImage(this.top);
+
   @override
   Widget build(BuildContext context) {
     final double imageSize = ScreenUtil.getInstance().setWidth(80);

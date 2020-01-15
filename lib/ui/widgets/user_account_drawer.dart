@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
-import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/dialog/alert_dialog_util.dart';
+import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/utils/widget_default.dart';
 
 import 'about_tile.dart';
 
@@ -48,24 +48,34 @@ class UserAccountDrawer extends State<UserAccountWidget> {
                 currentAccountPicture: Stack(
                   children: <Widget>[
                     Positioned.fill(
-                        child: WpUserHeader(
-                      wpSource: WordPressRep.wpSource,
-                      showUserName: false,
-                      userId: _wpUser.id,
-                      radius: 35,
-                      canClick: false,
-                    )),
+                        child: CacheCenter.tokenCache == null
+                            ? WidgetDefault.defaultCircleAvatar(context)
+                            : CircleAvatar(
+                                radius: 25,
+                                backgroundImage:
+                                    NetworkImage(_wpUser.avatarUrls.s96),
+                              )),
                     Positioned.fill(
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context,
-                                CacheCenter.tokenCache == null
-                                    ? UIData.loginPage
-                                    : UIData.profile,
-                                arguments: {"wpUserId": _wpUser.id});
+                          onTap: () async {
+                            if (CacheCenter.tokenCache == null) {
+                              Navigator.pushNamed(context, UIData.loginPage,
+                                      arguments: {"wpUserId": _wpUser.id})
+                                  .then((result) {
+                                print(result);
+                                if (result == NavState.LoginDone) {
+                                  setState(() {
+                                    _wpUser = CacheCenter.getUser(
+                                        CacheCenter.tokenCache.userId);
+                                  });
+                                }
+                              });
+                            } else {
+                              Navigator.pushNamed(context, UIData.profile,
+                                  arguments: {"wpUserId": _wpUser.id});
+                            }
                           },
                           customBorder: CircleBorder(),
                         ),
@@ -145,74 +155,28 @@ class UserAccountDrawer extends State<UserAccountWidget> {
 //                ],
               ),
               ClipRect(
-                child: ListTile(
-                  leading: CircleAvatar(child: Text("A")),
-                  title: Text('Drawer item A'),
-                  onTap: () => {},
-                ),
+                child: CacheCenter.tokenCache == null
+                    ? Container()
+                    : ListTile(
+                        leading: CircleAvatar(child: Icon(Icons.exit_to_app)),
+                        title: Text('Logout'),
+                        onTap: () {
+                          DialogUtil.showLogoutDialog(context, () {
+                            CacheCenter.tokenCache = null;
+                            _wpUser = WpUser.defaultUser;
+                            setState(() {});
+                          });
+                        },
+                      ),
               ),
               ClipRect(
                 child: ListTile(
-                  leading: CircleAvatar(child: Text("B")),
-                  title: Text('Drawer item B'),
-                  onTap: () => {},
-                ),
-              ),
-              ClipRect(
-                child: ListTile(
-                  leading: CircleAvatar(child: Text("B")),
-                  title: Text('Drawer item B'),
-                  onTap: () => {},
-                ),
-              ),
-              ClipRect(
-                child: ListTile(
-                  leading: CircleAvatar(child: Text("B")),
-                  title: Text('Drawer item B'),
-                  onTap: () => {},
-                ),
-              ),
-              ClipRect(
-                child: ListTile(
-                  leading: CircleAvatar(child: Text("S")),
+                  leading: CircleAvatar(child: Icon(Icons.settings)),
                   title: Text('Settings'),
                   onTap: () {
                     Navigator.pushNamed(context, UIData.settingsPage);
                   },
                 ),
-              ),
-              ListTile(
-                title: Text(
-                  "Opt 1",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-                ),
-                leading: Icon(
-                  Icons.person,
-                  color: Colors.blue,
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  "Opt 2",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-                ),
-                leading: Icon(
-                  Icons.shopping_cart,
-                  color: Colors.green,
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  "Opt 3",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
-                ),
-                leading: Icon(
-                  Icons.dashboard,
-                  color: Colors.red,
-                ),
-                onTap: () {},
               ),
               ListTile(
                 title: Text(

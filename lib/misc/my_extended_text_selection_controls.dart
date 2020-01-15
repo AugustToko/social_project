@@ -16,6 +16,7 @@ const double _kToolbarHeight = 44.0;
 class MyExtendedMaterialTextSelectionControls
     extends ExtendedMaterialTextSelectionControls {
   MyExtendedMaterialTextSelectionControls();
+
   @override
   Widget buildToolbar(
     BuildContext context,

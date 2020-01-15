@@ -44,7 +44,6 @@ class TuChongRepository extends LoadingMoreBase<TuChongItem> {
     // 标志位
     bool isSuccess = false;
     try {
-
       var result = await HttpClientHelper.get(url);
       var source = TuChongSource.fromJson(json.decode(result.body));
 

@@ -30,6 +30,7 @@ class DashboardMenuRow extends StatelessWidget {
       this.fourthIcon,
       this.fourthIconCircleColor})
       : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(

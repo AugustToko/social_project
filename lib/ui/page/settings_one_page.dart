@@ -29,7 +29,7 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "Account"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(
@@ -38,7 +38,7 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "Message"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: (){},
+                      onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(
@@ -47,7 +47,7 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "About"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: (){},
+                      onTap: () {},
                     )
                   ],
                 ),

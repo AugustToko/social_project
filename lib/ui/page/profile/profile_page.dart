@@ -18,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProfilePage extends StatefulWidget {
   final int _wpUserId;
 
+  // TODO: 使用 [WpUser] 传参
   ProfilePage(this._wpUserId);
 
   @override
@@ -27,11 +28,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  Size deviceSize;
+  Size _deviceSize;
 
   final int _wpUserId;
 
-  WpUser wpUser = WpUser.defaultUser;
+  WpUser _wpUser = WpUser.defaultUser;
 
   bool _destroy = false;
 
@@ -40,7 +41,7 @@ class ProfilePageState extends State<ProfilePage> {
   ProfilePageState(this._wpUserId);
 
   Widget profileHeader() => Container(
-        height: deviceSize.height / 4,
+        height: _deviceSize.height / 4,
         width: double.infinity,
         child: Card(
           clipBehavior: Clip.antiAlias,
@@ -56,7 +57,7 @@ class ProfilePageState extends State<ProfilePage> {
                         border: Border.all(width: 2.0, color: Colors.white)),
                     child: CircleAvatar(
                         radius: 40,
-                        backgroundImage: NetworkImage(wpUser.avatarUrls.s96)),
+                        backgroundImage: NetworkImage(_wpUser.avatarUrls.s96)),
 //                    WpUserHeader(
 //                      radius: 40,
 //                      userId: wpUser.id,
@@ -66,7 +67,7 @@ class ProfilePageState extends State<ProfilePage> {
 //                    ),
                   ),
                   Text(
-                    wpUser.name,
+                    _wpUser.name,
                     style: TextStyle(fontSize: 20.0),
                   ),
                   Text(
@@ -81,7 +82,7 @@ class ProfilePageState extends State<ProfilePage> {
       );
 
   Widget imagesCard() => Container(
-        height: deviceSize.height / 3.5,
+        height: _deviceSize.height / 3.5,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5.0),
           child: Column(
@@ -153,9 +154,16 @@ class ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              Column(
-                children: _posts,
-              )
+              _posts.length == 0
+                  ? CircularProgressIndicator(
+                      strokeWidth: 4.0,
+                      backgroundColor: Colors.blue,
+                      // value: 0.2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                    )
+                  : Column(
+                      children: _posts,
+                    )
             ],
           ),
         ),
@@ -178,7 +186,7 @@ class ProfilePageState extends State<ProfilePage> {
         onLongPress: () {
           BottomSheetUtil.showSheetBottom(
               context,
-              wpUser,
+              _wpUser,
               Menu(title: "Title", items: [
                 "Open source url",
                 "Share",
@@ -214,7 +222,7 @@ class ProfilePageState extends State<ProfilePage> {
                       WpUserHeader(
                         canClick: false,
                         radius: 20,
-                        userId: wpUser.id,
+                        userId: _wpUser.id,
                         showUserName: true,
                         wpSource: WordPressRep.wpSource,
                       ),
@@ -329,7 +337,7 @@ class ProfilePageState extends State<ProfilePage> {
               ],
             ),
             profileHeader(),
-            followColumn(deviceSize, _wpUserId),
+            followColumn(_deviceSize, _wpUserId),
             imagesCard(),
             postCard(),
           ],
@@ -347,7 +355,7 @@ class ProfilePageState extends State<ProfilePage> {
 
       NetTools.getWpUserInfoAuto(_wpUserId).then((user) {
         CacheCenter.putUser(_wpUserId, user);
-        wpUser = user;
+        _wpUser = user;
         if (!_destroy) {
           setState(() {});
         }
@@ -373,7 +381,7 @@ class ProfilePageState extends State<ProfilePage> {
 //        updateRecentlyPosts(posts);
       }
 
-      NetTools.getPostsAuto(wpUser.id, 5).then((wpPostsSource) {
+      NetTools.getPostsAuto(_wpUser.id, 5).then((wpPostsSource) {
         if (!_destroy) {
           setState(() {
             wpPostsSource.feedList.forEach((post) {
@@ -398,9 +406,17 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    deviceSize = MediaQuery.of(context).size;
+    _deviceSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: bodyData(),
+      floatingActionButton: CacheCenter.tokenCache != null &&
+              CacheCenter.tokenCache.userId == _wpUser.id
+          ? null
+          : FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.person_add),
+            ),
     );
   }
 
@@ -416,9 +432,8 @@ class ProfilePageState extends State<ProfilePage> {
       context,
       UIData.authorPostsPage,
       arguments: {
-        "url":
-        WordPressRep.getWpLink(WordPressRep.wpSource),
-        "wpUser": wpUser
+        "url": WordPressRep.getWpLink(WordPressRep.wpSource),
+        "wpUser": _wpUser
       },
     );
   }

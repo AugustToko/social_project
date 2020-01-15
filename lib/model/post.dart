@@ -31,6 +31,7 @@ class PostCommentType {
   static const int AUDIO = 1;
   static const int VIDEO = 3;
   static const int IMAGE = 4;
+
   /// 文本类型无需更多其它内容
   static const int TEXT = DEFAULT;
   static const int TEXT_IMAGE = 6;
