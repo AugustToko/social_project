@@ -81,7 +81,7 @@ class ProfilePageState extends State<ProfilePage> {
       );
 
   Widget imagesCard() => Container(
-        height: deviceSize.height / 6,
+        height: deviceSize.height / 3.5,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 5.0),
           child: Column(
@@ -89,9 +89,24 @@ class ProfilePageState extends State<ProfilePage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Photos",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Photos",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 18.0),
+                    ),
+                    MaterialButton(
+                      child: Text(
+                        "More",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      onPressed: () {
+                        //TODO: more
+                      },
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -119,7 +134,7 @@ class ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -133,18 +148,7 @@ class ProfilePageState extends State<ProfilePage> {
                         "More",
                         style: TextStyle(color: Colors.blue),
                       ),
-                      onPressed: () {
-                        //TODO: more
-                        Navigator.pushNamed(
-                          context,
-                          UIData.authorPostsPage,
-                          arguments: {
-                            "url":
-                                WordPressRep.getWpLink(WordPressRep.wpSource),
-                            "wpUser": wpUser
-                          },
-                        );
-                      },
+                      onPressed: _morePosts,
                     ),
                   ],
                 ),
@@ -221,14 +225,14 @@ class ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               post.title.rendered,
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             SizedBox(
                               height: 5.0,
@@ -251,31 +255,45 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  static Widget followColumn(final Size deviceSize, final int userId) {
+  //TODO: followColumn 待完善
+  Widget followColumn(final Size deviceSize, final int userId) {
     final WpPostSource source = CacheCenter.getPosts(userId);
-
+    const double iconSize = 80;
     return Container(
       height: deviceSize.height * 0.13,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          ProfileTile(
-            title:
-                source == null ? "Loading" : source.feedList.length.toString(),
-            subtitle: "Posts",
-          ),
-          ProfileTile(
-            title: "2.5K",
-            subtitle: "Followers",
-          ),
-          ProfileTile(
-            title: "10K",
-            subtitle: "Comments",
-          ),
-          ProfileTile(
-            title: "1.2K",
-            subtitle: "Following",
-          )
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                title: source == null
+                    ? "Loading"
+                    : source.feedList.length.toString(),
+                subtitle: "Posts",
+              ),
+              onPressed: _morePosts),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                title: "1.2K",
+                subtitle: "Following",
+              ),
+              onPressed: () {}),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                title: "2.5K",
+                subtitle: "Followers",
+              ),
+              onPressed: () {}),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                title: "10K",
+                subtitle: "Comments",
+              ),
+              onPressed: () {}),
         ],
       ),
     );
@@ -285,6 +303,31 @@ class ProfilePageState extends State<ProfilePage> {
   Widget bodyData() => SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            AppBar(
+              title: const Text("Profile Page"),
+              actions: <Widget>[
+                //TODO: menu
+                PopupMenuButton<Choice>(
+                  onSelected: (val) {},
+                  itemBuilder: (BuildContext context) {
+                    return choices.skip(2).map((Choice choice) {
+                      return PopupMenuItem<Choice>(
+                        value: choice,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(choice.icon),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(choice.title)
+                          ],
+                        ),
+                      );
+                    }).toList();
+                  },
+                ),
+              ],
+            ),
             profileHeader(),
             followColumn(deviceSize, _wpUserId),
             imagesCard(),
@@ -339,20 +382,19 @@ class ProfilePageState extends State<ProfilePage> {
           });
         }
       });
-
     } else {
       LogUtils.d("Profile Page", "userId == -1");
     }
   }
 
-  void _updateRecentlyPosts(final List<WpPost> posts) {
-    posts.forEach((post) {
-      _posts.add(articleCard(post));
-    });
-    if (!_destroy) {
-      setState(() {});
-    }
-  }
+//  void _updateRecentlyPosts(final List<WpPost> posts) {
+//    posts.forEach((post) {
+//      _posts.add(articleCard(post));
+//    });
+//    if (!_destroy) {
+//      setState(() {});
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -367,4 +409,33 @@ class ProfilePageState extends State<ProfilePage> {
     super.dispose();
     _destroy = true;
   }
+
+  /// 查看更多 Posts
+  void _morePosts() {
+    Navigator.pushNamed(
+      context,
+      UIData.authorPostsPage,
+      arguments: {
+        "url":
+        WordPressRep.getWpLink(WordPressRep.wpSource),
+        "wpUser": wpUser
+      },
+    );
+  }
 }
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Menu 1', icon: Icons.title),
+  const Choice(title: 'Menu 2', icon: Icons.title),
+  const Choice(title: 'Menu 3', icon: Icons.title),
+  const Choice(title: 'Menu 4', icon: Icons.title),
+  const Choice(title: 'Menu 5', icon: Icons.title),
+  const Choice(title: 'Menu 6', icon: Icons.title),
+];

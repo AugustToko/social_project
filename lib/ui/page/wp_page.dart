@@ -3,12 +3,15 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:flutter_html/flutter_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:like_button/like_button.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
+import 'package:social_project/model/post.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
@@ -51,6 +54,61 @@ class _WordPressPageState extends State<WordPressPage> {
   // you have to handle copy when image is loaded.
   bool knowImageSize = true;
   DateTime dateTimeNow = DateTime.now();
+
+  Widget actionRow(final WpPost post) {
+    const double iconSize = 18.0;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        LikeButton(
+          likeCount: 999,
+          onTap: (bool val) {
+            Navigator.pushNamed(
+              context,
+              UIData.sendPage,
+            );
+            return Future.value(true);
+          },
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.comment,
+              color: isClicked ? Colors.deepPurpleAccent : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.retweet,
+              color: isClicked ? Colors.deepOrange : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+        LikeButton(
+          likeCount: 999,
+          size: iconSize,
+        ),
+        LikeButton(
+          likeCount: 999,
+          onTap: (bool val) {
+            //TODO: Share库 支持平台问题
+            Share.share("This is a test action by Social Project");
+            return Future.value(true);
+          },
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.share,
+              color: isClicked ? Colors.blue : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+      ],
+    );
+  }
 
   @override
   void dispose() {
@@ -189,44 +247,47 @@ class _WordPressPageState extends State<WordPressPage> {
                                         title,
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                          Html(
-                                            data: contentSmall,
-                                            showImages: true,
-                                            useRichText: false,
-                                            linkStyle: TextStyle(),
-                                            customRender: (node, children) {
-                                              if (node is dom.Element) {
-                                                switch (node.localName) {
-                                                  case "video":
-                                                    return Text("[Video Here]");
-                                                  default:
-                                                    return null;
-                                                }
-                                              } else {
+                                      Html(
+                                        data: contentSmall,
+                                        showImages: true,
+                                        useRichText: false,
+                                        linkStyle: TextStyle(),
+                                        customRender: (node, children) {
+                                          if (node is dom.Element) {
+                                            switch (node.localName) {
+                                              case "video":
+                                                return Text("[Video Here]");
+                                              default:
                                                 return null;
-                                              }
-                                            },
-                                            onImageTap: (url) {
-                                              Navigator.pushNamed(context,
-                                                  "fluttercandies://picswiper",
-                                                  arguments: {
-                                                    "index": 0,
-                                                    "pics": [
-                                                      PicSwiperItem(url)
-                                                    ],
-                                                  });
-                                            },
-                                            onImageError: (p1, p2) {
-                                              print(
-                                                  "Image Error---------------start-----------------");
-                                              print(p1);
-                                              print(
-                                                  "-----===-------=======------====-----");
-                                              print(p2);
-                                              print(
-                                                  "Image Error----------------end----------------");
-                                            },
-                                          ),
+                                            }
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        onImageTap: (url) {
+                                          Navigator.pushNamed(context,
+                                              "fluttercandies://picswiper",
+                                              arguments: {
+                                                "index": 0,
+                                                "pics": [PicSwiperItem(url)],
+                                              });
+                                        },
+                                        onImageError: (p1, p2) {
+                                          print(
+                                              "Image Error---------------start-----------------");
+                                          print(p1);
+                                          print(
+                                              "-----===-------=======------====-----");
+                                          print(p2);
+                                          print(
+                                              "Image Error----------------end----------------");
+                                        },
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                        child: actionRow(item),
+                                      )
 //                                          CupertinoButton(
 //                                              child: Material(
 //                                                color: Colors.transparent,
@@ -262,8 +323,8 @@ class _WordPressPageState extends State<WordPressPage> {
 //                                              'assets/images/linear_mask.png',
 //                                              fit: BoxFit.cover,
 //                                              package: App.pkg)
-                                        ],
-                                      ),
+                                    ],
+                                  ),
                                   padding: EdgeInsets.only(
                                     left: margin,
                                     right: margin,

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/menu.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
+import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../ui/widgets/about_tile.dart';
 
 class BottomSheetUtil {
-  static Widget header(WpUser user) => Ink(
+  static Widget header(final WpUser user) => Ink(
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: UIData.kitGradients2)),
         child: Padding(
@@ -16,9 +18,16 @@ class BottomSheetUtil {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
+//              CircleAvatar(
+//                radius: 25.0,
+//                backgroundImage: NetworkImage(user.avatarUrls.s96),
+//              ),
+              WpUserHeader(
+                wpSource: WordPressRep.wpSource,
+                showUserName: false,
+                userId: user.id,
                 radius: 25.0,
-                backgroundImage: NetworkImage(user.avatarUrls.s96),
+                canClick: true,
               ),
               SizedBox(
                 width: 20,
@@ -36,8 +45,8 @@ class BottomSheetUtil {
         ),
       );
 
-  static void showSheetBottom(
-      BuildContext context, WpUser wpUser, Menu menu, Function(int num, Menu menu) func) {
+  static void showSheetBottom(BuildContext context, WpUser wpUser, Menu menu,
+      Function(int num, Menu menu) func) {
     showModalBottomSheet(
         context: context,
         builder: (context) => Material(

@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
 
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+  final Map<String, bool> data = {"pressed" : false};
 
   @override
   Widget build(BuildContext context) {
@@ -99,22 +100,31 @@ class LoginPage extends StatelessWidget {
                 ),
                 color: Colors.green,
                 onPressed: () {
-                  LogUtils.d("LoginPage", "Login Button Pressed!");
+                  if (!data["pressed"]) {
+                    data["pressed"] = false;
+                    LogUtils.d("LoginPage", "Login Button Pressed!");
 //                  NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl, userController.text, passwordController.text).then((wpLoginResult){
-                  NetTools.getWpLoginResult(WordPressRep.getWpLink(WordPressRep.wpSource), "chenlongcould", "18551348272Chen").then((wpLoginResult){
-                    if (wpLoginResult.token != null) {
-                      CacheCenter.putToken(wpLoginResult);
-                      NetTools.getWpUserInfoAuto(wpLoginResult.userId).then((user) {
-                        if (user != null) {
-                          CacheCenter.putUser(wpLoginResult.userId, user);
-                          showToast("Login successful!");
-                          Navigator.pop(context, NavState.LoginDone);
-                        }
-                      });
-                    } else {
-                      showToast("UserName or Password error!");
-                    }
-                  });
+                    NetTools.getWpLoginResult(
+                        WordPressRep.getWpLink(WordPressRep.wpSource),
+                        "chenlongcould", "18551348272Chen").then((wpLoginResult) {
+                      if (wpLoginResult.token != null) {
+                        CacheCenter.putToken(wpLoginResult);
+                        NetTools.getWpUserInfoAuto(wpLoginResult.userId).then((
+                            user) {
+                          if (user != null) {
+                            showToast("Login successful!", position: ToastPosition.bottom);
+                            CacheCenter.putUser(wpLoginResult.userId, user);
+                            Navigator.pop(context, NavState.LoginDone);
+                          }
+                        });
+                      } else {
+                        showToast("UserName or Password error!", position: ToastPosition.bottom);
+                        data["pressed"] = false;
+                      }
+                    });
+                  } else {
+                    showToast("Login...", position: ToastPosition.bottom);
+                  }
                 },
               ),
             ),
@@ -128,4 +138,17 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       );
+
+  Widget buildButton(
+      String text,
+      Function onPressed, {
+        Color color = Colors.white,
+      }) {
+    return FlatButton(
+      color: color,
+      child: Text(text),
+      onPressed: onPressed,
+    );
+  }
+
 }

@@ -118,7 +118,7 @@ class _TabBarState extends State<ContentPage>
           tabs: <Tab>[
             Tab(text: "Featured"),
             Tab(text: "TuChong"),
-            Tab(text: "WeiRan"),
+            Tab(text: "Wordpress"),
             Tab(text: "Time line 4"),
           ],
           controller: _tabController,
