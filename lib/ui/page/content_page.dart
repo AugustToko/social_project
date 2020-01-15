@@ -6,6 +6,8 @@ import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wp_page.dart';
+import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
@@ -59,6 +61,9 @@ class _TabBarState extends State<ContentPage>
 
   @override
   Widget build(BuildContext context) {
+
+    var wpPage = WordPressPage();
+
     //这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
     return Scaffold(
       //抽屉界面
@@ -117,7 +122,11 @@ class _TabBarState extends State<ContentPage>
         title: Text("Social Project"),
         bottom: TabBar(
           tabs: <Tab>[
-            Tab(child: Text("热门",),),
+            Tab(
+              child: Text(
+                "热门",
+              ),
+            ),
             Tab(text: "TuChong"),
             Tab(text: "Wordpress"),
             Tab(text: "Time line 4"),
@@ -152,17 +161,27 @@ class _TabBarState extends State<ContentPage>
         children: <Widget>[
           TimelineTwoPage(),
           PhotoViewDemo(),
-          WordPressPage(WordPressRep.wpSource),
+          wpPage,
           SampleHomePage(),
         ],
         controller: _tabController,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(
+        onPressed: () async {
+          await Navigator.pushNamed(
             context,
-            UIData.sendPage,
-          );
+            CacheCenter.tokenCache == null ? UIData.loginPage : UIData.sendPage,
+          ).then((result){
+            if (result != null) {
+              switch (result) {
+                case NavState.SendWpPostDone:
+                  wpPage.onNewPostReleased();
+                  break;
+                default:
+                  break;
+              }
+            }
+          });
         },
         backgroundColor: Colors.white,
         child: CustomPaint(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileContent extends StatefulWidget {
   final WpSource wpSource;
@@ -32,7 +34,7 @@ class _ProfileContentState extends State<ProfileContent> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Me"),
+          title: Text("我的资料"),
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -96,6 +98,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 title: Text('推荐给好友'),
                 trailing: buildArrowIcon(context, Icons.arrow_right),
                 onTap: () {
+                  Share.share("https://blog.geek-cloud.top/");
                   //TODO: 推荐给好友
                 },
               ),
@@ -108,6 +111,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 trailing: buildArrowIcon(context, Icons.arrow_right),
                 onTap: () {
                   //TODO: 给 ${UIData.appName} 一个好评
+                  launch("http://www.coolapk.com/u/430423");
                 },
               ),
               ListTile(
@@ -118,7 +122,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 title: Text('联系我们'),
                 trailing: buildArrowIcon(context, Icons.arrow_right),
                 onTap: () {
-                  //TODO: 联系我们
+                  launch("mailto:827266641@qq.com");
                 },
               ),
               ListTile(

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 主题工具
@@ -14,4 +13,14 @@ class ThemeUtil {
   static var backgroundLightColor = Colors.grey.shade50;
 
   static var clipRRectBorderRadius = BorderRadius.circular(8.0);
+
+  static InputBorder getUnderlineFocusedBorderBorder(final BuildContext context) =>
+      UnderlineInputBorder(
+          borderSide:
+              BorderSide(color: Theme.of(context).textTheme.title.color));
+
+  static InputBorder getUnderlineEnabledBorderBorder() =>
+      UnderlineInputBorder(
+          borderSide:
+          BorderSide(color: Colors.grey));
 }

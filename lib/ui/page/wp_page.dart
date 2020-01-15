@@ -8,7 +8,6 @@ import 'package:like_button/like_button.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
-import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
@@ -23,18 +22,26 @@ import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WordPressPage extends StatefulWidget {
-  final WpSource _wpSource;
+  final List<_WordPressPageState> _list = List(1);
 
-  WordPressPage(this._wpSource);
+  void onNewPostReleased() {
+    var state = _list[0];
+    if (state != null) {
+      state.onNewPostReleased();
+    }
+  }
 
   @override
-  _WordPressPageState createState() => _WordPressPageState(_wpSource);
+  _WordPressPageState createState() {
+    _list[0] = _WordPressPageState(WordPressRep.wpSource);
+    return _list[0];
+  }
 }
 
 class _WordPressPageState extends State<WordPressPage> {
-  final MyExtendedMaterialTextSelectionControls
-      _myExtendedMaterialTextSelectionControls =
-      MyExtendedMaterialTextSelectionControls();
+//  final MyExtendedMaterialTextSelectionControls
+//      _myExtendedMaterialTextSelectionControls =
+//      MyExtendedMaterialTextSelectionControls();
 
   WordPressRep listSourceRepository;
 
@@ -117,7 +124,7 @@ class _WordPressPageState extends State<WordPressPage> {
   @override
   Widget build(BuildContext context) {
     final double margin = ScreenUtil.instance.setWidth(22);
-    Widget result = Material(
+    final Widget result = Material(
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
@@ -256,7 +263,9 @@ class _WordPressPageState extends State<WordPressPage> {
                                               case "video":
                                                 return Text("[Video Here]");
                                               case "img":
-                                                String imageUrl = node.attributes["data-original"];
+                                                String imageUrl =
+                                                    node.attributes[
+                                                        "data-original"];
                                                 return Image.network(imageUrl);
                                               default:
                                                 return null;
@@ -395,6 +404,10 @@ class _WordPressPageState extends State<WordPressPage> {
     return listSourceRepository.refresh().whenComplete(() {
       dateTimeNow = DateTime.now();
     });
+  }
+
+  void onNewPostReleased() {
+    onRefresh();
   }
 
 //  avatar(int userId) {

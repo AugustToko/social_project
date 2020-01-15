@@ -60,22 +60,22 @@ class DialogUtil {
 
   static void showLogoutDialog(
       final BuildContext context, Function afterLogout) {
-    showAlertDialog(context, "Logout", "Are you sure?", [
+    showAlertDialog(context, "登出", "即将退出登陆，请确认。", [
       FlatButton(
           onPressed: () {
             afterLogout();
             showToast(
-              "You are logged out.",
+              "您已退出登陆。",
               position: ToastPosition.bottom,
             );
             Navigator.pop(context);
           },
-          child: Text("Sure")),
+          child: Text("登出")),
       FlatButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("Cancel"))
+          child: Text("取消"))
     ]);
   }
 }

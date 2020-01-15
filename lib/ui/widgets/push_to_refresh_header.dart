@@ -73,7 +73,7 @@ class PullToRefreshHeader extends StatelessWidget {
                       style: ts,
                     ),
                     Text(
-                      "Last updated:" +
+                      "上次更新:" +
                           DateFormat("yyyy-MM-dd hh:mm").format(time),
                       style: ts.copyWith(
                           fontSize: ScreenUtil.getInstance().setSp(24)),
@@ -101,7 +101,7 @@ class RefreshImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double imageSize = ScreenUtil.getInstance().setWidth(80);
     return ExtendedImage.asset(
-      "assets/flutterCandies_grey.png",
+      "assets/flutterCandies.png",
       width: imageSize,
       height: imageSize,
       afterPaintImage: (Canvas canvas, Rect rect, ui.Image image, Paint paint) {

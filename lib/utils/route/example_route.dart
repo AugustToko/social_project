@@ -15,7 +15,12 @@ import 'package:social_project/ui/page/wp_detail_page.dart';
 
 import '../uidata.dart';
 
-enum NavState { LoginDone }
+enum NavState {
+  LoginDone,
+
+  /// 发表 wordPress 文章成功
+  SendWpPostDone
+}
 
 RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
   switch (name) {

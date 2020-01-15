@@ -5,6 +5,7 @@ import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -63,12 +64,14 @@ class LoginPage extends StatelessWidget {
               child: TextField(
                 maxLines: 1,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.grey),
-                  labelStyle:
-                      TextStyle(color: Theme.of(context).textTheme.title.color),
-                  hintText: "输入你的用户名",
-                  labelText: "用户名",
-                ),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).textTheme.title.color),
+                    hintText: "输入你的用户名",
+                    labelText: "用户名",
+                    focusedBorder:
+                        ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                    enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder()),
                 controller: userController,
               ),
             ),
@@ -78,12 +81,14 @@ class LoginPage extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.grey),
-                  labelStyle:
-                      TextStyle(color: Theme.of(context).textTheme.title.color),
-                  hintText: "输入你的密码",
-                  labelText: "密码",
-                ),
+                    hintStyle: TextStyle(color: Colors.grey),
+                    labelStyle: TextStyle(
+                        color: Theme.of(context).textTheme.title.color),
+                    hintText: "输入你的密码",
+                    labelText: "密码",
+                    focusedBorder:
+                        ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                    enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder()),
                 controller: passwordController,
               ),
             ),
@@ -108,11 +113,6 @@ class LoginPage extends StatelessWidget {
                     NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl,
                             userController.text, passwordController.text)
                         .then((wpLoginResult) {
-//                    NetTools.getWpLoginResult(
-//                            WordPressRep.getWpLink(WordPressRep.wpSource),
-//                            "chenlongcould",
-//                            "18551348272Chen2")
-//                        .then((wpLoginResult) {
                       if (wpLoginResult.token != null) {
                         CacheCenter.putToken(wpLoginResult);
                         NetTools.getWpUserInfoAuto(wpLoginResult.userId)
@@ -147,7 +147,8 @@ class LoginPage extends StatelessWidget {
                     shape: StadiumBorder(),
                     child: Text(
                       "注册新账号",
-                      style: TextStyle(color: Theme.of(context).textTheme.title.color),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.title.color),
                     ),
                     color: Theme.of(context).backgroundColor,
                     elevation: 0,
@@ -155,19 +156,21 @@ class LoginPage extends StatelessWidget {
                       launch(WordPressRep.blogGeekReg);
                     },
                   ),
-                  SizedBox(width: 50,),
+                  SizedBox(
+                    width: 50,
+                  ),
                   RaisedButton(
                     padding: EdgeInsets.all(12.0),
                     shape: StadiumBorder(),
                     child: Text(
                       "忘记密码",
-                      style: TextStyle(color: Theme.of(context).textTheme.title.color),
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.title.color),
                     ),
                     color: Theme.of(context).backgroundColor,
                     elevation: 0,
                     onPressed: () {
                       launch(WordPressRep.blogGeekLostPwd);
-
                     },
                   )
                 ],

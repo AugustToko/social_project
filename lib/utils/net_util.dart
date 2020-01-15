@@ -1,4 +1,5 @@
 import 'package:http_client_helper/http_client_helper.dart';
+import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/model/wordpress/wp_login_result.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
@@ -288,5 +289,23 @@ class NetTools {
       print(stack);
     }
     return data;
+  }
+
+  static Future<WpPost> sendPost(
+      final String token, final SendPost data) async {
+    // 解析 URL
+    final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
+        "/wp-json/wp/v2/posts?title=${data.title}&content=${data.content}&comment_status=${data.allowComment ? "open" : "close"}&status=publish";
+
+    WpPost wpPost;
+    try {
+      var result = await HttpClientHelper.post(url,
+          headers: {"Authorization": 'Bearer' + token});
+      wpPost = WpPost.fromJson(json.decode(result.body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return wpPost;
   }
 }

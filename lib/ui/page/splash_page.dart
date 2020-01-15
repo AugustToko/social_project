@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
 
     // 如果第一次进入APP，则跳转引导页，否则进入主页
     isFirst.then((val) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 0), () {
         Navigator.pushReplacementNamed(
             context, val == null || val ? UIData.gooeyEdge : UIData.homeRoute);
       });
@@ -34,7 +34,8 @@ class _SplashPageState extends State<SplashPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              '${UIData.appName} Splash Page',
+              '${UIData.appName}',
+              style: TextStyle(fontSize: 30),
             ),
           ],
         ),

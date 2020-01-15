@@ -26,8 +26,8 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
   Future<bool> refresh([bool clearBeforeRequest = false]) async {
     _hasMore = true;
     pageIndex = 1;
-    //force to refresh list when you don't want clear list before request
-    //for the case, if your list already has 20 items.
+    // force to refresh list when you don't want clear list before request
+    // for the case, if your list already has 20 items.
     forceRefresh = !clearBeforeRequest;
     var result = await super.refresh(clearBeforeRequest);
     forceRefresh = false;
@@ -39,11 +39,12 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
     // 标志位
     bool isSuccess = false;
     try {
-
       // https://blog.geek-cloud.top/wp-json/wp/v2/posts?author=1&per_page=20&page=1
 
-      var result = await HttpClientHelper.get(
-          url + WordPressRep.postsOfAuthorX + userId.toString() + "&per_page=20&page=$pageIndex");
+      var result = await HttpClientHelper.get(url +
+          WordPressRep.postsOfAuthorX +
+          userId.toString() +
+          "&per_page=20&page=$pageIndex");
 
       var data = result.body;
 
@@ -63,8 +64,6 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
       }
 
       _hasMore = source.feedList.length != 0;
-
-      print(_hasMore);
 
       pageIndex++;
 

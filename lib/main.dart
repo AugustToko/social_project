@@ -11,10 +11,12 @@ import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/screen_util.dart';
+import 'package:social_project/utils/shared_prefs.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import 'env.dart';
+import 'misc/shared_prefs_key.dart';
 
 void main() => runApp(App());
 
@@ -96,10 +98,12 @@ class App extends StatelessWidget {
         theme: getTheme(),
         // 暗色主题
         darkTheme: getTheme(isDark: true),
-        supportedLocales: [
-          const Locale("en", "US"),
-          const Locale("hi", "IN"),
-        ],
+//        themeMode: ThemeMode.system,
+//        supportedLocales: [
+//          const Locale("en", "US"),
+//          const Locale("hi", "IN"),
+//          const Locale("hi", "IN"),
+//        ],
         builder: (c, w) {
           ScreenUtil.instance =
               ScreenUtil(width: 750, height: 1334, allowFontScaling: true)

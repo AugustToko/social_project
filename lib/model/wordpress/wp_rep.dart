@@ -17,9 +17,12 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
 
   static WpSource wpSource = defaultWpSource;
 
+  /// BASE URL
   static const String baseWeiranUrl = "https://www.weiran.org.cn";
   static const String baseMmgalUrl = "https://www.mmgal.com";
   static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
+
+  /// -------- GEEK BLOG ------------
 
   static const String blogGeekReg = "https://blog.geek-cloud.top/wp-login.php?action=register";
   static const String blogGeekLostPwd = "https://blog.geek-cloud.top/wp-login.php?action=lostpassword";
