@@ -265,7 +265,8 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           itemBuilder: (context, i) {
             if (i < posts.length) {
               final Post post = posts[i];
-              return ThemeUtil.materialCard(InkWell(
+
+              var card = ThemeUtil.materialCard(InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, UIData.commentDetail);
                 },
@@ -315,6 +316,21 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                   ),
                 ),
               ));
+
+              //TODO: 置顶信息
+              if (i == 0) {
+                return Column(
+                  children: <Widget>[
+                    ThemeUtil.materialCard(Padding(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: Image.asset("assets/images/timeline.jpeg"),
+                    )),
+                    card
+                  ],
+                );
+              } else {
+                return card;
+              }
             } else {
               return Card(
                 child: Center(

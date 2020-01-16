@@ -5,7 +5,7 @@ import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
-import 'package:social_project/ui/page/wp_page.dart';
+import 'package:social_project/ui/page/wordpress/wp_page.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -61,80 +61,122 @@ class _TabBarState extends State<ContentPage>
 
   @override
   Widget build(BuildContext context) {
-
     var wpPage = WordPressPage();
-
-    //这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
     return Scaffold(
-      //抽屉界面
       drawer: _drawer,
-//      body:  NestedScrollView(
-//        controller: _scrollViewController,
-//        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-//          return <Widget>[
-//             SliverAppBar(
-//              title:  Text("Social Project"),
-//              pinned: true,
-//              floating: true,
-//              forceElevated: innerBoxIsScrolled,
-//              bottom:  TabBar(
-//                tabs: <Tab>[
-//                   Tab(text: "Time line"),
-//                   Tab(text: "Time line2"),
-//                ],
-//                controller: _tabController,
-//              ),
-//              actions: <Widget>[
-//                 IconButton(
-//                    icon: Icon(Icons.search),
-//                    tooltip: 'Search',
-//                    onPressed: () {
-//                      showSearch(
-//                        context: context,
-//                        delegate: SearchBarDelegate(),
-//                      );
-//                    }),
-//                // overflow menu
-//                PopupMenuButton<Choice>(
-//                  onSelected: (val) {},
-//                  itemBuilder: (BuildContext context) {
-//                    return choices.skip(2).map((Choice choice) {
-//                      return PopupMenuItem<Choice>(
-//                        value: choice,
-//                        child: Text(choice.title),
-//                      );
-//                    }).toList();
-//                  },
-//                ),
-//              ],
-//            ),
-//          ];
-//        },
-//        body:  TabBarView(
-//          children: <Widget>[
+      body: NestedScrollView(
+        controller: _scrollViewController,
+        headerSliverBuilder: _sliverBuilder,
+        body: TabBarView(
+          children: <Widget>[
+            wpPage,
 //            TimelineTwoPage(),
-//            EmptyPage(),
-//          ],
-//          controller: _tabController,
-//        ),
-//      ),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 5,
-        title: Text("Social Project"),
-        bottom: TabBar(
-          tabs: <Tab>[
-            Tab(
-              child: Text(
-                "热门",
-              ),
-            ),
-            Tab(text: "TuChong"),
-            Tab(text: "Wordpress"),
-            Tab(text: "Time line 4"),
+            PhotoViewDemo(),
+            SampleHomePage(),
+            SampleHomePage(),
           ],
           controller: _tabController,
         ),
+      ),
+    );
+
+//    这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
+//    return Scaffold(
+//      //抽屉界面
+//      drawer: _drawer,
+//      appBar: AppBar(
+//        backgroundColor: Theme.of(context).backgroundColor,
+//        elevation: 5,
+//        title: Text("Social Project"),
+//        bottom: TabBar(
+//          tabs: <Tab>[
+//            Tab(
+//              child: Text(
+//                "热门",
+//              ),
+//            ),
+//            Tab(text: "TuChong"),
+//            Tab(text: "Wordpress"),
+//            Tab(text: "Time line 4"),
+//          ],
+//          controller: _tabController,
+//        ),
+//        actions: <Widget>[
+//          IconButton(
+//              icon: Icon(Icons.search),
+//              tooltip: '搜索',
+//              onPressed: () {
+//                showSearch(
+//                  context: context,
+//                  delegate: SearchBarDelegate(),
+//                );
+//              }),
+//          // overflow menu
+//          PopupMenuButton<Choice>(
+//            onSelected: (val) {},
+//            itemBuilder: (BuildContext context) {
+//              return choices.map((Choice choice) {
+//                return PopupMenuItem<Choice>(
+//                  value: choice,
+//                  child: Text(choice.title),
+//                );
+//              }).toList();
+//            },
+//          ),
+//        ],
+//      ),
+//      body: TabBarView(
+//        children: <Widget>[
+//          TimelineTwoPage(),
+//          PhotoViewDemo(),
+//          wpPage,
+//          SampleHomePage(),
+//        ],
+//        controller: _tabController,
+//      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () async {
+//          await Navigator.pushNamed(
+//            context,
+//            CacheCenter.tokenCache == null ? UIData.loginPage : UIData.sendPage,
+//          ).then((result) {
+//            if (result != null) {
+//              switch (result) {
+//                case NavState.SendWpPostDone:
+//                  wpPage.onNewPostReleased();
+//                  break;
+//                default:
+//                  break;
+//              }
+//            }
+//          });
+//        },
+//        backgroundColor: Colors.white,
+//        child: CustomPaint(
+//          child: Container(),
+//          foregroundPainter: FloatingPainter(),
+//        ),
+//      ),
+//    );
+  }
+
+  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
+    return <Widget>[
+      SliverAppBar(
+        centerTitle: true,
+        elevation: 5,
+        backgroundColor: Theme.of(context).backgroundColor,
+        title: Text("Social Project"),
+        pinned: false,
+        primary: true,
+//        flexibleSpace: FlexibleSpaceBar(
+//          centerTitle: true,
+//          title: Text('我是一个FlexibleSpaceBar'),
+//          background: Image.network(
+//            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531798262708&di=53d278a8427f482c5b836fa0e057f4ea&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F342ac65c103853434cc02dda9f13b07eca80883a.jpg",
+//            fit: BoxFit.cover,
+//          ),
+//        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
@@ -159,39 +201,59 @@ class _TabBarState extends State<ContentPage>
           ),
         ],
       ),
-      body: TabBarView(
-        children: <Widget>[
-          TimelineTwoPage(),
-          PhotoViewDemo(),
-          wpPage,
-          SampleHomePage(),
-        ],
-        controller: _tabController,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.pushNamed(
-            context,
-            CacheCenter.tokenCache == null ? UIData.loginPage : UIData.sendPage,
-          ).then((result){
-            if (result != null) {
-              switch (result) {
-                case NavState.SendWpPostDone:
-                  wpPage.onNewPostReleased();
-                  break;
-                default:
-                  break;
-              }
-            }
-          });
-        },
-        backgroundColor: Colors.white,
-        child: CustomPaint(
-          child: Container(),
-          foregroundPainter: FloatingPainter(),
+      SliverPersistentHeader(
+        delegate: _SliverAppBarDelegate(
+          TabBar(
+//            labelColor: Colors.green,
+//            unselectedLabelColor: Colors.grey,
+            tabs: [
+              Tab(
+                child: Text(
+                  "博客",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Tab(text: "TuChong"),
+              Tab(
+                child: Text(
+                  "热门",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              Tab(text: "Time line 4"),
+            ],
+            controller: _tabController,
+          ),
         ),
+        pinned: true,
       ),
+    ];
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar) : super();
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      child: Material(child: _tabBar, elevation: 2,),
+      color: Theme.of(context).backgroundColor,
     );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
   }
 }
 
@@ -213,30 +275,33 @@ const List<Choice> choices = const <Choice>[
 class FloatingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint amberPaint = Paint()
+    final Paint amberPaint = Paint()
       ..color = Colors.amber
       ..strokeWidth = 5;
 
-    Paint greenPaint = Paint()
+    final Paint greenPaint = Paint()
       ..color = Colors.green
       ..strokeWidth = 5;
 
-    Paint bluePaint = Paint()
+    final Paint bluePaint = Paint()
       ..color = Colors.blue
       ..strokeWidth = 5;
 
-    Paint redPaint = Paint()
+    final Paint redPaint = Paint()
       ..color = Colors.red
       ..strokeWidth = 5;
 
     canvas.drawLine(Offset(size.width * 0.27, size.height * 0.5),
         Offset(size.width * 0.5, size.height * 0.5), amberPaint);
+
     canvas.drawLine(
         Offset(size.width * 0.5, size.height * 0.5),
         Offset(size.width * 0.5, size.height - (size.height * 0.27)),
         greenPaint);
+
     canvas.drawLine(Offset(size.width * 0.5, size.height * 0.5),
         Offset(size.width - (size.width * 0.27), size.height * 0.5), bluePaint);
+
     canvas.drawLine(Offset(size.width * 0.5, size.height * 0.5),
         Offset(size.width * 0.5, size.height * 0.27), redPaint);
   }

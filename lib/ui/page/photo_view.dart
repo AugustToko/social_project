@@ -67,7 +67,8 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
   @override
   Widget build(BuildContext context) {
     final double margin = ScreenUtil.instance.setWidth(22);
-    Widget result = Material(
+
+    final Widget result = Material(
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
@@ -109,7 +110,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                         var content = item.content ?? (item.excerpt ?? title);
 //                        content += this._attachContent;
 
-                        return ThemeUtil.materialCard(InkWell(
+                        var card = ThemeUtil.materialCard(InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, UIData.commentDetail);
                           },
@@ -230,6 +231,26 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                             ],
                           ),
                         ));
+
+                        if (index == 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(12, 10, 0, 0),
+                                child: Text(
+                                  "API by https://api.tuchong.com/",
+                                  style: TextStyle(
+                                      color: Colors.grey.shade400,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                              card
+                            ],
+                          );
+                        } else {
+                          return card;
+                        }
                       },
                       sourceList: listSourceRepository,
                     ),

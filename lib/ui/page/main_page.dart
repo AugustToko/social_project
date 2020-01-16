@@ -7,21 +7,22 @@ import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
 import 'package:social_project/ui/page/profile/profile_guest.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/sample/content/save_page.dart';
+import 'package:social_project/ui/page/sample/scroll_bar_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
 import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/ui/widgets/user_account_drawer.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
-/// [HomePage]
+/// [MainPage]
 /// 仅带有一个 BottomNavigationBar
-class HomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _IndexState();
   }
 }
 
-class _IndexState extends State<HomePage> {
+class _IndexState extends State<MainPage> {
   List<NavBarItemData> _navBarItems;
 
   int _selectedNavIndex = 0;
@@ -46,7 +47,7 @@ class _IndexState extends State<HomePage> {
       ),
       GuidePage(),
       SampleHomePage(),
-      SampleSavePage(),
+      SampleHomePage(),
       ProfileContent(WordPressRep.wpSource),
     ];
 

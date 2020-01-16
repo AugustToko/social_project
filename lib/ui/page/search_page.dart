@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/ui/page/posts_page.dart';
+import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/utils/net_util.dart';
 
 typedef SearchItemCall = void Function(String item);

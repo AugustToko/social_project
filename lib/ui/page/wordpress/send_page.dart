@@ -25,8 +25,10 @@ class _SendPageState extends State<SendPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text("发表文章"),
+        backgroundColor: Theme.of(context).backgroundColor,
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {

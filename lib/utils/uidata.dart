@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
-import 'package:social_project/ui/page/posts_page.dart';
+import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_one_page.dart';
-import 'package:social_project/ui/page/send_page.dart';
+import 'package:social_project/ui/page/wordpress/send_page.dart';
 import 'package:social_project/ui/page/settings_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
-import 'package:social_project/ui/page/wp_detail_page.dart';
+import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
 
 // TODO: 清理
 class UIData {

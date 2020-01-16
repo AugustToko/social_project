@@ -15,11 +15,9 @@ import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// 通用文章展示页面（列表）
 class PostsPage extends StatefulWidget {

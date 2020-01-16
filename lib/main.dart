@@ -46,39 +46,40 @@ class App extends StatelessWidget {
       cardTheme: CardTheme(color: Colors.white),
 //    canvasColor: Colors.grey.shade50,
       dialogTheme: DialogTheme(
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Colors.grey.shade50,
       ),
       popupMenuTheme: PopupMenuThemeData(
-        color: Colors.grey.shade200,
+        color: Colors.grey.shade50,
       ),
       iconTheme: IconThemeData(color: Colors.white));
 
   /// 深色主题
   static var darkThemeData = ThemeData(
-      primarySwatch: Colors.grey,
-      primaryColor: Colors.grey.shade900,
-      scaffoldBackgroundColor: Colors.grey.shade900,
-      backgroundColor: Colors.grey.shade900,
-      appBarTheme: AppBarTheme(elevation: 0.0),
-      textTheme: TextTheme(
-        title: ThemeUtil.textDark,
-        subhead: ThemeUtil.textDark,
-        body1: ThemeUtil.textDark,
-        body2: ThemeUtil.textDark,
-        subtitle: ThemeUtil.subtitle,
-        button: ThemeUtil.textDark,
-        // for [AboutListTile]
-        headline: ThemeUtil.textDark,
-      ),
-      cardTheme: CardTheme(color: Colors.grey.shade900),
+    primarySwatch: Colors.grey,
+    primaryColor: Colors.grey.shade900,
+    scaffoldBackgroundColor: Colors.grey.shade900,
+    backgroundColor: Colors.grey.shade900,
+    appBarTheme: AppBarTheme(elevation: 0.0),
+    textTheme: TextTheme(
+      title: ThemeUtil.textDark,
+      subhead: ThemeUtil.textDark,
+      body1: ThemeUtil.textDark,
+      body2: ThemeUtil.textDark,
+      subtitle: ThemeUtil.subtitle,
+      button: ThemeUtil.textDark,
+      // for [AboutListTile]
+      headline: ThemeUtil.textDark,
+    ),
+    cardTheme: CardTheme(color: Colors.grey.shade900),
 //    canvasColor: Colors.grey.shade900,
-      dialogTheme: DialogTheme(
-        backgroundColor: Colors.grey.shade900,
-      ),
-      popupMenuTheme: PopupMenuThemeData(
-        color: Colors.grey.shade900,
-      ),
-      iconTheme: IconThemeData(color: Colors.black));
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey.shade900,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: Colors.grey.shade900,
+    ),
+    iconTheme: IconThemeData(color: Colors.black),
+  );
 
   // This widget is the root of your application.
   @override
@@ -88,7 +89,7 @@ class App extends StatelessWidget {
         title: UIData.appName,
         themeMode: ThemeMode.system,
         // 调试横幅
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         // 主题
         theme: getTheme(),
         // 暗色主题
