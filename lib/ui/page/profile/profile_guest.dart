@@ -33,8 +33,9 @@ class _ProfileContentState extends State<ProfileContent> {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("我的资料"),
+          title: Text("我的资料"), backgroundColor: Theme.of(context).backgroundColor,
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

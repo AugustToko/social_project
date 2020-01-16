@@ -46,6 +46,7 @@ class ProfilePageState extends State<ProfilePage> {
         width: double.infinity,
         child: Card(
           clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.fromLTRB(12, 12, 12, 12),
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
             child: FittedBox(

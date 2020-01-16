@@ -2,10 +2,9 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/image_properties.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/utils/log.dart';
+import 'package:social_project/utils/theme_util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:video_player/video_player.dart';
@@ -37,7 +36,7 @@ class _WpPageState extends State<WpDetailPage> {
       appBar: AppBar(
         title: Text(_title),
       ),
-      body: Center(
+      body: ThemeUtil.materialCard(Center(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +112,7 @@ class _WpPageState extends State<WpDetailPage> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 

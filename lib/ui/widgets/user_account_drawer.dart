@@ -56,7 +56,8 @@ class _UserAccountDrawerState extends State<UserAccountWidget> {
                   children: <Widget>[
                     Positioned.fill(
                         child: CacheCenter.tokenCache == null
-                            ? WidgetDefault.defaultCircleAvatar(context, color: Colors.white)
+                            ? WidgetDefault.defaultCircleAvatar(context,
+                                color: Colors.white)
                             : CircleAvatar(
                                 radius: 25,
                                 backgroundImage:

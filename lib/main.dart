@@ -11,18 +11,12 @@ import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/shared_prefs.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import 'env.dart';
-import 'misc/shared_prefs_key.dart';
 
 void main() => runApp(App());
-
-//void main() {
-//  runApp(BasicAppBarSample());
-//}
 
 class App extends StatelessWidget {
   static String _pkg = "gooey_edge";
@@ -34,9 +28,9 @@ class App extends StatelessWidget {
   /// 亮色主题
   static var themeData = ThemeData(
       primarySwatch: Colors.blue,
-      primaryColor: Colors.grey.shade50,
-      scaffoldBackgroundColor: Colors.grey.shade50,
-      backgroundColor: Colors.grey.shade50,
+      primaryColor: Colors.grey.shade200,
+      scaffoldBackgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.white,
       appBarTheme: AppBarTheme(elevation: 0.0),
       textTheme: TextTheme(
         title: ThemeUtil.textLight,
@@ -49,13 +43,13 @@ class App extends StatelessWidget {
         // for [AboutListTile]
         headline: ThemeUtil.textLight,
       ),
-      cardTheme: CardTheme(color: Colors.grey.shade50),
+      cardTheme: CardTheme(color: Colors.white),
 //    canvasColor: Colors.grey.shade50,
       dialogTheme: DialogTheme(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.grey.shade200,
       ),
       popupMenuTheme: PopupMenuThemeData(
-        color: Colors.grey.shade50,
+        color: Colors.grey.shade200,
       ),
       iconTheme: IconThemeData(color: Colors.white));
 
@@ -92,8 +86,9 @@ class App extends StatelessWidget {
     return OKToast(
       child: MaterialApp(
         title: UIData.appName,
+        themeMode: ThemeMode.system,
         // 调试横幅
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         // 主题
         theme: getTheme(),
         // 暗色主题

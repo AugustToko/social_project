@@ -265,58 +265,56 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
           itemBuilder: (context, i) {
             if (i < posts.length) {
               final Post post = posts[i];
-              return Card(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, UIData.commentDetail);
-                  },
-                  onLongPress: () {
-                    BottomSheetUtil.showSheetBottom(
-                        context, null, Menu(title: "Title", items: ["data"]),
-                        (i, menu) {
-                      showToast("You clicked ${menu.items[i]}",
-                          position: ToastPosition.bottom);
-                    });
-                  },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          // LEFT
-                          Stack(
-                            children: <Widget>[
-                              CircleAvatar(
-                                  radius: 25.0,
-                                  backgroundImage: NetworkImage(
-                                    post.personImage,
-                                  )),
-                              Positioned.fill(
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        UIData.profile,
-                                      );
-                                    },
-                                    customBorder: CircleBorder(),
-                                  ),
+              return ThemeUtil.materialCard(InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, UIData.commentDetail);
+                },
+                onLongPress: () {
+                  BottomSheetUtil.showSheetBottom(
+                      context, null, Menu(title: "Title", items: ["data"]),
+                      (i, menu) {
+                    showToast("You clicked ${menu.items[i]}",
+                        position: ToastPosition.bottom);
+                  });
+                },
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // LEFT
+                        Stack(
+                          children: <Widget>[
+                            CircleAvatar(
+                                radius: 25.0,
+                                backgroundImage: NetworkImage(
+                                  post.personImage,
+                                )),
+                            Positioned.fill(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      UIData.profile,
+                                    );
+                                  },
+                                  customBorder: CircleBorder(),
                                 ),
                               ),
-                            ],
-                          ),
-                          // RIGHT
-                          rightColumn(post),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        // RIGHT
+                        rightColumn(post),
+                      ],
                     ),
                   ),
                 ),
-              );
+              ));
             } else {
               return Card(
                 child: Center(

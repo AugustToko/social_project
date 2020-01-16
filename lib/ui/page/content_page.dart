@@ -119,6 +119,8 @@ class _TabBarState extends State<ContentPage>
 //        ),
 //      ),
       appBar: AppBar(
+        backgroundColor: Theme.of(context).backgroundColor,
+        elevation: 5,
         title: Text("Social Project"),
         bottom: TabBar(
           tabs: <Tab>[
