@@ -46,7 +46,7 @@ class _IndexState extends State<HomePage> {
       ContentPage(
         drawer: UserAccountWidget(),
       ),
-      DashboardOnePage(),
+      GuidePage(),
       SampleHomePage(),
       SampleSavePage(),
       ProfileContent(WordPressRep.wpSource),

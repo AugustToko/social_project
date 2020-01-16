@@ -10,8 +10,7 @@ import 'package:share/share.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/model/wordpress/wp_rep_author_posts.dart';
-import 'package:social_project/model/wordpress/wp_user.dart';
+import 'package:social_project/model/wordpress/wp_rep_argments_posts.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
@@ -22,33 +21,33 @@ import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// 通用文章展示页面（列表）
 class PostsPage extends StatefulWidget {
   final String _url;
-  final WpUser _wpUser;
+  final AppBar _appBar;
 
-  PostsPage(this._url, this._wpUser);
+  PostsPage(this._url, this._appBar);
 
   @override
-  _WordPressPageState createState() => _WordPressPageState(_url, _wpUser);
+  _WordPressPageState createState() => _WordPressPageState(_url, _appBar);
 }
 
 class _WordPressPageState extends State<PostsPage> {
-
 //  final MyExtendedMaterialTextSelectionControls
 //      _myExtendedMaterialTextSelectionControls =
 //      MyExtendedMaterialTextSelectionControls();
 
-  AuthorPostsRep listSourceRepository;
+  ArgPostsRep listSourceRepository;
 
   final String _url;
 
-  final WpUser _wpUser;
+  final AppBar _appBar;
 
-  _WordPressPageState(this._url, this._wpUser);
+  _WordPressPageState(this._url, this._appBar);
 
   @override
   void initState() {
-    listSourceRepository = AuthorPostsRep(_url, _wpUser.id);
+    listSourceRepository = ArgPostsRep(_url);
     super.initState();
   }
 
@@ -255,9 +254,7 @@ class _WordPressPageState extends State<PostsPage> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_wpUser.name + " 's Posts"),
-      ),
+      appBar: _appBar,
       body: ExtendedTextSelectionPointerHandler(
         //default behavior
         // child: result,

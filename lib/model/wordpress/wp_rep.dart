@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/utils/log.dart';
+import 'package:social_project/utils/net_util.dart';
 
 enum WpSource { BlogGeek, WeiRan, MMGal }
 
@@ -67,10 +68,7 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
       var result =
           await HttpClientHelper.get(url + _posts + pageIndex.toString());
 
-      var data = result.body;
-      if (url.contains("mmgal")) {
-        data = data.substring(0, data.indexOf("<!--"));
-      }
+      var data = NetTools.checkData(url, result.body);
 
       var source = WpPostSource.fromJson(json.decode(data));
 

@@ -7,16 +7,21 @@ import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/utils/log.dart';
 
-/// https://blog.geek-cloud.top/wp-json/wp/v2/posts?author=1
-class AuthorPostsRep extends LoadingMoreBase<WpPost> {
+/// 根据 URL 参数加载数据
+/// https://blog.geek-cloud.top/wp-json/wp/v2/posts
+class ArgPostsRep extends LoadingMoreBase<WpPost> {
+  /// 当前页面
   int pageIndex = 1;
+
   bool _hasMore = true;
   bool forceRefresh = false;
 
-  String url;
-  int userId;
+  /// 每页最多展示数据
+  int perPage = 20;
 
-  AuthorPostsRep(this.url, this.userId);
+  String url;
+
+  ArgPostsRep(this.url);
 
   @override
   bool get hasMore => (_hasMore && length < 300) || forceRefresh;
@@ -39,12 +44,9 @@ class AuthorPostsRep extends LoadingMoreBase<WpPost> {
     // 标志位
     bool isSuccess = false;
     try {
-      // https://blog.geek-cloud.top/wp-json/wp/v2/posts?author=1&per_page=20&page=1
+      var link = url + "&per_page=$perPage&page=$pageIndex";
 
-      var result = await HttpClientHelper.get(url +
-          WordPressRep.postsOfAuthorX +
-          userId.toString() +
-          "&per_page=20&page=$pageIndex");
+      var result = await HttpClientHelper.get(link);
 
       var data = result.body;
 

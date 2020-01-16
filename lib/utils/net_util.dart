@@ -7,7 +7,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_user.dart';
-import 'package:social_project/utils/log.dart';
 
 class NetTools {
   /// 此段介绍WP REST API 常用的获取数据（GET）的接口，提交数据因涉及到较为复杂的认证，此篇文章限于篇幅，后面看情况，再计划出一篇专门的WP REST API认证的文章单独介绍。
@@ -164,15 +163,29 @@ class NetTools {
   /// （2）获取指定用户ID的用户信息
   ///
   /// http://www.website.com/wp-json/wp/v2/users/1
+  ///
 
-  static Future<WpUser> getWpUserInfo(String webSite, int userId) async {
+  static String checkData(final String webSite, final String data) {
+    var temp = data;
+
+    if(webSite.contains("mmgal")) {
+      temp = temp.substring(0, data.indexOf("<!--"));
+    }
+
+    return temp;
+  }
+
+  static Future<WpUser> getWpUserInfo(final String webSite, int userId) async {
     // 解析 URL
     final String url = webSite + "/wp-json/wp/v2/users/" + userId.toString();
 
     WpUser data;
     try {
       var result = await HttpClientHelper.get(url);
-      data = WpUser.fromJson(json.decode(result.body));
+
+      var body = checkData(webSite, result.body);
+
+      data = WpUser.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -189,7 +202,8 @@ class NetTools {
     WpUser data;
     try {
       var result = await HttpClientHelper.get(url);
-      data = WpUser.fromJson(json.decode(result.body));
+      var body = checkData(url, result.body);
+      data = WpUser.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -248,7 +262,8 @@ class NetTools {
     WpPostSource data;
     try {
       var result = await HttpClientHelper.get(url);
-      data = WpPostSource.fromJson(json.decode(result.body));
+      var body = checkData(url, result.body);
+      data = WpPostSource.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -262,12 +277,11 @@ class NetTools {
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
         "/wp-json/wp/v2/posts?author=$userId&per_page=$count";
 
-    LogUtils.d("getPostsAuto", "URL: $url");
-
     WpPostSource data;
     try {
       var result = await HttpClientHelper.get(url);
-      data = WpPostSource.fromJson(json.decode(result.body));
+      var body = checkData(url, result.body);
+      data = WpPostSource.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -275,6 +289,7 @@ class NetTools {
     return data;
   }
 
+  ///TODO: 取消 100 条限制
   static Future<WpPostSource> getAllPosts(final int userId) async {
     // 解析 URL
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
@@ -283,7 +298,8 @@ class NetTools {
     WpPostSource data;
     try {
       var result = await HttpClientHelper.get(url);
-      data = WpPostSource.fromJson(json.decode(result.body));
+      var body = checkData(url, result.body);
+      data = WpPostSource.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
@@ -301,11 +317,29 @@ class NetTools {
     try {
       var result = await HttpClientHelper.post(url,
           headers: {"Authorization": 'Bearer' + token});
-      wpPost = WpPost.fromJson(json.decode(result.body));
+      var body = checkData(url, result.body);
+      wpPost = WpPost.fromJson(json.decode(body));
     } catch (exception, stack) {
       print(exception);
       print(stack);
     }
     return wpPost;
+  }
+
+  static Future<WpPostSource> getSearchPostsResult(final String keyWord) async {
+    // 解析 URL
+    final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
+        "/wp-json/wp/v2/posts?search=$keyWord";
+
+    WpPostSource data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      var body = checkData(url, result.body);
+      data = WpPostSource.fromJson(json.decode(body));
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data;
   }
 }

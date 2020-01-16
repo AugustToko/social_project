@@ -1,20 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/ui/widgets/login_background.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
+import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import 'dashboard_menu_row.dart';
 
-class DashboardOnePage extends StatelessWidget {
+class GuidePage extends StatelessWidget {
   Widget appBarColumn(BuildContext context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
-          child: new Column(
+          child: Column(
             children: <Widget>[
-              new Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 //                  new IconButton(
@@ -29,8 +29,8 @@ class DashboardOnePage extends StatelessWidget {
 //                        : null,
 //                  ),
                   ProfileTile(
-                    title: "Hi, User",
-                    subtitle: "Welcome to the Social Project",
+                    title: "Hi, " + (CacheCenter.tokenCache == null ? "User" : CacheCenter.tokenCache.userDisplayName),
+                    subtitle: "欢迎来到 Social Project",
                     textColor: Colors.white,
                   ),
 //                  new IconButton(
@@ -64,14 +64,14 @@ class DashboardOnePage extends StatelessWidget {
                     color: Theme.of(context).textTheme.title.color,
                   ),
                   onPressed: () {
-                    showToast("Seatch", position: ToastPosition.bottom);
+                    showToast("搜索", position: ToastPosition.bottom);
                   },
                 ),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Find our message",
+                        hintText: "查找信息",
                         hintStyle: TextStyle(
                             color: Theme.of(context).textTheme.title.color)),
                   ),
@@ -82,7 +82,7 @@ class DashboardOnePage extends StatelessWidget {
                     color: Theme.of(context).textTheme.title.color,
                   ),
                   onPressed: () {
-                    showToast("Seatch Menus", position: ToastPosition.bottom);
+                    showToast("搜索菜单", position: ToastPosition.bottom);
                   },
                 ),
               ],

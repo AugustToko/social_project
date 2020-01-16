@@ -266,7 +266,9 @@ class _WordPressPageState extends State<WordPressPage> {
                                                 String imageUrl =
                                                     node.attributes[
                                                         "data-original"];
-                                                return Image.network(imageUrl);
+                                                return imageUrl == null
+                                                    ? null
+                                                    : Image.network(imageUrl);
                                               default:
                                                 return null;
                                             }

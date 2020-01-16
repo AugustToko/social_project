@@ -44,7 +44,7 @@ class UIData {
   static const String wpPostDetail = "/wpDetail";
 
   /// [PostsPage]
-  static const String authorPostsPage = "/authorPostsPage";
+  static const String argPostsPage = "/argPostsPage";
 
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";

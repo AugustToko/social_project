@@ -82,7 +82,9 @@ class _WpPageState extends State<WpDetailPage> {
                         return playerWidget;
                       case "img":
                         String imageUrl = node.attributes["data-original"];
-                        return Image.network(imageUrl);
+                        return imageUrl == null
+                            ? null
+                            : Image.network(imageUrl);
                       default:
                         return null;
                     }

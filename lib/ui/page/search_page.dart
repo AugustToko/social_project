@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:social_project/ui/page/posts_page.dart';
+import 'package:social_project/utils/net_util.dart';
 
 typedef SearchItemCall = void Function(String item);
 
@@ -38,7 +41,8 @@ class SearchBarDelegate extends SearchDelegate<String> {
   Widget buildResults(BuildContext context) {
     //点击了搜索显示的页面
     return Center(
-      child: Text('Rsult'),
+      child: PostsPage(WordPressRep.getWpLink(WordPressRep.wpSource) +
+          "/wp-json/wp/v2/posts?search=$query", null),
     );
   }
 

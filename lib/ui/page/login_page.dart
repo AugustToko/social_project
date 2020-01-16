@@ -111,7 +111,8 @@ class LoginPage extends StatelessWidget {
                     data["pressed"] = false;
                     LogUtils.d("LoginPage", "Login Button Pressed!");
                     NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl,
-                            userController.text, passwordController.text)
+                            "chenlongcould", "18551348272Chen")
+//                            userController.text, passwordController.text)
                         .then((wpLoginResult) {
                       if (wpLoginResult.token != null) {
                         CacheCenter.putToken(wpLoginResult);

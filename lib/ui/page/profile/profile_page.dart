@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
@@ -418,7 +419,9 @@ class ProfilePageState extends State<ProfilePage> {
               CacheCenter.tokenCache.userId == _wpUser.id
           ? null
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                showToast("功能：添加好友（关注），状态：建设中", backgroundColor: Colors.red);
+              },
               child: Icon(Icons.person_add),
             ),
     );
@@ -434,10 +437,10 @@ class ProfilePageState extends State<ProfilePage> {
   void _morePosts() {
     Navigator.pushNamed(
       context,
-      UIData.authorPostsPage,
+      UIData.argPostsPage,
       arguments: {
-        "url": WordPressRep.getWpLink(WordPressRep.wpSource),
-        "wpUser": _wpUser
+        "url": WordPressRep.getWpLink(WordPressRep.wpSource) + WordPressRep.postsOfAuthorX + _wpUser.id.toString(),
+        "appBar": AppBar(title: Text(_wpUser.name + " 的全部文章"),)
       },
     );
   }
