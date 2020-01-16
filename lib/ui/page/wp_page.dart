@@ -21,6 +21,7 @@ import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// 获取 WordPress Posts
 class WordPressPage extends StatefulWidget {
   final List<_WordPressPageState> _list = List(1);
 
@@ -195,27 +196,7 @@ class _WordPressPageState extends State<WordPressPage> {
                                   });
                             },
                             onLongPress: () {
-                              BottomSheetUtil.showSheetBottom(
-                                  context,
-                                  CacheCenter.getUser(item.author),
-                                  Menu(title: "Title", items: [
-                                    "Open source url",
-                                    "Share",
-                                    "Add to favourite",
-                                    "Hide",
-                                  ]), (i, menu) {
-                                switch (i) {
-                                  case 0:
-                                    {
-                                      launch(item.link);
-                                    }
-                                    break;
-                                  case 1:
-                                    Share.share(
-                                        title + ":" + " \r\n" + item.link);
-                                    break;
-                                }
-                              });
+                              BottomSheetUtil.showPostSheetShow(context, item);
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,

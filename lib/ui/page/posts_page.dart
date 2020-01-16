@@ -136,27 +136,7 @@ class _WordPressPageState extends State<PostsPage> {
                                   });
                             },
                             onLongPress: () {
-                              BottomSheetUtil.showSheetBottom(
-                                  context,
-                                  CacheCenter.getUser(item.author),
-                                  Menu(title: "Title", items: [
-                                    "Open source url",
-                                    "Share",
-                                    "Add to favourite",
-                                    "Hide",
-                                  ]), (i, menu) {
-                                switch (i) {
-                                  case 0:
-                                    {
-                                      launch(item.link);
-                                    }
-                                    break;
-                                  case 1:
-                                    Share.share(
-                                        title + ":" + " \r\n" + item.link);
-                                    break;
-                                }
-                              });
+                              BottomSheetUtil.showPostSheetShow(context, item);
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,

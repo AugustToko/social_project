@@ -420,7 +420,12 @@ class ProfilePageState extends State<ProfilePage> {
           ? null
           : FloatingActionButton(
               onPressed: () {
-                showToast("功能：添加好友（关注），状态：建设中", backgroundColor: Colors.red);
+                if (CacheCenter.tokenCache == null) {
+                  showToast("请先登陆", backgroundColor: Colors.red, position: ToastPosition.bottom);
+                  Navigator.pushNamed(context, UIData.loginPage);
+                } else {
+                  showToast("功能：添加好友（关注），状态：建设中", backgroundColor: Colors.red);
+                }
               },
               child: Icon(Icons.person_add),
             ),

@@ -11,12 +11,12 @@ import 'about_tile.dart';
 class UserAccountWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return UserAccountDrawer();
+    return _UserAccountDrawerState();
   }
 }
 
 /// 显示用户账户的 Drawer
-class UserAccountDrawer extends State<UserAccountWidget> {
+class _UserAccountDrawerState extends State<UserAccountWidget> {
   WpUser _wpUser = WpUser.defaultUser;
 
   @override
@@ -38,18 +38,25 @@ class UserAccountDrawer extends State<UserAccountWidget> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+//                    image: DecorationImage(
+//                        image: AssetImage("assets/images/timeline.jpeg"),
+//                        fit: BoxFit.cover),
+                    gradient: LinearGradient(colors: UIData.kitGradients)),
                 accountName: Text(
                   _wpUser.name,
+                  style: TextStyle(color: Colors.white),
                 ),
                 accountEmail: Text(
                   // TODO: mail
                   "Building...",
+                  style: TextStyle(color: Colors.white),
                 ),
                 currentAccountPicture: Stack(
                   children: <Widget>[
                     Positioned.fill(
                         child: CacheCenter.tokenCache == null
-                            ? WidgetDefault.defaultCircleAvatar(context)
+                            ? WidgetDefault.defaultCircleAvatar(context, color: Colors.white)
                             : CircleAvatar(
                                 radius: 25,
                                 backgroundImage:

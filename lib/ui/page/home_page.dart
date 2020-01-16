@@ -12,8 +12,6 @@ import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/ui/widgets/user_account_drawer.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
-import '../../main.dart';
-
 /// [HomePage]
 /// 仅带有一个 BottomNavigationBar
 class HomePage extends StatefulWidget {
