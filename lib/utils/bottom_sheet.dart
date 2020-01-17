@@ -14,7 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../ui/widgets/about_tile.dart';
 
 class BottomSheetUtil {
-
   /// 显示于 BottomSheet 顶部
   static Widget header(final WpUser user) {
     var tempUser = user;
@@ -55,8 +54,8 @@ class BottomSheetUtil {
     );
   }
 
-  static void showSheetBottom(final BuildContext context, final WpUser wpUser,
-      final Menu menu, final Function(int num, Menu menu) func) {
+  static void showSheetBottom(
+      final BuildContext context, final WpUser wpUser, final Menu menu) {
     showModalBottomSheet(
         context: context,
         builder: (context) => Material(
@@ -75,16 +74,12 @@ class BottomSheetUtil {
                   child: ListView.builder(
                     shrinkWrap: false,
                     itemCount: menu.items.length,
-                    itemBuilder: (context, i) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: ListTile(
-                          title: Text(
-                            menu.items[i],
-                          ),
-                          onTap: () {
-                            func(i, menu);
-                          }),
-                    ),
+                    itemBuilder: (context, i) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: menu.items[i],
+                      );
+                    },
                   ),
                 ),
                 MyAboutTile()
@@ -98,22 +93,29 @@ class BottomSheetUtil {
         context,
         CacheCenter.getUser(item.author),
         Menu(title: "Title", items: [
-          "打开原网站",
-          "分享",
-          "收藏",
-          "隐藏",
-        ]), (i, menu) {
-      switch (i) {
-        case 0:
-          {
-            launch(item.link);
-          }
-          break;
-        case 1:
-          Share.share(item.title.rendered + ":" + " \r\n" + item.link);
-          break;
-      }
-    });
+          ListTile(
+            title: Text("打开原网站"),
+            leading: Icon(Icons.link),
+            onTap: () {
+              launch(item.link);
+            },
+          ),
+          ListTile(
+            title: Text("分享"),
+            leading: Icon(Icons.share),
+            onTap: () {
+              Share.share(item.title.rendered + ":" + " \r\n" + item.link);
+            },
+          ),
+          ListTile(
+            title: Text("收藏"),
+            leading: Icon(Icons.star),
+          ),
+          ListTile(
+            title: Text("隐藏"),
+            leading: Icon(Icons.restore_from_trash),
+          ),
+        ]));
   }
 }
 

@@ -271,12 +271,7 @@ class TimelineTwoPageState extends State<TimelineTwoPage> {
                   Navigator.pushNamed(context, UIData.commentDetail);
                 },
                 onLongPress: () {
-                  BottomSheetUtil.showSheetBottom(
-                      context, null, Menu(title: "Title", items: ["data"]),
-                      (i, menu) {
-                    showToast("You clicked ${menu.items[i]}",
-                        position: ToastPosition.bottom);
-                  });
+                  //TODO: 长按
                 },
                 child: Container(
                   child: Padding(

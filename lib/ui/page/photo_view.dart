@@ -10,6 +10,7 @@ import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+import 'package:share/share.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
 import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
@@ -119,16 +120,29 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                 context,
                                 null,
                                 Menu(title: "Title", items: [
-                                  "Menu 1",
-                                  "Menu 2",
-                                  "Menu 3",
-                                  "Menu 4",
-                                  "Menu 5",
-                                  "Menu 6",
-                                ]), (i, menu) {
-                              showToast("You clicked ${menu.items[i]}",
-                                  position: ToastPosition.bottom);
-                            });
+                                  ListTile(
+                                    title: Text("打开原网站"),
+                                    leading: Icon(Icons.link),
+                                    onTap: () {
+                                      launch(item.url);
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: Text("分享"),
+                                    leading: Icon(Icons.share),
+                                    onTap: () {
+                                      Share.share(item.title + ":" + " \r\n" + item.url);
+                                    },
+                                  ),
+                                  ListTile(
+                                    title: Text("收藏"),
+                                    leading: Icon(Icons.star),
+                                  ),
+                                  ListTile(
+                                    title: Text("隐藏"),
+                                    leading: Icon(Icons.restore_from_trash),
+                                  ),
+                                ],));
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,

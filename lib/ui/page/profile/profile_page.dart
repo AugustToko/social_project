@@ -186,26 +186,7 @@ class ProfilePageState extends State<ProfilePage> {
           });
         },
         onLongPress: () {
-          BottomSheetUtil.showSheetBottom(
-              context,
-              _wpUser,
-              Menu(title: "Title", items: [
-                "打开原网站",
-                "分享",
-                "添加到喜欢列表",
-                "隐藏此文章",
-              ]), (i, menu) {
-            switch (i) {
-              case 0:
-                {
-                  launch(post.link);
-                }
-                break;
-              case 1:
-                Share.share(post.title.rendered + ":" + " \r\n" + post.link);
-                break;
-            }
-          });
+          BottomSheetUtil.showPostSheetShow(context, post);
         },
         child: Padding(
           padding: EdgeInsets.fromLTRB(

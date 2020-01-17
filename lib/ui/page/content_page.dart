@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
-import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_page.dart';
-import 'package:social_project/utils/cache_center.dart';
-import 'package:social_project/utils/route/example_route.dart';
-import 'package:social_project/utils/uidata.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {
@@ -246,7 +240,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-      child: Material(child: _tabBar, elevation: 2,),
+      child: _tabBar,
       color: Theme.of(context).backgroundColor,
     );
   }
