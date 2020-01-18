@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/menu.dart';
@@ -97,7 +98,7 @@ class BottomSheetUtil {
             title: Text("打开原网站"),
             leading: Icon(Icons.link, color: Theme.of(context).iconTheme.color,),
             onTap: () {
-              launch(item.link);
+              FlutterWebBrowser.openWebPage(url: item.link);
             },
           ),
           ListTile(

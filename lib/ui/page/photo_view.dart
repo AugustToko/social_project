@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
@@ -130,7 +131,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                             Theme.of(context).iconTheme.color,
                                       ),
                                       onTap: () {
-                                        launch(item.url);
+                                        FlutterWebBrowser.openWebPage(url: item.url);
                                       },
                                     ),
                                     ListTile(
@@ -144,6 +145,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                         Share.share(item.title +
                                             ":" +
                                             " \r\n" +
+                                            item.content + " \r\n" +
                                             item.url);
                                       },
                                     ),

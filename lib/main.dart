@@ -53,6 +53,7 @@ class App extends StatelessWidget {
       color: Colors.grey.shade50,
     ),
     iconTheme: IconThemeData(color: Colors.grey.shade900),
+    dividerTheme: DividerThemeData(color: Colors.grey.shade200)
   );
 
   /// 深色主题
@@ -81,6 +82,7 @@ class App extends StatelessWidget {
       color: Colors.grey.shade900,
     ),
     iconTheme: IconThemeData(color: Colors.grey.shade400),
+      dividerTheme: DividerThemeData(color: Colors.grey.shade800)
   );
 
   // This widget is the root of your application.

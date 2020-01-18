@@ -360,9 +360,22 @@ class ImageItem {
     return ExtendedNetworkImageProvider(imageUrl);
   }
 
+  /// 重缩放图片
   ImageProvider createResizeImage() {
+    // 缩放系数
+    var value = 5;
+
+    if (width >= 3000) value = 10;
+    if (width >= 4000) value = 15;
+    if (width >= 5000) value = 20;
+    if (width >= 6000) value = 25;
+    if (width >= 7000) value = 30;
+
+    debugPrint("value=$value  ---  source $width  ---  resize: " +
+        (width ~/ value).toString());
+
     return ResizeImage(ExtendedNetworkImageProvider(imageUrl),
-        width: width ~/ 5, height: height ~/ 5);
+        width: width ~/ value, height: height ~/ value);
   }
 
   void clearCache() {

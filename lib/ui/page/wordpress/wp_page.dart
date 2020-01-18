@@ -136,7 +136,8 @@ class _WordPressPageState extends State<WordPressPage> {
               armedDragUpCancel: false,
               onRefresh: onRefresh,
               child: LoadingMoreCustomScrollView(
-                showGlowLeading: false,
+                showGlowLeading: true,
+                showGlowTrailing: true,
                 physics: ClampingScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
@@ -349,8 +350,13 @@ class _WordPressPageState extends State<WordPressPage> {
                                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                                 child: Column(
                                   children: <Widget>[
-                                    Text("🚧 置顶消息 🚧", style: TextStyle(fontSize: 30),),
-                                    SizedBox(height: 12,),
+                                    Text(
+                                      "🚧 置顶消息 🚧",
+                                      style: TextStyle(fontSize: 30),
+                                    ),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
                                     Image.asset("assets/images/timeline.jpeg")
                                   ],
                                 ),

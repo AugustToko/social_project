@@ -14,12 +14,13 @@ class SettingsOnePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "General Setting",
+                  "一般设置",
                 ),
               ),
               Card(
                 color: Theme.of(context).backgroundColor,
                 elevation: 2.0,
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -27,16 +28,68 @@ class SettingsOnePage extends StatelessWidget {
                         Icons.person,
                         color: Colors.grey,
                       ),
-                      title: buildText(context, "Account"),
+                      title: buildText(context, "账号"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
                       onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(
-                        Icons.message,
+                        Icons.notifications,
                         color: Colors.green,
                       ),
-                      title: buildText(context, "Message"),
+                      title: buildText(context, "通知"),
+                      trailing: buildArrowIcon(context, Icons.arrow_right),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+              //2
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "其他",
+                ),
+              ),
+              Card(
+                color: Theme.of(context).backgroundColor,
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                elevation: 2.0,
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(
+                        Icons.help,
+                        color: Colors.indigoAccent,
+                      ),
+                      title: buildText(context, "帮助与反馈"),
+                      trailing: buildArrowIcon(context, Icons.arrow_right),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.textsms,
+                        color: Colors.blueGrey,
+                      ),
+                      title: buildText(context, "用户协议"),
+                      trailing: buildArrowIcon(context, Icons.arrow_right),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.security,
+                        color: Colors.orange,
+                      ),
+                      title: buildText(context, "隐私政策"),
+                      trailing: buildArrowIcon(context, Icons.arrow_right),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.lock,
+                        color: Colors.red,
+                      ),
+                      title: buildText(context, "安全条款"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
                       onTap: () {},
                     ),
@@ -45,7 +98,7 @@ class SettingsOnePage extends StatelessWidget {
                         Icons.info,
                         color: Colors.blue,
                       ),
-                      title: buildText(context, "About"),
+                      title: buildText(context, "关于 ${UIData.appName}"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
                       onTap: () {},
                     )
@@ -186,11 +239,12 @@ class SettingsOnePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CommonScaffold(
-      appTitle: "App Settings",
-      showDrawer: false,
-      showFAB: false,
-      bodyData: bodyData(context),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("应用设置"),
+        elevation: 4.0,
+      ),
+      body: bodyData(context),
     );
   }
 }

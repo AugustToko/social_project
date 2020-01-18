@@ -9,7 +9,7 @@ import 'package:social_project/ui/page/login_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/ui/page/wordpress/send_page.dart';
-import 'package:social_project/ui/page/settings_one_page.dart';
+import 'package:social_project/ui/page/settings_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
 

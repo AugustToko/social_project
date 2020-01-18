@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -27,14 +29,16 @@ class PicGridView extends StatelessWidget {
       if (tuChongItem.images.length == 1) {
         return Padding(
           padding: EdgeInsets.all(margin),
-          child: ClipRRect(
-            borderRadius: ThemeUtil.clipRRectBorderRadius,
-            child: CropImage(
-              index: 0,
-              tuChongItem: tuChongItem,
-              knowImageSize: true,
-            ),
+          child:
+//          ClipRRect(
+//            borderRadius: ThemeUtil.clipRRectBorderRadius,
+//            child:
+              CropImage(
+            index: 0,
+            tuChongItem: tuChongItem,
+            knowImageSize: true,
           ),
+//          ),
         );
       }
 
@@ -51,6 +55,7 @@ class PicGridView extends StatelessWidget {
           borderRadius: ThemeUtil.clipRRectBorderRadius,
           child: GridView.builder(
             shrinkWrap: true,
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: rowCount,
                 crossAxisSpacing: 2.0,

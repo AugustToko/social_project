@@ -31,6 +31,7 @@ class CropImage extends StatelessWidget {
     double height = num300;
     double width = num400;
     final imageItem = tuChongItem.images[index];
+
     if (knowImageSize) {
       height = imageItem.height.toDouble();
       width = imageItem.width.toDouble();
@@ -52,7 +53,7 @@ class CropImage extends StatelessWidget {
         //if you don't want to resize image to reduce the memory
         //use ExtendedImage.network(imageItem.imageUrl)
         image: imageItem.createResizeImage(),
-        //fit: BoxFit.fill,
+        fit: BoxFit.cover,
         //height: 200.0,
         width: width,
         height: height,
@@ -152,97 +153,112 @@ class CropImage extends StatelessWidget {
   }
 
   Widget buildImage(ui.Image image, double num300, double num400) {
-    var n = image.height / image.width;
-    if (n >= 4 / 3) {
-      Widget imageWidget = ExtendedRawImage(
-          image: image,
-          width: num300,
-          height: num400,
-          fit: BoxFit.fill,
-          soucreRect: Rect.fromLTWH(
-              0.0, 0.0, image.width.toDouble(), 4 * image.width / 3));
-      if (n >= 4) {
-        imageWidget = Container(
-          width: num300,
-          height: num400,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: 0.0,
-                right: 0.0,
-                left: 0.0,
-                bottom: 0.0,
-                child: imageWidget,
-              ),
-              Positioned(
-                bottom: 0.0,
-                right: 0.0,
-                child: Container(
-                  padding: EdgeInsets.all(2.0),
-                  color: Colors.grey,
-                  child: const Text(
-                    "long image",
-                    style: TextStyle(color: Colors.white, fontSize: 10.0),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      }
-      return imageWidget;
-    } else if (4 / 3 > n && n > 3 / 4) {
-      var maxValue = max(image.width, image.height);
-      var height = num400 * image.height / maxValue;
-      var width = num400 * image.width / maxValue;
-      return ExtendedRawImage(
-        height: height,
-        width: width,
-        image: image,
-        fit: BoxFit.fill,
-      );
-    } else if (n <= 3 / 4) {
-      var width = 4 * image.height / 3;
-      Widget imageWidget = ExtendedRawImage(
-        image: image,
-        width: num400,
-        height: num300,
-        fit: BoxFit.fill,
-        soucreRect: Rect.fromLTWH(
-            (image.width - width) / 2.0, 0.0, width, image.height.toDouble()),
-      );
+    return ExtendedRawImage(
+      image: image,
+      width: num300,
+      height: num400,
+      fit: BoxFit.cover,
+//      soucreRect:
+//          Rect.fromLTWH(0.0, 0.0, image.width.toDouble(), 4 * image.width / 3),
+    );
 
-      if (n <= 1 / 4) {
-        imageWidget = Container(
-          width: num400,
-          height: num300,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: 0.0,
-                right: 0.0,
-                left: 0.0,
-                bottom: 0.0,
-                child: imageWidget,
-              ),
-              Positioned(
-                bottom: 0.0,
-                right: 0.0,
-                child: Container(
-                  padding: EdgeInsets.all(2.0),
-                  color: Colors.grey,
-                  child: const Text(
-                    "long image",
-                    style: TextStyle(color: Colors.white, fontSize: 10.0),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
-      }
-      return imageWidget;
-    }
-    return Container();
+//    var n = image.height / image.width;
+//    var fitType = BoxFit.cover;
+//    if (n >= 4 / 3) {
+//      Widget imageWidget = ExtendedRawImage(
+//        image: image,
+//        width: num300,
+//        height: num400,
+//        fit: fitType,
+////        soucreRect: Rect.fromLTWH(
+////            0.0, 0.0, image.width.toDouble(), 4 * image.width / 3),
+//      );
+//      if (n >= 4) {
+//        imageWidget = Container(
+//          width: num300,
+//          height: num400,
+//          child: Stack(
+//            children: <Widget>[
+//              Positioned(
+//                top: 0.0,
+//                right: 0.0,
+//                left: 0.0,
+//                bottom: 0.0,
+//                child: imageWidget,
+//              ),
+//              Positioned(
+//                bottom: 0.0,
+//                right: 0.0,
+//                child: Container(
+//                  padding: EdgeInsets.all(2.0),
+//                  color: Colors.grey,
+//                  child: const Text(
+//                    "加载图像中...",
+//                    style: TextStyle(color: Colors.white, fontSize: 10.0),
+//                  ),
+//                ),
+//              )
+//            ],
+//          ),
+//        );
+//      }
+//      return imageWidget;
+//    } else if (4 / 3 > n && n > 3 / 4) {
+//      var maxValue = max(image.width, image.height);
+//      var height = num400 * image.height / maxValue;
+//      var width = num400 * image.width / maxValue;
+//      return ExtendedRawImage(
+//        height: height,
+//        width: width,
+//        image: image,
+//        fit: fitType,
+//      );
+//    } else if (n <= 3 / 4) {
+//      var width = 4 * image.height / 3;
+//      Widget imageWidget = ExtendedRawImage(
+//        image: image,
+//        width: num400,
+//        height: num300,
+//        fit: fitType,
+////        soucreRect: Rect.fromLTWH(
+////          (image.width - width) / 2.0,
+////          0.0,
+////          width,
+////          image.height.toDouble(),
+////        ),
+//      );
+//
+//      if (n <= 1 / 4) {
+//        imageWidget = Container(
+//          width: num400,
+//          height: num300,
+//          child: Stack(
+//            children: <Widget>[
+//              Positioned(
+//                top: 0.0,
+//                right: 0.0,
+//                left: 0.0,
+//                bottom: 0.0,
+//                child: imageWidget,
+//              ),
+//              Positioned(
+//                bottom: 0.0,
+//                right: 0.0,
+//                child: Container(
+//                  padding: EdgeInsets.all(2.0),
+//                  color: Colors.grey,
+//                  child: const Text(
+//                    "long image",
+//                    style: TextStyle(color: Colors.white, fontSize: 10.0),
+//                  ),
+//                ),
+//              )
+//            ],
+//          ),
+//        );
+//      }
+//      return imageWidget;
+//    }
+//    return Container();
   }
 }

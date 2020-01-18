@@ -7,6 +7,8 @@ import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/route/example_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
+import '../../main.dart';
+
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {
   //抽屉widget
@@ -208,7 +210,7 @@ class _TabBarState extends State<ContentPage>
               }),
           // overflow menu
           PopupMenuButton<Choice>(
-            onSelected: (val) {},
+            onSelected: (menu) => menu.onTap(),
             itemBuilder: (BuildContext context) {
               return choices.map((Choice choice) {
                 return PopupMenuItem<Choice>(
@@ -278,18 +280,21 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class Choice {
-  const Choice({this.title, this.icon});
+  const Choice({this.title, this.icon, this.onTap});
 
   final String title;
   final IconData icon;
+  final Function() onTap;
 }
 
 // TODO: Sample Menus
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Boat', icon: Icons.directions_boat),
-  const Choice(title: 'Bus', icon: Icons.directions_bus),
-  const Choice(title: 'Train', icon: Icons.directions_railway),
-  const Choice(title: 'Walk', icon: Icons.directions_walk),
+List<Choice> choices = <Choice>[
+  Choice(
+      title: '退出',
+      icon: Icons.directions_boat,
+      onTap: () {
+        App.exitApp();
+      }),
 ];
 
 class FloatingPainter extends CustomPainter {
