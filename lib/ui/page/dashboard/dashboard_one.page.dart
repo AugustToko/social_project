@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/widgets/login_background.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -9,6 +10,8 @@ import 'package:social_project/utils/uidata.dart';
 import 'dashboard_menu_row.dart';
 
 class GuidePage extends StatelessWidget {
+  final TextEditingController _controller = TextEditingController();
+
   Widget appBarColumn(BuildContext context) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
@@ -29,7 +32,10 @@ class GuidePage extends StatelessWidget {
 //                        : null,
 //                  ),
                   ProfileTile(
-                    title: "Hi, " + (CacheCenter.tokenCache == null ? "User" : CacheCenter.tokenCache.userDisplayName),
+                    title: "Hi, " +
+                        (CacheCenter.tokenCache == null
+                            ? "User"
+                            : CacheCenter.tokenCache.userDisplayName),
                     subtitle: "欢迎来到 Social Project",
                     textColor: Colors.white,
                   ),
@@ -69,11 +75,24 @@ class GuidePage extends StatelessWidget {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: _controller,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "查找信息",
-                        hintStyle: TextStyle(
-                            color: Theme.of(context).textTheme.title.color)),
+                      border: InputBorder.none,
+                      hintText: "查找信息",
+                      hintStyle: TextStyle(
+                          color: Theme.of(context).textTheme.title.color),
+                    ),
+                    onSubmitted: (par1) => Navigator.pushNamed(
+                        context, UIData.argPostsPage,
+                        arguments: {
+                          'url': WordPressRep.getWpLink(WordPressRep.wpSource) +
+                              "/wp-json/wp/v2/posts?search=${_controller.text}",
+                          'appBar': AppBar(
+                            title: Text(_controller.text + ' 的搜索结果'),
+                            backgroundColor: Theme.of(context).backgroundColor,
+                            elevation: 5,
+                          )
+                        }),
                   ),
                 ),
                 IconButton(

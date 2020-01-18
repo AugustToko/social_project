@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker_saver/image_picker_saver.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
@@ -27,31 +28,32 @@ class App extends StatelessWidget {
 
   /// 亮色主题
   static var themeData = ThemeData(
-      primarySwatch: Colors.blue,
-      primaryColor: Colors.grey.shade200,
-      scaffoldBackgroundColor: Colors.grey.shade200,
-      backgroundColor: Colors.white,
-      appBarTheme: AppBarTheme(elevation: 0.0),
-      textTheme: TextTheme(
-        title: ThemeUtil.textLight,
-        body1: ThemeUtil.textLight,
-        subhead: ThemeUtil.textLight,
-        // 用于 Drawer 中选项文字
-        body2: ThemeUtil.textLight,
-        subtitle: ThemeUtil.subtitle,
-        button: ThemeUtil.textLight,
-        // for [AboutListTile]
-        headline: ThemeUtil.textLight,
-      ),
-      cardTheme: CardTheme(color: Colors.white),
+    primarySwatch: Colors.blue,
+    primaryColor: Colors.grey.shade200,
+    scaffoldBackgroundColor: Colors.grey.shade200,
+    backgroundColor: Colors.white,
+    appBarTheme: AppBarTheme(elevation: 0.0,  color: Colors.white),
+    textTheme: TextTheme(
+      title: ThemeUtil.textLight,
+      body1: ThemeUtil.textLight,
+      subhead: ThemeUtil.textLight,
+      // 用于 Drawer 中选项文字
+      body2: ThemeUtil.textLight,
+      subtitle: ThemeUtil.subtitle,
+      button: ThemeUtil.textLight,
+      // for [AboutListTile]
+      headline: ThemeUtil.textLight,
+    ),
+    cardTheme: CardTheme(color: Colors.white),
 //    canvasColor: Colors.grey.shade50,
-      dialogTheme: DialogTheme(
-        backgroundColor: Colors.grey.shade50,
-      ),
-      popupMenuTheme: PopupMenuThemeData(
-        color: Colors.grey.shade50,
-      ),
-      iconTheme: IconThemeData(color: Colors.white));
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey.shade50,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: Colors.grey.shade50,
+    ),
+    iconTheme: IconThemeData(color: Colors.grey.shade900),
+  );
 
   /// 深色主题
   static var darkThemeData = ThemeData(
@@ -59,7 +61,7 @@ class App extends StatelessWidget {
     primaryColor: Colors.grey.shade900,
     scaffoldBackgroundColor: Colors.grey.shade900,
     backgroundColor: Colors.grey.shade900,
-    appBarTheme: AppBarTheme(elevation: 0.0),
+    appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.grey.shade900),
     textTheme: TextTheme(
       title: ThemeUtil.textDark,
       subhead: ThemeUtil.textDark,
@@ -78,7 +80,7 @@ class App extends StatelessWidget {
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.grey.shade900,
     ),
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: IconThemeData(color: Colors.grey.shade400),
   );
 
   // This widget is the root of your application.
@@ -168,11 +170,17 @@ class App extends StatelessWidget {
     await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 
-  ///save netwrok image to photo
-  static Future<bool> saveNetworkImageToPhoto(String url,
+  /// save NetWork image to photo
+  static Future<bool> saveNetworkImageToPhoto(final String url,
       {bool useCache: true}) async {
     var data = await getNetworkImageData(url, useCache: useCache);
-    var filePath = await ImagePickerSaver.saveFile(fileData: data);
-    return filePath != null && filePath != "";
+
+//    var response = await Dio().get("/838ba61ea8d3fd1fc9c7b6853a4e251f94ca5f46.jpg", options: Options(responseType: ResponseType.bytes));
+
+    final result = await ImageGallerySaver.saveImage(Uint8List.fromList(data));
+
+    debugPrint(result);
+
+    return result != null && result != "";
   }
 }

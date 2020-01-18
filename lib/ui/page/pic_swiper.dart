@@ -73,8 +73,7 @@ class _PicSwiperState extends State<PicSwiper>
 
         /// if you use ExtendedImageSlidePage and slideType =SlideType.onlyImage,
         /// make sure your page is transparent background
-        color: Colors.transparent,
-        shadowColor: Colors.transparent,
+        color: Theme.of(context).backgroundColor,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -266,10 +265,13 @@ class MySwiperPlugin extends StatelessWidget {
                   width: 10.0,
                 ),
                 Expanded(
-                    child: Text(pics[data.data].des ?? "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16.0, color: Colors.blue))),
+                  child: Text(
+                    pics[data.data].des ?? "",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                  ),
+                ),
                 SizedBox(
                   width: 10.0,
                 ),
@@ -278,15 +280,16 @@ class MySwiperPlugin extends StatelessWidget {
                     padding: EdgeInsets.only(right: 10.0),
                     alignment: Alignment.center,
                     child: Text(
-                      "Save",
+                      "保存到相册",
                       style: TextStyle(fontSize: 16.0, color: Colors.blue),
                     ),
                   ),
                   onTap: () {
                     App.saveNetworkImageToPhoto(pics[index].picUrl)
                         .then((bool done) {
-                      showToast(done ? "save succeed" : "save failed",
-                          position: ToastPosition(align: Alignment.topCenter));
+                      showToast(done ? "保存成功" : "保存失败",
+                          position: ToastPosition(align: Alignment.topCenter),
+                          backgroundColor: Colors.red);
                     });
                   },
                 )

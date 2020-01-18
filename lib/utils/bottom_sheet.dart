@@ -95,25 +95,25 @@ class BottomSheetUtil {
         Menu(title: "Title", items: [
           ListTile(
             title: Text("打开原网站"),
-            leading: Icon(Icons.link),
+            leading: Icon(Icons.link, color: Theme.of(context).iconTheme.color,),
             onTap: () {
               launch(item.link);
             },
           ),
           ListTile(
             title: Text("分享"),
-            leading: Icon(Icons.share),
+            leading: Icon(Icons.share, color: Theme.of(context).iconTheme.color,),
             onTap: () {
               Share.share(item.title.rendered + ":" + " \r\n" + item.link);
             },
           ),
           ListTile(
             title: Text("收藏"),
-            leading: Icon(Icons.star),
+            leading: Icon(Icons.star, color: Theme.of(context).iconTheme.color,),
           ),
           ListTile(
             title: Text("隐藏"),
-            leading: Icon(Icons.restore_from_trash),
+            leading: Icon(Icons.restore_from_trash, color: Theme.of(context).iconTheme.color,),
           ),
         ]));
   }

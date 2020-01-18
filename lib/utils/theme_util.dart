@@ -16,6 +16,9 @@ class ThemeUtil {
   static var subtitle = TextStyle(color: Colors.grey);
   static var iconCommonColor = Colors.grey;
 
+  @Deprecated("null")
+  static var appBarTheme = AppBarTheme(elevation: 0.0);
+
   @Deprecated("Use [Colors.grey.shade900]")
   static var backgroundDarkColor = Colors.grey.shade900;
   @Deprecated("Use [Colors.grey.shade50]")

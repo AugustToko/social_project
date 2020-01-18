@@ -296,6 +296,7 @@ class ProfilePageState extends State<ProfilePage> {
           children: <Widget>[
             AppBar(
               title: Text(_wpUser.name + " 的资料"),
+              backgroundColor: Colors.transparent,
               actions: <Widget>[
                 //TODO: menu
                 PopupMenuButton<Choice>(

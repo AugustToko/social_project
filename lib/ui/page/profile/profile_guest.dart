@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
@@ -112,7 +113,9 @@ class _ProfileContentState extends State<ProfileContent> {
                 trailing: buildArrowIcon(context, Icons.arrow_right),
                 onTap: () {
                   //TODO: 给 ${UIData.appName} 一个好评
-                  launch("http://www.coolapk.com/u/430423");
+                  FlutterWebBrowser.openWebPage(
+                      url: "http://www.coolapk.com/u/430423",
+                      androidToolbarColor: Theme.of(context).primaryColor);
                 },
               ),
               ListTile(

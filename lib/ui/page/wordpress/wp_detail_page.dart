@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -34,6 +35,7 @@ class _WpPageState extends State<WpDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text(_title),
       ),
       body: ThemeUtil.materialCard(Center(
@@ -51,7 +53,7 @@ class _WpPageState extends State<WpDetailPage> {
               Html(
                 data: _content,
                 onLinkTap: (url) {
-                  launch(url);
+                  FlutterWebBrowser.openWebPage(url: url);
                 },
                 useRichText: false,
                 customRender: (node, children) {

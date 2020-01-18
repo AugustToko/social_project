@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -67,7 +68,8 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Colors.grey),
                     labelStyle: TextStyle(
-                        color: Theme.of(context).textTheme.title.color),
+                      color: Theme.of(context).textTheme.title.color,
+                    ),
                     hintText: "输入你的用户名",
                     labelText: "用户名",
                     focusedBorder:
@@ -113,7 +115,8 @@ class LoginPage extends StatelessWidget {
                     LogUtils.d("LoginPage", "Login Button Pressed!");
                     NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl,
                             "chenlongcould", "18551348272Chen")
-//                            userController.text, passwordController.text)
+//                            userController.text,
+//                            passwordController.text)
                         .then((wpLoginResult) {
                       if (wpLoginResult.token != null) {
                         CacheCenter.putToken(wpLoginResult);
@@ -140,7 +143,7 @@ class LoginPage extends StatelessWidget {
               height: 5.0,
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -155,7 +158,10 @@ class LoginPage extends StatelessWidget {
                     color: Theme.of(context).backgroundColor,
                     elevation: 0,
                     onPressed: () {
-                      launch(WordPressRep.blogGeekReg);
+                      FlutterWebBrowser.openWebPage(
+                          url: WordPressRep.blogGeekReg,
+                          androidToolbarColor: Theme.of(context).primaryColor);
+//                      launch(WordPressRep.blogGeekReg);
                     },
                   ),
                   SizedBox(
@@ -172,7 +178,10 @@ class LoginPage extends StatelessWidget {
                     color: Theme.of(context).backgroundColor,
                     elevation: 0,
                     onPressed: () {
-                      launch(WordPressRep.blogGeekLostPwd);
+                      FlutterWebBrowser.openWebPage(
+                          url: WordPressRep.blogGeekLostPwd,
+                          androidToolbarColor: Theme.of(context).primaryColor);
+//                      launch(WordPressRep.blogGeekLostPwd);
                     },
                   )
                 ],

@@ -119,30 +119,52 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                             BottomSheetUtil.showSheetBottom(
                                 context,
                                 null,
-                                Menu(title: "Title", items: [
-                                  ListTile(
-                                    title: Text("打开原网站"),
-                                    leading: Icon(Icons.link),
-                                    onTap: () {
-                                      launch(item.url);
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: Text("分享"),
-                                    leading: Icon(Icons.share),
-                                    onTap: () {
-                                      Share.share(item.title + ":" + " \r\n" + item.url);
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: Text("收藏"),
-                                    leading: Icon(Icons.star),
-                                  ),
-                                  ListTile(
-                                    title: Text("隐藏"),
-                                    leading: Icon(Icons.restore_from_trash),
-                                  ),
-                                ],));
+                                Menu(
+                                  title: "Title",
+                                  items: [
+                                    ListTile(
+                                      title: Text("打开原网站"),
+                                      leading: Icon(
+                                        Icons.link,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                      onTap: () {
+                                        launch(item.url);
+                                      },
+                                    ),
+                                    ListTile(
+                                      title: Text("分享"),
+                                      leading: Icon(
+                                        Icons.share,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                      onTap: () {
+                                        Share.share(item.title +
+                                            ":" +
+                                            " \r\n" +
+                                            item.url);
+                                      },
+                                    ),
+                                    ListTile(
+                                      title: Text("收藏"),
+                                      leading: Icon(
+                                        Icons.star,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: Text("隐藏"),
+                                      leading: Icon(
+                                        Icons.restore_from_trash,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                    ),
+                                  ],
+                                ));
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -165,9 +187,9 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                                         RichText(
                                           maxLines: 1,
                                           text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "@Location · ",
-                                                style: ThemeUtil.subtitle),
+//                                            TextSpan(
+//                                                text: "@Location · ",
+//                                                style: ThemeUtil.subtitle),
                                             TextSpan(
                                                 text: "${item.passedTime}",
                                                 style: ThemeUtil.subtitle)
