@@ -4,24 +4,24 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
+import 'package:social_project/ui/page/sample/my_bar.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/net_util.dart';
 
 import '../content_page.dart';
-import 'my_bar.dart';
 
-class DiscoverListPage extends StatefulWidget {
+class ProfileCoolApk extends StatefulWidget {
   final int wpUserId;
 
-  DiscoverListPage(this.wpUserId);
+  ProfileCoolApk(this.wpUserId);
 
   @override
-  State<StatefulWidget> createState() => _DiscoverListState();
+  State<StatefulWidget> createState() => _ProfileCoolApkState();
 }
 
-class _DiscoverListState extends State<DiscoverListPage>
+class _ProfileCoolApkState extends State<ProfileCoolApk>
     with TickerProviderStateMixin {
   TabController _tabController;
 
@@ -33,7 +33,7 @@ class _DiscoverListState extends State<DiscoverListPage>
 
   var needChangeColor = false;
 
-  var iconTheme = IconThemeData(color: Color.fromARGB(255, 255, 255, 255));
+  var iconTheme = IconThemeData(color: Colors.grey);
 
   @override
   void initState() {
@@ -149,8 +149,9 @@ class _DiscoverListState extends State<DiscoverListPage>
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
         expandedHeight: 350.0,
-        pinned: true,
+        pinned: false,
         iconTheme: iconTheme,
+        brightness: Brightness.dark,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
           PopupMenuButton<Choice>(
@@ -236,7 +237,7 @@ class _DiscoverListState extends State<DiscoverListPage>
                               onPressed: () {},
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -272,34 +273,34 @@ class _DiscoverListState extends State<DiscoverListPage>
             ],
           ),
         ),
-        bottom: TabBar(
-          labelColor: Colors.green,
-          unselectedLabelColor: Colors.grey,
-          tabs: [
-            Tab(text: '文章'),
-            Tab(text: '动态'),
-            Tab(text: '关注的话题'),
-            Tab(text: '粉丝'),
-          ],
-          controller: _tabController,
-        ),
-      ),
-//      SliverPersistentHeader(
-//        delegate: _SliverAppBarDelegate(
-//          TabBar(
-//            labelColor: Colors.red,
-//            unselectedLabelColor: Colors.grey,
-//            tabs: [
-//              Tab(text: '文章'),
-//              Tab(text: '动态'),
-//              Tab(text: '关注的话题'),
-//              Tab(text: '粉丝'),
-//            ],
-//            controller: _tabController,
-//          ),
+//        bottom: TabBar(
+//          labelColor: Colors.green,
+//          unselectedLabelColor: Colors.grey,
+//          tabs: [
+//            Tab(text: '文章'),
+//            Tab(text: '动态'),
+//            Tab(text: '关注的话题'),
+//            Tab(text: '粉丝'),
+//          ],
+//          controller: _tabController,
 //        ),
-//        pinned: true,
-//      )
+      ),
+      SliverPersistentHeader(
+        delegate: _SliverAppBarDelegate(
+          TabBar(
+            labelColor: Colors.red,
+            unselectedLabelColor: Colors.grey,
+            tabs: [
+              Tab(text: '文章'),
+              Tab(text: '动态'),
+              Tab(text: '关注的话题'),
+              Tab(text: '粉丝'),
+            ],
+            controller: _tabController,
+          ),
+        ),
+        pinned: true,
+      )
     ];
   }
 }
@@ -323,7 +324,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         child: _tabBar,
         color: Theme.of(context).backgroundColor,
       ),
-      borderRadius: BorderRadius.circular(28.0),
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
     );
   }
 

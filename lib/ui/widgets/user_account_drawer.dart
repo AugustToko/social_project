@@ -8,7 +8,7 @@ import 'package:social_project/utils/widget_default.dart';
 
 import 'about_tile.dart';
 
-class UserAccountWidget extends StatefulWidget {
+class UserAccountDrawer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _UserAccountDrawerState();
@@ -16,7 +16,7 @@ class UserAccountWidget extends StatefulWidget {
 }
 
 /// 显示用户账户的 Drawer
-class _UserAccountDrawerState extends State<UserAccountWidget> {
+class _UserAccountDrawerState extends State<UserAccountDrawer> {
   WpUser _wpUser = WpUser.defaultUser;
 
   @override
@@ -37,130 +37,109 @@ class _UserAccountDrawerState extends State<UserAccountWidget> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              UserAccountsDrawerHeader(
-                decoration: BoxDecoration(
-//                    image: DecorationImage(
-//                        image: AssetImage("assets/images/timeline.jpeg"),
-//                        fit: BoxFit.cover),
-                    gradient: LinearGradient(colors: UIData.kitGradients)),
-                accountName: Text(
-                  _wpUser.name,
-                  style: TextStyle(color: Colors.white),
-                ),
-                accountEmail: Text(
-                  // TODO: mail
-                  "Building...",
-                  style: TextStyle(color: Colors.white),
-                ),
-                currentAccountPicture: Stack(
+              InkWell(
+                child: Stack(
                   children: <Widget>[
-                    Positioned.fill(
-                        child: CacheCenter.tokenCache == null
-                            ? WidgetDefault.defaultCircleAvatar(context,
-                                color: Colors.white)
-                            : CircleAvatar(
-                                radius: 25,
-                                backgroundImage:
-                                    NetworkImage(_wpUser.avatarUrls.s96),
-                              )),
-                    Positioned.fill(
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () async {
-                            if (CacheCenter.tokenCache == null) {
-                              Navigator.pushNamed(context, UIData.loginPage,
-                                      arguments: {"wpUserId": _wpUser.id})
-                                  .then((result) {
-                                print(result);
-                                if (result == NavState.LoginDone) {
-                                  setState(() {
-                                    _wpUser = CacheCenter.getUser(
-                                        CacheCenter.tokenCache.userId);
-                                  });
-                                }
-                              });
-                            } else {
-                              Navigator.pushNamed(context, UIData.profile,
-                                  arguments: {"wpUserId": _wpUser.id});
-                            }
-                          },
-                          customBorder: CircleBorder(),
-                        ),
+                    Image.asset(
+                      "assets/images/timeline.jpeg",
+                      fit: BoxFit.cover,
+                    ),
+                    Opacity(
+                      opacity: 0.5,
+                      child: Image.asset(
+                        "assets/images/timeline.jpeg",
+                        fit: BoxFit.cover,
+                        color: Colors.black,
                       ),
                     ),
+                    UserAccountsDrawerHeader(
+                      decoration: BoxDecoration(color: Colors.transparent),
+//                  decoration: BoxDecoration(
+//                    image: DecorationImage(
+//                      image: AssetImage("assets/images/timeline.jpeg"),
+//                      fit: BoxFit.cover,
+//                    ),
+////                    gradient: LinearGradient(colors: UIData.kitGradients),
+//                  ),
+                      accountName: Text(
+                        _wpUser.name,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      accountEmail: Text(
+                        // TODO: mail
+                        "Building...",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      currentAccountPicture: Stack(
+                        children: <Widget>[
+                          Positioned.fill(
+                              child: CacheCenter.tokenCache == null
+                                  ? WidgetDefault.defaultCircleAvatar(context,
+                                      color: Colors.white)
+                                  : CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage:
+                                          NetworkImage(_wpUser.avatarUrls.s96),
+                                    )),
+                          Positioned.fill(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () async {
+                                  if (CacheCenter.tokenCache == null) {
+                                    Navigator.pushNamed(
+                                            context, UIData.loginPage,
+                                            arguments: {"wpUserId": _wpUser.id})
+                                        .then((result) {
+                                      print(result);
+                                      if (result == NavState.LoginDone) {
+                                        setState(() {
+                                          _wpUser = CacheCenter.getUser(
+                                              CacheCenter.tokenCache.userId);
+                                        });
+                                      }
+                                    });
+                                  } else {
+                                    Navigator.pushNamed(context, UIData.profile,
+                                        arguments: {"wpUserId": _wpUser.id});
+                                  }
+                                },
+                                customBorder: CircleBorder(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // 箭头同标题颜色
+                      arrowColor: Colors.white,
+                      onDetailsPressed: () {
+                        showMenu<String>(
+                          context: context,
+                          position: RelativeRect.fromLTRB(0, 0, 0, 0),
+                          items: [
+                            PopupMenuItem(child: Text("Menu")),
+                          ],
+                        );
+                      },
+                    )
                   ],
                 ),
-                // 箭头同标题颜色
-                arrowColor: Theme.of(context).textTheme.title.color,
-                onDetailsPressed: () {
-                  showMenu<String>(
-                      context: context,
-                      position: RelativeRect.fromLTRB(0, 0, 0, 0),
-                      items: [PopupMenuItem(child: Text("Menu"))]);
+                onTap: () {
+                  DialogUtil.showAlertDialog(context, "更换背景图", "是否需要更换背景图片?", [
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("取消"),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("是"),
+                    ),
+                  ]);
                 },
-//                otherAccountsPictures: <Widget>[
-//                  Stack(
-//                    children: <Widget>[
-//                      Positioned.fill(
-//                          child: CircleAvatar(
-//                        backgroundImage: NetworkImage(
-//                            "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
-//                      )),
-//                      Positioned.fill(
-//                        child: Material(
-//                          color: Colors.transparent,
-//                          child: InkWell(
-//                            onTap: () {
-//                              Navigator.pushNamed(context, UIData.profile);
-//                            },
-//                            customBorder: CircleBorder(),
-//                          ),
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Stack(
-//                    children: <Widget>[
-//                      Positioned.fill(
-//                          child: CircleAvatar(
-//                        backgroundImage: NetworkImage(
-//                            "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
-//                      )),
-//                      Positioned.fill(
-//                        child: Material(
-//                          color: Colors.transparent,
-//                          child: InkWell(
-//                            onTap: () {
-//                              Navigator.pushNamed(context, UIData.profile);
-//                            },
-//                            customBorder: CircleBorder(),
-//                          ),
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                  Stack(
-//                    children: <Widget>[
-//                      Positioned.fill(
-//                          child: CircleAvatar(
-//                        backgroundImage: NetworkImage(
-//                            "https://avatars1.githubusercontent.com/u/20200460?s=460&v=4"),
-//                      )),
-//                      Positioned.fill(
-//                        child: Material(
-//                          color: Colors.transparent,
-//                          child: InkWell(
-//                            onTap: () {
-//                              Navigator.pushNamed(context, UIData.profile);
-//                            },
-//                            customBorder: CircleBorder(),
-//                          ),
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ],
               ),
               ClipRect(
                 child: CacheCenter.tokenCache == null

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:share/share.dart';
-import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
@@ -13,33 +11,33 @@ import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import '../content_page.dart';
 
 /// 根据所给 UserId 获取信息
 class ProfilePage extends StatefulWidget {
-  final int _wpUserId;
+  final int wpUserId;
 
   // TODO: 使用 [WpUser] 传参
-  ProfilePage(this._wpUserId);
+  ProfilePage(this.wpUserId);
 
   @override
   State<StatefulWidget> createState() {
-    return ProfilePageState(_wpUserId);
+    return _ProfilePageState();
   }
+
+  static Widget getCard(BuildContext context, WpPost post) =>
+      _ProfilePageState.articleCard(context, post);
 }
 
-class ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> {
   Size _deviceSize;
-
-  final int _wpUserId;
 
   WpUser _wpUser = WpUser.defaultUser;
 
   bool _destroy = false;
 
   final List<Widget> _posts = [];
-
-  ProfilePageState(this._wpUserId);
 
   Widget profileHeader() => Container(
         height: _deviceSize.height / 4,
@@ -171,7 +169,7 @@ class ProfilePageState extends State<ProfilePage> {
         ),
       );
 
-  Widget articleCard(final WpPost post) {
+  static Widget articleCard(BuildContext context, final WpPost post) {
     var content = post.content.rendered;
 
     content =
@@ -205,7 +203,7 @@ class ProfilePageState extends State<ProfilePage> {
                       WpUserHeader(
                         canClick: false,
                         radius: 20,
-                        userId: _wpUser.id,
+                        userId: post.author,
                         showUserName: true,
                         wpSource: WordPressRep.wpSource,
                       ),
@@ -321,7 +319,7 @@ class ProfilePageState extends State<ProfilePage> {
               ],
             ),
             profileHeader(),
-            followColumn(_deviceSize, _wpUserId),
+            followColumn(_deviceSize, widget.wpUserId),
             imagesCard(),
             postCard(),
           ],
@@ -334,22 +332,22 @@ class ProfilePageState extends State<ProfilePage> {
 
     _destroy = false;
 
-    if (_wpUserId != -1) {
+    if (widget.wpUserId != -1) {
       LogUtils.d("Profile Page", "userId != -1");
 
       // 更新 _wpUser
-      NetTools.getWpUserInfoAuto(_wpUserId).then((user) {
-        CacheCenter.putUser(_wpUserId, user);
+      NetTools.getWpUserInfoAuto(widget.wpUserId).then((user) {
+        CacheCenter.putUser(widget.wpUserId, user);
         _wpUser = user;
         if (!_destroy) {
           setState(() {});
         }
       });
 
-      final WpPostSource wpSource = CacheCenter.getPosts(_wpUserId);
+      final WpPostSource wpSource = CacheCenter.getPosts(widget.wpUserId);
       if (wpSource == null) {
-        NetTools.getAllPosts(_wpUserId).then((wpPostSource) {
-          CacheCenter.putPosts(_wpUserId, wpPostSource);
+        NetTools.getAllPosts(widget.wpUserId).then((wpPostSource) {
+          CacheCenter.putPosts(widget.wpUserId, wpPostSource);
           if (!_destroy) {
             // 更新 followColumn
             setState(() {});
@@ -366,18 +364,17 @@ class ProfilePageState extends State<ProfilePage> {
 //        updateRecentlyPosts(posts);
       }
 
-      NetTools.getPostsAuto(_wpUserId, 5).then((wpPostsSource) {
+      NetTools.getPostsAuto(widget.wpUserId, 5).then((wpPostsSource) {
         print("getpostauto id: ${_wpUser.id}");
         print("getpostauto size: ${wpPostsSource.feedList.length}");
         if (!_destroy) {
           setState(() {
             wpPostsSource.feedList.forEach((post) {
-              _posts.add(articleCard(post));
+              _posts.add(articleCard(context, post));
             });
           });
         }
       });
-
     } else {
       LogUtils.d("Profile Page", "userId == -1");
     }
@@ -404,7 +401,9 @@ class ProfilePageState extends State<ProfilePage> {
           : FloatingActionButton(
               onPressed: () {
                 if (CacheCenter.tokenCache == null) {
-                  showToast("请先登陆", backgroundColor: Colors.red, position: ToastPosition.bottom);
+                  showToast("请先登陆",
+                      backgroundColor: Colors.red,
+                      position: ToastPosition.bottom);
                   Navigator.pushNamed(context, UIData.loginPage);
                 } else {
                   showToast("功能：添加好友（关注），状态：建设中", backgroundColor: Colors.red);
@@ -427,18 +426,15 @@ class ProfilePageState extends State<ProfilePage> {
       context,
       UIData.argPostsPage,
       arguments: {
-        "url": WordPressRep.getWpLink(WordPressRep.wpSource) + WordPressRep.postsOfAuthorX + _wpUser.id.toString(),
-        "appBar": AppBar(title: Text(_wpUser.name + " 的全部文章"),)
+        "url": WordPressRep.getWpLink(WordPressRep.wpSource) +
+            WordPressRep.postsOfAuthorX +
+            _wpUser.id.toString(),
+        "appBar": AppBar(
+          title: Text(_wpUser.name + " 的全部文章"),
+        )
       },
     );
   }
-}
-
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
 }
 
 const List<Choice> choices = const <Choice>[

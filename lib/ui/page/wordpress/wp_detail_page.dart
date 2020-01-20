@@ -6,7 +6,6 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/theme_util.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:video_player/video_player.dart';
 

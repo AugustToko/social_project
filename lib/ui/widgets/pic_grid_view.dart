@@ -29,16 +29,14 @@ class PicGridView extends StatelessWidget {
       if (tuChongItem.images.length == 1) {
         return Padding(
           padding: EdgeInsets.all(margin),
-          child:
-//          ClipRRect(
-//            borderRadius: ThemeUtil.clipRRectBorderRadius,
-//            child:
-              CropImage(
-            index: 0,
-            tuChongItem: tuChongItem,
-            knowImageSize: true,
+          child: ClipRRect(
+            borderRadius: ThemeUtil.clipRRectBorderRadius,
+            child: CropImage(
+              index: 0,
+              tuChongItem: tuChongItem,
+              knowImageSize: true,
+            ),
           ),
-//          ),
         );
       }
 

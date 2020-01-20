@@ -43,7 +43,7 @@ class _IndexState extends State<MainPage> {
     //Create the views which will be mapped to the indices for our nav btns
     _viewsByIndex = <Widget>[
       ContentPage(
-        drawer: UserAccountWidget(),
+        drawer: UserAccountDrawer(),
       ),
       GuidePage(),
       SampleHomePage(),

@@ -33,37 +33,24 @@ class WpUserHeader extends StatefulWidget {
 
   @override
   _WpUserHeaderState createState() =>
-      _WpUserHeaderState(userId, wpSource, radius, showUserName, canClick);
+      _WpUserHeaderState();
 }
 
 class _WpUserHeaderState extends State<WpUserHeader> {
-  final int _userId;
-  final WpSource _wpSource;
-  final bool showUserName;
-  final double _radius;
-  final bool _canClick;
   var _wpUser = WpUser.defaultUser;
   final double margin = ScreenUtil.instance.setWidth(22);
-
-  _WpUserHeaderState(
-    this._userId,
-    this._wpSource,
-    this._radius,
-    this.showUserName,
-    this._canClick,
-  ) : super();
 
   @override
   void initState() {
     super.initState();
-    if (_userId != -1) {
-      _wpUser = CacheCenter.getUser(_userId);
+    if (widget.userId != -1) {
+      _wpUser = CacheCenter.getUser(widget.userId);
       if (_wpUser.id == -1) {
-        NetTools.getWpUserInfo(WordPressRep.getWpLink(_wpSource), _userId)
+        NetTools.getWpUserInfo(WordPressRep.getWpLink(widget.wpSource), widget.userId)
             .then((user) {
               // 检查
           if (user != null && user.id >= 0) {
-            CacheCenter.putUser(_userId, user);
+            CacheCenter.putUser(widget.userId, user);
             _wpUser = user;
             setState(() {});
           }
@@ -80,23 +67,23 @@ class _WpUserHeaderState extends State<WpUserHeader> {
         _wpUser.id == -1
             ? WidgetDefault.defaultCircleAvatar(context)
             : CircleAvatar(
-                radius: _radius,
+                radius: widget.radius,
                 backgroundImage: NetworkImage(_wpUser.avatarUrls.s96)),
       ],
     );
 
-    var widget = Row(
+    var myWidget = Row(
       children: <Widget>[stack],
     );
 
-    if (_canClick) {
+    if (widget.canClick) {
       stack.children.add(Positioned.fill(
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
               Navigator.pushNamed(context, UIData.profile,
-                  arguments: {"wpUserId": _userId});
+                  arguments: {"wpUserId": widget.userId});
             },
             customBorder: CircleBorder(),
           ),
@@ -104,8 +91,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       ));
     }
 
-    if (showUserName) {
-      widget.children.addAll([
+    if (widget.showUserName) {
+      myWidget.children.addAll([
         SizedBox(
           width: margin,
         ),
@@ -115,6 +102,6 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       ]);
     }
 
-    return widget;
+    return myWidget;
   }
 }
