@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
@@ -5,6 +7,7 @@ import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_page.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../../main.dart';
@@ -77,127 +80,46 @@ class _TabBarState extends State<ContentPage>
           controller: _tabController,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.pushNamed(
-            context,
-            CacheCenter.tokenCache == null ? UIData.loginPage : UIData.sendPage,
-          ).then((result) {
-            if (result != null) {
-              switch (result) {
-                case NavState.SendWpPostDone:
-                  wpPage.onNewPostReleased();
-                  break;
-                default:
-                  break;
+      floatingActionButton: Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, ThemeUtil.navBarHeight),
+        child: FloatingActionButton(
+          onPressed: () async {
+            await Navigator.pushNamed(
+              context,
+              CacheCenter.tokenCache == null
+                  ? UIData.loginPage
+                  : UIData.sendPage,
+            ).then((result) {
+              if (result != null) {
+                switch (result) {
+                  case NavState.SendWpPostDone:
+                    wpPage.onNewPostReleased();
+                    break;
+                  default:
+                    break;
+                }
               }
-            }
-          });
-        },
-        backgroundColor: Colors.white,
-        child: CustomPaint(
-          child: Container(),
-          foregroundPainter: FloatingPainter(),
+            });
+          },
+          backgroundColor: Colors.white,
+          child: CustomPaint(
+            child: Container(),
+            foregroundPainter: FloatingPainter(),
+          ),
         ),
       ),
     );
-
-//    这个类主要是可以实现展示drawer、snack bar、bottom sheets的功能
-//    return Scaffold(
-//      //抽屉界面
-//      drawer: _drawer,
-//      appBar: AppBar(
-//        backgroundColor: Theme.of(context).backgroundColor,
-//        elevation: 5,
-//        title: Text("Social Project"),
-//        bottom: TabBar(
-//          tabs: <Tab>[
-//            Tab(
-//              child: Text(
-//                "热门",
-//              ),
-//            ),
-//            Tab(text: "TuChong"),
-//            Tab(text: "Wordpress"),
-//            Tab(text: "Time line 4"),
-//          ],
-//          controller: _tabController,
-//        ),
-//        actions: <Widget>[
-//          IconButton(
-//              icon: Icon(Icons.search),
-//              tooltip: '搜索',
-//              onPressed: () {
-//                showSearch(
-//                  context: context,
-//                  delegate: SearchBarDelegate(),
-//                );
-//              }),
-//          // overflow menu
-//          PopupMenuButton<Choice>(
-//            onSelected: (val) {},
-//            itemBuilder: (BuildContext context) {
-//              return choices.map((Choice choice) {
-//                return PopupMenuItem<Choice>(
-//                  value: choice,
-//                  child: Text(choice.title),
-//                );
-//              }).toList();
-//            },
-//          ),
-//        ],
-//      ),
-//      body: TabBarView(
-//        children: <Widget>[
-//          TimelineTwoPage(),
-//          PhotoViewDemo(),
-//          wpPage,
-//          SampleHomePage(),
-//        ],
-//        controller: _tabController,
-//      ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () async {
-//          await Navigator.pushNamed(
-//            context,
-//            CacheCenter.tokenCache == null ? UIData.loginPage : UIData.sendPage,
-//          ).then((result) {
-//            if (result != null) {
-//              switch (result) {
-//                case NavState.SendWpPostDone:
-//                  wpPage.onNewPostReleased();
-//                  break;
-//                default:
-//                  break;
-//              }
-//            }
-//          });
-//        },
-//        backgroundColor: Colors.white,
-//        child: CustomPaint(
-//          child: Container(),
-//          foregroundPainter: FloatingPainter(),
-//        ),
-//      ),
-//    );
   }
 
   List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
+        backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
 //        backgroundColor: Theme.of(context).cardTheme.color,
         title: Text("Social Project"),
         pinned: false,
         primary: true,
-//        flexibleSpace: FlexibleSpaceBar(
-//          centerTitle: true,
-//          title: Text('我是一个FlexibleSpaceBar'),
-//          background: Image.network(
-//            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531798262708&di=53d278a8427f482c5b836fa0e057f4ea&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F342ac65c103853434cc02dda9f13b07eca80883a.jpg",
-//            fit: BoxFit.cover,
-//          ),
-//        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.search),
@@ -267,9 +189,24 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
-      child: _tabBar,
-      color: Theme.of(context).backgroundColor,
-      elevation: 2.0,
+      child: Stack(
+        children: <Widget>[
+          ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                width: double.infinity,
+                height: _tabBar.preferredSize.height,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).backgroundColor.withOpacity(0.8)),
+              ),
+            ),
+          ),
+          _tabBar
+        ],
+      ),
+      color: Colors.transparent,
+//      elevation: 2.0,
     );
   }
 

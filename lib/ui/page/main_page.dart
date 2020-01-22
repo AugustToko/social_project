@@ -6,8 +6,6 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
 import 'package:social_project/ui/page/profile/profile_guest.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
-import 'package:social_project/ui/page/sample/content/save_page.dart';
-import 'package:social_project/ui/page/sample/scroll_bar_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
 import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/ui/widgets/user_account_drawer.dart';
@@ -63,20 +61,30 @@ class _IndexState extends State<MainPage> {
     // Wrap our custom navbar + contentView with the app Scaffold
     return WillPopScope(
       child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          //Wrap the current page in an AnimatedSwitcher for an easy cross-fade effect
-          child: AnimatedSwitcher(
-            duration: Duration(milliseconds: 350),
-            //Pass the current accent color down as a theme, so our overscroll indicator matches the btn color
-            child: contentView,
-          ),
+        body: Stack(
+          alignment: Alignment.bottomCenter,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              //Wrap the current page in an AnimatedSwitcher for an easy cross-fade effect
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 350),
+                //Pass the current accent color down as a theme, so our overscroll indicator matches the btn color
+                child: contentView,
+              ),
+            ),
+            NavBar(
+              items: _navBarItems,
+              itemTapped: _handleNavBtnTapped,
+              currentIndex: _selectedNavIndex,
+            )
+          ],
         ),
-        bottomNavigationBar: NavBar(
-          items: _navBarItems,
-          itemTapped: _handleNavBtnTapped,
-          currentIndex: _selectedNavIndex,
-        ), //Pass our custom navBar into the scaffold
+//        bottomNavigationBar: NavBar(
+//          items: _navBarItems,
+//          itemTapped: _handleNavBtnTapped,
+//          currentIndex: _selectedNavIndex,
+//        ), //Pass our custom navBar into the scaffold
       ),
       onWillPop: () => DialogUtil.showExitDialog(context),
     );

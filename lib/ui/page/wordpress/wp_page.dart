@@ -1,22 +1,23 @@
-import 'dart:async';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:html/dom.dart' as dom;
 import 'package:like_button/like_button.dart';
 import 'package:loading_more_list/loading_more_list.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
+    as re;
 import 'package:share/share.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
+
+import '../pic_swiper.dart';
 
 /// 获取 WordPress Posts
 class WordPressPage extends StatefulWidget {
@@ -127,7 +128,7 @@ class _WordPressPageState extends State<WordPressPage> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: PullToRefreshNotification(
+            child: re.PullToRefreshNotification(
               pullBackOnRefresh: false,
               maxDragOffset: maxDragOffset,
               armedDragUpCancel: false,
@@ -138,7 +139,7 @@ class _WordPressPageState extends State<WordPressPage> {
                 physics: ClampingScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
-                    child: PullToRefreshContainer((info) {
+                    child: re.PullToRefreshContainer((info) {
                       return PullToRefreshHeader(info, dateTimeNow);
                     }),
                   ),

@@ -34,13 +34,13 @@ dependencies:
   isolate: ^2.0.2
   image_editor: ^0.1.2
   oktoast: ^2.1.4
-  image_picker_saver: 0.3.0
-  image_picker: 0.6.1+4
+#  image_picker_saver: 0.3.0
+  image_picker: 0.6.3+1
   share: any
   flutter_html: ^0.11.1
   dio: ^3.0.8
   flutter_web_browser: ^0.11.0
-#  zefyr: ^0.10.0
+  zefyr: ^0.10.0
   #  webview_flutter: ^0.3.19+4
   image_gallery_saver: ^1.2.2
 

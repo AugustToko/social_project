@@ -53,7 +53,7 @@ class App extends StatelessWidget {
       color: Colors.grey.shade50,
     ),
     iconTheme: IconThemeData(color: Colors.grey.shade900),
-    dividerTheme: DividerThemeData(color: Colors.grey.shade200)
+    dividerTheme: DividerThemeData(color: Colors.grey.shade200),
   );
 
   /// 深色主题

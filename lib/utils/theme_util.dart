@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// 主题工具
 class ThemeUtil {
-  static EdgeInsets cardPaddingEdgeInsets = EdgeInsets.fromLTRB(14, 14, 14, 0);
+  static EdgeInsets cardPaddingEdgeInsets = EdgeInsets.fromLTRB(8, 8, 8, 0);
 
   static Card materialCard(final Widget widget) => Card(
         shape: const RoundedRectangleBorder(
@@ -34,4 +34,8 @@ class ThemeUtil {
 
   static InputBorder getUnderlineEnabledBorderBorder() =>
       UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey));
+
+  static double navBarHeight = 64;
+
+
 }

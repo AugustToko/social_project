@@ -7,6 +7,7 @@ import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
 import 'package:social_project/ui/page/profile/profile_coolapk.dart';
+import 'package:social_project/ui/page/sample/editor.dart';
 import 'package:social_project/ui/page/sample/scroll_bar_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_page.dart';
@@ -110,6 +111,8 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.sendPage:
       return RouteResult(
+        //TODO：编辑页面待完善
+//        widget: EditorPage(),
         widget: SendPage(),
         showStatusBar: true,
         routeName: UIData.sendPage,

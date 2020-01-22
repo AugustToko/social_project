@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -7,6 +8,7 @@ import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/example_route.dart';
 
 /// 编辑文章、回复文章
+/// TODO: 待完善
 class SendPage extends StatefulWidget {
   SendPage({Key key, this.title}) : super(key: key);
 
@@ -36,28 +38,34 @@ class _SendPageState extends State<SendPage> {
           },
         ),
         actions: <Widget>[
-          MaterialButton(
-            shape: StadiumBorder(),
-            onPressed: () {
-              if (titleController.text == null || titleController.text == "") {
-                showToast("标题不可为空!", position: ToastPosition.bottom);
-              } else {
-                NetTools.sendPost(
-                    CacheCenter.tokenCache.token,
-                    SendPost(titleController.text, contentController.text,
-                        openComment))
-                    .then((post) {
-                  if (post != null) {
-                    showToast("发表成功!", position: ToastPosition.bottom);
-                    Navigator.pop(context, NavState.SendWpPostDone);
-                  }
-                });
-              }
-            },
-            child: Text(
-              "发表",
-              style: TextStyle(
-                color: Colors.blue,
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 8, 10, 5),
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  side: BorderSide(width: 1.5, color: Colors.blue)),
+              onPressed: () {
+                if (titleController.text == null ||
+                    titleController.text == "") {
+                  showToast("标题不可为空!", position: ToastPosition.bottom);
+                } else {
+                  NetTools.sendPost(
+                          CacheCenter.tokenCache.token,
+                          SendPost(titleController.text, contentController.text,
+                              openComment))
+                      .then((post) {
+                    if (post != null) {
+                      showToast("发表成功!", position: ToastPosition.bottom);
+                      Navigator.pop(context, NavState.SendWpPostDone);
+                    }
+                  });
+                }
+              },
+              child: Text(
+                "发表",
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
               ),
             ),
           )
@@ -70,6 +78,32 @@ class _SendPageState extends State<SendPage> {
               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: Column(
                 children: <Widget>[
+                  Card(
+                    color: Colors.grey.shade200,
+                    child: InkWell(
+                      child: Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Container(
+                          width: double.infinity,
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                "添加特色图片",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              Text("（请注意图片于文章的适应性）"),
+                            ],
+                          ),
+                        ),
+                      ),
+                      onTap: () async {
+                        await ImagePicker.pickImage(source: ImageSource.gallery);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   TextField(
                     controller: titleController,
                     keyboardType: TextInputType.text,
@@ -86,6 +120,9 @@ class _SendPageState extends State<SendPage> {
                           borderSide: BorderSide(
                               color: Theme.of(context).textTheme.title.color)),
                     ),
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   TextField(
                     controller: contentController,

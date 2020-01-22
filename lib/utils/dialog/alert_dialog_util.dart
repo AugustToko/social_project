@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -53,6 +55,50 @@ class DialogUtil {
               child: Text('退出'),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  static Future<bool> showExitEditorDialog(
+      final BuildContext context, final bool needBackup) {
+    return showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(needBackup ? '请问是否需要保存到草稿箱？' : '是否退出编辑？'),
+          content: Text(needBackup ? "我们发现您已经编辑了一些内容，请问是否保存它们？" : '您即将离开编辑页面！'),
+          actions: needBackup
+              ? <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    child: Text('不用'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      //TODO: 保存操作
+                      Navigator.of(context).pop(true);
+                    },
+                    child: Text('保存'),
+                  ),
+                ]
+              : <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                    child: Text('确定'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('取消'),
+                  ),
+                ],
         );
       },
     );
