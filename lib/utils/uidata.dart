@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
+import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/profile/profile_one_page.dart';
 import 'package:social_project/ui/page/wordpress/send_page.dart';
@@ -45,6 +46,9 @@ class UIData {
 
   /// [PostsPage]
   static const String argPostsPage = "/argPostsPage";
+
+  /// [DraftBoxPage]
+  static const String draftBoxPage = "/draftBoxPage";
 
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";

@@ -145,6 +145,17 @@ class _WordPressPageState extends State<WordPressPage> {
                   ),
                   LoadingMoreSliverList(
                     SliverListConfig<WpPost>(
+                      indicatorBuilder: (p, q) {
+                        return listSourceRepository.length > 0
+                            ? Padding(
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, ThemeUtil.navBarHeight + 20),
+                                child: Text(
+                                  "—————— 做人也是要有底线的哦 ——————",
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : null;
+                      },
                       //TODO: 修复 indicatorBuilder: ,
                       collectGarbage: (List<int> indexes) {
                         ///collectGarbage
@@ -186,99 +197,79 @@ class _WordPressPageState extends State<WordPressPage> {
 
                         contentSmall += "<h2>......</h2>";
 
-                        var card = ThemeUtil.materialCard(InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, UIData.wpPostDetail,
-                                arguments: {
-                                  "content": content,
-                                  "title": title,
-                                });
-                          },
-                          onLongPress: () {
-                            BottomSheetUtil.showPostSheetShow(context, item);
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(margin),
-                                child: Row(
-                                  children: <Widget>[
-                                    // 头像
-                                    WpUserHeader(
-                                      userId: item.author,
-                                      wpSource: _wpSource,
-                                    ),
-                                    SizedBox(
-                                      width: margin,
-                                    ),
-                                    // TODO: 超出屏幕宽度
-                                    RichText(
-                                      maxLines: 1,
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text: "${item.date}",
-                                            style: ThemeUtil.subtitle)
-                                      ]),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      title,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Html(
-                                      data: contentSmall,
-                                      showImages: true,
-                                      useRichText: false,
-                                      linkStyle: TextStyle(),
-                                      customRender: (node, children) {
-                                        if (node is dom.Element) {
-                                          switch (node.localName) {
-                                            case "video":
-                                              return Text("[Video Here]");
-                                            case "img":
-                                              String imageUrl = node
-                                                  .attributes["data-original"];
-                                              return imageUrl == null
-                                                  ? null
-                                                  : Image.network(imageUrl);
-                                            default:
+                        var card = ThemeUtil.materialPostCard(
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, UIData.wpPostDetail,
+                                    arguments: {
+                                      "content": content,
+                                      "title": title,
+                                    });
+                              },
+                              onLongPress: () {
+                                BottomSheetUtil.showPostSheetShow(
+                                    context, item);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          title,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Html(
+                                          data: contentSmall,
+                                          showImages: true,
+                                          useRichText: false,
+                                          linkStyle: TextStyle(),
+                                          customRender: (node, children) {
+                                            if (node is dom.Element) {
+                                              switch (node.localName) {
+                                                case "video":
+                                                  return Text("[Video Here]");
+                                                case "img":
+                                                  String imageUrl =
+                                                      node.attributes[
+                                                          "data-original"];
+                                                  return imageUrl == null
+                                                      ? null
+                                                      : Image.network(imageUrl);
+                                                default:
+                                                  return null;
+                                              }
+                                            } else {
                                               return null;
-                                          }
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      onImageTap: (url) {
-                                        Navigator.pushNamed(context,
-                                            "fluttercandies://picswiper",
-                                            arguments: {
-                                              "index": 0,
-                                              "pics": [PicSwiperItem(url)],
-                                            });
-                                      },
-                                      onImageError: (p1, p2) {
-                                        print(
-                                            "Image Error---------------start-----------------");
-                                        print(p1);
-                                        print(
-                                            "-----===-------=======------====-----");
-                                        print(p2);
-                                        print(
-                                            "Image Error----------------end----------------");
-                                      },
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                      child: actionRow(item),
-                                    )
+                                            }
+                                          },
+                                          onImageTap: (url) {
+                                            Navigator.pushNamed(context,
+                                                "fluttercandies://picswiper",
+                                                arguments: {
+                                                  "index": 0,
+                                                  "pics": [PicSwiperItem(url)],
+                                                });
+                                          },
+                                          onImageError: (p1, p2) {
+                                            print(
+                                                "Image Error---------------start-----------------");
+                                            print(p1);
+                                            print(
+                                                "-----===-------=======------====-----");
+                                            print(p2);
+                                            print(
+                                                "Image Error----------------end----------------");
+                                          },
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                          child: actionRow(item),
+                                        )
 //                                          CupertinoButton(
 //                                              child: Material(
 //                                                color: Colors.transparent,
@@ -314,33 +305,35 @@ class _WordPressPageState extends State<WordPressPage> {
 //                                              'assets/images/linear_mask.png',
 //                                              fit: BoxFit.cover,
 //                                              package: App.pkg)
-                                  ],
-                                ),
-                                padding: EdgeInsets.only(
-                                  left: margin,
-                                  right: margin,
-                                  bottom: margin,
-                                ),
-                              ),
-                              // 标签
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.only(
+                                      left: margin,
+                                      right: margin,
+                                      bottom: margin,
+                                    ),
+                                  ),
+                                  // 标签
 //                                Padding(
 //                                  padding:
 //                                      EdgeInsets.symmetric(horizontal: margin),
 //                                  child: buildTagsWidget(item, context),
 //                                ),
-                              // 图片区域
+                                  // 图片区域
 //                                PicGridView(
 //                                  tuChongItem: item,
 //                                ),
-                              // 操作按钮区域
+                                  // 操作按钮区域
 //                                Padding(
 //                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
 //                                  child: buildBottomWidget(item,
 //                                      showAvatar: false),
 //                                ),
-                            ],
-                          ),
-                        ));
+                                ],
+                              ),
+                            ),
+                            item,
+                            margin);
 
                         if (index == 0) {
                           return Column(

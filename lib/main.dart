@@ -9,7 +9,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';

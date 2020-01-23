@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Env {
   static bool isGalleryActive = false;
 
@@ -6,6 +8,10 @@ class Env {
   static String getPackage(String value) => isGalleryActive ? value : null;
 
   static String getBundle(String value) => "packages/$value";
+
+  /// 获取用户编辑的草稿文章
+  static Directory getTempArticlesDir() => Directory.fromUri(
+        Uri.file(Directory.systemTemp.parent.path + "/" + "tempArticles"));
 
 /**
  * USAGE

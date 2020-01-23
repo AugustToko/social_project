@@ -5,7 +5,7 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -105,6 +105,7 @@ class _ProfileContentState extends State<ProfileContent> {
                           trailing: buildArrowIcon(context, Icons.arrow_right),
                           onTap: () {
                             //TODO: 草稿箱
+                            Navigator.pushNamed(context, UIData.draftBoxPage);
                           },
                         )
                       ],

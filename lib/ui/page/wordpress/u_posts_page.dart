@@ -11,7 +11,6 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_rep_argments_posts.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
-import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -82,6 +81,14 @@ class _WordPressPageState extends State<PostsPage> {
                   ),
                   LoadingMoreSliverList(
                     SliverListConfig<WpPost>(
+                      indicatorBuilder: (p, q) {
+                        return listSourceRepository.length > 0
+                            ? Text(
+                                "—————— 做人也是要有底线的哦 ——————",
+                                textAlign: TextAlign.center,
+                              )
+                            : null;
+                      },
                       collectGarbage: (List<int> indexes) {
                         ///TODO: collectGarbage
                         indexes.forEach((index) {
@@ -121,102 +128,143 @@ class _WordPressPageState extends State<PostsPage> {
                             0, content.length < 1050 ? content.length : 1050);
 
                         contentSmall += "<h2>......</h2>";
-
-                        return Card(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, UIData.wpPostDetail,
-                                  arguments: {
-                                    "content": content,
-                                    "title": title,
-                                  });
-                            },
-                            onLongPress: () {
-                              BottomSheetUtil.showPostSheetShow(context, item);
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(margin),
-                                  child: Row(
-                                    children: <Widget>[
-                                      // 头像
-                                      WpUserHeader(
-                                        userId: item.author,
-                                        wpSource: WordPressRep.wpSource,
-                                      ),
-                                      SizedBox(
-                                        width: margin,
-                                      ),
-                                      // TODO: 超出屏幕宽度
-                                      RichText(
-                                        maxLines: 1,
-                                        text: TextSpan(children: [
-                                          TextSpan(
-                                              text: "${item.date}",
-                                              style: ThemeUtil.subtitle)
-                                        ]),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        title,
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Html(
-                                        data: contentSmall,
-                                        showImages: true,
-                                        useRichText: false,
-                                        linkStyle: TextStyle(),
-                                        customRender: (node, children) {
-                                          if (node is dom.Element) {
-                                            switch (node.localName) {
-                                              case "video":
-                                                return Text("[Video Here]");
-                                              default:
-                                                return null;
+                        return ThemeUtil.materialPostCard(
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, UIData.wpPostDetail,
+                                    arguments: {
+                                      "content": content,
+                                      "title": title,
+                                    });
+                              },
+                              onLongPress: () {
+                                BottomSheetUtil.showPostSheetShow(
+                                    context, item);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          title,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Html(
+                                          data: contentSmall,
+                                          showImages: true,
+                                          useRichText: false,
+                                          linkStyle: TextStyle(),
+                                          customRender: (node, children) {
+                                            if (node is dom.Element) {
+                                              switch (node.localName) {
+                                                case "video":
+                                                  return Text("[Video Here]");
+                                                case "img":
+                                                  String imageUrl =
+                                                      node.attributes[
+                                                          "data-original"];
+                                                  return imageUrl == null
+                                                      ? null
+                                                      : Image.network(imageUrl);
+                                                default:
+                                                  return null;
+                                              }
+                                            } else {
+                                              return null;
                                             }
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        onImageTap: (url) {
-                                          Navigator.pushNamed(context,
-                                              "fluttercandies://picswiper",
-                                              arguments: {
-                                                "index": 0,
-                                                "pics": [PicSwiperItem(url)],
-                                              });
-                                        },
-                                        onImageError: (p1, p2) {
-                                          print(
-                                              "Image Error---------------start-----------------");
-                                          print(p1);
-                                          print(
-                                              "-----===-------=======------====-----");
-                                          print(p2);
-                                          print(
-                                              "Image Error----------------end----------------");
-                                        },
-                                      ),
-                                    ],
+                                          },
+                                          onImageTap: (url) {
+                                            Navigator.pushNamed(context,
+                                                "fluttercandies://picswiper",
+                                                arguments: {
+                                                  "index": 0,
+                                                  "pics": [PicSwiperItem(url)],
+                                                });
+                                          },
+                                          onImageError: (p1, p2) {
+                                            print(
+                                                "Image Error---------------start-----------------");
+                                            print(p1);
+                                            print(
+                                                "-----===-------=======------====-----");
+                                            print(p2);
+                                            print(
+                                                "Image Error----------------end----------------");
+                                          },
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
+//                                      child: actionRow(item),
+                                        )
+//                                          CupertinoButton(
+//                                              child: Material(
+//                                                color: Colors.transparent,
+//                                                child: Ink(
+//                                                  decoration: BoxDecoration(
+//                                                      gradient: LinearGradient(
+//                                                    begin: Alignment.topCenter,
+//                                                    end: Alignment.bottomCenter,
+//                                                    colors: [
+//                                                      Colors.white,
+//                                                      Theme.of(context)
+//                                                          .backgroundColor,
+//                                                    ],
+//                                                  )),
+//                                                  child: Padding(
+//                                                    padding:
+//                                                        const EdgeInsets.all(
+//                                                            0.0),
+//                                                    child: Row(
+//                                                      mainAxisAlignment:
+//                                                          MainAxisAlignment
+//                                                              .center,
+//                                                      children: <Widget>[
+//                                                        Text("Click for more")
+//                                                      ],
+//                                                    ),
+//                                                  ),
+//                                                ),
+//                                              ),
+//                                              onPressed: () {}),
+
+//                                          Image.asset(
+//                                              'assets/images/linear_mask.png',
+//                                              fit: BoxFit.cover,
+//                                              package: App.pkg)
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.only(
+                                      left: margin,
+                                      right: margin,
+                                      bottom: margin,
+                                    ),
                                   ),
-                                  padding: EdgeInsets.only(
-                                    left: margin,
-                                    right: margin,
-                                    bottom: margin,
-                                  ),
-                                ),
-                              ],
+                                  // 标签
+//                                Padding(
+//                                  padding:
+//                                      EdgeInsets.symmetric(horizontal: margin),
+//                                  child: buildTagsWidget(item, context),
+//                                ),
+                                  // 图片区域
+//                                PicGridView(
+//                                  tuChongItem: item,
+//                                ),
+                                  // 操作按钮区域
+//                                Padding(
+//                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
+//                                  child: buildBottomWidget(item,
+//                                      showAvatar: false),
+//                                ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                            item,
+                            margin);
                       },
                       sourceList: listSourceRepository,
                     ),

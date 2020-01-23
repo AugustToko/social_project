@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:social_project/utils/widget_default.dart';
@@ -34,21 +34,21 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: Colors.transparent,
+        canvasColor: Theme.of(context).backgroundColor,
       ),
       child: Drawer(
         child: Stack(
           children: <Widget>[
-            ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).backgroundColor.withOpacity(0.7)),
-                ),
-              ),
-            ),
+//            ClipRect(
+//              child: BackdropFilter(
+//                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+//                child: Container(
+//                  decoration: BoxDecoration(
+//                      color:
+//                          Theme.of(context).backgroundColor.withOpacity(0.7)),
+//                ),
+//              ),
+//            ),
             ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[

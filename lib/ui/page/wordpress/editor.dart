@@ -10,6 +10,8 @@ import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:zefyr/zefyr.dart';
 
+import '../../../env.dart';
+
 class EditorPage extends StatefulWidget {
   @override
   EditorPageState createState() => EditorPageState();
@@ -182,15 +184,13 @@ class EditorPageState extends State<EditorPage> {
   void _saveDocument(BuildContext context) {
     final contents = jsonEncode(_controller.document);
 
-    final targetDir = Directory.fromUri(
-        Uri.file(Directory.systemTemp.parent.path + "/" + "tempArticles"));
-
-    targetDir.exists().then((exists) async {
+    Env.getTempArticlesDir().exists().then((exists) async {
       if (!exists) {
-        await targetDir.create();
+        await Env.getTempArticlesDir().create();
       }
 
-      final file = File(targetDir.path + "/" + "${DateTime.now()}.json");
+      final file =
+          File(Env.getTempArticlesDir().path + "/" + "${DateTime.now()}.json");
       print(file.path);
       file.writeAsString(contents).then((_) {
         showToast("已保存！");

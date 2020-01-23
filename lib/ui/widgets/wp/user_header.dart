@@ -3,6 +3,7 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:social_project/utils/widget_default.dart';
@@ -11,29 +12,35 @@ import 'package:social_project/utils/widget_default.dart';
 class WpUserHeader extends StatefulWidget {
   static String defaultIcon = "";
 
+  /// 用户ID
   final int userId;
 
   /// 选择 Wordpress 源
   final WpSource wpSource;
 
+  /// 是否显示用户名
   final bool showUserName;
 
+  /// 图像半径
   final double radius;
 
+  /// 是否有点击事件
   final bool canClick;
+
+  final bool forUser;
 
   WpUserHeader(
       {Key key,
       this.userId = -1,
-      this.wpSource = WordPressRep.defaultWpSource,
+      this.wpSource = WordPressRep.wpSource,
       this.radius = 25.0,
       this.canClick = true,
-      this.showUserName = true})
+      this.showUserName = true,
+      this.forUser = false})
       : super(key: key);
 
   @override
-  _WpUserHeaderState createState() =>
-      _WpUserHeaderState();
+  _WpUserHeaderState createState() => _WpUserHeaderState();
 }
 
 class _WpUserHeaderState extends State<WpUserHeader> {
@@ -46,9 +53,10 @@ class _WpUserHeaderState extends State<WpUserHeader> {
     if (widget.userId != -1) {
       _wpUser = CacheCenter.getUser(widget.userId);
       if (_wpUser.id == -1) {
-        NetTools.getWpUserInfo(WordPressRep.getWpLink(widget.wpSource), widget.userId)
+        NetTools.getWpUserInfo(
+                WordPressRep.getWpLink(widget.wpSource), widget.userId)
             .then((user) {
-              // 检查
+          // 检查
           if (user != null && user.id >= 0) {
             CacheCenter.putUser(widget.userId, user);
             _wpUser = user;
@@ -65,7 +73,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       children: <Widget>[
         // 头像
         _wpUser.id == -1
-            ? WidgetDefault.defaultCircleAvatar(context)
+            ? WidgetDefault.defaultCircleAvatar(context,
+                size: widget.radius * 2)
             : CircleAvatar(
                 radius: widget.radius,
                 backgroundImage: NetworkImage(_wpUser.avatarUrls.s96)),
@@ -81,9 +90,20 @@ class _WpUserHeaderState extends State<WpUserHeader> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, UIData.profile,
-                  arguments: {"wpUserId": widget.userId});
+            onTap: () async {
+              if (widget.forUser) {
+                Navigator.pushNamed(context, UIData.loginPage).then((result) {
+                  if (result == NavState.LoginDone) {
+                    setState(() {
+                      _wpUser =
+                          CacheCenter.getUser(CacheCenter.tokenCache.userId);
+                    });
+                  }
+                });
+              } else {
+                Navigator.pushNamed(context, UIData.profile,
+                    arguments: {"wpUserId": widget.userId});
+              }
             },
             customBorder: CircleBorder(),
           ),

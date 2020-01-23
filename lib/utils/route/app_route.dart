@@ -1,17 +1,13 @@
 import 'package:flutter/widgets.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/model/wordpress/wp_rep_argments_posts.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/ui/page/login_page.dart';
 import 'package:social_project/ui/page/profile/profile_coolapk.dart';
-import 'package:social_project/ui/page/sample/editor.dart';
-import 'package:social_project/ui/page/sample/scroll_bar_page.dart';
+import 'package:social_project/ui/page/wordpress/editor.dart';
+import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
-import 'package:social_project/ui/page/profile/profile_page.dart';
-import 'package:social_project/ui/page/wordpress/send_page.dart';
 import 'package:social_project/ui/page/settings_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
@@ -124,6 +120,14 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: SettingsOnePage(),
         showStatusBar: true,
         routeName: UIData.settingsPage,
+        pageRouteType: PageRouteType.transparent,
+      );
+      break;
+    case UIData.draftBoxPage:
+      return RouteResult(
+        widget: DraftBoxPage(),
+        showStatusBar: true,
+        routeName: UIData.draftBoxPage,
         pageRouteType: PageRouteType.transparent,
       );
       break;

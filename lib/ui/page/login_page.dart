@@ -5,7 +5,7 @@ import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';

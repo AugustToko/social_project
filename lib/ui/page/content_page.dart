@@ -5,8 +5,9 @@ import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_page.dart';
+import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -24,7 +25,7 @@ class ContentPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _TabBarState(this.drawer);
+    return _TabBarState();
   }
 }
 
@@ -34,13 +35,7 @@ class ContentPage extends StatefulWidget {
 /// 当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
 class _TabBarState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
-  final Widget _drawer;
-
   ScrollController _scrollViewController;
-
-  _TabBarState(
-    this._drawer,
-  ) : super();
 
   //标签控制器，主要是管理标签的行为，比如移动或者跳转到哪一个标签
   TabController _tabController;
@@ -65,7 +60,8 @@ class _TabBarState extends State<ContentPage>
   Widget build(BuildContext context) {
     var wpPage = WordPressPage();
     return Scaffold(
-      drawer: _drawer,
+      //TODO: need drawer？
+//      drawer: widget.drawer,
       body: NestedScrollView(
         controller: _scrollViewController,
         headerSliverBuilder: _sliverBuilder,
@@ -115,6 +111,17 @@ class _TabBarState extends State<ContentPage>
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
+          child: WpUserHeader(
+            radius: 15,
+            showUserName: false,
+            forUser: true,
+            userId: CacheCenter.tokenCache == null
+                ? -1
+                : CacheCenter.tokenCache.userId,
+          ),
+        ),
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
 //        backgroundColor: Theme.of(context).cardTheme.color,
         title: Text("Social Project"),

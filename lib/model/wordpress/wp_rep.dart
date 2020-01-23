@@ -16,7 +16,7 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
 
   static const WpSource defaultWpSource = WpSource.BlogGeek;
 
-  static WpSource wpSource = defaultWpSource;
+  static const WpSource wpSource = defaultWpSource;
 
   /// BASE URL
   static const String baseWeiranUrl = "https://www.weiran.org.cn";

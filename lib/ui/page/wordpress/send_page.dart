@@ -7,7 +7,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
-import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 
 /// 编辑文章、回复文章

@@ -9,6 +9,7 @@ import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/uidata.dart';
 
 import '../content_page.dart';
 
@@ -97,6 +98,22 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
     );
   }
 
+  /// 查看更多 Posts
+  void _morePosts() {
+    Navigator.pushNamed(
+      context,
+      UIData.argPostsPage,
+      arguments: {
+        "url": WordPressRep.getWpLink(WordPressRep.wpSource) +
+            WordPressRep.postsOfAuthorX +
+            _wpUser.id.toString(),
+        "appBar": AppBar(
+          title: Text(_wpUser.name + " 的全部文章"),
+        )
+      },
+    );
+  }
+
   Widget postCard() => Container(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -117,9 +134,7 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
                         "查看更多",
                         style: TextStyle(color: Colors.blue),
                       ),
-                      onPressed: () {
-                        showToast("USER ID: " + widget.wpUserId.toString());
-                      },
+                      onPressed: _morePosts,
                     ),
                   ],
                 ),
