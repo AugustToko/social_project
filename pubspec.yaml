@@ -18,7 +18,7 @@ dependencies:
   font_awesome_flutter:
   http: ^0.12.0+1
   rxdart: ^0.21.0
-  flutter_masked_text: ^0.8.0
+#  flutter_masked_text: ^0.8.0
   flutter_localizations:
     sdk: flutter
   shared_preferences: ^0.5.6
@@ -43,6 +43,9 @@ dependencies:
   zefyr: ^0.10.0
   #  webview_flutter: ^0.3.19+4
   image_gallery_saver: ^1.2.2
+#  directory_picker: ^1.0.0
+#  flutter_document_picker: ^3.0.1
+
 
 #  get_it: ^3.1.0
 

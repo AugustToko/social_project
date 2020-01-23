@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +8,7 @@ import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/example_route.dart';
+import 'package:social_project/utils/theme_util.dart';
 
 /// 编辑文章、回复文章
 /// TODO: 待完善
@@ -15,11 +18,16 @@ class SendPage extends StatefulWidget {
   final String title;
 
   @override
-  _SendPageState createState() => _SendPageState();
+  _SendPageState createState() {
+    print("CREATE STATE");
+    return _SendPageState();
+  }
 }
 
 class _SendPageState extends State<SendPage> {
   bool openComment = true;
+
+  File headerImage;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -79,13 +87,16 @@ class _SendPageState extends State<SendPage> {
               child: Column(
                 children: <Widget>[
                   Card(
-                    color: Colors.grey.shade200,
+                    color: Theme.of(context).backgroundColor.withOpacity(0.5),
                     child: InkWell(
                       child: Padding(
                         padding: EdgeInsets.all(12),
                         child: Container(
+                          height: ThemeUtil.headerImageHeight,
                           width: double.infinity,
-                          child: Column(
+                          child: headerImage == null ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
                                 "添加特色图片",
@@ -93,11 +104,16 @@ class _SendPageState extends State<SendPage> {
                               ),
                               Text("（请注意图片于文章的适应性）"),
                             ],
-                          ),
+                          ) : Image.file(headerImage, fit: BoxFit.cover,),
                         ),
                       ),
-                      onTap: () async {
-                        await ImagePicker.pickImage(source: ImageSource.gallery);
+                      onTap: () {
+                        ImagePicker.pickImage(
+                            source: ImageSource.gallery).then((file){
+                              setState(() {
+                                headerImage = file;
+                              });
+                        });
                       },
                     ),
                   ),
@@ -109,6 +125,7 @@ class _SendPageState extends State<SendPage> {
                     keyboardType: TextInputType.text,
                     maxLength: 20,
                     decoration: InputDecoration(
+                      helperText: "严禁标题党、灌水等",
                       labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).textTheme.subtitle.color),

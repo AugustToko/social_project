@@ -145,6 +145,7 @@ class _WordPressPageState extends State<WordPressPage> {
                   ),
                   LoadingMoreSliverList(
                     SliverListConfig<WpPost>(
+                      //TODO: 修复 indicatorBuilder: ,
                       collectGarbage: (List<int> indexes) {
                         ///collectGarbage
                         indexes.forEach((index) {

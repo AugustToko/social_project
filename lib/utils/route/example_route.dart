@@ -112,8 +112,8 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
     case UIData.sendPage:
       return RouteResult(
         //TODO：编辑页面待完善
-//        widget: EditorPage(),
-        widget: SendPage(),
+        widget: EditorPage(),
+//        widget: SendPage(),
         showStatusBar: true,
         routeName: UIData.sendPage,
         pageRouteType: PageRouteType.transparent,

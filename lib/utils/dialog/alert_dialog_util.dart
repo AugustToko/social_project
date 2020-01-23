@@ -61,9 +61,9 @@ class DialogUtil {
   }
 
   static Future<bool> showExitEditorDialog(
-      final BuildContext context, final bool needBackup) {
+      final BuildContext context, final bool needBackup, final Function() onTapSave) {
     return showDialog(
-      barrierDismissible: true,
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -79,8 +79,7 @@ class DialogUtil {
                   ),
                   FlatButton(
                     onPressed: () {
-                      //TODO: 保存操作
-                      Navigator.of(context).pop(true);
+                      onTapSave();
                     },
                     child: Text('保存'),
                   ),

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
+import 'package:social_project/utils/theme_util.dart';
 import 'package:zefyr/zefyr.dart';
 
 class EditorPage extends StatefulWidget {
@@ -13,11 +16,13 @@ class EditorPage extends StatefulWidget {
 }
 
 class EditorPageState extends State<EditorPage> {
-  /// Allows to control the editor and the document.
   ZefyrController _controller;
 
-  /// Zefyr editor like any other input field requires a focus node.
+  final TextEditingController titleController = TextEditingController();
+
   FocusNode _focusNode;
+
+  File headerImage;
 
   @override
   void initState() {
@@ -64,6 +69,7 @@ class EditorPageState extends State<EditorPage> {
                   child: Text(
                     "发表",
                     style: TextStyle(
+                      fontSize: 16,
                       color: Colors.blue,
                     ),
                   ),
@@ -71,18 +77,96 @@ class EditorPageState extends State<EditorPage> {
               )
             ],
           ),
-          body: ZefyrScaffold(
-            child: ZefyrEditor(
-              padding: EdgeInsets.all(16),
-              mode: ZefyrMode.edit,
-              controller: _controller,
-              focusNode: _focusNode,
-              imageDelegate: MyAppZefyrImageDelegate(),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Column(
+                children: <Widget>[
+                  Card(
+                    color: Theme.of(context).backgroundColor.withOpacity(0.5),
+                    child: InkWell(
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          height: ThemeUtil.headerImageHeight,
+                          width: double.infinity,
+                          child: headerImage == null
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "添加特色图片",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text("（请注意图片于文章的适应性）"),
+                                  ],
+                                )
+                              : Image.file(
+                                  headerImage,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      ),
+                      onTap: () {
+                        ImagePicker.pickImage(source: ImageSource.gallery)
+                            .then((file) {
+                          setState(() {
+                            headerImage = file;
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    child: TextField(
+                      controller: titleController,
+                      keyboardType: TextInputType.text,
+                      maxLength: 20,
+                      decoration: InputDecoration(
+                        helperText: "严禁标题党、灌水等",
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.subtitle.color),
+                        labelText: "文章标题",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color:
+                                    Theme.of(context).textTheme.title.color)),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 330,
+                    child: ZefyrScaffold(
+                      child: ZefyrEditor(
+                        mode: ZefyrMode.edit,
+                        controller: _controller,
+                        focusNode: _focusNode,
+                        imageDelegate: MyAppZefyrImageDelegate(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
         onWillPop: () {
-          return DialogUtil.showExitEditorDialog(context, _controller.document.length > 1);
+          return DialogUtil.showExitEditorDialog(
+              context, _controller.document.length > 1, () {
+            _saveDocument(context);
+          });
         });
   }
 
@@ -94,6 +178,26 @@ class EditorPageState extends State<EditorPage> {
     final Delta delta = Delta()..insert("\n");
     return NotusDocument.fromDelta(delta);
   }
+
+  void _saveDocument(BuildContext context) {
+    final contents = jsonEncode(_controller.document);
+
+    final targetDir = Directory.fromUri(
+        Uri.file(Directory.systemTemp.parent.path + "/" + "tempArticles"));
+
+    targetDir.exists().then((exists) async {
+      if (!exists) {
+        await targetDir.create();
+      }
+
+      final file = File(targetDir.path + "/" + "${DateTime.now()}.json");
+      print(file.path);
+      file.writeAsString(contents).then((_) {
+        showToast("已保存！");
+        Navigator.of(context).pop(true);
+      });
+    });
+  }
 }
 
 class MyAppZefyrImageDelegate implements ZefyrImageDelegate<ImageSource> {
@@ -102,16 +206,12 @@ class MyAppZefyrImageDelegate implements ZefyrImageDelegate<ImageSource> {
     final file = await ImagePicker.pickImage(source: source);
     print(file.path);
     if (file == null) return null;
-    // We simply return the absolute path to selected file.
     return file.uri.toString();
   }
 
   @override
   Widget buildImage(BuildContext context, String key) {
     final file = File.fromUri(Uri.parse(key));
-
-    /// Create standard [FileImage] provider. If [key] was an HTTP link
-    /// we could use [NetworkImage] instead.
     final image = FileImage(file);
     return Image(image: image);
   }

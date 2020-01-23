@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
-import 'package:social_project/main.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -24,6 +23,8 @@ class ProfileContent extends StatefulWidget {
 class _ProfileContentState extends State<ProfileContent> {
   final WpSource wpSource;
 
+  var archiveCount = 50;
+
   _ProfileContentState(this.wpSource);
 
   WpUser _wpUser = WpUser.defaultUser;
@@ -35,9 +36,10 @@ class _ProfileContentState extends State<ProfileContent> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text("我的资料"), backgroundColor: Theme.of(context).backgroundColor,
+          title: Text("我的资料"),
+          backgroundColor: Theme.of(context).backgroundColor,
         ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -81,16 +83,31 @@ class _ProfileContentState extends State<ProfileContent> {
               Divider(),
               CacheCenter.tokenCache == null
                   ? Container()
-                  : ListTile(
-                      leading: Icon(
-                        Icons.message,
-                        color: Colors.green,
-                      ),
-                      title: buildText(context, "消息"),
-                      trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: () {
-                        //TODO: 消息
-                      },
+                  : Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(
+                            Icons.message,
+                            color: Colors.green,
+                          ),
+                          title: buildText(context, "消息"),
+                          trailing: buildArrowIcon(context, Icons.arrow_right),
+                          onTap: () {
+                            //TODO: 消息
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.archive,
+                            color: Colors.purple,
+                          ),
+                          title: buildText(context, "草稿箱"),
+                          trailing: buildArrowIcon(context, Icons.arrow_right),
+                          onTap: () {
+                            //TODO: 草稿箱
+                          },
+                        )
+                      ],
                     ),
               Divider(),
               ListTile(

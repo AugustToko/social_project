@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/wordpress/send_page.dart';
+import 'package:social_project/ui/widgets/navbar/navbar.dart';
 
 /// 主题工具
 class ThemeUtil {
@@ -35,7 +37,11 @@ class ThemeUtil {
   static InputBorder getUnderlineEnabledBorderBorder() =>
       UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey));
 
+  /// [NavBar]
   static double navBarHeight = 64;
 
+  /// 文章顶部图像
+  /// [SendPage]
+  static double headerImageHeight = 100;
 
 }
