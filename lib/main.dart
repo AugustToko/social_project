@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:provider/provider.dart';
+import 'package:social_project/rebuild/di/app_module.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
@@ -17,7 +19,13 @@ import 'package:social_project/utils/uidata.dart';
 
 import 'env.dart';
 
-void main() => runApp(App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // wait init
+  await init();
+  Provider.debugCheckInvalidValueType = null;
+  runApp(App());
+}
 
 class App extends StatelessWidget {
   static String _pkg = "gooey_edge";

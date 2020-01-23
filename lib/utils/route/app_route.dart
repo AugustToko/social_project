@@ -3,7 +3,7 @@ import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
-import 'package:social_project/ui/page/login_page.dart';
+import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/ui/page/profile/profile_coolapk.dart';
 import 'package:social_project/ui/page/wordpress/editor.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
@@ -99,7 +99,7 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.loginPage:
       return RouteResult(
-        widget: LoginPage(),
+        widget: LoginPage("Login Page"),
         showStatusBar: false,
         routeName: UIData.loginPage,
         pageRouteType: PageRouteType.transparent,

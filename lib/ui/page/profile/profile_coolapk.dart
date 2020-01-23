@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/sample/my_bar.dart';
+import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/utils/utils.dart';
 
 import '../content_page.dart';
 
@@ -26,7 +29,10 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
     with TickerProviderStateMixin {
   TabController _tabController;
 
+  /// 用于最新 5 篇文章数据存储
   final List<Widget> _posts = [];
+
+  WpPostSource source;
 
   bool _destroy = false;
 
@@ -36,34 +42,90 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
 
   var iconTheme = IconThemeData(color: Colors.grey);
 
+  Size _deviceSize;
+
   @override
   void initState() {
     super.initState();
     _destroy = false;
+    _tabController = TabController(length: 4, vsync: this);
 
-    if (widget.wpUserId != -1) {
+    if (widget.wpUserId > 0) {
       // 更新 _wpUser
-      NetTools.getWpUserInfoAuto(widget.wpUserId).then((user) {
-        CacheCenter.putUser(widget.wpUserId, user);
+      getWpUserNew(widget.wpUserId).then((user) {
         _wpUser = user;
         if (!_destroy) {
           setState(() {});
         }
       });
-    }
 
-    _tabController = TabController(length: 4, vsync: this);
-    NetTools.getPostsAuto(widget.wpUserId, 5).then((wpPostsSource) {
-      print("getpostauto id: ${widget.wpUserId}");
-      print("getpostauto size: ${wpPostsSource.feedList.length}");
-      if (!_destroy) {
-        setState(() {
-          wpPostsSource.feedList.forEach((post) {
-            _posts.add(ProfilePage.getCard(context, post));
+      NetTools.getAllPosts(widget.wpUserId).then((wpPostSource) {
+        CacheCenter.putPosts(widget.wpUserId, wpPostSource);
+        source = wpPostSource;
+
+        if (!_destroy) {
+          setState(() {});
+        }
+        return wpPostSource;
+      }).then((wpSource) {
+        if (!_destroy) {
+          setState(() {
+            wpSource.feedList.reversed
+                .skip(wpSource.feedList.length - 5)
+                .toList()
+                .reversed
+                .forEach((post) {
+              _posts.add(ProfilePage.getCard(context, post));
+            },);
           });
-        });
-      }
-    });
+        }
+      });
+    }
+  }
+
+  //TODO: followColumn 待完善
+  Widget followColumn(final Size deviceSize, final int userId) {
+    const double iconSize = 60;
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                textColor: Colors.white,
+                title:
+                    source == null ? "加载中" : source.feedList.length.toString(),
+                subtitle: "文章",
+              ),
+              onPressed: _morePosts),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                textColor: Colors.white,
+                title: "1.2K",
+                subtitle: "正在关注",
+              ),
+              onPressed: () {}),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                textColor: Colors.white,
+                title: "2.5K",
+                subtitle: "关注者",
+              ),
+              onPressed: () {}),
+          IconButton(
+              iconSize: iconSize,
+              icon: ProfileTile(
+                textColor: Colors.white,
+                title: "10K",
+                subtitle: "评论",
+              ),
+              onPressed: () {}),
+        ],
+      ),
+    );
   }
 
   @override
@@ -74,6 +136,7 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
 
   @override
   Widget build(BuildContext context) {
+    _deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: _sliverBuilder,
@@ -163,7 +226,7 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
 //        ),
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
-        expandedHeight: 350.0,
+        expandedHeight: 370.0,
         pinned: false,
         iconTheme: iconTheme,
         brightness: Brightness.dark,
@@ -196,7 +259,7 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
           background: Stack(
             children: <Widget>[
               Image.network(
-                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579424225565&di=fb5bb05f3d3a959ae153cabd4b5849f7&imgtype=0&src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2Fattachments2%2F201306%2F06%2F144907wbpz80kxwgvv7v11.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579795819240&di=a76686117f05bff3788ff5532a6fd196&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F4%2F5743b11d203a1.jpg",
                 fit: BoxFit.cover,
                 height: 430,
               ),
@@ -264,24 +327,22 @@ class _ProfileCoolApkState extends State<ProfileCoolApk>
                       height: 15,
                     ),
                     Text(
-                      "user_mail@mail.mail",
+                      _wpUser.description == null || _wpUser.description == ""
+                          ? "这里是空空的，啥也没有哦~"
+                          : _wpUser.description,
                       style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      "这里是个人签名。这里是个人签名。这里是个人签名。",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                    Text(
-                      "这里是个人签名。这里是个人签名。这里是个人签名。",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                    Text(
-                      "这里是个人签名。这里是个人签名。这里是个人签名。",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
+                    CacheCenter.tokenCache != null &&
+                            CacheCenter.tokenCache.userId == _wpUser.id
+                        ? Text(
+                            getWpUserCap(CacheCenter.tokenCache.userCaps),
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          )
+                        : Container(),
+                    followColumn(_deviceSize, widget.wpUserId),
                   ],
                 ),
               )

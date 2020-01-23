@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:http_client_helper/http_client_helper.dart';
 import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/model/wordpress/wp_login_result.dart';
@@ -7,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_user.dart';
+import 'package:social_project/utils/cache_center.dart';
 
 class NetTools {
   /// 此段介绍WP REST API 常用的获取数据（GET）的接口，提交数据因涉及到较为复杂的认证，此篇文章限于篇幅，后面看情况，再计划出一篇专门的WP REST API认证的文章单独介绍。
@@ -168,7 +170,7 @@ class NetTools {
   static String checkData(final String webSite, final String data) {
     var temp = data;
 
-    if(webSite.contains("mmgal")) {
+    if (webSite.contains("mmgal")) {
       temp = temp.substring(0, data.indexOf("<!--"));
     }
 
@@ -211,26 +213,26 @@ class NetTools {
     return data;
   }
 
-  static Future<WpLoginResultDone> getWpLoginResult(
-      String webSite, String userName, String password) async {
-    // 解析 URL
-    final String url = webSite + "/wp-json/jwt-auth/v1/token";
-
-    var aut = {
-      'username': userName,
-      'password': password,
-    };
-
-    WpLoginResultDone data;
-    try {
-      var result = await HttpClientHelper.post(url, body: aut);
-      data = WpLoginResultDone.fromJson(json.decode(result.body));
-    } catch (exception, stack) {
-      print(exception);
-      print(stack);
-    }
-    return data;
-  }
+//  static Future<WpLoginResultDone> getWpLoginResult(
+//      String webSite, String userName, String password) async {
+//    // 解析 URL
+//    final String url = webSite + "/wp-json/jwt-auth/v1/token";
+//
+//    var aut = {
+//      'username': userName,
+//      'password': password,
+//    };
+//
+//    WpLoginResultDone data;
+//    try {
+//      var result = await HttpClientHelper.post(url, body: aut);
+//      data = WpLoginResultDone.fromJson(json.decode(result.body));
+//    } catch (exception, stack) {
+//      print(exception);
+//      print(stack);
+//    }
+//    return data;
+//  }
 
   static Future<WpLoginResultDone> getTokenWpUserInfo(
       String webSite, String userName, String password) async {
@@ -291,6 +293,13 @@ class NetTools {
 
   ///TODO: 取消 100 条限制
   static Future<WpPostSource> getAllPosts(final int userId) async {
+    // 使用缓存
+    var wpPosts = CacheCenter.getPosts(userId);
+    if (wpPosts != null) {
+      debugPrint("getAllPosts 命中缓存");
+      return wpPosts;
+    }
+
     // 解析 URL
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
         "/wp-json/wp/v2/posts?author=$userId&per_page=100&page=1";

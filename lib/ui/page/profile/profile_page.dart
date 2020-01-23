@@ -365,8 +365,6 @@ class _ProfilePageState extends State<ProfilePage> {
       }
 
       NetTools.getPostsAuto(widget.wpUserId, 5).then((wpPostsSource) {
-        print("getpostauto id: ${_wpUser.id}");
-        print("getpostauto size: ${wpPostsSource.feedList.length}");
         if (!_destroy) {
           setState(() {
             wpPostsSource.feedList.forEach((post) {

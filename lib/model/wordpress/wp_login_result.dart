@@ -49,16 +49,19 @@ class WpLoginResultDone {
 
 class UserCaps {
   bool administrator;
+  bool subscriber;
 
-  UserCaps({this.administrator});
+  UserCaps({this.administrator,this.subscriber});
 
   UserCaps.fromJson(Map<String, dynamic> json) {
     administrator = json['administrator'];
+    subscriber = json['subscriber'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['administrator'] = this.administrator;
+    data['subscriber'] = this.subscriber;
     return data;
   }
 }

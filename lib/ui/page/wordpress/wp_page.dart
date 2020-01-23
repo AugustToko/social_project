@@ -148,7 +148,8 @@ class _WordPressPageState extends State<WordPressPage> {
                       indicatorBuilder: (p, q) {
                         return listSourceRepository.length > 0
                             ? Padding(
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, ThemeUtil.navBarHeight + 20),
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 10, 0, ThemeUtil.navBarHeight + 20),
                                 child: Text(
                                   "—————— 做人也是要有底线的哦 ——————",
                                   textAlign: TextAlign.center,

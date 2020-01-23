@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/model/wordpress/wp_login_result.dart';
+import 'package:social_project/model/wordpress/wp_user.dart';
+import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/uidata.dart';
 
 ///
 ///  create by zmtzawqlp on 2019/8/23
@@ -21,6 +26,26 @@ double initScale({Size imageSize, Size size, double initialScale}) {
   }
 
   return initialScale;
+}
+
+/// 获取权限组
+String getWpUserCap(final UserCaps caps) {
+  if (caps.administrator) return "${UIData.appName} 管理员";
+  if (caps.subscriber) return "订阅者";
+  return '';
+}
+
+Future<WpUser> getWpUserNew(final int id) async {
+  WpUser wpUser = CacheCenter.getUser(id);
+  if (wpUser.id == -1) {
+    wpUser = await NetTools.getWpUserInfoAuto(id);
+  }
+
+  if (wpUser.id > 0) {
+    CacheCenter.putUser(id, wpUser);
+  }
+
+  return wpUser;
 }
 
 class AspectRatioItem {

@@ -91,7 +91,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              if (widget.forUser) {
+              if (widget.forUser && CacheCenter.tokenCache == null) {
                 Navigator.pushNamed(context, UIData.loginPage).then((result) {
                   if (result == NavState.LoginDone) {
                     setState(() {
