@@ -37,9 +37,15 @@ class LoginPageProvider extends BaseProvide {
   LoginPageProvider(this.title, this._repo);
 
   Observable login() => _repo
-      .login(username, password)
+//      .login(username, password)
+      .login("827266641@qq.com", "18551348272Chen")
       .doOnData((r) {
-        CacheCenter.tokenCache = WpLoginResultDone.fromJson(json.decode(r));
+        var tempData = WpLoginResultDone.fromJson(json.decode(r));
+        if (tempData.token != null && tempData.token != "") {
+          CacheCenter.tokenCache = tempData;
+        } else {
+          CacheCenter.tokenCache = null;
+        }
       })
       .doOnError((e, stacktrace) {
         if (e is DioError) {

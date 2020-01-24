@@ -4,7 +4,7 @@ import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/ui/page/profile/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/ui/page/wordpress/editor.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
@@ -61,7 +61,7 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
     case UIData.profile:
       return RouteResult(
 //        widget: ProfilePage(arguments["wpUserId"]),
-        widget: ProfileCoolApk(arguments["wpUserId"]),
+        widget: ProfileCoolApkPage(arguments["wpUserId"]),
         showStatusBar: false,
         routeName: UIData.profile,
         pageRouteType: PageRouteType.transparent,

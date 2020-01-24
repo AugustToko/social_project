@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/cache_center.dart';
-import 'package:social_project/utils/log.dart';
-import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -34,11 +32,11 @@ class _LoginPageContent extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return LoginPageContentPage();
+    return LoginPageContentPageState();
   }
 }
 
-class LoginPageContentPage extends State<_LoginPageContent>
+class LoginPageContentPageState extends State<_LoginPageContent>
     with TickerProviderStateMixin<_LoginPageContent>
     implements Presenter {
   LoginPageProvider mProvide;
@@ -48,8 +46,6 @@ class LoginPageContentPage extends State<_LoginPageContent>
   /// 处理动画
   AnimationController _controller;
   Animation<double> _animation;
-
-  final Map<String, bool> data = {"pressed": false};
 
   @override
   void initState() {
@@ -156,49 +152,12 @@ class LoginPageContentPage extends State<_LoginPageContent>
               padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
               width: double.infinity,
               child: buildLoginBtnProvide(),
-//              child: RaisedButton(
-//                padding: EdgeInsets.all(12.0),
-//                shape: StadiumBorder(),
-//                child: Text(
-//                  "登陆",
-//                  style: TextStyle(color: Colors.white),
-//                ),
-//                color: Colors.green,
-//                onPressed: () {
-//                  if (!data["pressed"]) {
-//                    data["pressed"] = false;
-//                    LogUtils.d("LoginPage", "Login Button Pressed!");
-//                    NetTools.getWpLoginResult(WordPressRep.baseBlogGeekUrl,
-//                            "chenlongcould", "18551348272Chen")
-////                            userController.text,
-////                            passwordController.text)
-//                        .then((wpLoginResult) {
-//                      if (wpLoginResult.token != null) {
-//                        CacheCenter.putToken(wpLoginResult);
-//                        NetTools.getWpUserInfoAuto(wpLoginResult.userId)
-//                            .then((user) {
-//                          if (user != null) {
-//                            showToast("登陆成功!", position: ToastPosition.bottom);
-//                            CacheCenter.putUser(wpLoginResult.userId, user);
-//                            Navigator.pop(context, NavState.LoginDone);
-//                          }
-//                        });
-//                      } else {
-//                        showToast("用户名或密码错误!", position: ToastPosition.bottom);
-//                        data["pressed"] = false;
-//                      }
-//                    });
-//                  } else {
-//                    showToast("登陆中...", position: ToastPosition.bottom);
-//                  }
-//                },
-//              ),
             ),
-            SizedBox(
-              height: 5.0,
-            ),
+//            SizedBox(
+//              height: 5.0,
+//            ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -246,24 +205,22 @@ class LoginPageContentPage extends State<_LoginPageContent>
         ),
       );
 
-  Widget buildButton(
-    String text,
-    Function onPressed, {
-    Color color = Colors.white,
-  }) {
-    return FlatButton(
-      color: color,
-      child: Text(text),
-      onPressed: onPressed,
-    );
-  }
+//  Widget buildButton(
+//    String text,
+//    Function onPressed, {
+//    Color color = Colors.white,
+//  }) {
+//    return FlatButton(
+//      color: color,
+//      child: Text(text),
+//      onPressed: onPressed,
+//    );
+//  }
 
   /// 登录按钮
   ///
   /// 当 [mProvide.loading] 为true 时 ，点击事件不生效
   Consumer<LoginPageProvider> buildLoginBtnProvide() {
-    print("buildLoginBtnProvide");
-
     return Consumer<LoginPageProvider>(
       builder: (context, value, child) {
         // 使用 Consumer ,当 provide.notifyListeners() 时都会rebuild
@@ -322,8 +279,12 @@ class LoginPageContentPage extends State<_LoginPageContent>
     }).doOnDone(() {
       _controller.reverse();
     }).listen((data) {
-      showToast("登陆成功！");
-      Navigator.pop(context, NavState.LoginDone);
+      if (CacheCenter.tokenCache != null) {
+        showToast("登陆成功！");
+        Navigator.pop(context, NavState.LoginDone);
+      } else {
+        showToast("登陆失败！", position: ToastPosition.bottom);
+      }
     }, onError: (e) {
       print(e);
       showToast("登陆失败！");

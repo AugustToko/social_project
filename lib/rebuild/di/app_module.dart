@@ -1,8 +1,7 @@
 import 'package:dartin/dartin.dart';
-import 'package:dio/dio.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
+import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 
-import '../helper/constants.dart';
 import '../helper/shared_preferences.dart';
 import '../model/repository.dart';
 
@@ -14,6 +13,8 @@ const testScope = DartInScope('test');
 final viewModelModule = Module([
   factory<LoginPageProvider>(
       ({params}) => LoginPageProvider(params.get(0), get())),
+  factory<ProfileCoolApkPageProvider>(
+          ({params}) => ProfileCoolApkPageProvider()),
 ])
   ..withScope(testScope, [
     ///other scope

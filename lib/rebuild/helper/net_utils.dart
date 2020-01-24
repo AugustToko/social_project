@@ -3,8 +3,6 @@ import 'package:http_client_helper/http_client_helper.dart';
 
 import 'package:rxdart/rxdart.dart';
 
-import '../di/app_module.dart';
-
 //Future _get(String url, {Map<String, dynamic> params}) async {
 //  var response = await dio.get(url, queryParameters: params);
 //  return response.data;

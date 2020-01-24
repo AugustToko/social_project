@@ -39,7 +39,7 @@ class WordPressNewRepo {
   /// - 调用 [_remote] 的 [login] 方法进行网络访问
   /// - 返回 [Observable] 给ViewModel层
   Observable login(final String username, final String password) {
-    print("------$username------$password-----");
+//    print("------$username------$password-----");
     _sp.putString(KEY_TOKEN, "basic " + base64Encode(utf8.encode('$username:$password')));
     return _remote.login(username, password);
   }

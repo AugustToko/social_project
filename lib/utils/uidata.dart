@@ -30,7 +30,7 @@ class UIData {
   /// [CommentPage]
   static const String commentDetail = "/commentDetail";
 
-  /// [LoginPageContentPage]
+  /// [LoginPageContentPageState]
   @Deprecated("Use loginPage")
   static const String loginRoute = "/login";
   static const String loginPage = "/loginPage";
