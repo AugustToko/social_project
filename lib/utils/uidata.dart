@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/about_app.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
@@ -49,6 +50,9 @@ class UIData {
 
   /// [DraftBoxPage]
   static const String draftBoxPage = "/draftBoxPage";
+
+  /// [AboutPage]
+  static const String aboutPage = "/aboutPage";
 
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";

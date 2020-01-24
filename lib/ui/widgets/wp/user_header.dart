@@ -102,7 +102,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
                 });
               } else {
                 Navigator.pushNamed(context, UIData.profile,
-                    arguments: {"wpUserId": widget.userId});
+                    arguments: {"wpUserId": CacheCenter.tokenCache.userId});
               }
             },
             customBorder: CircleBorder(),

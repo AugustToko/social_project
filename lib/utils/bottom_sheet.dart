@@ -1,6 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/menu.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
@@ -9,19 +10,22 @@ import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/ui/widgets/profile_tile.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
+import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../ui/widgets/about_tile.dart';
 
 class BottomSheetUtil {
   /// 显示于 BottomSheet 顶部
-  static Widget header(final WpUser user) {
+  static Widget _header(final WpUser user) {
     var tempUser = user;
     if (tempUser == null) tempUser = WpUser.defaultUser;
     return Ink(
-      decoration:
-          BoxDecoration(gradient: LinearGradient(colors: UIData.kitGradients2)),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Colors.cyan.shade600.withOpacity(0.5),
+        Colors.blue.shade900.withOpacity(0.5)
+      ])),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -59,62 +63,97 @@ class BottomSheetUtil {
       final BuildContext context, final WpUser wpUser, final Menu menu) {
     showModalBottomSheet(
         context: context,
-        builder: (context) => Material(
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        builder: (context) => Stack(
+              children: <Widget>[
+                ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .backgroundColor
+                              .withOpacity(0.5)),
+                    ),
+                  ),
+                ),
+                Material(
 //            clipBehavior: Clip.antiAlias,
-            color: Theme.of(context).backgroundColor,
+                    color: Colors.transparent,
 //            shape: RoundedRectangleBorder(
 //                borderRadius: BorderRadius.only(
 //                    topLeft: Radius.circular(15.0),
 //                    topRight: Radius.circular(15.0))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                BottomSheetUtil.header(wpUser),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: false,
-                    itemCount: menu.items.length,
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: menu.items[i],
-                      );
-                    },
-                  ),
-                ),
-                MyAboutTile()
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        BottomSheetUtil._header(wpUser),
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: false,
+                            itemCount: menu.items.length,
+                            itemBuilder: (context, i) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: menu.items[i],
+                              );
+                            },
+                          ),
+                        ),
+                        MyAboutTile()
+                      ],
+                    ))
               ],
-            )));
+            ));
   }
 
   /// 显示来自 POST CARD 被长按下的 bottomSheet
   static void showPostSheetShow(final BuildContext context, final WpPost item) {
+    var textStyle = TextStyle(color: Colors.white);
     showSheetBottom(
         context,
         CacheCenter.getUser(item.author),
         Menu(title: "Title", items: [
           ListTile(
-            title: Text("打开原网站"),
-            leading: Icon(Icons.link, color: Theme.of(context).iconTheme.color,),
+            title: Text(
+              "打开原网站",
+            ),
+            leading: Icon(
+              Icons.link,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onTap: () {
               FlutterWebBrowser.openWebPage(url: item.link);
             },
           ),
           ListTile(
             title: Text("分享"),
-            leading: Icon(Icons.share, color: Theme.of(context).iconTheme.color,),
+            leading: Icon(
+              Icons.share,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onTap: () {
               Share.share(item.title.rendered + ":" + " \r\n" + item.link);
             },
           ),
           ListTile(
             title: Text("收藏"),
-            leading: Icon(Icons.star, color: Theme.of(context).iconTheme.color,),
+            leading: Icon(
+              Icons.star,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
           ListTile(
             title: Text("隐藏"),
-            leading: Icon(Icons.restore_from_trash, color: Theme.of(context).iconTheme.color,),
+            leading: Icon(
+              Icons.restore_from_trash,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
         ]));
   }

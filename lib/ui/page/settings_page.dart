@@ -100,7 +100,9 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "关于 ${UIData.appName}"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, UIData.aboutPage);
+                      },
                     )
                   ],
                 ),

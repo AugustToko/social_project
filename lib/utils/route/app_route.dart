@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:social_project/ui/page/about_app.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
@@ -128,6 +129,14 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: DraftBoxPage(),
         showStatusBar: true,
         routeName: UIData.draftBoxPage,
+        pageRouteType: PageRouteType.transparent,
+      );
+      break;
+    case UIData.aboutPage:
+      return RouteResult(
+        widget: AboutPage(),
+        showStatusBar: true,
+        routeName: UIData.aboutPage,
         pageRouteType: PageRouteType.transparent,
       );
       break;
