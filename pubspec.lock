@@ -29,6 +29,13 @@ packages:
       url: "https://pub.flutter-io.cn/"
     source: hosted
     version: "1.5.2"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      url: "https://pub.flutter-io.cn/"
+    source: hosted
+    version: "0.6.0"
   async:
     dependency: transitive
     description:
@@ -167,6 +174,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_banner_swiper:
+    dependency: "direct main"
+    description:
+      name: flutter_banner_swiper
+      url: "https://pub.flutter-io.cn/"
+    source: hosted
+    version: "0.1.4"
   flutter_html:
     dependency: "direct main"
     description:
@@ -186,6 +200,13 @@ packages:
       url: "https://pub.flutter-io.cn/"
     source: hosted
     version: "1.0.4"
+  flutter_statusbarcolor:
+    dependency: "direct main"
+    description:
+      name: flutter_statusbarcolor
+      url: "https://pub.flutter-io.cn/"
+    source: hosted
+    version: "0.2.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -537,6 +558,13 @@ packages:
       url: "https://pub.flutter-io.cn/"
     source: hosted
     version: "1.9.3"
+  steel_crypt:
+    dependency: "direct main"
+    description:
+      name: steel_crypt
+      url: "https://pub.flutter-io.cn/"
+    source: hosted
+    version: "1.5.4+1"
   stream_channel:
     dependency: transitive
     description:

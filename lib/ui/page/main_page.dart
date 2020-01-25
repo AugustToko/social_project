@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
@@ -58,6 +59,9 @@ class _IndexState extends State<MainPage> {
     // Display the correct child view for the current index
     var contentView =
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
+
+//    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor, animate: true);
+//    FlutterStatusbarcolor.setNavigationBarWhiteForeground(Theme.of(context).backgroundColor.red < 120);
 
     // Wrap our custom navbar + contentView with the app Scaffold
     return WillPopScope(

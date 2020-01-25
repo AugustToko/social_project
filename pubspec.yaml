@@ -49,6 +49,9 @@ dependencies:
   image_gallery_saver: ^1.2.2
 #  directory_picker: ^1.0.0
 #  flutter_document_picker: ^3.0.1
+  steel_crypt: ^1.5.4+1
+  flutter_statusbarcolor: ^0.2.3
+  flutter_banner_swiper: ^0.1.4
 
 
 #  get_it: ^3.1.0
@@ -65,8 +68,6 @@ flutter:
   assets:
     - images/
     - assets/images/
-    - locale/i18n_en.json
-    - locale/i18n_hi.json
 
   fonts:
     - family: Quicksand

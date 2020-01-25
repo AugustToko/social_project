@@ -1,5 +1,6 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
@@ -7,17 +8,14 @@ import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
 import 'package:share/share.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:social_project/model/banner_post.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
-import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-
-import '../pic_swiper.dart';
 
 /// 获取 WordPress Posts
 class WordPressPage extends StatefulWidget {
@@ -41,6 +39,43 @@ class _WordPressPageState extends State<WordPressPage> {
 //  final MyExtendedMaterialTextSelectionControls
 //      _myExtendedMaterialTextSelectionControls =
 //      MyExtendedMaterialTextSelectionControls();
+
+  var listData = [
+    "timeline.jpeg",
+    "verification.jpg",
+    "shopping.jpeg",
+    "blank.jpg"
+  ];
+
+  var debugData = [
+    BannerPost(
+      title: "嗨，欢迎来到 \"零昀\" !",
+      subTitle: "Hey guy, welcome to LingYun!",
+      messageText: "https://blog.geek-cloud.top/",
+      assetUrl: "index.jpg",
+      assetAuthorName: "August",
+    ),
+    BannerPost(
+      title: "Android开发版块正式开放！",
+      subTitle: "Read the f*** source code!",
+      messageText: "https://blog.geek-cloud.top/",
+      assetUrl: "android.png",
+      assetAuthorName: "August",
+    ),
+    BannerPost(
+      title: "像素画版块正式开放！",
+      subTitle: "虽复古但不落后",
+      messageText: "https://blog.geek-cloud.top/",
+      assetUrl: "pixel.png",
+      assetAuthorName: "MurlocWallace",
+    ),
+    BannerPost(
+        title: "电音制作版块正式开放！",
+        subTitle: "Nothing is worth living for without music.",
+        messageText: "https://blog.geek-cloud.top/",
+        assetUrl: "sound.png",
+        assetAuthorName: "Spark_焱 "),
+  ];
 
   WordPressRep listSourceRepository;
 
@@ -99,7 +134,7 @@ class _WordPressPageState extends State<WordPressPage> {
           likeCount: 999,
           onTap: (bool val) {
             //TODO: Share库 支持平台问题
-            Share.share("This is a test action by Social Project");
+            Share.share("This is a test action by LingYun");
             return Future.value(true);
           },
           likeBuilder: (bool isClicked) {
@@ -149,7 +184,11 @@ class _WordPressPageState extends State<WordPressPage> {
                         return listSourceRepository.length > 0
                             ? Padding(
                                 padding: EdgeInsets.fromLTRB(
-                                    0, 10, 0, ThemeUtil.navBarHeight + 20),
+                                    0,
+                                    10,
+                                    0,
+                                    ThemeUtil.navBarHeight +
+                                        ScreenUtil.getInstance().setWidth(20)),
                                 child: Text(
                                   "—————— 做人也是要有底线的哦 ——————",
                                   textAlign: TextAlign.center,
@@ -225,46 +264,6 @@ class _WordPressPageState extends State<WordPressPage> {
                                         ),
                                         Html(
                                           data: contentSmall,
-//                                          showImages: true,
-//                                          useRichText: false,
-//                                          linkStyle: TextStyle(),
-//                                          customRender: (node, children) {
-//                                            if (node is dom.Element) {
-//                                              switch (node.localName) {
-//                                                case "video":
-//                                                  return Text("[Video Here]");
-//                                                case "img":
-//                                                  String imageUrl =
-//                                                      node.attributes[
-//                                                          "data-original"];
-//                                                  return imageUrl == null
-//                                                      ? null
-//                                                      : Image.network(imageUrl);
-//                                                default:
-//                                                  return null;
-//                                              }
-//                                            } else {
-//                                              return null;
-//                                            }
-//                                          },
-//                                          onImageTap: (url) {
-//                                            Navigator.pushNamed(context,
-//                                                "fluttercandies://picswiper",
-//                                                arguments: {
-//                                                  "index": 0,
-//                                                  "pics": [PicSwiperItem(url)],
-//                                                });
-//                                          },
-//                                          onImageError: (p1, p2) {
-//                                            print(
-//                                                "Image Error---------------start-----------------");
-//                                            print(p1);
-//                                            print(
-//                                                "-----===-------=======------====-----");
-//                                            print(p2);
-//                                            print(
-//                                                "Image Error----------------end----------------");
-//                                          },
                                         ),
                                         Padding(
                                           padding:
@@ -337,25 +336,104 @@ class _WordPressPageState extends State<WordPressPage> {
                             margin);
 
                         if (index == 0) {
-                          return Column(
-                            children: <Widget>[
-                              ThemeUtil.materialCard(Padding(
-                                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      "🚧 置顶消息 🚧",
-                                      style: TextStyle(fontSize: 30),
+                          return BannerSwiper(
+                            showIndicator: true,
+                            //width  和 height 是图片的高宽比  不用传具体的高宽   必传
+                            height: 100,
+                            width: 48,
+                            //轮播图数目 必传
+                            length: debugData.length,
+
+                            //轮播的item  widget 必传
+                            getwidget: (index) {
+                              var bannerData =
+                                  debugData[index % debugData.length];
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Material(
+                                  elevation: 1.5,
+                                  borderRadius: ThemeUtil.clipRRectBorderRadius,
+                                  color: Colors.transparent,
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        ThemeUtil.clipRRectBorderRadius,
+                                    child: Stack(
+                                      children: <Widget>[
+//                                        Image.network(
+//                                          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579963291831&di=6fdb4ea45d31a968fd7025721ddb9380&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F4%2F586b0784596f9.jpg%3Fdown",
+//                                          width: 400,
+//                                          fit: BoxFit.cover,
+//                                        ),
+                                        Image.asset(
+//                                          "assets/images${bannerData.assetUrl}",
+                                          "assets/images/${bannerData.assetUrl}",
+                                          width: 400,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Container(
+                                          color: Colors.black.withOpacity(0.4),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                bannerData.title,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                bannerData.subTitle,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              Text(
+                                                bannerData.messageText,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15),
+                                              ),
+                                              SizedBox(
+                                                height: 8,
+                                              ),
+                                              MaterialButton(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    side: BorderSide(
+                                                        width: 1.5,
+                                                        color: Colors.white)),
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "了解更多",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Image.asset("assets/images/timeline.jpeg")
-                                  ],
+                                  ),
                                 ),
-                              )),
-                              card
-                            ],
+                              );
+                            },
                           );
                         } else {
                           return card;

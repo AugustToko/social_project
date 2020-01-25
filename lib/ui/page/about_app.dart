@@ -2,7 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/widgets/flip_panel.dart';
+import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 class AboutPage extends StatefulWidget {
   AboutPage({Key key}) : super(key: key);
@@ -14,14 +19,123 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   final digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+//  @override
+//  void dispose() {
+//    super.dispose();
+//    FlutterStatusbarcolor.setNavigationBarColor(Colors.black, animate: true);
+//    FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text("Comment Detail Page"),
+        title: Text("关于"),
       ),
       body: Column(
-        children: <Widget>[AnimatedImagePage()],
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              FlutterLogo(
+                style: FlutterLogoStyle.markOnly,
+                size: 110,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            customBorder: CircleBorder(),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "零昀",
+                  style: TextStyle(fontSize: 24),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Step By Step",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            onTap: () {
+              DialogUtil.showAlertDialog(
+                  context, "零昀 Step By Step", "即使黑暗，我们也一步一个脚印得往前走。", [
+                FlatButton(
+                    onPressed: () {
+                      FlutterWebBrowser.openWebPage(
+                          url: WordPressRep.aboutBlogGeek,
+                          androidToolbarColor: Theme.of(context).primaryColor);
+                    },
+                    child: Text("加入我们"))
+              ]);
+            },
+          ),
+          SizedBox(
+            height: 240,
+          ),
+          CupertinoButton(
+            onPressed: () {
+              FlutterWebBrowser.openWebPage(
+                  url: WordPressRep.baseBlogGeekUrl,
+                  androidToolbarColor: Theme.of(context).primaryColor);
+            },
+            pressedOpacity: 0.8,
+            child: Container(
+              alignment: Alignment.center,
+              width: 300,
+              height: 48,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  gradient: LinearGradient(colors: [
+                    Color(0xFF686CF2),
+                    Color(0xFF0E5CFF),
+                  ]),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color(0x4D5E56FF),
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 13.0)
+                  ]),
+              child: Text(
+                "访问官网",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          RaisedButton(
+            shape: StadiumBorder(),
+            child: Text(
+              "开源许可证",
+              style: TextStyle(color: Theme.of(context).textTheme.title.color),
+            ),
+            color: Theme.of(context).backgroundColor,
+            elevation: 0,
+            onPressed: () {
+              FlutterWebBrowser.openWebPage(
+                  url: WordPressRep.blogGeekReg,
+                  androidToolbarColor: Theme.of(context).primaryColor);
+//                      launch(WordPressRep.blogGeekReg);
+            },
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Developed by August 827266641@qq.com",
+            style: TextStyle(fontSize: 10),
+          )
+        ],
       ),
     );
   }

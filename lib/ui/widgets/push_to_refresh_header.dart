@@ -1,10 +1,6 @@
-import 'dart:math';
-
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:intl/intl.dart';
-import 'dart:ui' as ui show Image;
 
 import 'package:social_project/utils/screen_util.dart';
 
@@ -24,16 +20,16 @@ class PullToRefreshHeader extends StatelessWidget {
     if (info == null) return Container();
     String text = "";
     if (info.mode == RefreshIndicatorMode.armed) {
-      text = "Release to refresh";
+      text = "释放刷新";
     } else if (info.mode == RefreshIndicatorMode.refresh ||
         info.mode == RefreshIndicatorMode.snap) {
-      text = "Loading...";
+      text = "加载中...";
     } else if (info.mode == RefreshIndicatorMode.done) {
-      text = "Refresh completed.";
+      text = "刷新完成";
     } else if (info.mode == RefreshIndicatorMode.drag) {
-      text = "Pull to refresh";
+      text = "下拉以便刷新";
     } else if (info.mode == RefreshIndicatorMode.canceled) {
-      text = "Cancel refresh";
+      text = "取消刷新";
     }
 
     final TextStyle ts = TextStyle(
@@ -92,6 +88,7 @@ class PullToRefreshHeader extends StatelessWidget {
   }
 }
 
+///TODO: 刷新图像
 class RefreshImage extends StatelessWidget {
   final double top;
 
@@ -100,30 +97,6 @@ class RefreshImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double imageSize = ScreenUtil.getInstance().setWidth(80);
-    return ExtendedImage.asset(
-      "assets/flutterCandies.png",
-      width: imageSize,
-      height: imageSize,
-      afterPaintImage: (Canvas canvas, Rect rect, ui.Image image, Paint paint) {
-        final double imageHeight = image.height.toDouble();
-        final double imageWidth = image.width.toDouble();
-        final Size size = rect.size;
-        final double y =
-            (1 - min(top / (refreshHeight - hideHeight), 1)) * imageHeight;
-
-        canvas.drawImageRect(
-            image,
-            Rect.fromLTWH(0.0, y, imageWidth, imageHeight - y),
-            Rect.fromLTWH(rect.left, rect.top + y / imageHeight * size.height,
-                size.width, (imageHeight - y) / imageHeight * size.height),
-            Paint()
-              ..colorFilter =
-                  ColorFilter.mode(Color(0xFFea5504), BlendMode.srcIn)
-              ..isAntiAlias = false
-              ..filterQuality = FilterQuality.low);
-
-        //canvas.restore();
-      },
-    );
+    return FlutterLogo(size: 40,);
   }
 }

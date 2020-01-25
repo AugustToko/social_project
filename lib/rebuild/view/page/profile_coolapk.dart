@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
@@ -63,6 +64,27 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
     super.dispose();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    mProvider.deviceSize = MediaQuery.of(context).size;
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: _sliverBuilder,
+        body: TabBarView(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: buildPostCard(),
+            ),
+            SampleHomePage(),
+            SampleHomePage(),
+            SampleHomePage(),
+          ],
+          controller: _tabController,
+        ),
+      ),
+    );
+  }
+
   //TODO: followColumn 待完善
   Widget followColumn(final Size deviceSize, final int userId) {
     const double iconSize = 60;
@@ -107,27 +129,6 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
               ),
               onPressed: () {}),
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    mProvider.deviceSize = MediaQuery.of(context).size;
-    return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: _sliverBuilder,
-        body: TabBarView(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: buildPostCard(),
-            ),
-            SampleHomePage(),
-            SampleHomePage(),
-            SampleHomePage(),
-          ],
-          controller: _tabController,
-        ),
       ),
     );
   }

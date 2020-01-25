@@ -16,6 +16,9 @@ import 'package:social_project/utils/uidata.dart';
 import '../ui/widgets/about_tile.dart';
 
 class BottomSheetUtil {
+
+  static const double opacityVal = 0.85;
+
   /// 显示于 BottomSheet 顶部
   static Widget _header(final WpUser user) {
     var tempUser = user;
@@ -23,8 +26,8 @@ class BottomSheetUtil {
     return Ink(
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-        Colors.cyan.shade600.withOpacity(0.5),
-        Colors.blue.shade900.withOpacity(0.5)
+        Colors.cyan.shade600.withOpacity(opacityVal),
+        Colors.blue.shade900.withOpacity(opacityVal)
       ])),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -76,7 +79,7 @@ class BottomSheetUtil {
                       decoration: BoxDecoration(
                           color: Theme.of(context)
                               .backgroundColor
-                              .withOpacity(0.5)),
+                              .withOpacity(opacityVal)),
                     ),
                   ),
                 ),

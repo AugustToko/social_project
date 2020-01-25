@@ -5,6 +5,6 @@ class WidgetDefault {
   static Widget defaultCircleAvatar(final BuildContext context, {final Color color, final double size}) => Icon(
         Icons.person,
         size: size ?? 40,
-        color: color == null ? Theme.of(context).textTheme.title.color : color,
+        color: color == null ? Theme.of(context).textTheme.title.color.withOpacity(0.5) : color,
       );
 }

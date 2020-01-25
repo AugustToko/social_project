@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
-import 'package:social_project/ui/page/search_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_page.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -36,6 +37,8 @@ class ContentPage extends StatefulWidget {
 class _TabBarState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
   ScrollController _scrollViewController;
+
+  final TextEditingController _controller = TextEditingController();
 
   //标签控制器，主要是管理标签的行为，比如移动或者跳转到哪一个标签
   TabController _tabController;
@@ -111,66 +114,138 @@ class _TabBarState extends State<ContentPage>
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
-          child: WpUserHeader(
-            radius: 15,
-            showUserName: false,
-            forUser: true,
-            userId: CacheCenter.tokenCache == null
-                ? -1
-                : CacheCenter.tokenCache.userId,
+        backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
+        expandedHeight: 80,
+        flexibleSpace: FlexibleSpaceBar(
+          collapseMode: CollapseMode.pin,
+          background: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 35, 16, 0),
+            child: Card(
+              elevation: 2.0,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.search,
+                        color: Theme.of(context)
+                            .textTheme
+                            .title
+                            .color
+                            .withOpacity(0.7),
+                      ),
+                      onPressed: () {
+                        showToast("搜索", position: ToastPosition.bottom);
+                      },
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "查找信息",
+                          hintStyle: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.subtitle.color),
+                        ),
+                        onSubmitted: (par1) {
+                          return Navigator.pushNamed(
+                              context, UIData.argPostsPage,
+                              arguments: {
+                                'url': WordPressRep.getWpLink(
+                                        WordPressRep.wpSource) +
+                                    "/wp-json/wp/v2/posts?search=${_controller.text}",
+                                'appBar': AppBar(
+                                  title: Text(_controller.text + ' 的搜索结果'),
+                                  backgroundColor:
+                                      Theme.of(context).backgroundColor,
+                                  elevation: 5,
+                                )
+                              });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    WpUserHeader(
+                      radius: 20,
+                      showUserName: false,
+                      forUser: true,
+                      userId: CacheCenter.tokenCache == null
+                          ? -1
+                          : CacheCenter.tokenCache.userId,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
-        backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
-//        backgroundColor: Theme.of(context).cardTheme.color,
-        title: Text("Social Project"),
         pinned: false,
         primary: true,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              tooltip: '搜索',
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: SearchBarDelegate(),
-                );
-              }),
-          // overflow menu
-          PopupMenuButton<Choice>(
-            onSelected: (menu) => menu.onTap(),
-            itemBuilder: (BuildContext context) {
-              return choices.map((Choice choice) {
-                return PopupMenuItem<Choice>(
-                  value: choice,
-                  child: Text(choice.title),
-                );
-              }).toList();
-            },
-          ),
-        ],
       ),
+
+//      SliverAppBar(
+//        centerTitle: true,
+//        leading: Padding(
+//          padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
+//          child: WpUserHeader(
+//            radius: 15,
+//            showUserName: false,
+//            forUser: true,
+//            userId: CacheCenter.tokenCache == null
+//                ? -1
+//                : CacheCenter.tokenCache.userId,
+//          ),
+//        ),
+//        backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
+////        backgroundColor: Theme.of(context).cardTheme.color,
+//        title: Text(UIData.appName,),
+//        pinned: false,
+//        primary: true,
+//        actions: <Widget>[
+//          IconButton(
+//              icon: Icon(Icons.search),
+//              tooltip: '搜索',
+//              onPressed: () {
+//                showSearch(
+//                  context: context,
+//                  delegate: SearchBarDelegate(),
+//                );
+//              }),
+//          // overflow menu
+//          PopupMenuButton<Choice>(
+//            onSelected: (menu) => menu.onTap(),
+//            itemBuilder: (BuildContext context) {
+//              return choices.map((Choice choice) {
+//                return PopupMenuItem<Choice>(
+//                  value: choice,
+//                  child: Text(choice.title),
+//                );
+//              }).toList();
+//            },
+//          ),
+//        ],
+//      ),
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
           TabBar(
-//            labelColor: Colors.green,
-//            unselectedLabelColor: Colors.grey,
             tabs: [
-              Tab(
-                child: Text(
-                  "博客",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Tab(text: "TuChong"),
-              Tab(
-                child: Text(
-                  "热门",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Tab(text: "Time line 4"),
+              //TODO: 动态标签（根据服务器）
+              Tab(child: Text("博客")),
+              Tab(text: "图虫"),
+              Tab(child: Text("热门")),
+              Tab(text: "版块"),
             ],
             controller: _tabController,
           ),
@@ -195,25 +270,19 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Material(
-      child: Stack(
-        children: <Widget>[
-          ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-              child: Container(
-                width: double.infinity,
-                height: _tabBar.preferredSize.height,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor.withOpacity(0.8)),
-              ),
+    return Stack(
+      children: <Widget>[
+        ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).backgroundColor.withOpacity(0.8)),
             ),
           ),
-          _tabBar
-        ],
-      ),
-      color: Colors.transparent,
-//      elevation: 2.0,
+        ),
+        _tabBar
+      ],
     );
   }
 

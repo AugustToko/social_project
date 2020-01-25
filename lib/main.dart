@@ -5,6 +5,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +37,11 @@ class App extends StatelessWidget {
 
   /// 亮色主题
   static var themeData = ThemeData(
-    primarySwatch: Colors.blue,
-    primaryColor: Colors.grey.shade200,
+    primarySwatch: Colors.green,
+    primaryColor: Colors.green.shade200,
     scaffoldBackgroundColor: Colors.grey.shade200,
     backgroundColor: Colors.white,
-    appBarTheme: AppBarTheme(elevation: 0.0,  color: Colors.white),
+    appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.white),
     textTheme: TextTheme(
       title: ThemeUtil.textLight,
       body1: ThemeUtil.textLight,
@@ -52,7 +53,10 @@ class App extends StatelessWidget {
       // for [AboutListTile]
       headline: ThemeUtil.textLight,
     ),
-    cardTheme: CardTheme(color: Colors.white),
+    tabBarTheme: TabBarTheme(
+        labelColor: Color(0xff01b87d),
+        unselectedLabelColor: Colors.grey.shade700),
+    cardTheme: CardTheme(color: Colors.white, elevation: 0),
 //    canvasColor: Colors.grey.shade50,
     dialogTheme: DialogTheme(
       backgroundColor: Colors.grey.shade50,
@@ -60,38 +64,43 @@ class App extends StatelessWidget {
     popupMenuTheme: PopupMenuThemeData(
       color: Colors.grey.shade50,
     ),
+    // icon
     iconTheme: IconThemeData(color: Colors.grey.shade900),
-    dividerTheme: DividerThemeData(color: Colors.grey.shade200),
+    primaryIconTheme: IconThemeData(color: Colors.grey.shade900),
+    accentIconTheme: IconThemeData(color: Colors.grey.shade900),
+    // 分割线
+    dividerTheme: DividerThemeData(
+        color: Colors.grey.shade400.withOpacity(0.2), thickness: 1),
   );
 
   /// 深色主题
   static var darkThemeData = ThemeData(
-    primarySwatch: Colors.grey,
-    primaryColor: Colors.grey.shade900,
-    scaffoldBackgroundColor: Colors.grey.shade900,
-    backgroundColor: Colors.grey.shade900,
-    appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.grey.shade900),
-    textTheme: TextTheme(
-      title: ThemeUtil.textDark,
-      subhead: ThemeUtil.textDark,
-      body1: ThemeUtil.textDark,
-      body2: ThemeUtil.textDark,
-      subtitle: ThemeUtil.subtitle,
-      button: ThemeUtil.textDark,
-      // for [AboutListTile]
-      headline: ThemeUtil.textDark,
-    ),
-    cardTheme: CardTheme(color: Colors.grey.shade900),
-//    canvasColor: Colors.grey.shade900,
-    dialogTheme: DialogTheme(
+      primarySwatch: Colors.grey,
+      primaryColor: Colors.grey.shade900,
+      scaffoldBackgroundColor: Colors.grey.shade900,
       backgroundColor: Colors.grey.shade900,
-    ),
-    popupMenuTheme: PopupMenuThemeData(
-      color: Colors.grey.shade900,
-    ),
-    iconTheme: IconThemeData(color: Colors.grey.shade400),
-      dividerTheme: DividerThemeData(color: Colors.grey.shade800)
-  );
+      appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.grey.shade900),
+      textTheme: TextTheme(
+        title: ThemeUtil.textDark,
+        subhead: ThemeUtil.textDark,
+        body1: ThemeUtil.textDark,
+        body2: ThemeUtil.textDark,
+        subtitle: ThemeUtil.subtitle,
+        button: ThemeUtil.textDark,
+        // for [AboutListTile]
+        headline: ThemeUtil.textDark,
+      ),
+      cardTheme: CardTheme(color: Colors.grey.shade900),
+//    canvasColor: Colors.grey.shade900,
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.grey.shade900,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: Colors.grey.shade900,
+      ),
+      iconTheme: IconThemeData(color: Colors.grey.shade400),
+      dividerTheme:
+          DividerThemeData(color: Colors.grey.shade800, thickness: 1));
 
   // This widget is the root of your application.
   @override
@@ -114,7 +123,7 @@ class App extends StatelessWidget {
 //        ],
         builder: (c, w) {
           ScreenUtil.instance =
-              ScreenUtil(width: 750, height: 1334, allowFontScaling: true)
+              ScreenUtil(width: 1080, height: 1920, allowFontScaling: true)
                 ..init(c);
           var data = MediaQuery.of(c);
           return MediaQuery(

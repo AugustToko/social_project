@@ -51,6 +51,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   void initState() {
     super.initState();
     mProvide = widget.provide;
+    mProvide.initData();
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     _animation = Tween(begin: 295.0, end: 48.0).animate(_controller)
@@ -68,21 +69,25 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme
+          .of(context)
+          .backgroundColor,
       body: Center(
         child: loginBody(context),
       ),
     );
   }
 
-  loginBody(BuildContext context) => SingleChildScrollView(
+  loginBody(BuildContext context) =>
+      SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[loginHeader(), loginFields(context)],
         ),
       );
 
-  loginHeader() => Column(
+  loginHeader() =>
+      Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           FlutterLogo(
@@ -106,7 +111,8 @@ class LoginPageContentPageState extends State<_LoginPageContent>
         ],
       );
 
-  loginFields(BuildContext context) => Container(
+  loginFields(BuildContext context) =>
+      Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
@@ -117,15 +123,21 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                 maxLines: 1,
                 onChanged: (str) => mProvide.username = str,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.grey),
-                    labelStyle: TextStyle(
-                      color: Theme.of(context).textTheme.title.color,
-                    ),
-                    hintText: "输入你的用户名",
-                    labelText: "用户名",
-                    focusedBorder:
-                        ThemeUtil.getUnderlineFocusedBorderBorder(context),
-                    enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder()),
+                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: TextStyle(
+                    color: Theme
+                        .of(context)
+                        .textTheme
+                        .title
+                        .color,
+                  ),
+                  hintText: "输入你的用户名",
+                  labelText: "用户名",
+                  focusedBorder:
+                  ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                  enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder(),
+                ),
+                controller: mProvide.userNameController,
               ),
             ),
             Container(
@@ -135,27 +147,34 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                 onChanged: (str) => mProvide.password = str,
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintStyle: TextStyle(color: Colors.grey),
-                    labelStyle: TextStyle(
-                        color: Theme.of(context).textTheme.title.color),
-                    hintText: "输入你的密码",
-                    labelText: "密码",
-                    focusedBorder:
-                        ThemeUtil.getUnderlineFocusedBorderBorder(context),
-                    enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder()),
+                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: TextStyle(
+                      color: Theme
+                          .of(context)
+                          .textTheme
+                          .title
+                          .color),
+                  hintText: "输入你的密码",
+                  labelText: "密码",
+                  focusedBorder:
+                  ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                  enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder(),
+                ),
+                controller: mProvide.passwordController,
               ),
             ),
             SizedBox(
-              height: 30.0,
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: buildCheckBoxProvide(),
             ),
             Container(
               padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
               width: double.infinity,
               child: buildLoginBtnProvide(),
             ),
-//            SizedBox(
-//              height: 5.0,
-//            ),
             Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Row(
@@ -167,14 +186,22 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                     child: Text(
                       "注册新账号",
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.title.color),
+                          color: Theme
+                              .of(context)
+                              .textTheme
+                              .title
+                              .color),
                     ),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme
+                        .of(context)
+                        .backgroundColor,
                     elevation: 0,
                     onPressed: () {
                       FlutterWebBrowser.openWebPage(
                           url: WordPressRep.blogGeekReg,
-                          androidToolbarColor: Theme.of(context).primaryColor);
+                          androidToolbarColor: Theme
+                              .of(context)
+                              .primaryColor);
 //                      launch(WordPressRep.blogGeekReg);
                     },
                   ),
@@ -187,14 +214,22 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                     child: Text(
                       "忘记密码",
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.title.color),
+                          color: Theme
+                              .of(context)
+                              .textTheme
+                              .title
+                              .color),
                     ),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme
+                        .of(context)
+                        .backgroundColor,
                     elevation: 0,
                     onPressed: () {
                       FlutterWebBrowser.openWebPage(
                           url: WordPressRep.blogGeekLostPwd,
-                          androidToolbarColor: Theme.of(context).primaryColor);
+                          androidToolbarColor: Theme
+                              .of(context)
+                              .primaryColor);
 //                      launch(WordPressRep.blogGeekLostPwd);
                     },
                   )
@@ -216,6 +251,27 @@ class LoginPageContentPageState extends State<_LoginPageContent>
 //      onPressed: onPressed,
 //    );
 //  }
+
+  /// 登录按钮
+  ///
+  /// 当 [mProvide.loading] 为true 时 ，点击事件不生效
+  Consumer<LoginPageProvider> buildCheckBoxProvide() {
+    return Consumer<LoginPageProvider>(
+      builder: (context, value, child) {
+        // 使用 Consumer ,当 provide.notifyListeners() 时都会rebuild
+        return CheckboxListTile(
+          controlAffinity: ListTileControlAffinity.leading,
+          value: mProvide.rememberPassword,
+          onChanged: (newValue) => mProvide.rememberPassword = newValue,
+          title: Text('记住密码'),
+//          secondary: Icon(Icons.vpn_key),
+          selected: true,
+          subtitle: Text("将您的信息加密保存在本地"),
+          dense: true,
+        );
+      },
+    );
+  }
 
   /// 登录按钮
   ///

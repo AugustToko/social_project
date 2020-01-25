@@ -69,7 +69,7 @@ class UIData {
 
   // TODO: 项目名称
   //strings
-  static const String appName = "Social Project";
+  static const String appName = "零昀";
 
   // 开发者名称
   static const String developerName = "Crypto Studio";

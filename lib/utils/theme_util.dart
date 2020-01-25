@@ -6,8 +6,9 @@ import 'package:social_project/ui/widgets/wp/user_header.dart';
 
 /// 主题工具
 class ThemeUtil {
-  static EdgeInsets cardPaddingEdgeInsets = EdgeInsets.fromLTRB(8, 8, 8, 0);
+  static const EdgeInsets cardPaddingEdgeInsets = EdgeInsets.fromLTRB(8, 8, 8, 0);
 
+  @Deprecated("use materialPostCard")
   static Card materialCard(final Widget widget) => Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
@@ -18,7 +19,7 @@ class ThemeUtil {
   static Card materialPostCard(final Widget widget, final WpPost item, final double margin) => Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        margin: cardPaddingEdgeInsets,
+        margin: EdgeInsets.fromLTRB(margin, margin, margin, 0),
         child: Column(
           children: <Widget>[
             Padding(

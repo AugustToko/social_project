@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:rxdart/rxdart.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/rebuild/helper/constants.dart';
+import 'package:steel_crypt/steel_crypt.dart';
 
 import '../helper/net_utils.dart';
 import '../helper/shared_preferences.dart';
@@ -39,8 +40,30 @@ class WordPressNewRepo {
   /// - 调用 [_remote] 的 [login] 方法进行网络访问
   /// - 返回 [Observable] 给ViewModel层
   Observable login(final String username, final String password) {
-//    print("------$username------$password-----");
-    _sp.putString(KEY_TOKEN, "basic " + base64Encode(utf8.encode('$username:$password')));
     return _remote.login(username, password);
+  }
+
+  void saveAuth(final String username, final String password) {
+    var aesEncrypter = AesCrypt(FortunaKey, 'gcm',
+        'iso10126-2'); //generate AES block encrypter with key and ISO7816-4 padding
+
+    var process1 = aesEncrypter.encrypt('$username:$password', IV);
+
+    _sp.putString(KEY_TOKEN, process1);
+  }
+
+  void clearAuth() {
+    _sp.putString(KEY_TOKEN, '');
+  }
+
+  String getAuth() {
+    var data = _sp.getString(KEY_TOKEN);
+
+    if (data == null || data == '') return '';
+
+    var aesEncrypter = AesCrypt(FortunaKey, 'gcm',
+        'iso10126-2'); //generate AES block encrypter with key and ISO7816-4 padding
+
+    return aesEncrypter.decrypt(data, IV);
   }
 }
