@@ -32,42 +32,50 @@ class NavBar extends StatelessWidget {
     }).toList();
 
     // 创建一个包含一行的容器，然后将btn小部件添加到该行中
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        ClipRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              width: double.infinity,
-              height: ThemeUtil.navBarHeight,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor.withOpacity(0.8)),
+        ThemeUtil.getLine(),
+        Stack(
+          alignment: Alignment.bottomCenter,
+          children: <Widget>[
+            ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
+                  width: double.infinity,
+                  height: ThemeUtil.navBarHeight,
+                  decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).backgroundColor.withOpacity(0.8)),
+                ),
+              ),
             ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            // navBar 背景颜色
-            color: Colors.transparent,
-            // 在我们的导航栏中添加一些阴影，使用 2 可获得更好的效果
+            Container(
+              decoration: BoxDecoration(
+                // navBar 背景颜色
+                color: Colors.transparent,
+                // 在我们的导航栏中添加一些阴影，使用 2 可获得更好的效果
 //            boxShadow: [
 //              BoxShadow(blurRadius: 16, color: Colors.black12),
 //              BoxShadow(blurRadius: 24, color: Colors.black12),
 //            ],
-          ),
-          alignment: Alignment.center,
-          height: 64,
-          // 裁剪小部件行，以抑制动画期间可能发生的任何溢出错误
-          child: ClippedView(
-            child: Row(
-              // 水平居中按钮
-              mainAxisAlignment: MainAxisAlignment.center,
-              // Inject a bunch of btn instances into our row
-              // 向我们的行中注入一堆btn实例
-              children: buttonWidgets,
-            ),
-          ),
+              ),
+              alignment: Alignment.center,
+              height: 64,
+              // 裁剪小部件行，以抑制动画期间可能发生的任何溢出错误
+              child: ClippedView(
+                child: Row(
+                  // 水平居中按钮
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // Inject a bunch of btn instances into our row
+                  // 向我们的行中注入一堆btn实例
+                  children: buttonWidgets,
+                ),
+              ),
+            )
+          ],
         )
       ],
     );

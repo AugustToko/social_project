@@ -1,28 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
+import 'package:social_project/ui/page/topic_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_page.dart';
+import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/wp/user_header.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/temp/test_bar.dart';
 
 import '../../main.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {
-  //抽屉widget
-  final Widget drawer;
-
-  ContentPage({
-    Key key,
-    this.drawer,
-  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -63,20 +58,25 @@ class _TabBarState extends State<ContentPage>
   Widget build(BuildContext context) {
     var wpPage = WordPressPage();
     return Scaffold(
-      //TODO: need drawer？
-//      drawer: widget.drawer,
+      drawer: CommonDrawer(),
       body: NestedScrollView(
         controller: _scrollViewController,
         headerSliverBuilder: _sliverBuilder,
-        body: TabBarView(
+        body: Column(
           children: <Widget>[
-            wpPage,
-//            TimelineTwoPage(),
-            PhotoViewDemo(),
-            SampleHomePage(),
-            SampleHomePage(),
+//            Padding(padding: EdgeInsets.fromLTRB(0, 10, 0, 0), child: Text("Welcome to LingYun"),),
+            Expanded(
+              child: TabBarView(
+                children: <Widget>[
+                  wpPage,
+                  PhotoViewDemo(),
+                  SampleHomePage(),
+                  TopicPage(),
+                ],
+                controller: _tabController,
+              ),
+            )
           ],
-          controller: _tabController,
         ),
       ),
       floatingActionButton: Padding(
@@ -114,6 +114,7 @@ class _TabBarState extends State<ContentPage>
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
+        leading: Container(),
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
         expandedHeight: 80,
         flexibleSpace: FlexibleSpaceBar(
@@ -130,7 +131,7 @@ class _TabBarState extends State<ContentPage>
                   children: <Widget>[
                     IconButton(
                       icon: Icon(
-                        Icons.search,
+                        Icons.menu,
                         color: Theme.of(context)
                             .textTheme
                             .title
@@ -138,7 +139,7 @@ class _TabBarState extends State<ContentPage>
                             .withOpacity(0.7),
                       ),
                       onPressed: () {
-                        showToast("搜索", position: ToastPosition.bottom);
+                        Scaffold.of(context).openDrawer();
                       },
                     ),
                     SizedBox(
@@ -239,7 +240,7 @@ class _TabBarState extends State<ContentPage>
 //      ),
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
-          TabBar(
+          MyTabBar(
             tabs: [
               //TODO: 动态标签（根据服务器）
               Tab(child: Text("博客")),
@@ -259,7 +260,7 @@ class _TabBarState extends State<ContentPage>
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate(this._tabBar) : super();
 
-  final TabBar _tabBar;
+  final MyTabBar _tabBar;
 
   @override
   double get minExtent => _tabBar.preferredSize.height;

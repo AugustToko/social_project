@@ -2,6 +2,7 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:loading_more_list/loading_more_list.dart';
@@ -49,32 +50,41 @@ class _WordPressPageState extends State<WordPressPage> {
 
   var debugData = [
     BannerPost(
-      title: "嗨，欢迎来到 \"零昀\" !",
-      subTitle: "Hey guy, welcome to LingYun!",
-      messageText: "https://blog.geek-cloud.top/",
-      assetUrl: "index.jpg",
-      assetAuthorName: "August",
-    ),
+        title: "嗨，欢迎来到 \"零昀\" !",
+        subTitle: "Hey guy, welcome to LingYun!",
+        messageText: "https://blog.geek-cloud.top/",
+        assetUrl: "index.jpg",
+        assetAuthorName: "August",
+        action: () {
+          FlutterWebBrowser.openWebPage(url: "https://blog.geek-cloud.top/");
+        }),
     BannerPost(
-      title: "Android开发版块正式开放！",
-      subTitle: "Read the f*** source code!",
-      messageText: "https://blog.geek-cloud.top/",
-      assetUrl: "android.png",
-      assetAuthorName: "August",
-    ),
+        title: "Android开发版块正式开放！",
+        subTitle: "Read the f*** source code!",
+        messageText: "https://blog.geek-cloud.top/",
+        assetUrl: "android.png",
+        assetAuthorName: "August",
+        action: () {
+          FlutterWebBrowser.openWebPage(url: "https://blog.geek-cloud.top/");
+        }),
     BannerPost(
-      title: "像素画版块正式开放！",
-      subTitle: "虽复古但不落后",
-      messageText: "https://blog.geek-cloud.top/",
-      assetUrl: "pixel.png",
-      assetAuthorName: "MurlocWallace",
-    ),
+        title: "像素画版块正式开放！",
+        subTitle: "虽复古但不落后",
+        messageText: "https://blog.geek-cloud.top/",
+        assetUrl: "pixel.png",
+        assetAuthorName: "MurlocWallace",
+        action: () {
+          FlutterWebBrowser.openWebPage(url: "https://blog.geek-cloud.top/");
+        }),
     BannerPost(
         title: "电音制作版块正式开放！",
         subTitle: "Nothing is worth living for without music.",
         messageText: "https://blog.geek-cloud.top/",
         assetUrl: "sound.png",
-        assetAuthorName: "Spark_焱 "),
+        assetAuthorName: "Spark_焱 ",
+        action: () {
+          FlutterWebBrowser.openWebPage(url: "https://blog.geek-cloud.top/");
+        }),
   ];
 
   WordPressRep listSourceRepository;
@@ -348,87 +358,92 @@ class _WordPressPageState extends State<WordPressPage> {
                             getwidget: (index) {
                               var bannerData =
                                   debugData[index % debugData.length];
-                              return Padding(
-                                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: Material(
-                                  elevation: 1.5,
-                                  borderRadius: ThemeUtil.clipRRectBorderRadius,
-                                  color: Colors.transparent,
-                                  child: ClipRRect(
+                              return GestureDetector(
+                                onTap: bannerData.action,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                  child: Material(
+                                    elevation: 1.5,
                                     borderRadius:
                                         ThemeUtil.clipRRectBorderRadius,
-                                    child: Stack(
-                                      children: <Widget>[
+                                    color: Colors.transparent,
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          ThemeUtil.clipRRectBorderRadius,
+                                      child: Stack(
+                                        children: <Widget>[
 //                                        Image.network(
 //                                          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579963291831&di=6fdb4ea45d31a968fd7025721ddb9380&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F4%2F586b0784596f9.jpg%3Fdown",
 //                                          width: 400,
 //                                          fit: BoxFit.cover,
 //                                        ),
-                                        Image.asset(
+                                          Image.asset(
 //                                          "assets/images${bannerData.assetUrl}",
-                                          "assets/images/${bannerData.assetUrl}",
-                                          width: 400,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Container(
-                                          color: Colors.black.withOpacity(0.4),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(
-                                                bannerData.title,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                bannerData.subTitle,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15),
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                bannerData.messageText,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15),
-                                              ),
-                                              SizedBox(
-                                                height: 8,
-                                              ),
-                                              MaterialButton(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    side: BorderSide(
-                                                        width: 1.5,
-                                                        color: Colors.white)),
-                                                onPressed: () {},
-                                                child: Text(
-                                                  "了解更多",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
+                                            "assets/images/${bannerData.assetUrl}",
+                                            width: 400,
+                                            fit: BoxFit.cover,
                                           ),
-                                        ),
-                                      ],
+                                          Container(
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                12, 0, 12, 0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(
+                                                  bannerData.title,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20),
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  bannerData.subTitle,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15),
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  bannerData.messageText,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15),
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      side: BorderSide(
+                                                          width: 1.5,
+                                                          color: Colors.white)),
+                                                  onPressed: bannerData.action,
+                                                  child: Text(
+                                                    "了解更多",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import 'package:social_project/utils/screen_util.dart';
 
-double get maxDragOffset => ScreenUtil.getInstance().setWidth(180);
+double get maxDragOffset => ScreenUtil.getInstance().setWidth(260);
 double hideHeight = maxDragOffset / 2.3;
 double refreshHeight = maxDragOffset / 1.5;
 

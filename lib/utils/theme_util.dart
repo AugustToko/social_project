@@ -6,7 +6,15 @@ import 'package:social_project/ui/widgets/wp/user_header.dart';
 
 /// 主题工具
 class ThemeUtil {
-  static const EdgeInsets cardPaddingEdgeInsets = EdgeInsets.fromLTRB(8, 8, 8, 0);
+  static const EdgeInsets cardPaddingEdgeInsets =
+      EdgeInsets.fromLTRB(8, 8, 8, 0);
+
+  static Widget getLine() {
+    return Container(
+      color: Colors.black.withOpacity(0.15),
+      height: 1,
+    );
+  }
 
   @Deprecated("use materialPostCard")
   static Card materialCard(final Widget widget) => Card(
@@ -16,7 +24,9 @@ class ThemeUtil {
         child: widget,
       );
 
-  static Card materialPostCard(final Widget widget, final WpPost item, final double margin) => Card(
+  static Card materialPostCard(
+          final Widget widget, final WpPost item, final double margin) =>
+      Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         margin: EdgeInsets.fromLTRB(margin, margin, margin, 0),
@@ -72,7 +82,7 @@ class ThemeUtil {
 
   static var textDark = TextStyle(color: Colors.grey.shade50);
   static var textLight = TextStyle(color: Colors.grey.shade900);
-  static var subtitle = TextStyle(color: Colors.grey);
+  static var subtitle = TextStyle(color: Colors.black.withOpacity(0.6));
   static var iconCommonColor = Colors.grey;
 
   @Deprecated("null")

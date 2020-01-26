@@ -6,6 +6,7 @@ class BannerPost {
   String subTitle;
   String messageText;
   String assetAuthorName;
+  Function() action;
 
   BannerPost({
     this.postPreviewType,
@@ -14,6 +15,7 @@ class BannerPost {
     this.subTitle,
     this.messageText,
     this.assetAuthorName,
+    this.action
   });
 }
 
