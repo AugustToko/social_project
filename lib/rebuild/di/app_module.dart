@@ -1,6 +1,7 @@
 import 'package:dartin/dartin.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
+import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 
 import '../helper/shared_preferences.dart';
 import '../model/repository.dart';
@@ -15,6 +16,8 @@ final viewModelModule = Module([
       ({params}) => LoginPageProvider(params.get(0), get())),
   factory<ProfileCoolApkPageProvider>(
           ({params}) => ProfileCoolApkPageProvider()),
+  factory<WordPressPageProvider>(
+          ({params}) => WordPressPageProvider()),
 ])
   ..withScope(testScope, [
     ///other scope

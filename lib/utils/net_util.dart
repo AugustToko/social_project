@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http_client_helper/http_client_helper.dart';
+import 'package:social_project/model/lingyun/banner_model.dart';
 import 'package:social_project/model/wordpress/send/send_post_data.dart';
 import 'package:social_project/model/wordpress/wp_login_result.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
@@ -304,6 +305,8 @@ class NetTools {
     final String url = WordPressRep.getWpLink(WordPressRep.wpSource) +
         "/wp-json/wp/v2/posts?author=$userId&per_page=100&page=1";
 
+    debugPrint("getAllPosts:" + url);
+
     WpPostSource data;
     try {
       var result = await HttpClientHelper.get(url);
@@ -350,5 +353,20 @@ class NetTools {
       print(stack);
     }
     return data;
+  }
+
+  static Future<List<LingYunBanner>> getLingYunBanner() async {
+    final String url = "https://api.geek-cloud.top/lingyun/banner";
+
+    LingYunBannerSource data;
+    try {
+      var result = await HttpClientHelper.get(url);
+      data = LingYunBannerSource.fromJson(json.decode(result.body));
+      print(data.data);
+    } catch (exception, stack) {
+      print(exception);
+      print(stack);
+    }
+    return data.data;
   }
 }

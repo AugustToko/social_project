@@ -51,7 +51,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   void initState() {
     super.initState();
     mProvide = widget.provide;
-    mProvide.initData();
+    mProvide.init(context);
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     _animation = Tween(begin: 295.0, end: 48.0).animate(_controller)

@@ -22,7 +22,7 @@ abstract class ItemPresenter<T> {
 }
 
 /// BaseProvide
-class BaseProvide with ChangeNotifier {
+abstract class BaseProvide with ChangeNotifier {
   CompositeSubscription compositeSubscription = CompositeSubscription();
 
   /// add [StreamSubscription] to [compositeSubscription]
@@ -39,6 +39,8 @@ class BaseProvide with ChangeNotifier {
     }
     super.dispose();
   }
+
+  void init(BuildContext context);
 }
 
 /// page的基类 [PageProvideNode]

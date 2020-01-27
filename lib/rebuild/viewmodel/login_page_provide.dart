@@ -48,7 +48,8 @@ class LoginPageProvider extends BaseProvide {
 
   LoginPageProvider(this.title, this._repo);
 
-  void initData() {
+  @override
+  void init(BuildContext context) {
     var data = _repo.getAuth();
 
     if (data == null || data == '') {

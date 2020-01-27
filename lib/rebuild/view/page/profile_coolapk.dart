@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
@@ -51,10 +50,11 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
     super.initState();
     mProvider = widget.provider;
     _tabController = TabController(length: 4, vsync: this);
+    mProvider.wpUserId = widget.wpUserId;
     mProvider.destroy = false;
 
     if (widget.wpUserId > 0) {
-      mProvider.initData(context, widget.wpUserId);
+      mProvider.init(context);
     }
   }
 
@@ -213,7 +213,9 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
                   return PopupMenuItem<Choice>(
                     value: choice,
                     child: Row(
-                      children: <Widget>[Text(choice.title)],
+                      children: <Widget>[
+                        Text(choice.title),
+                      ],
                     ),
                   );
                 }).toList();

@@ -35,13 +35,17 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     notifyListeners();
   }
 
+  int wpUserId;
+
   var needChangeColor = false;
 
   var iconTheme = IconThemeData(color: Colors.grey);
 
   Size deviceSize;
 
-  void initData(final BuildContext context, final int wpUserId) {
+  @override
+  void init(final BuildContext context) {
+    // 清除数据
     _posts.clear();
 
     // 更新 _wpUser
