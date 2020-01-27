@@ -18,7 +18,6 @@ import '../../main.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _TabBarState();
@@ -116,128 +115,86 @@ class _TabBarState extends State<ContentPage>
         centerTitle: true,
         leading: Container(),
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
-        expandedHeight: 80,
-        flexibleSpace: FlexibleSpaceBar(
-          collapseMode: CollapseMode.pin,
-          background: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 35, 16, 0),
-            child: Card(
-              elevation: 2.0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Theme.of(context)
-                            .textTheme
-                            .title
-                            .color
-                            .withOpacity(0.7),
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "查找信息",
-                          hintStyle: TextStyle(
-                              color:
-                                  Theme.of(context).textTheme.subtitle.color),
+        expandedHeight: 70,
+        flexibleSpace: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Container(
+              height: 60,
+              child: Card(
+                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                elevation: 2.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Theme.of(context)
+                              .textTheme
+                              .title
+                              .color
+                              .withOpacity(0.7),
                         ),
-                        onSubmitted: (par1) {
-                          return Navigator.pushNamed(
-                              context, UIData.argPostsPage,
-                              arguments: {
-                                'url': WordPressRep.getWpLink(
-                                        WordPressRep.wpSource) +
-                                    "/wp-json/wp/v2/posts?search=${_controller.text}",
-                                'appBar': AppBar(
-                                  title: Text(_controller.text + ' 的搜索结果'),
-                                  backgroundColor:
-                                      Theme.of(context).backgroundColor,
-                                  elevation: 5,
-                                )
-                              });
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
                         },
                       ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    WpUserHeader(
-                      radius: 20,
-                      showUserName: false,
-                      forUser: true,
-                      userId: CacheCenter.tokenCache == null
-                          ? -1
-                          : CacheCenter.tokenCache.userId,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                  ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "查找信息",
+                            hintStyle: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.subtitle.color),
+                          ),
+                          onSubmitted: (par1) {
+                            return Navigator.pushNamed(
+                                context, UIData.argPostsPage,
+                                arguments: {
+                                  'url': WordPressRep.getWpLink(
+                                          WordPressRep.wpSource) +
+                                      "/wp-json/wp/v2/posts?search=${_controller.text}",
+                                  'appBar': AppBar(
+                                    title: Text(_controller.text + ' 的搜索结果'),
+                                    backgroundColor:
+                                        Theme.of(context).backgroundColor,
+                                    elevation: 5,
+                                  )
+                                });
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      WpUserHeader(
+                        radius: 20,
+                        showUserName: false,
+                        forUser: true,
+                        userId: CacheCenter.tokenCache == null
+                            ? -1
+                            : CacheCenter.tokenCache.userId,
+                      ),
+                      SizedBox(
+                        width: 4,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            )
+          ],
         ),
         pinned: false,
-        primary: true,
       ),
-
-//      SliverAppBar(
-//        centerTitle: true,
-//        leading: Padding(
-//          padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
-//          child: WpUserHeader(
-//            radius: 15,
-//            showUserName: false,
-//            forUser: true,
-//            userId: CacheCenter.tokenCache == null
-//                ? -1
-//                : CacheCenter.tokenCache.userId,
-//          ),
-//        ),
-//        backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
-////        backgroundColor: Theme.of(context).cardTheme.color,
-//        title: Text(UIData.appName,),
-//        pinned: false,
-//        primary: true,
-//        actions: <Widget>[
-//          IconButton(
-//              icon: Icon(Icons.search),
-//              tooltip: '搜索',
-//              onPressed: () {
-//                showSearch(
-//                  context: context,
-//                  delegate: SearchBarDelegate(),
-//                );
-//              }),
-//          // overflow menu
-//          PopupMenuButton<Choice>(
-//            onSelected: (menu) => menu.onTap(),
-//            itemBuilder: (BuildContext context) {
-//              return choices.map((Choice choice) {
-//                return PopupMenuItem<Choice>(
-//                  value: choice,
-//                  child: Text(choice.title),
-//                );
-//              }).toList();
-//            },
-//          ),
-//        ],
-//      ),
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
           MyTabBar(
