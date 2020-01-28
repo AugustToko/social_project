@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_rep_argments_posts.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
+import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
+import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/screen_util.dart';
@@ -17,6 +18,7 @@ import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 /// 通用文章展示页面（列表）
+/// TODO: 简化代码
 class PostsPage extends StatefulWidget {
   final String _url;
   final AppBar _appBar;
@@ -28,10 +30,6 @@ class PostsPage extends StatefulWidget {
 }
 
 class _WordPressPageState extends State<PostsPage> {
-//  final MyExtendedMaterialTextSelectionControls
-//      _myExtendedMaterialTextSelectionControls =
-//      MyExtendedMaterialTextSelectionControls();
-
   ArgPostsRep listSourceRepository;
 
   final String _url;
@@ -79,8 +77,8 @@ class _WordPressPageState extends State<PostsPage> {
                       return PullToRefreshHeader(info, dateTimeNow);
                     }),
                   ),
-                  LoadingMoreSliverList(
-                    SliverListConfig<WpPost>(
+                  LyLoadingMoreSliverList(
+                    LySliverListConfig<WpPost>(
                       indicatorBuilder: (p, q) {
                         return listSourceRepository.length > 0
                             ? Text(
@@ -91,14 +89,7 @@ class _WordPressPageState extends State<PostsPage> {
                       },
                       collectGarbage: (List<int> indexes) {
                         ///TODO: collectGarbage
-                        indexes.forEach((index) {
-//                          final item = listSourceRepository[index];
-//                          if (item.hasImage) {
-//                            item.images.forEach((image) {
-//                              image.clearCache();
-//                            });
-//                          }
-                        });
+                        indexes.forEach((index) {});
                       },
                       itemBuilder: (context, item, index) {
                         String title = item.title.rendered;
@@ -201,41 +192,6 @@ class _WordPressPageState extends State<PostsPage> {
                                               EdgeInsets.fromLTRB(20, 0, 20, 0),
 //                                      child: actionRow(item),
                                         )
-//                                          CupertinoButton(
-//                                              child: Material(
-//                                                color: Colors.transparent,
-//                                                child: Ink(
-//                                                  decoration: BoxDecoration(
-//                                                      gradient: LinearGradient(
-//                                                    begin: Alignment.topCenter,
-//                                                    end: Alignment.bottomCenter,
-//                                                    colors: [
-//                                                      Colors.white,
-//                                                      Theme.of(context)
-//                                                          .backgroundColor,
-//                                                    ],
-//                                                  )),
-//                                                  child: Padding(
-//                                                    padding:
-//                                                        const EdgeInsets.all(
-//                                                            0.0),
-//                                                    child: Row(
-//                                                      mainAxisAlignment:
-//                                                          MainAxisAlignment
-//                                                              .center,
-//                                                      children: <Widget>[
-//                                                        Text("Click for more")
-//                                                      ],
-//                                                    ),
-//                                                  ),
-//                                                ),
-//                                              ),
-//                                              onPressed: () {}),
-
-//                                          Image.asset(
-//                                              'assets/images/linear_mask.png',
-//                                              fit: BoxFit.cover,
-//                                              package: App.pkg)
                                       ],
                                     ),
                                     padding: EdgeInsets.only(
@@ -244,22 +200,6 @@ class _WordPressPageState extends State<PostsPage> {
                                       bottom: margin,
                                     ),
                                   ),
-                                  // 标签
-//                                Padding(
-//                                  padding:
-//                                      EdgeInsets.symmetric(horizontal: margin),
-//                                  child: buildTagsWidget(item, context),
-//                                ),
-                                  // 图片区域
-//                                PicGridView(
-//                                  tuChongItem: item,
-//                                ),
-                                  // 操作按钮区域
-//                                Padding(
-//                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-//                                  child: buildBottomWidget(item,
-//                                      showAvatar: false),
-//                                ),
                                 ],
                               ),
                             ),

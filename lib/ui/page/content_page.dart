@@ -20,7 +20,7 @@ import '../../main.dart';
 class ContentPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _TabBarState();
+    return _TabBarPageState();
   }
 }
 
@@ -28,7 +28,7 @@ class ContentPage extends StatefulWidget {
 /// with表示扩展，SingleTickerProviderStateMixin是一个扩展（混合）类，它没有构造函数，只能继承自Object。
 /// 一个类可以有多个扩展类，扩展类可以实现方法，接口不能实现方法，只能在实现类里面实现，继承只能是单继承，这就是扩展的好处。
 /// 当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
-class _TabBarState extends State<ContentPage>
+class _TabBarPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
   ScrollController _scrollViewController;
 
@@ -147,6 +147,10 @@ class _TabBarState extends State<ContentPage>
                       ),
                       Expanded(
                         child: TextField(
+                          autofocus: false,
+                          keyboardAppearance: App.isDarkMode(context)
+                              ? Brightness.dark
+                              : Brightness.light,
                           controller: _controller,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -235,7 +239,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).backgroundColor.withOpacity(0.8)),
+                color: Theme.of(context).backgroundColor.withOpacity(0.8),
+              ),
             ),
           ),
         ),

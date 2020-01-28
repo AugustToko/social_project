@@ -57,9 +57,6 @@ class _IndexState extends State<MainPage> {
     var contentView =
         _viewsByIndex[min(_selectedNavIndex, _viewsByIndex.length - 1)];
 
-//    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).backgroundColor, animate: true);
-//    FlutterStatusbarcolor.setNavigationBarWhiteForeground(Theme.of(context).backgroundColor.red < 120);
-
     // Wrap our custom navbar + contentView with the app Scaffold
     return WillPopScope(
       child: Scaffold(

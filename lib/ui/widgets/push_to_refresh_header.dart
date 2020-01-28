@@ -34,7 +34,7 @@ class PullToRefreshHeader extends StatelessWidget {
 
     final TextStyle ts = TextStyle(
       color: Colors.grey,
-    ).copyWith(fontSize: ScreenUtil.getInstance().setSp(26));
+    ).copyWith(fontSize: ScreenUtil.getInstance().setSp(36));
 
     double dragOffset = info?.dragOffset ?? 0.0;
 
@@ -72,7 +72,7 @@ class PullToRefreshHeader extends StatelessWidget {
                       "上次更新:" +
                           DateFormat("yyyy-MM-dd hh:mm").format(time),
                       style: ts.copyWith(
-                          fontSize: ScreenUtil.getInstance().setSp(24)),
+                          fontSize: ScreenUtil.getInstance().setSp(30)),
                     )
                   ],
                 ),

@@ -1,15 +1,17 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
-import 'package:loading_more_list/loading_more_list.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
+import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
+import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
@@ -130,8 +132,8 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                       return PullToRefreshHeader(info, mProvider.dateTimeNow);
                     }),
                   ),
-                  LoadingMoreSliverList(
-                    SliverListConfig<WpPost>(
+                  LyLoadingMoreSliverList(
+                    LySliverListConfig<WpPost>(
                       indicatorBuilder: (p, q) {
                         return mProvider.listSourceRepository.length > 0
                             ? Padding(
@@ -173,61 +175,31 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                         var contentSmall = mProvider.trimContent(content);
 
                         var card = ThemeUtil.materialPostCard(
-                            InkWell(
-                              onTap: () {
-                                mProvider.cardClicked(context, content, title);
-                              },
-                              onLongPress: () {
-                                mProvider.cardLongPressed(context, item);
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          title,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        Html(
-                                          data: contentSmall,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                          child: actionRow(item),
-                                        ),
-                                      ],
-                                    ),
-                                    padding: EdgeInsets.only(
-                                      left: margin,
-                                      right: margin,
-                                      bottom: margin,
-                                    ),
-                                  ),
-                                  // 标签
-//                                Padding(
-//                                  padding:
-//                                      EdgeInsets.symmetric(horizontal: margin),
-//                                  child: buildTagsWidget(item, context),
-//                                ),
-                                  // 图片区域
-//                                PicGridView(
-//                                  tuChongItem: item,
-//                                ),
-                                  // 操作按钮区域
-//                                Padding(
-//                                  padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-//                                  child: buildBottomWidget(item,
-//                                      showAvatar: false),
-//                                ),
-                                ],
-                              ),
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  title,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                buildTagsWidget(item, context),
+                                Html(
+                                  data: contentSmall,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                  child: actionRow(item),
+                                ),
+                              ],
                             ),
                             item,
-                            margin);
+                            margin, onCardClicked: () {
+                          mProvider.cardClicked(context, content, title);
+                        }, onLongPressed: () {
+                          mProvider.cardLongPressed(context, item);
+                        });
 
                         if (index == 0) {
                           return Column(
@@ -275,6 +247,55 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
     );
   }
 
+  /// 标签
+  Widget buildTagsWidget(WpPost item, BuildContext context) {
+    final fontSize = 12.0;
+    var tag = Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(3.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
+            borderRadius: BorderRadius.all(
+              Radius.circular(5.0),
+            ),
+          ),
+          child: Text(
+            "TAG DEBUG",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: fontSize),
+          ),
+        ),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                // TODO: 标签按下
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+
+    var spacing = ScreenUtil.getInstance().setWidth(10.0);
+
+    return Wrap(
+      runSpacing: spacing,
+      spacing: spacing,
+      children: [
+        tag,
+        tag,
+        tag,
+        tag,
+        tag,
+        tag,
+      ],
+    );
+  }
+
   Widget buildBannerSwipe() {
     return BannerSwiper(
       showIndicator: true,
@@ -283,7 +304,6 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
       width: 48,
       //轮播图数目 必传
       length: mProvider.banners.length,
-
       //轮播的item  widget 必传
       getwidget: (index) {
         var bannerData = mProvider.banners[index % mProvider.banners.length];
@@ -299,13 +319,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                 borderRadius: ThemeUtil.clipRRectBorderRadius,
                 child: Stack(
                   children: <Widget>[
-//                                        Image.network(
-//                                          "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579963291831&di=6fdb4ea45d31a968fd7025721ddb9380&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F4%2F586b0784596f9.jpg%3Fdown",
-//                                          width: 400,
-//                                          fit: BoxFit.cover,
-//                                        ),
                     Image.network(
-//                                          "assets/images${bannerData.assetUrl}",
                       bannerData.assetUrl,
                       width: 400,
                       fit: BoxFit.cover,
@@ -371,6 +385,5 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   @override
-  void onClick(String action) {
-  }
+  void onClick(String action) {}
 }

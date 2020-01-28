@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/ui/page/wordpress/send_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
@@ -25,16 +26,21 @@ class ThemeUtil {
       );
 
   static Card materialPostCard(
-          final Widget widget, final WpPost item, final double margin) =>
-      Card(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        margin: EdgeInsets.fromLTRB(margin, margin, margin, 0),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(margin),
-              child: Row(
+      final Widget widget, final WpPost item, final double margin,
+      {final Function() onCardClicked, final Function() onLongPressed}) {
+    const radius = BorderRadius.all(Radius.circular(8.0));
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: radius,
+      ),
+      margin: EdgeInsets.fromLTRB(margin, margin, margin, 0),
+      child: InkWell(
+        borderRadius: radius,
+        child: Padding(
+          padding: EdgeInsets.all(margin),
+          child: Column(
+            children: <Widget>[
+              Row(
                 children: <Widget>[
                   // 头像
                   WpUserHeader(
@@ -53,11 +59,18 @@ class ThemeUtil {
                   )
                 ],
               ),
-            ),
-            widget
-          ],
+              SizedBox(
+                height: margin,
+              ),
+              widget
+            ],
+          ),
         ),
-      );
+        onTap: onCardClicked,
+        onLongPress: onLongPressed,
+      ),
+    );
+  }
 
   /// 获取用于放在 [AppBar] 上的方形按钮
   static Widget squareOutLineButtonOnAppBar(
@@ -82,7 +95,7 @@ class ThemeUtil {
 
   static var textDark = TextStyle(color: Colors.grey.shade50);
   static var textLight = TextStyle(color: Colors.grey.shade900);
-  static var subtitle = TextStyle(color: Colors.black.withOpacity(0.6));
+  static var subtitle = TextStyle(color: Colors.grey);
   static var iconCommonColor = Colors.grey;
 
   @Deprecated("null")

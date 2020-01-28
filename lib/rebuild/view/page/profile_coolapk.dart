@@ -134,35 +134,32 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
   }
 
   Widget _postCard() => Container(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "文章 (显示最新的 5 篇)",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700, fontSize: 18.0),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "文章 (显示最新的 5 篇)",
+                    style:
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 18.0),
+                  ),
+                  MaterialButton(
+                    child: Text(
+                      "查看更多",
+                      style: TextStyle(color: Colors.blue),
                     ),
-                    MaterialButton(
-                      child: Text(
-                        "查看更多",
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                      onPressed: () {
-                        onClick(ACTION_MORE_POSTS);
-                      },
-                    ),
-                  ],
-                ),
+                    onPressed: () {
+                      onClick(ACTION_MORE_POSTS);
+                    },
+                  ),
+                ],
               ),
-              buildList()
-            ],
-          ),
+            ),
+            buildList()
+          ],
         ),
       );
 

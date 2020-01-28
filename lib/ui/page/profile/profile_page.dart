@@ -15,6 +15,7 @@ import 'package:social_project/utils/uidata.dart';
 import '../content_page.dart';
 
 /// 根据所给 UserId 获取信息
+@Deprecated("Use CoolApk-style profile")
 class ProfilePage extends StatefulWidget {
   final int wpUserId;
 
@@ -29,7 +30,7 @@ class ProfilePage extends StatefulWidget {
   static Widget getCard(BuildContext context, WpPost post) =>
       _ProfilePageState.articleCard(context, post);
 }
-
+@Deprecated("")
 class _ProfilePageState extends State<ProfilePage> {
   Size _deviceSize;
 

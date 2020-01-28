@@ -100,7 +100,7 @@ class App extends StatelessWidget {
       ),
       iconTheme: IconThemeData(color: Colors.grey.shade400),
       dividerTheme:
-          DividerThemeData(color: Colors.grey.shade800, thickness: 1));
+          DividerThemeData(color: Colors.grey.shade800.withOpacity(0.2), thickness: 1));
 
   // This widget is the root of your application.
   @override
