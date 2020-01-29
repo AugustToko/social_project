@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/rebuild/helper/constants.dart';
 import 'package:social_project/ui/widgets/common_scaffold.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -73,7 +74,9 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "用户协议"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, UIData.webPage, arguments: {"title" : "用户协议", "url" : UserAgreementUrl});
+                      },
                     ),
                     ListTile(
                       leading: Icon(
@@ -82,17 +85,19 @@ class SettingsOnePage extends StatelessWidget {
                       ),
                       title: buildText(context, "隐私政策"),
                       trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, UIData.webPage, arguments: {"title" : "隐私政策", "url" : PrivacyPolicyUrl});
+                      },
                     ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.lock,
-                        color: Colors.red,
-                      ),
-                      title: buildText(context, "安全条款"),
-                      trailing: buildArrowIcon(context, Icons.arrow_right),
-                      onTap: () {},
-                    ),
+//                    ListTile(
+//                      leading: Icon(
+//                        Icons.lock,
+//                        color: Colors.red,
+//                      ),
+//                      title: buildText(context, "安全条款"),
+//                      trailing: buildArrowIcon(context, Icons.arrow_right),
+//                      onTap: () {},
+//                    ),
                     ListTile(
                       leading: Icon(
                         Icons.info,

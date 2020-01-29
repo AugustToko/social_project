@@ -9,6 +9,7 @@ import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -71,27 +72,21 @@ class ProfileCoolApkPageProvider extends BaseProvide {
           .forEach(
         (post) {
           posts.add(ThemeUtil.materialPostCard(
-            Column(
-              children: <Widget>[
-                Text(
-                  post.title.rendered,
-                  style: TextStyle(fontSize: 20),
-                ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    post.title.rendered,
+                    style: TextStyle(fontSize: 20),
+                  ),
 //                  Html(data: post.content.rendered)
-              ],
-            ),
-            post,
-            margin,
-            onCardClicked: () {
-              Navigator.pushNamed(context, UIData.wpPostDetail, arguments: {
-                "content": post.content.rendered,
-                "title": post.title.rendered,
-              });
-            },
-            onLongPressed: () {
-              BottomSheetUtil.showPostSheetShow(context, post);
-            },
-          ));
+                ],
+              ),
+              post,
+              margin, onCardClicked: () {
+            goToWpPostDetail(context, post);
+          }, onLongPressed: () {
+            BottomSheetUtil.showPostSheetShow(context, post);
+          }, canIconClick: false));
         },
       );
       notifyListeners();

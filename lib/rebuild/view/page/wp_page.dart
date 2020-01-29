@@ -13,6 +13,7 @@ import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 
@@ -196,7 +197,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                             ),
                             item,
                             margin, onCardClicked: () {
-                          mProvider.cardClicked(context, content, title);
+                              goToWpPostDetail(context, item);
                         }, onLongPressed: () {
                           mProvider.cardLongPressed(context, item);
                         });

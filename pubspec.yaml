@@ -45,7 +45,7 @@ dependencies:
   dio: ^3.0.8
   flutter_web_browser: ^0.11.0
   zefyr: ^0.10.0
-  #  webview_flutter: ^0.3.19+4
+  webview_flutter: ^0.3.19+5
   image_gallery_saver: ^1.2.2
 #  directory_picker: ^1.0.0
 #  flutter_document_picker: ^3.0.1

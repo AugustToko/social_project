@@ -27,13 +27,13 @@ class ThemeUtil {
 
   static Card materialPostCard(
       final Widget widget, final WpPost item, final double margin,
-      {final Function() onCardClicked, final Function() onLongPressed}) {
+      {final Function() onCardClicked, final Function() onLongPressed, bool marginBottom = false, bool canIconClick = true}) {
     const radius = BorderRadius.all(Radius.circular(8.0));
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: radius,
       ),
-      margin: EdgeInsets.fromLTRB(margin, margin, margin, 0),
+      margin: EdgeInsets.fromLTRB(margin, margin, margin, marginBottom ? margin : 0),
       child: InkWell(
         borderRadius: radius,
         child: Padding(
@@ -46,6 +46,7 @@ class ThemeUtil {
                   WpUserHeader(
                     userId: item.author,
                     radius: 20,
+                    canClick: canIconClick,
                   ),
                   SizedBox(
                     width: margin,

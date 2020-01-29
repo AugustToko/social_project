@@ -54,6 +54,9 @@ class UIData {
   /// [AboutPage]
   static const String aboutPage = "/aboutPage";
 
+  /// [WebPage]
+  static const webPage = "/webPage";
+
   static const String notFoundRoute = "/No Search Result";
   static const String timelineOneRoute = "/Feed";
   static const String timelineTwoRoute = "/Tweets";

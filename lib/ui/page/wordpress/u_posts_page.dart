@@ -13,6 +13,7 @@ import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.d
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/screen_util.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -122,12 +123,7 @@ class _WordPressPageState extends State<PostsPage> {
                         return ThemeUtil.materialPostCard(
                             InkWell(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, UIData.wpPostDetail,
-                                    arguments: {
-                                      "content": content,
-                                      "title": title,
-                                    });
+                                goToWpPostDetail(context, item);
                               },
                               onLongPress: () {
                                 BottomSheetUtil.showPostSheetShow(

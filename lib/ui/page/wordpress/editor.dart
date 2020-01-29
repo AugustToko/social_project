@@ -41,7 +41,9 @@ class EditorPageState extends State<EditorPage> {
     // one of its parents.
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme
+              .of(context)
+              .backgroundColor,
           appBar: AppBar(
             title: Text("发表文章"),
             actions: <Widget>[
@@ -85,7 +87,10 @@ class EditorPageState extends State<EditorPage> {
               child: Column(
                 children: <Widget>[
                   Card(
-                    color: Theme.of(context).backgroundColor.withOpacity(0.5),
+                    color: Theme
+                        .of(context)
+                        .backgroundColor
+                        .withOpacity(0.5),
                     child: InkWell(
                       child: Padding(
                         padding: EdgeInsets.all(8),
@@ -94,20 +99,20 @@ class EditorPageState extends State<EditorPage> {
                           width: double.infinity,
                           child: headerImage == null
                               ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "添加特色图片",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text("（请注意图片于文章的适应性）"),
-                                  ],
-                                )
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "添加特色图片",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              Text("（请注意图片于文章的适应性）"),
+                            ],
+                          )
                               : Image.file(
-                                  headerImage,
-                                  fit: BoxFit.cover,
-                                ),
+                            headerImage,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       onTap: () {
@@ -131,9 +136,19 @@ class EditorPageState extends State<EditorPage> {
                       maxLength: 20,
                       decoration: InputDecoration(
                         helperText: "严禁标题党、灌水等",
+                        helperStyle: TextStyle(
+                            color: Theme
+                                .of(context)
+                                .textTheme
+                                .subtitle
+                                .color),
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).textTheme.subtitle.color),
+                            color: Theme
+                                .of(context)
+                                .textTheme
+                                .subtitle
+                                .color),
                         labelText: "文章标题",
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue),
@@ -141,7 +156,11 @@ class EditorPageState extends State<EditorPage> {
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color:
-                                    Theme.of(context).textTheme.title.color)),
+                                Theme
+                                    .of(context)
+                                    .textTheme
+                                    .title
+                                    .color)),
                       ),
                     ),
                   ),
@@ -177,7 +196,8 @@ class EditorPageState extends State<EditorPage> {
     // For simplicity we hardcode a simple document with one line of text
     // saying "Zefyr Quick Start".
     // (Note that delta must always end with newline.)
-    final Delta delta = Delta()..insert("\n");
+    final Delta delta = Delta()
+      ..insert("\n");
     return NotusDocument.fromDelta(delta);
   }
 
@@ -190,7 +210,9 @@ class EditorPageState extends State<EditorPage> {
       }
 
       final file =
-          File(Env.getTempArticlesDir().path + "/" + "${DateTime.now()}.json");
+      File(Env
+          .getTempArticlesDir()
+          .path + "/" + "${DateTime.now()}.json");
       print(file.path);
       file.writeAsString(contents).then((_) {
         showToast("已保存！");

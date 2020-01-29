@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:social_project/model/wordpress/wp_post_source.dart';
+import 'package:social_project/rebuild/helper/constants.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
 
@@ -21,7 +22,8 @@ class WordPressRep extends LoadingMoreBase<WpPost> {
   /// BASE URL
   static const String baseWeiranUrl = "https://www.weiran.org.cn";
   static const String baseMmgalUrl = "https://www.mmgal.com";
-  static const String baseBlogGeekUrl = "https://blog.geek-cloud.top";
+  @Deprecated("Use BLOG_GEEK_URL")
+  static const String baseBlogGeekUrl = BLOG_GEEK_URL;
   static const String aboutBlogGeek = "https://blog.geek-cloud.top/%e5%85%b3%e4%ba%8e%e6%88%91%e4%bb%ac/";
 
   /// -------- GEEK BLOG ------------

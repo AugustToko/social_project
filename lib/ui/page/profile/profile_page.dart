@@ -10,6 +10,7 @@ import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/log.dart';
 import 'package:social_project/utils/net_util.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../content_page.dart';
@@ -179,10 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Card(
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, UIData.wpPostDetail, arguments: {
-            "content": post.content.rendered,
-            "title": post.title.rendered,
-          });
+          goToWpPostDetail(context, post);
         },
         onLongPress: () {
           BottomSheetUtil.showPostSheetShow(context, post);

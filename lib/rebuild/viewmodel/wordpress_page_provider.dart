@@ -66,14 +66,6 @@ class WordPressPageProvider extends BaseProvide {
     return contentSmall;
   }
 
-  void cardClicked(
-      final BuildContext context, final String content, final String title) {
-    Navigator.pushNamed(context, UIData.wpPostDetail, arguments: {
-      "content": content,
-      "title": title,
-    });
-  }
-
   void cardLongPressed(final BuildContext context, final WpPost item) {
     BottomSheetUtil.showPostSheetShow(context, item);
   }
