@@ -60,7 +60,7 @@ class LoginPageProvider extends BaseProvide {
       username = temp[0];
       passwordController.text = temp[1];
       password = temp[1];
-      rememberPassword = true;
+      _rememberPassword = true;
     }
   }
 

@@ -309,7 +309,9 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
       getwidget: (index) {
         var bannerData = mProvider.banners[index % mProvider.banners.length];
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            mProvider.onBannerPressed(bannerData);
+          },
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Material(
@@ -360,7 +362,9 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(
                                     width: 1.5, color: Colors.white)),
-                            onPressed: () {},
+                            onPressed: (){
+                              mProvider.onBannerPressed(bannerData);
+                            },
                             child: Text(
                               "了解更多",
                               style: TextStyle(

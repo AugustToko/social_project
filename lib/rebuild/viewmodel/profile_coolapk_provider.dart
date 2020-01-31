@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/rebuild/view/base.dart';
-import 'package:social_project/ui/page/profile/profile_page.dart';
 import 'package:social_project/utils/bottom_sheet.dart';
 import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/net_util.dart';

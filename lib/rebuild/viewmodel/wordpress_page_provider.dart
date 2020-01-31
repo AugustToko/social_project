@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/lingyun/banner_model.dart';
 import 'package:social_project/model/wordpress/wp_post_source.dart';
@@ -74,5 +75,20 @@ class WordPressPageProvider extends BaseProvide {
     return listSourceRepository.refresh().whenComplete(() {
       dateTimeNow = DateTime.now();
     });
+  }
+
+  void onBannerPressed(final LingYunBanner banner) {
+     var temp = banner.onTapAction.split(';');
+     if (temp.length < 2) return;
+
+     print("-------------------- action ===-------------");
+     print(temp[0]);
+     print(temp[1]);
+
+     switch (temp[0]) {
+       case "openUrl":
+         FlutterWebBrowser.openWebPage(url: temp[1]);
+         break;
+     }
   }
 }
