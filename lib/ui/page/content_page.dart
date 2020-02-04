@@ -12,7 +12,7 @@ import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:social_project/temp/test_bar.dart';
+import 'package:social_project/ui/widgets/test_bar.dart';
 
 import '../../main.dart';
 

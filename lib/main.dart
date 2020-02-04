@@ -5,7 +5,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
@@ -99,8 +98,8 @@ class App extends StatelessWidget {
         color: Colors.grey.shade900,
       ),
       iconTheme: IconThemeData(color: Colors.grey.shade400),
-      dividerTheme:
-          DividerThemeData(color: Colors.grey.shade800.withOpacity(0.2), thickness: 1));
+      dividerTheme: DividerThemeData(
+          color: Colors.grey.shade800.withOpacity(0.2), thickness: 1));
 
   // This widget is the root of your application.
   @override
@@ -112,23 +111,22 @@ class App extends StatelessWidget {
         // 调试横幅
         debugShowCheckedModeBanner: true,
         // 主题
-        theme: getTheme(),
+        theme: themeData,
         // 暗色主题
-        darkTheme: getTheme(isDark: true),
-//        themeMode: ThemeMode.system,
+        darkTheme: darkThemeData,
 //        supportedLocales: [
 //          const Locale("en", "US"),
 //          const Locale("hi", "IN"),
 //          const Locale("hi", "IN"),
 //        ],
-        builder: (c, w) {
+        builder: (context, widget) {
           ScreenUtil.instance =
               ScreenUtil(width: 1080, height: 1920, allowFontScaling: true)
-                ..init(c);
-          var data = MediaQuery.of(c);
+                ..init(context);
+          var data = MediaQuery.of(context);
           return MediaQuery(
             data: data.copyWith(textScaleFactor: 1.0),
-            child: w,
+            child: widget,
           );
         },
         home: SplashPage(),

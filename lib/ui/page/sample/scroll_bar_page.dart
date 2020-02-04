@@ -10,7 +10,7 @@ import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/net_util.dart';
 
 import '../content_page.dart';
-import 'my_bar.dart';
+import '../../widgets/my_bar.dart';
 
 class DiscoverListPage extends StatefulWidget {
   final int wpUserId;

@@ -197,7 +197,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                             ),
                             item,
                             margin, onCardClicked: () {
-                              goToWpPostDetail(context, item);
+                          goToWpPostDetail(context, item);
                         }, onLongPressed: () {
                           mProvider.cardLongPressed(context, item);
                         });
@@ -362,7 +362,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(
                                     width: 1.5, color: Colors.white)),
-                            onPressed: (){
+                            onPressed: () {
                               mProvider.onBannerPressed(bannerData);
                             },
                             child: Text(

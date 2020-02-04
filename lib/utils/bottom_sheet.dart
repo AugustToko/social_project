@@ -44,6 +44,7 @@ class BottomSheetUtil {
               userId: tempUser.id,
               radius: 25.0,
               canClick: true,
+              forUser: false,
             ),
             SizedBox(
               width: 20,
@@ -117,7 +118,7 @@ class BottomSheetUtil {
 
   /// 显示来自 POST CARD 被长按下的 bottomSheet
   static void showPostSheetShow(final BuildContext context, final WpPost item) {
-    var textStyle = TextStyle(color: Colors.white);
+//    var textStyle = TextStyle(color: Colors.white);
     showSheetBottom(
         context,
         CacheCenter.getUser(item.author),

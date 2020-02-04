@@ -27,6 +27,7 @@ class WpUserHeader extends StatefulWidget {
   /// 是否有点击事件
   final bool canClick;
 
+  /// 是否专门用于已登录用户的头像展示
   final bool forUser;
 
   WpUserHeader(
@@ -98,11 +99,11 @@ class _WpUserHeaderState extends State<WpUserHeader> {
                       _wpUser =
                           CacheCenter.getUser(CacheCenter.tokenCache.userId);
                     });
+                    goToProfilePage();
                   }
                 });
               } else {
-                Navigator.pushNamed(context, UIData.profile,
-                    arguments: {"wpUserId": CacheCenter.tokenCache.userId});
+                goToProfilePage();
               }
             },
             customBorder: CircleBorder(),
@@ -123,5 +124,10 @@ class _WpUserHeaderState extends State<WpUserHeader> {
     }
 
     return myWidget;
+  }
+
+  void goToProfilePage() {
+    Navigator.pushNamed(context, UIData.profile,
+        arguments: {"wpUserId": CacheCenter.tokenCache.userId});
   }
 }
