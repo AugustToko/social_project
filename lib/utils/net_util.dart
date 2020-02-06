@@ -178,6 +178,8 @@ class NetTools {
     return temp;
   }
 
+  /// 获取 Wp 用户
+  /// 可能为空
   static Future<WpUser> getWpUserInfo(final String webSite, int userId) async {
     // 解析 URL
     final String url = webSite + "/wp-json/wp/v2/users/" + userId.toString();
@@ -193,7 +195,14 @@ class NetTools {
       print(exception);
       print(stack);
     }
-    return data;
+
+    if (data != null && data.id > 0) {
+      CacheCenter.putUser(data.id, data);
+      return data;
+    } else {
+      return null;
+    }
+
   }
 
   static Future<WpUser> getWpUserInfoAuto(int userId) async {

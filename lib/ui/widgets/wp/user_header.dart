@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:social_project/model/wordpress/wp_rep.dart';
 import 'package:social_project/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/cache_center.dart';
@@ -51,17 +52,21 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   @override
   void initState() {
     super.initState();
+
+    // 检查 userId
     if (widget.userId != -1) {
+      // 检查缓存
       _wpUser = CacheCenter.getUser(widget.userId);
       if (_wpUser.id == -1) {
         NetTools.getWpUserInfo(
                 WordPressRep.getWpLink(widget.wpSource), widget.userId)
             .then((user) {
-          // 检查
-          if (user != null && user.id >= 0) {
-            CacheCenter.putUser(widget.userId, user);
+          if (user != null) {
             _wpUser = user;
             setState(() {});
+          } else {
+            showToast("未找到相关 WpUser.");
+            Navigator.pop(context);
           }
         });
       }
@@ -99,11 +104,11 @@ class _WpUserHeaderState extends State<WpUserHeader> {
                       _wpUser =
                           CacheCenter.getUser(CacheCenter.tokenCache.userId);
                     });
-                    goToProfilePage();
+                    goToProfilePage(CacheCenter.tokenCache.userId);
                   }
                 });
               } else {
-                goToProfilePage();
+                goToProfilePage(_wpUser.id);
               }
             },
             customBorder: CircleBorder(),
@@ -126,8 +131,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
     return myWidget;
   }
 
-  void goToProfilePage() {
+  void goToProfilePage(final int userId) {
     Navigator.pushNamed(context, UIData.profile,
-        arguments: {"wpUserId": CacheCenter.tokenCache.userId});
+        arguments: {"wpUserId": userId});
   }
 }

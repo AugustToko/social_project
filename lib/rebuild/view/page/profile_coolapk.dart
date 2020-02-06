@@ -198,7 +198,7 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
           backgroundColor: Theme.of(context).backgroundColor,
           elevation: 0,
           expandedHeight: 370.0,
-          pinned: false,
+          pinned: true,
           iconTheme: mProvider.iconTheme,
           brightness: Brightness.dark,
           actions: <Widget>[
@@ -219,12 +219,8 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
               },
             ),
           ],
-          primary: true,
           flexibleSpace: CustomFlexibleSpaceBar(
-            callBack: (t) {
-//            val = Tween<double>(begin: 0, end: 255).transform(t).round();
-//            print(iconTheme.color);
-            },
+            callBack: (t) {},
             onImageTap: () {
               DialogUtil.showAlertDialog(context, "更换背景图片", "将更换背景图片", []);
             },
@@ -325,17 +321,6 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
               ],
             ),
           ),
-//        bottom: TabBar(
-//          labelColor: Colors.green,
-//          unselectedLabelColor: Colors.grey,
-//          tabs: [
-//            Tab(text: '文章'),
-//            Tab(text: '动态'),
-//            Tab(text: '关注的话题'),
-//            Tab(text: '粉丝'),
-//          ],
-//          controller: _tabController,
-//        ),
         );
       },
     );
