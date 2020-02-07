@@ -6,9 +6,9 @@ Social project.
 ## 艺术交流地带
 包括但不限于 音乐、绘画、游戏、文章、影视、code
 
-<img src="./screenshots/Screenshot_1.png" hspace="0" width="720" height="1280">
-<img src="./screenshots/Screenshot_2.png" hspace="0" width="720" height="1280">
-<img src="./screenshots/Screenshot_3.png" hspace="0" width="720" height="1280">
+<img src="./screenshots/Screenshot_1.png" >
+<img src="./screenshots/Screenshot_2.png" >
+<img src="./screenshots/Screenshot_3.png" >
 
 ## Getting Started
 
