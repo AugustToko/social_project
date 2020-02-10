@@ -1,10 +1,9 @@
 import 'package:dartin/dartin.dart';
+import 'package:shared/mvvm/helper/shared_preferences.dart';
+import 'package:shared/mvvm/model/repository.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
-
-import '../helper/shared_preferences.dart';
-import '../model/repository.dart';
 
 const testScope = DartInScope('test');
 
@@ -12,12 +11,14 @@ const testScope = DartInScope('test');
 ///
 /// 定义ViewModel的构造方式
 final viewModelModule = Module([
+  // 1
   factory<LoginPageProvider>(
       ({params}) => LoginPageProvider(params.get(0), get())),
+  // 2
   factory<ProfileCoolApkPageProvider>(
           ({params}) => ProfileCoolApkPageProvider()),
-  factory<WordPressPageProvider>(
-          ({params}) => WordPressPageProvider()),
+  // 3
+  factory<WordPressPageProvider>(({params}) => WordPressPageProvider()),
 ])
   ..withScope(testScope, [
     ///other scope
@@ -28,7 +29,7 @@ final viewModelModule = Module([
 ///
 /// 定义Repository 的构造方式
 final repoModule = Module([
-  factory<WordPressNewRepo>(({params}) => WordPressNewRepo(get(), get())),
+  factory<WordPressMvvmRepo>(({params}) => WordPressMvvmRepo(get(), get())),
 ]);
 
 /// Remote 模块

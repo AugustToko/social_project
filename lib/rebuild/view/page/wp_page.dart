@@ -10,14 +10,13 @@ import 'package:like_button/like_button.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/route/app_route.dart';
-
-import '../base.dart';
 
 /// TODO: 写完文章后自动刷新
 class WordPressPage extends PageProvideNode<WordPressPageProvider> {

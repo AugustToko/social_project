@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/model/wordpress/wp_login_result.dart';
-
-import '../model/repository.dart';
-import '../view/base.dart';
+import 'package:shared/mvvm/model/repository.dart';
+import 'package:shared/mvvm/view/base.dart';
 
 /// ViewModel 层
 /// 通过 [notifyListeners] 通知UI层更新
 class LoginPageProvider extends BaseProvide {
-  final WordPressNewRepo _repo;
+  final WordPressMvvmRepo _repo;
   String username = "";
   String password = "";
   bool _loading = false;

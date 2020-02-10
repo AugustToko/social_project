@@ -3,10 +3,10 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
 import 'package:shared/model/lingyun/banner_model.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/net_util.dart';
-import 'package:social_project/rebuild/view/base.dart';
 
 class WordPressPageProvider extends BaseProvide {
   List<LingYunBanner> _banners = [];

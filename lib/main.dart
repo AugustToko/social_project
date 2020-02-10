@@ -10,12 +10,13 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/util/theme_util.dart';
-import 'package:social_project/rebuild/di/app_module.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/uidata.dart';
+
+import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/rebuild/app_module.dart';
 
 import 'env.dart';
 

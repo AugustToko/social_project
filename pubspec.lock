@@ -107,14 +107,14 @@ packages:
     source: hosted
     version: "0.1.3"
   dartin:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: dartin
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.5"
   dio:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: dio
       url: "https://pub.flutter-io.cn"
@@ -182,7 +182,7 @@ packages:
     source: hosted
     version: "0.1.4"
   flutter_html:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_html
       url: "https://pub.flutter-io.cn"
@@ -220,7 +220,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_web_browser:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_web_browser
       url: "https://pub.flutter-io.cn"
@@ -456,7 +456,7 @@ packages:
     source: hosted
     version: "1.0.1"
   provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: provider
       url: "https://pub.flutter-io.cn"
@@ -498,7 +498,7 @@ packages:
     source: hosted
     version: "2.0.0"
   rxdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: rxdart
       url: "https://pub.flutter-io.cn"
@@ -573,7 +573,7 @@ packages:
     source: hosted
     version: "1.9.3"
   steel_crypt:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: steel_crypt
       url: "https://pub.flutter-io.cn"
