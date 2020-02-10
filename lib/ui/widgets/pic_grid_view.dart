@@ -1,11 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/util/theme_util.dart';
 
-import 'crop_image.dart';
 import '../../model/tuchong/tu_chong_source.dart';
+import 'crop_image.dart';
 
 const int maxPicGridViewCount = 9;
 
@@ -22,7 +20,7 @@ class PicGridView extends StatelessWidget {
     if (!tuChongItem.hasImage) return Container();
 
     Widget widget = LayoutBuilder(builder: (c, b) {
-      final double margin = ScreenUtil.instance.setWidth(22);
+      final double margin = ScreenUtil().setWidth(22);
       var size = b.maxWidth;
       int rowCount = 3;
       //single image

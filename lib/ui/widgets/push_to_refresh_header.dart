@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 
-import 'package:social_project/utils/screen_util.dart';
-
-double get maxDragOffset => ScreenUtil.getInstance().setWidth(260);
+double get maxDragOffset => ScreenUtil().setWidth(260);
 double hideHeight = maxDragOffset / 2.3;
 double refreshHeight = maxDragOffset / 1.5;
 
@@ -34,7 +33,7 @@ class PullToRefreshHeader extends StatelessWidget {
 
     final TextStyle ts = TextStyle(
       color: Colors.grey,
-    ).copyWith(fontSize: ScreenUtil.getInstance().setSp(36));
+    ).copyWith(fontSize: ScreenUtil().setSp(36));
 
     double dragOffset = info?.dragOffset ?? 0.0;
 
@@ -72,7 +71,7 @@ class PullToRefreshHeader extends StatelessWidget {
                       "上次更新:" +
                           DateFormat("yyyy-MM-dd hh:mm").format(time),
                       style: ts.copyWith(
-                          fontSize: ScreenUtil.getInstance().setSp(30)),
+                          fontSize: ScreenUtil().setSp(30)),
                     )
                   ],
                 ),
@@ -96,7 +95,7 @@ class RefreshImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double imageSize = ScreenUtil.getInstance().setWidth(80);
+    final double imageSize = ScreenUtil().setWidth(80);
     return FlutterLogo(size: 40,);
   }
 }

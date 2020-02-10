@@ -2,13 +2,13 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:social_project/model/wordpress/wp_post_source.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
-import 'package:social_project/utils/log.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/util/log.dart';
+import 'package:shared/util/theme_util.dart';
+import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:video_player/video_player.dart';
 
 /// 用于显示 WordPress 文章
@@ -117,7 +117,7 @@ class _WpPageState extends State<WpDetailPage> {
             ),
           )),
           _post,
-          ScreenUtil.getInstance().setWidth(20),
+          ScreenUtil().setWidth(20),
           marginBottom: true),
     );
   }

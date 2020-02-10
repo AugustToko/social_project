@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_project/rebuild/helper/constants.dart';
-import 'package:social_project/ui/widgets/common_scaffold.dart';
+import 'package:shared/util/urls.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class SettingsOnePage extends StatelessWidget {

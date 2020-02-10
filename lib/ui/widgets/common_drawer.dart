@@ -1,16 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:social_project/model/wordpress/wp_user.dart';
-import 'package:social_project/utils/cache_center.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
-import 'package:social_project/utils/route/app_route.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:social_project/utils/widget_default.dart';
-
-import 'about_tile.dart';
 
 class CommonDrawer extends StatefulWidget {
   @override
@@ -54,7 +49,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
               padding: EdgeInsets.zero,
               children: <Widget>[
                 SizedBox(
-                  height: ScreenUtil.getInstance().setWidth(80),
+                  height: ScreenUtil().setWidth(80),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
@@ -64,12 +59,12 @@ class _CommonDrawerState extends State<CommonDrawer> {
                         size: 35,
                       ),
                       SizedBox(
-                        width: ScreenUtil.getInstance().setWidth(20),
+                        width: ScreenUtil().setWidth(20),
                       ),
                       Text(
                         UIData.appName + "  Step By Step.",
                         style: TextStyle(
-                            fontSize: ScreenUtil.getInstance().setSp(45),
+                            fontSize: ScreenUtil().setSp(45),
                             color: Theme.of(context).textTheme.subtitle.color,
                             fontWeight: FontWeight.bold),
                       )

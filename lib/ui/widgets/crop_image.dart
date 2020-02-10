@@ -1,11 +1,11 @@
 import 'dart:math';
-import 'package:extended_image/extended_image.dart';
-import 'package:flutter/material.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
 import 'dart:ui' as ui show Image;
 
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
-import 'package:social_project/utils/screen_util.dart';
+import 'package:social_project/ui/page/pic_swiper.dart';
 
 ///
 ///  crop_image.dart
@@ -26,8 +26,8 @@ class CropImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!tuChongItem.hasImage) return Container();
 
-    final double num300 = ScreenUtil.getInstance().setWidth(300);
-    final double num400 = ScreenUtil.getInstance().setWidth(400);
+    final double num300 = ScreenUtil().setWidth(300);
+    final double num400 = ScreenUtil().setWidth(400);
     double height = num300;
     double width = num400;
     final imageItem = tuChongItem.images[index];

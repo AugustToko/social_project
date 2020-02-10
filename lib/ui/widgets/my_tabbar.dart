@@ -1,10 +1,10 @@
 import 'dart:ui' show lerpDouble;
 
+import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/gestures.dart' show DragStartBehavior;
-import 'package:social_project/utils/theme_util.dart';
+import 'package:shared/util/theme_util.dart';
 
 const double _kTabHeight = 46.0;
 const double _kTextAndIconTabHeight = 72.0;

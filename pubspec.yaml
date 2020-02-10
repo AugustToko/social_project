@@ -14,9 +14,9 @@ dependencies:
     path: ../_shared/
 
   outline_material_icons: ^0.1.0
-  cupertino_icons: ^0.1.2
+  #  cupertino_icons: ^0.1.2
   font_awesome_flutter:
-  http: ^0.12.0+1
+  #  http: ^0.12.0+1
   dio: ^3.0.8
   rxdart: ^0.21.0
   dartin: ^0.1.5
@@ -24,22 +24,22 @@ dependencies:
   #  flutter_masked_text: ^0.8.0
   flutter_localizations:
     sdk: flutter
-  shared_preferences: ^0.5.6
+  #  shared_preferences: ^0.5.6
   chewie: ^0.9.8+1
   video_player: ^0.10.5
   audioplayers: ^0.13.5
   extended_image: ^0.6.8
   like_button: ^0.1.9
   pull_to_refresh_notification: any
-  loading_more_list: ^1.0.4
+  #  loading_more_list: ^1.0.4
   extended_text: any
   url_launcher: ^5.0.2
   isolate: ^2.0.2
   image_editor: ^0.1.2
-  oktoast: ^2.1.4
+  #  oktoast: ^2.1.4
   #  image_picker_saver: 0.3.0
   image_picker: 0.6.3+1
-  share: any
+  #  share: any
   flutter_html: ^0.11.1
   flutter_web_browser: ^0.11.0
   zefyr: ^0.10.0
@@ -51,6 +51,7 @@ dependencies:
   flutter_statusbarcolor: ^0.2.3
   flutter_banner_swiper: ^0.1.4
   #  get_it: ^3.1.0
+  flutter_screenutil: ^1.0.2
 
 dev_dependencies:
   flutter_test:

@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_banner_swiper/flutter_banner_swiper.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
-import 'package:social_project/model/wordpress/wp_post_source.dart';
+import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/route/app_route.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 
 import '../base.dart';
 
@@ -112,7 +112,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
 
   @override
   Widget build(BuildContext context) {
-    final double margin = ScreenUtil.instance.setWidth(22);
+    final double margin = ScreenUtil().setWidth(22);
     final Widget result = Material(
       color: Colors.transparent,
       child: Column(
@@ -143,7 +143,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                                   10,
                                   0,
                                   ThemeUtil.navBarHeight +
-                                      ScreenUtil.getInstance().setWidth(20),
+                                      ScreenUtil().setWidth(20),
                                 ),
                                 child: Text(
                                   "—————— 做人也是要有底线的哦 ——————",
@@ -281,7 +281,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
       ],
     );
 
-    var spacing = ScreenUtil.getInstance().setWidth(10.0);
+    var spacing = ScreenUtil().setWidth(10.0);
 
     return Wrap(
       runSpacing: spacing,

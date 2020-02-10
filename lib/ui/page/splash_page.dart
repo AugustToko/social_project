@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/util/shared_prefs.dart';
 import 'package:social_project/misc/shared_prefs_key.dart';
-import 'package:social_project/utils/shared_prefs.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class SplashPage extends StatefulWidget {

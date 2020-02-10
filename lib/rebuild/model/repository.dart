@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:rxdart/rxdart.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/util/urls.dart';
 import 'package:social_project/rebuild/helper/constants.dart';
 import 'package:steel_crypt/steel_crypt.dart';
 
@@ -14,7 +12,7 @@ import '../helper/shared_preferences.dart';
 class WordPressService {
   /// 登录
   Observable login(final String userName, final String password) =>
-      post(WordPressRep.baseBlogGeekUrl + "/wp-json/jwt-auth/v1/token", {
+      post(BLOG_GEEK_URL + "/wp-json/jwt-auth/v1/token", {
         'username': userName,
         'password': password,
       });

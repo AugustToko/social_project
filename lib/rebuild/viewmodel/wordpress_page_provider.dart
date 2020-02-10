@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
-import 'package:social_project/model/lingyun/banner_model.dart';
-import 'package:social_project/model/wordpress/wp_post_source.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/model/lingyun/banner_model.dart';
+import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:shared/util/bottom_sheet.dart';
+import 'package:shared/util/net_util.dart';
 import 'package:social_project/rebuild/view/base.dart';
-import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/net_util.dart';
-import 'package:social_project/utils/uidata.dart';
 
 class WordPressPageProvider extends BaseProvide {
   List<LingYunBanner> _banners = [];

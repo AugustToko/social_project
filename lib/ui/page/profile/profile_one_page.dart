@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared/ui/widget/profile_tile.dart';
 import 'package:social_project/ui/widgets/common_divider.dart';
 import 'package:social_project/ui/widgets/common_scaffold.dart';
-import 'package:social_project/ui/widgets/profile_tile.dart';
-import 'package:social_project/utils/cache_center.dart';
 
 class ProfileOnePage extends StatelessWidget {
   var deviceSize;

@@ -2,10 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/rep/wp_rep.dart';
 import 'package:social_project/ui/widgets/flip_panel.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 

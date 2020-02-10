@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:social_project/model/wordpress/wp_login_result.dart';
-import 'package:social_project/utils/cache_center.dart';
+import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/model/wordpress/wp_login_result.dart';
 
 import '../model/repository.dart';
 import '../view/base.dart';

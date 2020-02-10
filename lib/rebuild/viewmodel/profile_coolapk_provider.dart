@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:social_project/model/wordpress/wp_post_source.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/model/wordpress/wp_user.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/model/wordpress/wp_user.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:shared/util/bottom_sheet.dart';
+import 'package:shared/util/net_util.dart';
+import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/view/base.dart';
-import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/cache_center.dart';
-import 'package:social_project/utils/net_util.dart';
 import 'package:social_project/utils/route/app_route.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
-import 'package:social_project/utils/utils.dart';
 
 /// ViewModel 层
 /// 通过 [notifyListeners] 通知UI层更新
@@ -49,7 +48,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
 
   @override
   void init(final BuildContext context) {
-    final double margin = ScreenUtil.instance.setWidth(22);
+    final double margin = ScreenUtil().setWidth(22);
     // 清除数据
     _posts.clear();
 

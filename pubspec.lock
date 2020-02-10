@@ -100,7 +100,7 @@ packages:
     source: hosted
     version: "0.16.1"
   cupertino_icons:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cupertino_icons
       url: "https://pub.flutter-io.cn"
@@ -200,6 +200,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.2"
   flutter_statusbarcolor:
     dependency: "direct main"
     description:
@@ -246,7 +253,7 @@ packages:
     source: hosted
     version: "0.14.0+3"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.flutter-io.cn"
@@ -323,7 +330,7 @@ packages:
     source: hosted
     version: "0.1.9"
   loading_more_list:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: loading_more_list
       url: "https://pub.flutter-io.cn"
@@ -379,7 +386,7 @@ packages:
     source: hosted
     version: "0.1.5"
   oktoast:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: oktoast
       url: "https://pub.flutter-io.cn"
@@ -505,7 +512,7 @@ packages:
     source: hosted
     version: "0.0.5"
   share:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: share
       url: "https://pub.flutter-io.cn"
@@ -519,7 +526,7 @@ packages:
     source: path
     version: "1.0.0+1"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       url: "https://pub.flutter-io.cn"

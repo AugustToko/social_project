@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:shared/ui/widget/profile_tile.dart';
+import 'package:shared/ui/widget/wp/user_header.dart';
+import 'package:shared/util/net_util.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/widgets/my_bar.dart';
-import 'package:social_project/ui/widgets/profile_tile.dart';
-import 'package:social_project/ui/widgets/wp/user_header.dart';
-import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
-import 'package:social_project/utils/utils.dart';
 
 import '../../../ui/page/content_page.dart';
 import '../base.dart';

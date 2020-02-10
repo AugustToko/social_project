@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:quill_delta/quill_delta.dart';
+import 'package:shared/util/theme_util.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 import 'package:zefyr/zefyr.dart';
 
 import '../../../env.dart';

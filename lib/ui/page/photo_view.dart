@@ -2,32 +2,30 @@
 ///  photo_view.dart
 ///  create by zmtzawqlp on 2019/4/4
 ///
-
 import 'dart:async';
+
 import 'package:extended_text/extended_text.dart';
+import 'package:ff_annotation_route/ff_annotation_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
+import 'package:shared/model/menu.dart';
+import 'package:shared/util/bottom_sheet.dart';
+import 'package:shared/util/theme_util.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
-import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
-import 'package:social_project/model/menu.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
-import 'package:social_project/ui/widgets/pic_grid_view.dart';
-import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
+import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
-import 'package:social_project/utils/bottom_sheet.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
+import 'package:social_project/ui/widgets/pic_grid_view.dart';
+import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:ff_annotation_route/ff_annotation_route.dart';
 
 @FFRoute(
     name: "fluttercandies://photoview",
@@ -68,7 +66,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
 
   @override
   Widget build(BuildContext context) {
-    final double margin = ScreenUtil.instance.setWidth(22);
+    final double margin = ScreenUtil().setWidth(22);
 
     final Widget result = Material(
       color: Colors.transparent,

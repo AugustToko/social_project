@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/ui/page/dashboard/dashboard_one.page.dart';
 import 'package:social_project/ui/page/profile/profile_guest.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/widgets/navbar/navbar.dart';
-import 'package:social_project/ui/page/content_page.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 /// [MainPage]

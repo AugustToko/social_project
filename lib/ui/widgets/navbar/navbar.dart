@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:social_project/utils/theme_util.dart';
+import 'package:shared/util/theme_util.dart';
 
 import 'clipped_view.dart';
 import 'navbar_button.dart';

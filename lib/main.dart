@@ -5,16 +5,16 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/di/app_module.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
-import 'package:social_project/utils/screen_util.dart';
-import 'package:social_project/utils/theme_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import 'env.dart';
@@ -120,9 +120,8 @@ class App extends StatelessWidget {
 //          const Locale("hi", "IN"),
 //        ],
         builder: (context, widget) {
-          ScreenUtil.instance =
-              ScreenUtil(width: 1080, height: 1920, allowFontScaling: true)
-                ..init(context);
+          ScreenUtil.init(context,
+              width: 1080, height: 1920, allowFontScaling: true);
           var data = MediaQuery.of(context);
           return MediaQuery(
             data: data.copyWith(textScaleFactor: 1.0),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:social_project/model/wordpress/wp_rep.dart';
+import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:shared/ui/widget/profile_tile.dart';
 import 'package:social_project/ui/widgets/login_background.dart';
-import 'package:social_project/ui/widgets/profile_tile.dart';
-import 'package:social_project/utils/cache_center.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import 'dashboard_menu_row.dart';
