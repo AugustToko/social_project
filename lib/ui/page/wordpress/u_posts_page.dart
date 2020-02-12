@@ -10,12 +10,12 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/rep/wp_rep_argments_posts.dart';
+import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
-import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/route/app_route.dart';
 
 /// 通用文章展示页面（列表）

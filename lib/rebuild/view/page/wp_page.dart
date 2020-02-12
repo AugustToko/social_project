@@ -7,15 +7,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
-    as re;
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' as re;
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/mvvm/view/base.dart';
+import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
-import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/route/app_route.dart';
 
 /// TODO: 写完文章后自动刷新
@@ -137,18 +136,18 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                       indicatorBuilder: (p, q) {
                         return mProvider.listSourceRepository.length > 0
                             ? Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                  0,
-                                  10,
-                                  0,
-                                  ThemeUtil.navBarHeight +
-                                      ScreenUtil().setWidth(20),
-                                ),
-                                child: Text(
-                                  "—————— 做人也是要有底线的哦 ——————",
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
+                          padding: EdgeInsets.fromLTRB(
+                            0,
+                            10,
+                            0,
+                            ThemeUtil.navBarHeight +
+                                ScreenUtil().setWidth(20),
+                          ),
+                          child: Text(
+                            "—————— 做人也是要有底线的哦 ——————",
+                            textAlign: TextAlign.center,
+                          ),
+                        )
                             : null;
                       },
                       collectGarbage: (List<int> indexes) {
@@ -170,7 +169,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
 
                         // 内容文本
                         var content =
-                            mProvider.fixPostData(item.content.rendered);
+                        mProvider.fixPostData(item.content.rendered);
 
                         var contentSmall = mProvider.trimContent(content);
 
@@ -255,7 +254,9 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
         Container(
           padding: EdgeInsets.all(3.0),
           decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
+            color: Theme
+                .of(context)
+                .backgroundColor,
             border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
             borderRadius: BorderRadius.all(
               Radius.circular(5.0),

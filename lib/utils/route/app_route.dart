@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/ui/page/settings_page.dart';
+import 'package:shared/ui/page/web_page.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/ui/page/about_app.dart';
@@ -7,9 +9,7 @@ import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
-import 'package:social_project/ui/page/settings_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
-import 'package:social_project/ui/page/web_page.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/editor.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';

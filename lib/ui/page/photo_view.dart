@@ -15,6 +15,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
 import 'package:shared/model/menu.dart';
+import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
@@ -23,7 +24,6 @@ import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
 import 'package:social_project/ui/widgets/pic_grid_view.dart';
-import 'package:social_project/ui/widgets/push_to_refresh_header.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -8,6 +8,7 @@ import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/web_pages.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -56,6 +57,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
     _animation = Tween(begin: 295.0, end: 48.0).animate(_controller)
       ..addListener(() {
         mProvide.btnWidth = _animation.value;
+        print("${_animation.value}");
       });
   }
 
@@ -196,11 +198,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                         .backgroundColor,
                     elevation: 0,
                     onPressed: () {
-                      FlutterWebBrowser.openWebPage(
-                          url: WordPressRep.blogGeekReg,
-                          androidToolbarColor: Theme
-                              .of(context)
-                              .primaryColor);
+                      gotoBlogGeekReg(context);
 //                      launch(WordPressRep.blogGeekReg);
                     },
                   ),

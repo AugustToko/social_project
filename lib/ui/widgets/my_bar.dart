@@ -292,7 +292,7 @@ class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
                 bottom: 16.0,
               );
           final double scaleValue =
-              Tween<double>(begin: 1.5, end: 1.0).transform(t);
+          Tween<double>(begin: 1.5, end: 1.0).transform(t);
           final Matrix4 scaleTransform = Matrix4.identity()
             ..scale(scaleValue, scaleValue, 1.0);
           final Alignment titleAlignment =

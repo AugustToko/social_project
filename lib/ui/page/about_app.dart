@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:shared/rep/wp_rep.dart';
-import 'package:social_project/ui/widgets/flip_panel.dart';
+import 'package:shared/ui/widget/flip_panel.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 class AboutPage extends StatefulWidget {
