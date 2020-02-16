@@ -3,8 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:shared/ui/page/settings_page.dart';
-import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/ui/page/about_app.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/profile/profile_one_page.dart';
@@ -31,9 +29,6 @@ class UIData {
   /// [CommentPage]
   static const String commentDetail = "/commentDetail";
 
-  /// [LoginPageContentPageState]
-  @Deprecated("Use loginPage")
-  static const String loginRoute = "/login";
   static const String loginPage = "/loginPage";
 
   /// [SendPage]
@@ -50,9 +45,6 @@ class UIData {
 
   /// [DraftBoxPage]
   static const String draftBoxPage = "/draftBoxPage";
-
-  /// [AboutPage]
-  static const String aboutPage = "/aboutPage";
 
   /// [WebPage]
   static const webPage = "/webPage";

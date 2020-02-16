@@ -13,13 +13,8 @@ import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
-  /// 提供
-  ///
-  /// 获取参数 [title] 并生成一个[HomeProvide]对象
-  LoginPage(String title) : super(params: [title]);
-
   @override
-  Widget buildContent(BuildContext context) {
+  Widget buildContent(final BuildContext context) {
     return _LoginPageContent(mProvider);
   }
 }
@@ -149,12 +144,12 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                 obscureText: true,
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.grey),
-                  labelStyle: TextStyle(
-                      color: Theme
-                          .of(context)
-                          .textTheme
-                          .title
-                          .color),
+                  labelStyle:
+                  TextStyle(color: Theme
+                      .of(context)
+                      .textTheme
+                      .title
+                      .color),
                   hintText: "输入你的密码",
                   labelText: "密码",
                   focusedBorder:

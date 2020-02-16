@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/ui/page/about_app.dart';
 import 'package:shared/ui/page/settings_page.dart';
 import 'package:shared/ui/page/web_page.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
-import 'package:social_project/ui/page/about_app.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/main_page.dart';
@@ -33,7 +33,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         ),
         showStatusBar: false,
         routeName: "PicSwiper",
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.homeRoute:
@@ -41,7 +40,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: MainPage(),
         showStatusBar: false,
         routeName: UIData.homeRoute,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.gooeyEdge:
@@ -49,7 +47,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: GooeyEdgePage(),
         showStatusBar: false,
         routeName: UIData.gooeyEdge,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.timeLine:
@@ -57,16 +54,13 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: TimelineTwoPage(),
         showStatusBar: false,
         routeName: UIData.timeLine,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.profile:
       return RouteResult(
-//        widget: ProfilePage(arguments["wpUserId"]),
         widget: ProfileCoolApkPage(arguments["wpUserId"]),
         showStatusBar: false,
         routeName: UIData.profile,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.commentDetail:
@@ -74,7 +68,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: CommentPage(),
         showStatusBar: false,
         routeName: UIData.commentDetail,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.wpPostDetail:
@@ -84,7 +77,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         ),
         showStatusBar: false,
         routeName: UIData.wpPostDetail,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.argPostsPage:
@@ -95,15 +87,13 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         ),
         showStatusBar: false,
         routeName: UIData.argPostsPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.loginPage:
       return RouteResult(
-        widget: LoginPage("Login Page"),
+        widget: LoginPage(),
         showStatusBar: false,
         routeName: UIData.loginPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.sendPage:
@@ -113,7 +103,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
 //        widget: SendPage(),
         showStatusBar: true,
         routeName: UIData.sendPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.settingsPage:
@@ -121,7 +110,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: SettingsOnePage(),
         showStatusBar: true,
         routeName: UIData.settingsPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
     case UIData.draftBoxPage:
@@ -129,18 +117,16 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         widget: DraftBoxPage(),
         showStatusBar: true,
         routeName: UIData.draftBoxPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
-    case UIData.aboutPage:
+    case AboutPage.routeName:
       return RouteResult(
         widget: AboutPage(),
         showStatusBar: true,
-        routeName: UIData.aboutPage,
-        pageRouteType: PageRouteType.transparent,
+        routeName: AboutPage.routeName,
       );
       break;
-    case UIData.webPage:
+    case WebPage.routeName:
       return RouteResult(
         widget: WebPage(
           title: arguments["title"],
@@ -148,7 +134,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         ),
         showStatusBar: true,
         routeName: UIData.webPage,
-        pageRouteType: PageRouteType.transparent,
       );
       break;
 //    case "fluttercandies://customimage":
@@ -216,9 +201,6 @@ class RouteResult {
   /// The route name to track page
   final String routeName;
 
-  /// The type of page route
-  final PageRouteType pageRouteType;
-
   /// The description of route
   final String description;
 
@@ -226,8 +208,5 @@ class RouteResult {
       {this.widget,
       this.showStatusBar = true,
       this.routeName = '',
-      this.pageRouteType,
       this.description = ''});
 }
-
-enum PageRouteType { material, cupertino, transparent }

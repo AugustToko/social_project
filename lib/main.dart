@@ -10,13 +10,12 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:social_project/rebuild/app_module.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/uidata.dart';
-
-import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/rebuild/app_module.dart';
 
 import 'env.dart';
 
@@ -146,29 +145,9 @@ class App extends StatelessWidget {
 
           var page = routeResult.widget ?? NoRoute();
 
-          switch (routeResult.pageRouteType) {
-            case PageRouteType.material:
-              return MaterialPageRoute(
-                  settings: settings, builder: (c) => page);
-            case PageRouteType.cupertino:
-              return CupertinoPageRoute(
-                  settings: settings, builder: (c) => page);
-            case PageRouteType.transparent:
-              return Platform.isIOS
-                  ? TransparentCupertinoPageRoute(
-                      settings: settings, builder: (c) => page)
-                  : TransparentMaterialPageRoute(
-                      settings: settings, builder: (c) => page);
-//            return FFTransparentPageRoute(
-//                settings: settings,
-//                pageBuilder: (BuildContext context, Animation<double> animation,
-//                        Animation<double> secondaryAnimation) =>
-//                    page);
-            default:
-              return Platform.isIOS
-                  ? CupertinoPageRoute(settings: settings, builder: (c) => page)
-                  : MaterialPageRoute(settings: settings, builder: (c) => page);
-          }
+          return Platform.isIOS
+              ? CupertinoPageRoute(settings: settings, builder: (c) => page)
+              : MaterialPageRoute(settings: settings, builder: (c) => page);
         },
       ),
     );
@@ -192,11 +171,7 @@ class App extends StatelessWidget {
       {bool useCache: true}) async {
     var data = await getNetworkImageData(url, useCache: useCache);
 
-//    var response = await Dio().get("/838ba61ea8d3fd1fc9c7b6853a4e251f94ca5f46.jpg", options: Options(responseType: ResponseType.bytes));
-
     final result = await ImageGallerySaver.saveImage(Uint8List.fromList(data));
-
-    debugPrint(result);
 
     return result != null && result != "";
   }

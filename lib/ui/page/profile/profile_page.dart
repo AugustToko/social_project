@@ -6,12 +6,13 @@ import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
-import 'package:shared/ui/widget/wp/user_header.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/log.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
+
+import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/user_header.dart';
 
 import '../content_page.dart';
 
@@ -31,6 +32,7 @@ class ProfilePage extends StatefulWidget {
   static Widget getCard(BuildContext context, WpPost post) =>
       _ProfilePageState.articleCard(context, post);
 }
+
 @Deprecated("")
 class _ProfilePageState extends State<ProfilePage> {
   Size _deviceSize;

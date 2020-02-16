@@ -28,8 +28,6 @@ class LoginPageProvider extends BaseProvide {
     notifyListeners();
   }
 
-  final String title;
-
   bool get loading => _loading;
 
   set loading(bool loading) {
@@ -46,7 +44,7 @@ class LoginPageProvider extends BaseProvide {
     notifyListeners();
   }
 
-  LoginPageProvider(this.title, this._repo);
+  LoginPageProvider(this._repo);
 
   @override
   void init(BuildContext context) {

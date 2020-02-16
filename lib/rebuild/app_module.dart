@@ -5,25 +5,15 @@ import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 
-const testScope = DartInScope('test');
-
 /// ViewModel 模块
 ///
 /// 定义ViewModel的构造方式
 final viewModelModule = Module([
-  // 1
-  factory<LoginPageProvider>(
-      ({params}) => LoginPageProvider(params.get(0), get())),
-  // 2
+  factory<LoginPageProvider>(({params}) => LoginPageProvider(get())),
   factory<ProfileCoolApkPageProvider>(
           ({params}) => ProfileCoolApkPageProvider()),
-  // 3
   factory<WordPressPageProvider>(({params}) => WordPressPageProvider()),
-])
-  ..withScope(testScope, [
-    ///other scope
-//  factory<HomeProvide>(({params}) => HomeProvide(params.get(0), get<GithubRepo>())),
-  ]);
+]);
 
 /// Repository 模块
 ///
@@ -46,8 +36,6 @@ final localModule = Module([
   single<SpUtil>(({params}) => spUtil),
 ]);
 
-final appModule = [viewModelModule, repoModule, remoteModule, localModule];
-
 ///// AuthInterceptor
 /////
 ///// 添加header认证
@@ -68,6 +56,8 @@ final appModule = [viewModelModule, repoModule, remoteModule, localModule];
 //      receiveTimeout: 30)
 //  ..interceptors.add(AuthInterceptor())
 //  ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+
+final appModule = [viewModelModule, repoModule, remoteModule, localModule];
 
 SpUtil spUtil;
 
