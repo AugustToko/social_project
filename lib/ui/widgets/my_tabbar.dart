@@ -1014,7 +1014,12 @@ class _MyTabBarState extends State<MyTabBar> {
     }
 
     return Column(
-      children: <Widget>[tabBar, ThemeUtil.getLine()],
+      children: <Widget>[
+        tabBar,
+        ThemeUtil.getLine(color: Theme
+            .of(context)
+            .dividerColor)
+      ],
     );
   }
 }

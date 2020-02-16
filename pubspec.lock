@@ -169,6 +169,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.4"
+  flushbar:
+    dependency: transitive
+    description:
+      name: flushbar
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.9.1"
   flutter:
     dependency: "direct main"
     description: flutter

@@ -7,7 +7,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
-import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart' as re;
+import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
+as re;
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
@@ -124,7 +125,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
               child: LoadingMoreCustomScrollView(
                 showGlowLeading: true,
                 showGlowTrailing: true,
-                physics: ClampingScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: re.PullToRefreshContainer((info) {
