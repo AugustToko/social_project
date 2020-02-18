@@ -6,7 +6,6 @@ import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/net_util.dart';
-import 'package:social_project/utils/uidata.dart';
 
 /// 根据 wp 所给 userId 获取 user 头像、用户名
 class WpUserHeader extends StatefulWidget {
@@ -30,15 +29,17 @@ class WpUserHeader extends StatefulWidget {
   /// 是否专门用于已登录用户的头像展示
   final bool forUser;
 
-  WpUserHeader({
-    Key key,
+  final loginRouteName;
+
+  WpUserHeader({Key key,
     this.userId = -1,
     this.wpSource = WordPressRep.wpSource,
     this.radius = 25.0,
     this.canClick = true,
     this.showUserName = true,
     this.forUser = false,
-  }) : super(key: key);
+    this.loginRouteName})
+      : super(key: key);
 
   @override
   _WpUserHeaderState createState() => _WpUserHeaderState();
@@ -97,7 +98,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
           child: InkWell(
             onTap: () async {
               if (widget.forUser && CacheCenter.tokenCache == null) {
-                Navigator.pushNamed(context, UIData.loginPage).then((result) {
+                Navigator.pushNamed(context, widget.loginRouteName)
+                    .then((result) {
                   if (result == NavState.LoginDone) {
                     setState(() {
                       _wpUser =
@@ -131,7 +133,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   }
 
   void goToProfilePage(final int userId) {
-    Navigator.pushNamed(context, UIData.profile,
+    Navigator.pushNamed(context, widget.loginRouteName,
         arguments: {"wpUserId": userId});
   }
 }
