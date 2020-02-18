@@ -65,25 +65,21 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: loginBody(context),
       ),
     );
   }
 
-  loginBody(BuildContext context) =>
-      SingleChildScrollView(
+  loginBody(BuildContext context) => SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[loginHeader(), loginFields(context)],
         ),
       );
 
-  loginHeader() =>
-      Column(
+  loginHeader() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           FlutterLogo(
@@ -107,8 +103,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
         ],
       );
 
-  loginFields(BuildContext context) =>
-      Container(
+  loginFields(BuildContext context) => Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.min,
@@ -121,16 +116,12 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.grey),
                   labelStyle: TextStyle(
-                    color: Theme
-                        .of(context)
-                        .textTheme
-                        .title
-                        .color,
+                    color: Theme.of(context).textTheme.title.color,
                   ),
                   hintText: "输入你的用户名",
                   labelText: "用户名",
                   focusedBorder:
-                  ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                      ThemeUtil.getUnderlineFocusedBorderBorder(context),
                   enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder(),
                 ),
                 controller: mProvide.userNameController,
@@ -145,15 +136,11 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                 decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.grey),
                   labelStyle:
-                  TextStyle(color: Theme
-                      .of(context)
-                      .textTheme
-                      .title
-                      .color),
+                      TextStyle(color: Theme.of(context).textTheme.title.color),
                   hintText: "输入你的密码",
                   labelText: "密码",
                   focusedBorder:
-                  ThemeUtil.getUnderlineFocusedBorderBorder(context),
+                      ThemeUtil.getUnderlineFocusedBorderBorder(context),
                   enabledBorder: ThemeUtil.getUnderlineEnabledBorderBorder(),
                 ),
                 controller: mProvide.passwordController,
@@ -182,15 +169,9 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                     child: Text(
                       "注册新账号",
                       style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .textTheme
-                              .title
-                              .color),
+                          color: Theme.of(context).textTheme.title.color),
                     ),
-                    color: Theme
-                        .of(context)
-                        .backgroundColor,
+                    color: Theme.of(context).backgroundColor,
                     elevation: 0,
                     onPressed: () {
                       gotoBlogGeekReg(context);
@@ -206,22 +187,14 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                     child: Text(
                       "忘记密码",
                       style: TextStyle(
-                          color: Theme
-                              .of(context)
-                              .textTheme
-                              .title
-                              .color),
+                          color: Theme.of(context).textTheme.title.color),
                     ),
-                    color: Theme
-                        .of(context)
-                        .backgroundColor,
+                    color: Theme.of(context).backgroundColor,
                     elevation: 0,
                     onPressed: () {
                       FlutterWebBrowser.openWebPage(
                           url: WordPressRep.blogGeekLostPwd,
-                          androidToolbarColor: Theme
-                              .of(context)
-                              .primaryColor);
+                          androidToolbarColor: Theme.of(context).primaryColor);
 //                      launch(WordPressRep.blogGeekLostPwd);
                     },
                   )

@@ -11,7 +11,7 @@ import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 final viewModelModule = Module([
   factory<LoginPageProvider>(({params}) => LoginPageProvider(get())),
   factory<ProfileCoolApkPageProvider>(
-          ({params}) => ProfileCoolApkPageProvider()),
+      ({params}) => ProfileCoolApkPageProvider()),
   factory<WordPressPageProvider>(({params}) => WordPressPageProvider()),
 ]);
 
