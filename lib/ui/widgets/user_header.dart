@@ -31,14 +31,15 @@ class WpUserHeader extends StatefulWidget {
 
   final loginRouteName;
 
-  WpUserHeader({Key key,
-    this.userId = -1,
-    this.wpSource = WordPressRep.wpSource,
-    this.radius = 25.0,
-    this.canClick = true,
-    this.showUserName = true,
-    this.forUser = false,
-    this.loginRouteName})
+  WpUserHeader(
+      {Key key,
+      this.userId = -1,
+      this.wpSource = WordPressRep.wpSource,
+      this.radius = 25.0,
+      this.canClick = true,
+      this.showUserName = true,
+      this.forUser = false,
+      this.loginRouteName})
       : super(key: key);
 
   @override

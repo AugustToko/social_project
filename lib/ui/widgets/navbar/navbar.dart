@@ -36,9 +36,7 @@ class NavBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        ThemeUtil.getLine(color: Theme
-            .of(context)
-            .dividerColor),
+        ThemeUtil.getLine(color: Theme.of(context).dividerColor),
         Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
