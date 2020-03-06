@@ -65,22 +65,23 @@ class _DraftBoxPageState extends State<DraftBoxPage> {
   }
 
   void _clearData() {
-    Env.getTempArticlesDir().exists().then((exists) {
+    Env.getTempArticlesDir().exists().then((exists) async {
       if (exists) {
-        Env.getTempArticlesDir().list().toList().then((list) {
-          list.forEach((e) {
-            e.delete();
-          });
-        }).whenComplete(() {
-          _loadData();
-        });
+        var list = await Env.getTempArticlesDir().list().toList();
+        final stream = Stream.fromIterable(list);
+        await for (var i in stream) {
+          i.deleteSync();
+        }
+        _loadData();
       }
     });
   }
 
   /// 加载草稿数据
   void _loadData() {
-    listEditorData.clear();
+    setState(() {
+      listEditorData.clear();
+    });
     Env.getTempArticlesDir().exists().then((exists) async {
       if (exists) {
         var list = await Env.getTempArticlesDir().list().toList();
@@ -154,7 +155,8 @@ class _DraftBoxPageState extends State<DraftBoxPage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(UIData.sendPage, arguments: {"editorData" : data});
+                  Navigator.of(context).pushNamed(UIData.sendPage,
+                      arguments: {"editorData": data});
                 },
               ),
             ),

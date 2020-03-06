@@ -99,7 +99,7 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
     case UIData.sendPage:
       return RouteResult(
         //TODO：编辑页面待完善
-        widget: EditorPage(editorData: arguments["editorData"],),
+        widget: EditorPage(editorData: arguments == null ? null : arguments["editorData"],),
 //        widget: SendPage(),
         showStatusBar: true,
         routeName: UIData.sendPage,
