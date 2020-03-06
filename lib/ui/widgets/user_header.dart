@@ -39,7 +39,7 @@ class WpUserHeader extends StatefulWidget {
       this.canClick = true,
       this.showUserName = true,
       this.forUser = false,
-      this.loginRouteName})
+      @required this.loginRouteName})
       : super(key: key);
 
   @override

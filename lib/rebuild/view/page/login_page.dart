@@ -13,6 +13,9 @@ import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
+
+  static const String loginPage = "/loginPage";
+
   @override
   Widget buildContent(final BuildContext context) {
     return _LoginPageContent(mProvider);

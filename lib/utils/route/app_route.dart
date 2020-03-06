@@ -89,11 +89,11 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         routeName: UIData.argPostsPage,
       );
       break;
-    case UIData.loginPage:
+    case LoginPage.loginPage:
       return RouteResult(
         widget: LoginPage(),
         showStatusBar: false,
-        routeName: UIData.loginPage,
+        routeName: LoginPage.loginPage,
       );
       break;
     case UIData.sendPage:

@@ -10,8 +10,10 @@ import 'package:shared/util/net_util.dart';
 
 class WordPressPageProvider extends BaseProvide {
   List<LingYunBanner> _banners = [];
+
   List<LingYunBanner> get banners => _banners;
-  set banners(List<LingYunBanner> data){
+
+  set banners(List<LingYunBanner> data) {
     _banners.clear();
     _banners.addAll(data);
 //    notifyListeners();
@@ -77,17 +79,13 @@ class WordPressPageProvider extends BaseProvide {
   }
 
   void onBannerPressed(final LingYunBanner banner) {
-     var temp = banner.onTapAction.split(';');
-     if (temp.length < 2) return;
+    var temp = banner.onTapAction.split(';');
+    if (temp.length < 2) return;
 
-     print("-------------------- action ===-------------");
-     print(temp[0]);
-     print(temp[1]);
-
-     switch (temp[0]) {
-       case "openUrl":
-         FlutterWebBrowser.openWebPage(url: temp[1]);
-         break;
-     }
+    switch (temp[0]) {
+      case "openUrl":
+        FlutterWebBrowser.openWebPage(url: temp[1]);
+        break;
+    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
@@ -186,7 +187,7 @@ class _TabBarPageState extends State<ContentPage>
                         forUser: true,
                         userId: CacheCenter.tokenCache == null
                             ? -1
-                            : CacheCenter.tokenCache.userId,
+                            : CacheCenter.tokenCache.userId, loginRouteName: LoginPage.loginPage,
                       ),
                       SizedBox(
                         width: 4,

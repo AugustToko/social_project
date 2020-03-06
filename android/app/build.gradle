@@ -56,7 +56,7 @@ android {
     // TODO: Hide key
     signingConfigs {
         release4googleplay {
-            storeFile file('C:\\Users\\chenlongcould\\Desktop\\AndroidStudio_KEY_Store\\as\\chenlongcould4googleplay.jks')
+            storeFile file('E:\\AndroidStudio_KEY_Store\\as\\chenlongcould4googleplay.jks')
             storePassword '18551348272Chen'
             keyAlias = 'chenlongcloud'
             keyPassword '18551348272Chen'
