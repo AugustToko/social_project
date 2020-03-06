@@ -184,7 +184,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                                 SizedBox(
                                   height: 10,
                                 ),
-                                buildTagsWidget(item, context),
+//                                buildTagsWidget(item, context),
                                 Html(
                                   data: contentSmall,
                                 ),
@@ -248,6 +248,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 标签
+  // TODO: 标签编辑
   Widget buildTagsWidget(WpPost item, BuildContext context) {
     final fontSize = 12.0;
     var tag = Stack(

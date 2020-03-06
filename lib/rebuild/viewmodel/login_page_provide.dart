@@ -53,10 +53,14 @@ class LoginPageProvider extends BaseProvide {
     if (data == null || data == '') {
       clearAuth();
     } else {
-      var temp = data.split(':');
+      var temp = data.split('.');
+      if (temp.length < 2) {
+        return;
+      }
       userNameController.text = temp[0];
-      username = temp[0];
       passwordController.text = temp[1];
+
+      username = temp[0];
       password = temp[1];
       _rememberPassword = true;
     }
@@ -67,7 +71,7 @@ class LoginPageProvider extends BaseProvide {
       .doOnData((r) {
         var tempData = WpLoginResultDone.fromJson(json.decode(r));
         if (tempData.token != null && tempData.token != "") {
-          CacheCenter.tokenCache = tempData;
+          WpCacheCenter.tokenCache = tempData;
 
           if (_rememberPassword) {
             saveAuth();
@@ -75,7 +79,7 @@ class LoginPageProvider extends BaseProvide {
             clearAuth();
           }
         } else {
-          CacheCenter.tokenCache = null;
+          WpCacheCenter.tokenCache = null;
         }
       })
       .doOnError((e, stacktrace) {

@@ -32,8 +32,8 @@ class _IndexState extends State<MainPage> {
     _navBarItems = [
       NavBarItemData("首页", OMIcons.home, 110, Color(0xff01b87d)),
       NavBarItemData("搜索", OMIcons.search, 110, Color(0xff594ccf)),
-      NavBarItemData("消息", OMIcons.message, 115, Color(0xff09a8d9)),
-      NavBarItemData("收藏", OMIcons.save, 105, Color(0xfff2873f)),
+//      NavBarItemData("消息", OMIcons.message, 115, Color(0xff09a8d9)),
+//      NavBarItemData("收藏", OMIcons.save, 105, Color(0xfff2873f)),
       NavBarItemData("我", OMIcons.person, 100, Color(0xffcf4c7a)),
     ];
 
@@ -41,8 +41,8 @@ class _IndexState extends State<MainPage> {
     _viewsByIndex = <Widget>[
       ContentPage(),
       GuidePage(),
-      SampleHomePage(),
-      SampleHomePage(),
+//      SampleHomePage(),
+//      SampleHomePage(),
       ProfileContent(WordPressRep.wpSource),
     ];
 

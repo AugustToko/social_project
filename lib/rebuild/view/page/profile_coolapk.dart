@@ -5,6 +5,7 @@ import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
 import 'package:shared/util/net_util.dart';
+import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/widgets/my_bar.dart';
@@ -16,6 +17,8 @@ import '../../../ui/page/content_page.dart';
 
 class ProfileCoolApkPage extends PageProvideNode<ProfileCoolApkPageProvider> {
   final int wpUserId;
+
+  static const String profile = "/profile";
 
   ProfileCoolApkPage(this.wpUserId);
 
@@ -243,10 +246,11 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
                         children: <Widget>[
                           WpUserHeader(
                             radius: 45,
-                            canClick: false,
                             userId: widget.wpUserId,
                             showUserName: false,
                             wpSource: WordPressRep.wpSource,
+                            loginRouteName: LoginPage.loginPage,
+                            profileRouteName: ProfileCoolApkPage.profile,
                           ),
 //                        InkWell(
 //                          child: CircleAvatar(
@@ -266,7 +270,7 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
                                 padding: EdgeInsets.all(10.0),
                                 shape: StadiumBorder(),
                                 child: Text(
-                                  "  ${(CacheCenter.tokenCache == null || CacheCenter.tokenCache.userId != widget.wpUserId) ? "注册新账号" : "编辑个人资料"}  ",
+                                  "  ${(WpCacheCenter.tokenCache == null || WpCacheCenter.tokenCache.userId != widget.wpUserId) ? "注册新账号" : "编辑个人资料"}  ",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 color: Color.fromARGB(50, 255, 255, 255),
@@ -306,11 +310,11 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
                       SizedBox(
                         height: 15,
                       ),
-                      CacheCenter.tokenCache != null &&
-                              CacheCenter.tokenCache.userId ==
+                      WpCacheCenter.tokenCache != null &&
+                              WpCacheCenter.tokenCache.userId ==
                                   mProvider.wpUser.id
                           ? Text(
-                              getWpUserCap(CacheCenter.tokenCache.userCaps),
+                              getWpUserCap(WpCacheCenter.tokenCache.userCaps),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             )

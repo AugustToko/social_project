@@ -9,6 +9,8 @@ import 'package:shared/ui/widget/profile_tile.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/log.dart';
 import 'package:shared/util/net_util.dart';
+import 'package:social_project/rebuild/view/page/login_page.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -202,11 +204,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       WpUserHeader(
-                        canClick: false,
                         radius: 20,
                         userId: post.author,
                         showUserName: true,
                         wpSource: WordPressRep.wpSource,
+                        profileRouteName: ProfileCoolApkPage.profile,
+                        loginRouteName: LoginPage.loginPage,
                       ),
                     ],
                   ),
@@ -247,7 +250,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   //TODO: followColumn 待完善
   Widget followColumn(final Size deviceSize, final int userId) {
-    final WpPostSource source = CacheCenter.getPosts(userId);
+    final WpPostSource source = WpCacheCenter.getPosts(userId);
     const double iconSize = 80;
     return Container(
       height: deviceSize.height * 0.13,
@@ -338,17 +341,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
       // 更新 _wpUser
       NetTools.getWpUserInfoAuto(widget.wpUserId).then((user) {
-        CacheCenter.putUser(widget.wpUserId, user);
+        WpCacheCenter.putUser(widget.wpUserId, user);
         _wpUser = user;
         if (!_destroy) {
           setState(() {});
         }
       });
 
-      final WpPostSource wpSource = CacheCenter.getPosts(widget.wpUserId);
+      final WpPostSource wpSource = WpCacheCenter.getPosts(widget.wpUserId);
       if (wpSource == null) {
         NetTools.getAllPosts(widget.wpUserId).then((wpPostSource) {
-          CacheCenter.putPosts(widget.wpUserId, wpPostSource);
+          WpCacheCenter.putPosts(widget.wpUserId, wpPostSource);
           if (!_destroy) {
             // 更新 followColumn
             setState(() {});
@@ -394,12 +397,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       body: bodyData(),
-      floatingActionButton: CacheCenter.tokenCache != null &&
-              CacheCenter.tokenCache.userId == _wpUser.id
+      floatingActionButton: WpCacheCenter.tokenCache != null &&
+              WpCacheCenter.tokenCache.userId == _wpUser.id
           ? null
           : FloatingActionButton(
               onPressed: () {
-                if (CacheCenter.tokenCache == null) {
+                if (WpCacheCenter.tokenCache == null) {
                   showToast("请先登陆",
                       backgroundColor: Colors.red,
                       position: ToastPosition.bottom);

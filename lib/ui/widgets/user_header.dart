@@ -24,22 +24,21 @@ class WpUserHeader extends StatefulWidget {
   final double radius;
 
   /// 是否有点击事件
-  final bool canClick;
-
-  /// 是否专门用于已登录用户的头像展示
-  final bool forUser;
+  final bool clickable;
 
   final loginRouteName;
+
+  final profileRouteName;
 
   WpUserHeader(
       {Key key,
       this.userId = -1,
       this.wpSource = WordPressRep.wpSource,
       this.radius = 25.0,
-      this.canClick = true,
+      this.clickable = true,
       this.showUserName = true,
-      this.forUser = false,
-      @required this.loginRouteName})
+      @required this.loginRouteName,
+      @required this.profileRouteName})
       : super(key: key);
 
   @override
@@ -49,15 +48,23 @@ class WpUserHeader extends StatefulWidget {
 class _WpUserHeaderState extends State<WpUserHeader> {
   var _wpUser = WpUser.defaultUser;
   final double margin = ScreenUtil().setWidth(22);
+  var clickable;
 
   @override
   void initState() {
     super.initState();
 
+    // 避免 Null 参数
+    if (widget.profileRouteName != null && widget.loginRouteName != null) {
+      clickable = false;
+    } else {
+      clickable = widget.clickable;
+    }
+
     // 检查 userId
     if (widget.userId != -1) {
       // 检查缓存
-      _wpUser = CacheCenter.getUser(widget.userId);
+      _wpUser = WpCacheCenter.getUser(widget.userId);
       if (_wpUser.id == -1) {
         NetTools.getWpUserInfo(
                 WordPressRep.getWpLink(widget.wpSource), widget.userId)
@@ -92,21 +99,21 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       children: <Widget>[stack],
     );
 
-    if (widget.canClick) {
+    if (widget.clickable) {
       stack.children.add(Positioned.fill(
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              if (widget.forUser && CacheCenter.tokenCache == null) {
+              if (WpCacheCenter.tokenCache == null) {
                 Navigator.pushNamed(context, widget.loginRouteName)
                     .then((result) {
                   if (result == NavState.LoginDone) {
                     setState(() {
-                      _wpUser =
-                          CacheCenter.getUser(CacheCenter.tokenCache.userId);
+                      _wpUser = WpCacheCenter.getUser(
+                          WpCacheCenter.tokenCache.userId);
                     });
-                    goToProfilePage(CacheCenter.tokenCache.userId);
+                    goToProfilePage(WpCacheCenter.tokenCache.userId);
                   }
                 });
               } else {
@@ -134,7 +141,9 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   }
 
   void goToProfilePage(final int userId) {
-    Navigator.pushNamed(context, widget.loginRouteName,
+    if (widget.profileRouteName == null || widget.profileRouteName == '')
+      return;
+    Navigator.pushNamed(context, widget.profileRouteName,
         arguments: {"wpUserId": userId});
   }
 }

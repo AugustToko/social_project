@@ -57,7 +57,7 @@ class _SendPageState extends State<SendPage> {
                   showToast("标题不可为空!", position: ToastPosition.bottom);
                 } else {
                   NetTools.sendPost(
-                          CacheCenter.tokenCache.token,
+                          WpCacheCenter.tokenCache.token,
                           SendPost(titleController.text, contentController.text,
                               openComment))
                       .then((post) {

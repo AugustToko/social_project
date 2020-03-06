@@ -21,8 +21,8 @@ class _CommonDrawerState extends State<CommonDrawer> {
   @override
   void initState() {
     super.initState();
-    if (CacheCenter.tokenCache != null) {
-      _wpUser = CacheCenter.getUser(CacheCenter.tokenCache.userId);
+    if (WpCacheCenter.tokenCache != null) {
+      _wpUser = WpCacheCenter.getUser(WpCacheCenter.tokenCache.userId);
     }
   }
 
@@ -73,14 +73,14 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 ),
                 Divider(),
                 ClipRect(
-                  child: CacheCenter.tokenCache == null
+                  child: WpCacheCenter.tokenCache == null
                       ? Container()
                       : ListTile(
                           leading: Icon(Icons.exit_to_app),
                           title: Text('登出'),
                           onTap: () {
                             DialogUtil.showLogoutDialog(context, () {
-                              CacheCenter.tokenCache = null;
+                              WpCacheCenter.tokenCache = null;
                               _wpUser = WpUser.defaultUser;
                               setState(() {});
                             });

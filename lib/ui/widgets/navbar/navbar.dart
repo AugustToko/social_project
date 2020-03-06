@@ -64,16 +64,29 @@ class NavBar extends StatelessWidget {
               ),
               alignment: Alignment.center,
               height: 64,
-              // 裁剪小部件行，以抑制动画期间可能发生的任何溢出错误
-              child: ClippedView(
+              child: Container(
+//                color: Colors.amber,
                 child: Row(
                   // 水平居中按钮
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   // Inject a bunch of btn instances into our row
                   // 向我们的行中注入一堆btn实例
                   children: buttonWidgets,
                 ),
               ),
+              // 裁剪小部件行，以抑制动画期间可能发生的任何溢出错误
+//              child: ClippedView(
+//                child: Container(
+//                  color: Colors.amber,
+//                  child: Row(
+//                    // 水平居中按钮
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    // Inject a bunch of btn instances into our row
+//                    // 向我们的行中注入一堆btn实例
+//                    children: buttonWidgets,
+//                  ),
+//                ),
+//              ),
             )
           ],
         )

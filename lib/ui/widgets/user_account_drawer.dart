@@ -6,9 +6,9 @@ import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/ui/widget/about_tile.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/net_util.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/uidata.dart';
-
 
 class UserAccountDrawer extends StatefulWidget {
   @override
@@ -24,8 +24,8 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
   @override
   void initState() {
     super.initState();
-    if (CacheCenter.tokenCache != null) {
-      _wpUser = CacheCenter.getUser(CacheCenter.tokenCache.userId);
+    if (WpCacheCenter.tokenCache != null) {
+      _wpUser = WpCacheCenter.getUser(WpCacheCenter.tokenCache.userId);
     }
   }
 
@@ -87,7 +87,7 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
                         currentAccountPicture: Stack(
                           children: <Widget>[
                             Positioned.fill(
-                                child: CacheCenter.tokenCache == null
+                                child: WpCacheCenter.tokenCache == null
                                     ? WidgetDefault.defaultCircleAvatar(context,
                                         color: Colors.white)
                                     : CircleAvatar(
@@ -100,7 +100,7 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () async {
-                                    if (CacheCenter.tokenCache == null) {
+                                    if (WpCacheCenter.tokenCache == null) {
                                       Navigator.pushNamed(
                                           context, UIData.loginPage,
                                           arguments: {
@@ -109,14 +109,15 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
                                         print(result);
                                         if (result == NavState.LoginDone) {
                                           setState(() {
-                                            _wpUser = CacheCenter.getUser(
-                                                CacheCenter.tokenCache.userId);
+                                            _wpUser = WpCacheCenter.getUser(
+                                                WpCacheCenter
+                                                    .tokenCache.userId);
                                           });
                                         }
                                       });
                                     } else {
                                       Navigator.pushNamed(
-                                          context, UIData.profile,
+                                          context, ProfileCoolApkPage.profile,
                                           arguments: {"wpUserId": _wpUser.id});
                                     }
                                   },
@@ -159,14 +160,14 @@ class _UserAccountDrawerState extends State<UserAccountDrawer> {
                   },
                 ),
                 ClipRect(
-                  child: CacheCenter.tokenCache == null
+                  child: WpCacheCenter.tokenCache == null
                       ? Container()
                       : ListTile(
                           leading: CircleAvatar(child: Icon(Icons.exit_to_app)),
                           title: Text('登出'),
                           onTap: () {
                             DialogUtil.showLogoutDialog(context, () {
-                              CacheCenter.tokenCache = null;
+                              WpCacheCenter.tokenCache = null;
                               _wpUser = WpUser.defaultUser;
                               setState(() {});
                             });

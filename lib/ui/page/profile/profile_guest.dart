@@ -31,8 +31,8 @@ class _ProfileContentState extends State<ProfileContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (CacheCenter.tokenCache != null) {
-      _wpUser = CacheCenter.getUser(CacheCenter.tokenCache.userId);
+    if (WpCacheCenter.tokenCache != null) {
+      _wpUser = WpCacheCenter.getUser(WpCacheCenter.tokenCache.userId);
     }
 
     return Scaffold(
@@ -62,7 +62,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 title: buildText(context, _wpUser.name),
                 trailing: buildArrowIcon(context, Icons.keyboard_arrow_right),
                 onTap: () {
-                  if (CacheCenter.tokenCache == null) {
+                  if (WpCacheCenter.tokenCache == null) {
                     Navigator.pushNamed(context, UIData.loginPage)
                         .then((result) {
                       if (result == NavState.LoginDone) {
@@ -71,7 +71,7 @@ class _ProfileContentState extends State<ProfileContent> {
                     });
                   } else {
                     Navigator.of(context).pushNamed(UIData.profile,
-                        arguments: {"wpUserId": CacheCenter.tokenCache.userId});
+                        arguments: {"wpUserId": WpCacheCenter.tokenCache.userId});
                   }
                 },
                 subtitle: Text(
@@ -81,7 +81,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 ),
               ),
               Divider(),
-              CacheCenter.tokenCache == null
+              WpCacheCenter.tokenCache == null
                   ? Container()
                   : Column(
                       children: <Widget>[
@@ -160,7 +160,7 @@ class _ProfileContentState extends State<ProfileContent> {
                 },
               ),
               Divider(),
-              CacheCenter.tokenCache == null
+              WpCacheCenter.tokenCache == null
                   ? Container()
                   : Column(
                       children: <Widget>[
@@ -173,7 +173,7 @@ class _ProfileContentState extends State<ProfileContent> {
                           trailing: buildArrowIcon(context, Icons.arrow_right),
                           onTap: () {
                             DialogUtil.showLogoutDialog(context, () {
-                              CacheCenter.tokenCache = null;
+                              WpCacheCenter.tokenCache = null;
                               _wpUser = WpUser.defaultUser;
                               setState(() {});
                             });

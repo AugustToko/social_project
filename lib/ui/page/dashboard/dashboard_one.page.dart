@@ -33,9 +33,9 @@ class GuidePage extends StatelessWidget {
 //                  ),
                   ProfileTile(
                     title: "Hi, " +
-                        (CacheCenter.tokenCache == null
+                        (WpCacheCenter.tokenCache == null
                             ? "User"
-                            : CacheCenter.tokenCache.userDisplayName),
+                            : WpCacheCenter.tokenCache.userDisplayName),
                     subtitle: "欢迎来到 Social Project",
                     textColor: Colors.white,
                   ),

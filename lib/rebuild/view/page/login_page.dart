@@ -303,7 +303,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
     }).doOnDone(() {
       _controller.reverse();
     }).listen((data) {
-      if (CacheCenter.tokenCache != null) {
+      if (WpCacheCenter.tokenCache != null) {
         showToast("登陆成功！");
         Navigator.pop(context, NavState.LoginDone);
       } else {

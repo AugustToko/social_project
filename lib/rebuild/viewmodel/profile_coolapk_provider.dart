@@ -58,7 +58,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     });
 
     NetTools.getAllPosts(wpUserId).then((wpPostSource) {
-      CacheCenter.putPosts(wpUserId, wpPostSource);
+      WpCacheCenter.putPosts(wpUserId, wpPostSource);
       source = wpPostSource;
       return wpPostSource;
     }).then((wpSource) {

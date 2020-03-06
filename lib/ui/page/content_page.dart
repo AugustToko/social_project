@@ -6,6 +6,7 @@ import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
@@ -39,11 +40,19 @@ class _TabBarPageState extends State<ContentPage>
   //标签控制器，主要是管理标签的行为，比如移动或者跳转到哪一个标签
   TabController _tabController;
 
+  final List<Widget> tabs = [
+    //TODO: 动态标签（根据服务器）
+    Tab(child: Text("博客")),
+    Tab(text: "图虫"),
+//    Tab(child: Text("热门")),
+    Tab(text: "版块"),
+  ];
+
   //初始化方法，当有状态widget已创建，就会为之创建一个state对象，就会调用initState方法
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: tabs.length, vsync: this);
     _scrollViewController = ScrollController();
   }
 
@@ -71,7 +80,7 @@ class _TabBarPageState extends State<ContentPage>
                 children: <Widget>[
                   wpPage,
                   PhotoViewDemo(),
-                  SampleHomePage(),
+//                  SampleHomePage(),
                   TopicPage(),
                 ],
                 controller: _tabController,
@@ -86,7 +95,7 @@ class _TabBarPageState extends State<ContentPage>
           onPressed: () async {
             await Navigator.pushNamed(
               context,
-              CacheCenter.tokenCache == null
+              WpCacheCenter.tokenCache == null
                   ? UIData.loginPage
                   : UIData.sendPage,
             ).then((result) {
@@ -184,10 +193,11 @@ class _TabBarPageState extends State<ContentPage>
                       WpUserHeader(
                         radius: 20,
                         showUserName: false,
-                        forUser: true,
-                        userId: CacheCenter.tokenCache == null
+                        userId: WpCacheCenter.tokenCache == null
                             ? -1
-                            : CacheCenter.tokenCache.userId, loginRouteName: LoginPage.loginPage,
+                            : WpCacheCenter.tokenCache.userId,
+                        loginRouteName: LoginPage.loginPage,
+                        profileRouteName: ProfileCoolApkPage.profile,
                       ),
                       SizedBox(
                         width: 4,
@@ -204,13 +214,7 @@ class _TabBarPageState extends State<ContentPage>
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
           MyTabBar(
-            tabs: [
-              //TODO: 动态标签（根据服务器）
-              Tab(child: Text("博客")),
-              Tab(text: "图虫"),
-              Tab(child: Text("热门")),
-              Tab(text: "版块"),
-            ],
+            tabs: tabs,
             controller: _tabController,
           ),
         ),

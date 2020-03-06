@@ -56,11 +56,11 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         routeName: UIData.timeLine,
       );
       break;
-    case UIData.profile:
+    case ProfileCoolApkPage.profile:
       return RouteResult(
         widget: ProfileCoolApkPage(arguments["wpUserId"]),
         showStatusBar: false,
-        routeName: UIData.profile,
+        routeName: ProfileCoolApkPage.profile,
       );
       break;
     case UIData.commentDetail:
