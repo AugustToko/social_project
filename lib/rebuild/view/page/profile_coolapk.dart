@@ -224,7 +224,6 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
             ),
           ],
           flexibleSpace: CustomFlexibleSpaceBar(
-            callBack: (t) {},
             onImageTap: () {
               DialogUtil.showAlertDialog(context, "更换背景图片", "将更换背景图片", []);
             },

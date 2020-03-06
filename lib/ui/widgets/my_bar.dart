@@ -17,7 +17,7 @@ class CustomFlexibleSpaceBar extends StatefulWidget {
     this.centerTitle,
     this.titlePadding,
     this.appbarColor,
-    this.callBack,
+//    this.callBack,
     this.onImageTap,
     this.collapseMode = CollapseMode.parallax,
     this.stretchModes = const <StretchMode>[StretchMode.zoomBackground],
@@ -55,7 +55,7 @@ class CustomFlexibleSpaceBar extends StatefulWidget {
     );
   }
 
-  final Function(double opacity) callBack;
+//  final Function(double opacity) callBack;
   final Function onImageTap;
 
   @override
@@ -178,7 +178,7 @@ class _CustomFlexibleSpaceBarState extends State<CustomFlexibleSpaceBar> {
 //                ),
 //              );
 
-          widget.callBack(t);
+//          widget.callBack(t);
 
           children.add(Stack(
             children: <Widget>[

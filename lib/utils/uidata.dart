@@ -7,7 +7,7 @@ import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
-import 'package:social_project/ui/page/profile/profile_one_page.dart';
+import 'package:social_project/ui/page/sample/profile_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/send_page.dart';
