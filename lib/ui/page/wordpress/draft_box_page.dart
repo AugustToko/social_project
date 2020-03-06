@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:social_project/model/editor/editor_data.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
+import 'package:social_project/utils/uidata.dart';
 
 import '../../../env.dart';
 
@@ -14,7 +18,8 @@ class DraftBoxPage extends StatefulWidget {
 }
 
 class _DraftBoxPageState extends State<DraftBoxPage> {
-  List<FileSystemEntity> listData = [];
+//  List<FileSystemEntity> listData = [];
+  List<EditorData> listEditorData = [];
 
   @override
   void initState() {
@@ -48,23 +53,14 @@ class _DraftBoxPageState extends State<DraftBoxPage> {
               },
               child: Text(
                 "清空草稿箱",
-                style: TextStyle(fontSize: 16),
               ),
             ),
           )
         ],
       ),
       body: Center(
-          child: listData.length == 0
-              ? Text("恩，什么都没有。")
-              : ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(listData[index].path),
-                    );
-                  },
-                  itemCount: listData.length,
-                )),
+          child:
+              listEditorData.length == 0 ? Text("恩，什么都没有。") : buildListView()),
     );
   }
 
@@ -82,16 +78,94 @@ class _DraftBoxPageState extends State<DraftBoxPage> {
     });
   }
 
+  /// 加载草稿数据
   void _loadData() {
-    listData.clear();
-    Env.getTempArticlesDir().exists().then((exists) {
+    listEditorData.clear();
+    Env.getTempArticlesDir().exists().then((exists) async {
       if (exists) {
-        Env.getTempArticlesDir().list().toList().then((list) {
-          setState(() {
-            listData.addAll(list);
+        var list = await Env.getTempArticlesDir().list().toList();
+        list.forEach((i) async {
+          File(i.path).readAsString().then((str) {
+            setState(() {
+              listEditorData.add(EditorData.fromJson(jsonDecode(str)));
+            });
           });
         });
       }
     });
+  }
+
+  buildListView() {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        var data = listEditorData[index];
+        return Stack(
+          children: <Widget>[
+            Material(
+              child: InkWell(
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(ScreenUtil().setWidth(35)),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              data.title,
+                              style: Theme.of(context).textTheme.title,
+                              textAlign: TextAlign.left,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(18),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              data.insert.substring(
+                                  0,
+                                  data.insert.length > 30
+                                      ? 30
+                                      : data.insert.length),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(18),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Time",
+                              style: Theme.of(context).textTheme.subtitle,
+                            ),
+                            Text(
+                              "图文",
+                              style: Theme.of(context).textTheme.subtitle,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(UIData.sendPage, arguments: {"editorData" : data});
+                },
+              ),
+            ),
+            Container(
+              color: Theme.of(context).textTheme.title.color.withOpacity(0.1),
+              height: 1,
+            )
+          ],
+        );
+      },
+      itemCount: listEditorData.length,
+    );
   }
 }

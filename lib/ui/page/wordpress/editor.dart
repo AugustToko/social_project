@@ -25,36 +25,44 @@ class EditorPage extends StatefulWidget {
   final FocusNode focusNode = FocusNode(canRequestFocus: true);
 
   final TextEditingController titleController = TextEditingController();
-  ZefyrController controller;
 
   final int lineHeight = 42;
 
+  /// 预加载数据
+  final EditorData editorData;
+
+  EditorPage({Key key, this.editorData}) : super(key: key);
+
   @override
-  EditorPageState createState() => EditorPageState();
+  EditorPageState createState() {
+    return EditorPageState();
+  }
 }
 
 class EditorPageState extends State<EditorPage> {
   File headerImage;
   int height = 300;
 
+  ZefyrController controller;
+
   @override
   void initState() {
     super.initState();
     // Here we must load the document and pass it to Zefyr controller.
     final document = _loadDocument();
-    widget.controller = ZefyrController(document);
-    widget.controller.addListener(() {
+    controller = ZefyrController(document);
+    controller.addListener(() {
       setState(() {
-        height = (widget.controller.document.toPlainText().split('\n').length)
-                .round() *
-            widget.lineHeight;
+        height =
+            (controller.document.toPlainText().split('\n').length).round() *
+                widget.lineHeight;
       });
     });
   }
 
   @override
   void dispose() {
-    widget.controller.dispose();
+    controller.dispose();
     widget.titleController.dispose();
     super.dispose();
   }
@@ -82,10 +90,8 @@ class EditorPageState extends State<EditorPage> {
                     } else {
                       NetTools.sendPost(
                               WpCacheCenter.tokenCache.token,
-                              SendPost(
-                                  widget.titleController.text,
-                                  widget.controller.document.toPlainText(),
-                                  true))
+                              SendPost(widget.titleController.text,
+                                  controller.document.toPlainText(), true))
                           .then((post) {
                         if (post != null) {
                           showSuccessToast(context, "发表成功!");
@@ -186,7 +192,7 @@ class EditorPageState extends State<EditorPage> {
                         mode: ZefyrMode.edit,
                         autofocus: false,
                         physics: NeverScrollableScrollPhysics(),
-                        controller: widget.controller,
+                        controller: controller,
                         focusNode: widget.focusNode,
                         imageDelegate: MyAppZefyrImageDelegate(),
                       ),
@@ -199,7 +205,7 @@ class EditorPageState extends State<EditorPage> {
         ),
         onWillPop: () {
           return DialogUtil.showExitEditorDialog(
-              context, widget.controller.document.length > 1, () {
+              context, controller.document.length > 1, () {
             _saveDocument(context);
           });
         });
@@ -207,6 +213,13 @@ class EditorPageState extends State<EditorPage> {
 
   /// Loads the document to be edited in Zefyr.
   NotusDocument _loadDocument() {
+    // 进行预加载数据
+    if (widget.editorData != null) {
+      widget.titleController.text = widget.editorData.title;
+      final Delta delta = Delta.fromJson([widget.editorData.toJson()]);
+      return NotusDocument.fromDelta(delta);
+    }
+
     // For simplicity we hardcode a simple document with one line of text
     // saying "Zefyr Quick Start".
     // (Note that delta must always end with newline.)
@@ -216,7 +229,9 @@ class EditorPageState extends State<EditorPage> {
 
   void _saveDocument(BuildContext context) {
     // 解码 NotusDocument, 再编码为 Json
-    var data = EditorData.fromJson(json.decode(jsonEncode(widget.controller)));
+    print(jsonEncode(controller.document));
+    var data =
+        EditorData.fromJson(json.decode(jsonEncode(controller.document))[0]);
     data.title = widget.titleController.text ?? "";
     final contents = json.encode(data);
 
