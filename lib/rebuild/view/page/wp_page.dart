@@ -24,10 +24,6 @@ class WordPressPage extends PageProvideNode<WordPressPageProvider> {
   Widget buildContent(BuildContext context) {
     return _WordPressPageContent(mProvider);
   }
-
-  void onNewPostReleased() {
-    mProvider.onRefresh();
-  }
 }
 
 /// 获取 WordPress Posts

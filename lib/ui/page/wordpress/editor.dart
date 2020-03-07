@@ -11,8 +11,8 @@ import 'package:shared/model/wordpress/send/send_post_data.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
+import 'package:shared/ui/loading_dialog.dart';
 import 'package:social_project/model/editor/editor_data.dart';
-import 'package:social_project/ui/widgets/my_bar.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:zefyr/zefyr.dart';
 
@@ -88,15 +88,25 @@ class EditorPageState extends State<EditorPage> {
                         widget.titleController.text == "") {
                       showErrorToast(context, "标题不可为空!");
                     } else {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (c) {
+                          return LoadingDialog(
+                            text: "正在发送文章...",
+                          );
+                        },
+                      );
                       NetTools.sendPost(
                               WpCacheCenter.tokenCache.token,
                               SendPost(widget.titleController.text,
                                   controller.document.toPlainText(), true))
                           .then((post) {
                         if (post != null) {
-                          showSuccessToast(context, "发表成功!");
-                          Navigator.pop(context, NavState.SendWpPostDone);
+                          Navigator.pop(context);
                         }
+                      }).whenComplete((){
+                        Navigator.pop(context, NavState.SendWpPostDone);
                       });
                     }
                   },

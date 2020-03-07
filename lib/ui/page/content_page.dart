@@ -5,11 +5,11 @@ import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/photo_view.dart';
-import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/page/topic_page.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -96,17 +96,14 @@ class _TabBarPageState extends State<ContentPage>
             await Navigator.pushNamed(
               context,
               WpCacheCenter.tokenCache == null
-                  ? UIData.loginPage
+                  ? LoginPage.loginPage
                   : UIData.sendPage,
             ).then((result) {
-              if (result != null) {
-                switch (result) {
-                  case NavState.SendWpPostDone:
-                    wpPage.onNewPostReleased();
-                    break;
-                  default:
-                    break;
-                }
+              if (result != NavState.SendWpPostDone) return;
+              switch (result) {
+                case NavState.SendWpPostDone:
+                  showSuccessToast(context, "发表成功!");
+                  break;
               }
             });
           },
