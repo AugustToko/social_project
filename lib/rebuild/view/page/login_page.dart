@@ -8,12 +8,12 @@ import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/tost.dart';
 import 'package:shared/util/web_pages.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
-
   static const String loginPage = "/loginPage";
 
   @override
@@ -304,14 +304,14 @@ class LoginPageContentPageState extends State<_LoginPageContent>
       _controller.reverse();
     }).listen((data) {
       if (WpCacheCenter.tokenCache != null) {
-        showToast("登陆成功！");
         Navigator.pop(context, NavState.LoginDone);
+        showSuccessToast(context, "登陆成功！");
       } else {
-        showToast("登陆失败！", position: ToastPosition.bottom);
+        showErrorToast(context, "登陆失败！");
       }
     }, onError: (e) {
       print(e);
-      showToast("登陆失败！");
+      showErrorToast(context, "登陆失败！");
     });
     mProvide.addSubscription(s);
   }
@@ -319,7 +319,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   @override
   void onClick(String action) {
     if (ACTION_LOGIN == action) {
-      _login();
+    _login();
     }
   }
 }

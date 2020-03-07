@@ -30,6 +30,8 @@ class WpUserHeader extends StatefulWidget {
 
   final profileRouteName;
 
+  final needLogin;
+
   WpUserHeader(
       {Key key,
       this.userId = -1,
@@ -38,7 +40,8 @@ class WpUserHeader extends StatefulWidget {
       this.clickable = true,
       this.showUserName = true,
       @required this.loginRouteName,
-      @required this.profileRouteName})
+      @required this.profileRouteName,
+      this.needLogin = false})
       : super(key: key);
 
   @override
@@ -105,7 +108,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              if (WpCacheCenter.tokenCache == null) {
+              if (WpCacheCenter.tokenCache == null && widget.needLogin) {
+                debugPrint("GotoLogin...");
                 Navigator.pushNamed(context, widget.loginRouteName)
                     .then((result) {
                   if (result == NavState.LoginDone) {
@@ -143,6 +147,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
   void goToProfilePage(final int userId) {
     if (widget.profileRouteName == null || widget.profileRouteName == '')
       return;
+    debugPrint("GotoLogin...");
     Navigator.pushNamed(context, widget.profileRouteName,
         arguments: {"wpUserId": userId});
   }
