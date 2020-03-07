@@ -39,83 +39,82 @@ class _WpPageState extends State<WpDetailPage> {
       ),
       body: ThemeUtil.materialPostCard(
           Expanded(
-              child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Text(
-                      _post.title.rendered,
-                      style: TextStyle(fontSize: 30),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: Text(
+                        _post.title.rendered,
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
-                  ),
-                  Html(
-                    data: _post.content.rendered,
-                    onLinkTap: (url) {
-                      FlutterWebBrowser.openWebPage(url: url);
-                    },
-                    useRichText: false,
-                    customRender: (node, children) {
-                      if (node is dom.Element) {
-                        switch (node.localName) {
+                    Html(
+                      data: _post.content.rendered,
+                      onLinkTap: (url) {
+                        FlutterWebBrowser.openWebPage(url: url);
+                      },
+                      useRichText: false,
+                      customRender: (node, children) {
+                        if (node is dom.Element) {
+                          switch (node.localName) {
                           // 处理 <video>
-                          case "video":
-                            final videoPlayerController =
-                                VideoPlayerController.network(
-                              node.attributes["src"],
-                            );
+                            case "video":
+                              final videoPlayerController =
+                              VideoPlayerController.network(
+                                node.attributes["src"],
+                              );
 
-                            final chewieController = ChewieController(
-                              videoPlayerController: videoPlayerController,
-                              aspectRatio: 3 / 2,
-                              autoPlay: true,
-                              looping: true,
-                            );
+                              final chewieController = ChewieController(
+                                videoPlayerController: videoPlayerController,
+                                aspectRatio: 3 / 2,
+                                autoPlay: true,
+                                looping: true,
+                              );
 
-                            needDispose.add(videoPlayerController);
-                            needDispose.add(chewieController);
+                              needDispose.add(videoPlayerController);
+                              needDispose.add(chewieController);
 
-                            final playerWidget = Chewie(
-                              controller: chewieController,
-                            );
+                              final playerWidget = Chewie(
+                                controller: chewieController,
+                              );
 
-                            return playerWidget;
-                          case "img":
-                            String imageUrl = node.attributes["data-original"];
-                            return imageUrl == null
-                                ? null
-                                : Image.network(imageUrl);
-                          default:
-                            return null;
+                              return playerWidget;
+                            case "img":
+                              String imageUrl = node.attributes["data-original"];
+                              return imageUrl == null
+                                  ? null
+                                  : Image.network(imageUrl);
+                            default:
+                              return null;
+                          }
+                        } else {
+                          return null;
                         }
-                      } else {
-                        return null;
-                      }
-                    },
-                    onImageTap: (url) {
-                      LogUtils.d("WpDetailPage", "onImageTap");
-                      Navigator.pushNamed(context, "fluttercandies://picswiper",
-                          arguments: {
-                            "index": 0,
-                            "pics": [PicSwiperItem(url)],
-                          });
-                    },
-                    onImageError: (p1, p2) {
-                      print("Image Error---------------start-----------------");
-                      print(p1);
-                      print("---------------=======-----------------");
-                      print(p2);
-                      print("Image Error----------------end----------------");
-                    },
-                    showImages: true,
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  )
-                ],
-              ),
-            ),
-          )),
+                      },
+                      onImageTap: (url) {
+                        LogUtils.d("WpDetailPage", "onImageTap");
+                        Navigator.pushNamed(context, "fluttercandies://picswiper",
+                            arguments: {
+                              "index": 0,
+                              "pics": [PicSwiperItem(url)],
+                            });
+                      },
+                      onImageError: (p1, p2) {
+                        print("Image Error---------------start-----------------");
+                        print(p1);
+                        print("---------------=======-----------------");
+                        print(p2);
+                        print("Image Error----------------end----------------");
+                      },
+                      showImages: true,
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    )
+                  ],
+                ),
+              )),
           _post,
           ScreenUtil().setWidth(20),
           marginBottom: true),

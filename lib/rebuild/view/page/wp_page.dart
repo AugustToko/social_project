@@ -59,7 +59,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
       children: <Widget>[
         LikeButton(
           likeCount: 999,
-          likeBuilder: (bool isClicked) {
+          likeBuilder: (isClicked) {
             return Icon(
               FontAwesomeIcons.comment,
               color: isClicked ? Colors.deepPurpleAccent : Colors.grey,

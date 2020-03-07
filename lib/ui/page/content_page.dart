@@ -156,6 +156,7 @@ class _TabBarPageState extends State<ContentPage>
                       Expanded(
                         child: TextField(
                           autofocus: false,
+                          focusNode: FocusNode(canRequestFocus: true),
                           keyboardAppearance: App.isDarkMode(context)
                               ? Brightness.dark
                               : Brightness.light,
