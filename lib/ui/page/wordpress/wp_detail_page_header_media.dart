@@ -14,6 +14,7 @@ import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
+import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:video_player/video_player.dart';
 
 import '../content_page.dart';
@@ -90,6 +91,9 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
                             aspectRatio: 3 / 2,
                             autoPlay: true,
                             looping: true,
+                            allowFullScreen: true,
+                            isLive: false,
+                            allowMuting: true,
                           );
 
                           needDispose.add(videoPlayerController);
@@ -104,7 +108,24 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
                           String imageUrl = node.attributes["data-original"];
                           return imageUrl == null
                               ? null
-                              : Image.network(imageUrl);
+                              : ExtendedImage.network(
+                                  imageUrl,
+                                  cache: true,
+                                  clearMemoryCacheIfFailed: true,
+                                  filterQuality: FilterQuality.low,
+                                  enableMemoryCache: true,
+                                  loadStateChanged: (state) {
+                                    if (state.extendedImageLoadState ==
+                                        LoadState.failed) {
+                                      showErrorToast(context, "图片加载失败!");
+                                      return Text("加载失败");
+                                    }
+                                    return null;
+                                  },
+                                  onDoubleTap: (state) {
+                                    showErrorToast(context, "正在建设...");
+                                  },
+                                );
                         default:
                           return null;
                       }
@@ -112,22 +133,7 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
                       return null;
                     }
                   },
-                  onImageTap: (url) {
-                    LogUtils.d("WpDetailPage", "onImageTap");
-                    Navigator.pushNamed(context, "fluttercandies://picswiper",
-                        arguments: {
-                          "index": 0,
-                          "pics": [PicSwiperItem(url)],
-                        });
-                  },
-                  onImageError: (p1, p2) {
-                    print("Image Error---------------start-----------------");
-                    print(p1);
-                    print("---------------=======-----------------");
-                    print(p2);
-                    print("Image Error----------------end----------------");
-                  },
-                  showImages: true,
+//                  showImages: true,
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 )
               ],
@@ -138,7 +144,8 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
     );
   }
 
-  List<Widget> _sliverBuilder(final BuildContext context, final bool innerBoxIsScrolled) {
+  List<Widget> _sliverBuilder(
+      final BuildContext context, final bool innerBoxIsScrolled) {
     var needHeaderMedia = widget.content.jetpackFeaturedMediaUrl != null &&
         widget.content.jetpackFeaturedMediaUrl != '';
     return <Widget>[
