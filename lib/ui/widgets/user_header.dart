@@ -6,6 +6,8 @@ import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/net_util.dart';
+import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/tost.dart';
 
 /// 根据 wp 所给 userId 获取 user 头像、用户名
 class WpUserHeader extends StatefulWidget {
@@ -30,7 +32,7 @@ class WpUserHeader extends StatefulWidget {
 
   final profileRouteName;
 
-  final needLogin;
+  final bool needLogin;
 
   WpUserHeader(
       {Key key,
@@ -76,7 +78,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
             _wpUser = user;
             setState(() {});
           } else {
-            showToast("未找到相关 WpUser.");
+            showErrorToast(context, "未找到相关 WpUser.");
             Navigator.pop(context);
           }
         });
@@ -137,7 +139,10 @@ class _WpUserHeaderState extends State<WpUserHeader> {
         ),
         // TODO: 超出屏幕宽度
         // 用户名
-        Text(_wpUser.name),
+        Text(
+          _wpUser.name,
+          style: TextStyle(fontSize: ThemeUtil.wpUserHeaderTextSize),
+        ),
       ]);
     }
 

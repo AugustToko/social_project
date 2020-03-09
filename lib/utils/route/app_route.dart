@@ -14,6 +14,7 @@ import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
 import 'package:social_project/ui/page/wordpress/editor.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
+import 'package:social_project/ui/page/wordpress/wp_detail_page_header_media.dart';
 
 import '../uidata.dart';
 
@@ -72,7 +73,10 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       break;
     case UIData.wpPostDetail:
       return RouteResult(
-        widget: WpDetailPage(
+//        widget: WpDetailPage(
+//          arguments['postItem'],
+//        ),
+        widget: WpDetailPageHeaderMedia(
           arguments['postItem'],
         ),
         showStatusBar: false,

@@ -59,7 +59,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                         size: 35,
                       ),
                       SizedBox(
-                        width: ScreenUtil().setWidth(20),
+                        width: ScreenUtil().setWidth(40),
                       ),
                       Text(
                         UIData.appName + "  Step By Step.",

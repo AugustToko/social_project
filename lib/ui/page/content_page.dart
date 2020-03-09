@@ -117,7 +117,7 @@ class _TabBarPageState extends State<ContentPage>
     );
   }
 
-  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
+  List<Widget> _sliverBuilder(final BuildContext context, final bool innerBoxIsScrolled) {
     return <Widget>[
       SliverAppBar(
         centerTitle: true,
@@ -191,6 +191,7 @@ class _TabBarPageState extends State<ContentPage>
                       WpUserHeader(
                         radius: 20,
                         showUserName: false,
+                        needLogin: true,
                         userId: WpCacheCenter.tokenCache == null
                             ? -1
                             : WpCacheCenter.tokenCache.userId,

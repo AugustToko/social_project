@@ -206,10 +206,10 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
           iconTheme: mProvider.iconTheme,
           brightness: Brightness.dark,
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            IconButton(icon: Icon(Icons.share), onPressed: () {}),
             PopupMenuButton<Choice>(
               onSelected: (val) => val.onTap(),
-              itemBuilder: (BuildContext context) {
+              itemBuilder: (context) {
                 return choices.map((Choice choice) {
                   return PopupMenuItem<Choice>(
                     value: choice,
