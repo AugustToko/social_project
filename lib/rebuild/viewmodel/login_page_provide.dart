@@ -53,7 +53,7 @@ class LoginPageProvider extends BaseProvide {
     if (data == null || data == '') {
       clearAuth();
     } else {
-      var temp = data.split('.');
+      var temp = data.split(WordPressMvvmRepo.splitChar);
       if (temp.length < 2) {
         return;
       }
@@ -90,10 +90,12 @@ class LoginPageProvider extends BaseProvide {
       .doOnListen(() => loading = true)
       .doOnDone(() => loading = false);
 
+  /// 保存密码
   void saveAuth() {
     _repo.saveAuth(username, password);
   }
 
+  /// 清除登陆信息
   void clearAuth() {
     rememberPassword = false;
     _repo.clearAuth();

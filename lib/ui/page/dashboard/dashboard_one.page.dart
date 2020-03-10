@@ -225,7 +225,7 @@ class GuidePage extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),
-            actionMenuCard(),
+//            actionMenuCard(),
 //            SizedBox(
 //              height: deviceSize.height * 0.01,
 //            ),
