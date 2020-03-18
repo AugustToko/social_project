@@ -9,6 +9,7 @@ import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/tost.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -53,8 +54,13 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     _posts.clear();
 
     // 更新 _wpUser
-    getWpUserNew(wpUserId).then((user) {
-      wpUser = user;
+    getWpUser(wpUserId).then((user) {
+      if (user == null) {
+        Navigator.of(context).pop();
+        showErrorToast(context, "获取用户失败!");
+      } else{
+        wpUser = user;
+      }
     });
 
     NetTools.getAllPosts(wpUserId).then((wpPostSource) {

@@ -66,24 +66,17 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       clickable = widget.clickable;
     }
 
-    // 检查 userId
-    if (widget.userId != -1) {
-      // 检查缓存
-      _wpUser = WpCacheCenter.getUser(widget.userId);
-      if (_wpUser.id == -1) {
-        NetTools.getWpUserInfo(
-                WordPressRep.getWpLink(widget.wpSource), widget.userId)
-            .then((user) {
-          if (user != null) {
-            _wpUser = user;
-            setState(() {});
-          } else {
-            showErrorToast(context, "未找到相关 WpUser.");
-            Navigator.pop(context);
-          }
+    getWpUser(widget.userId).then((user) {
+      if (user != null) {
+        setState(() {
+          _wpUser = user;
         });
+      } else {
+        Navigator.pop(context);
+        clickable = false;
+        showErrorToast(context, "未找到相关 WpUser.");
       }
-    }
+    });
   }
 
   @override

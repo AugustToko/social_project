@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,17 @@ import 'package:like_button/like_button.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/model/wordpress/wp_category.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/tost.dart';
+import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
 import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/utils/route/app_route.dart';
+import 'package:html/dom.dart' as dom;
 
 /// TODO: 写完文章后自动刷新
 class WordPressPage extends PageProvideNode<WordPressPageProvider> {
@@ -50,53 +55,6 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
     super.initState();
     mProvider = widget.provider;
     mProvider.init(context);
-  }
-
-  Widget actionRow(final WpPost post) {
-    const double iconSize = 18.0;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        LikeButton(
-          likeCount: 999,
-          likeBuilder: (isClicked) {
-            return Icon(
-              FontAwesomeIcons.comment,
-              color: isClicked ? Colors.deepPurpleAccent : Colors.grey,
-              size: iconSize,
-            );
-          },
-        ),
-        LikeButton(
-          likeCount: 999,
-          likeBuilder: (bool isClicked) {
-            return Icon(
-              FontAwesomeIcons.retweet,
-              color: isClicked ? Colors.deepOrange : Colors.grey,
-              size: iconSize,
-            );
-          },
-        ),
-        LikeButton(
-          likeCount: 999,
-          size: iconSize,
-        ),
-        LikeButton(
-          likeCount: 999,
-          onTap: (bool isLiked) {
-            mProvider.share(post);
-            return Future.value(true);
-          },
-          likeBuilder: (bool isClicked) {
-            return Icon(
-              FontAwesomeIcons.share,
-              color: isClicked ? Colors.blue : Colors.grey,
-              size: iconSize,
-            );
-          },
-        ),
-      ],
-    );
   }
 
   @override
@@ -179,8 +137,17 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                                 SizedBox(
                                   height: 10,
                                 ),
-//                                buildTagsWidget(item, context),
+                                buildTagsWidget(item, context),
                                 Html(
+                                  customRender: (node, children) {
+                                    if (node is dom.Element) {
+                                      print("----------------------------------");
+                                      print(node.localName);
+                                      return null;
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                   data: contentSmall,
                                 ),
 //                                Padding(
@@ -243,51 +210,105 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 标签
-  // TODO: 标签编辑
-  Widget buildTagsWidget(WpPost item, BuildContext context) {
+  Widget buildTagsWidget(final WpPost item, final BuildContext context) {
     final fontSize = 12.0;
-    var tag = Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(3.0),
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
-            borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
-            ),
-          ),
-          child: Text(
-            "TAG DEBUG",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: fontSize),
-          ),
-        ),
-        Positioned.fill(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                // TODO: 标签按下
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-
+    final tags = <WpCategory>[];
     var spacing = ScreenUtil().setWidth(10.0);
+
+    WordPressConfigCenter.wpCategories.list.forEach((val) {
+      if (item.categories.contains(val.id)) {
+        tags.add(val);
+      }
+    });
+
+    Widget wpTag(String name) {
+      return Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(3.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              border:
+                  Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
+              borderRadius: BorderRadius.all(
+                Radius.circular(5.0),
+              ),
+            ),
+            child: Text(
+              name,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: fontSize),
+            ),
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  // TODO: 标签按下
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    var tagWidgets = <Widget>[];
+    tags.forEach((t) {
+      tagWidgets.add(wpTag(t.name));
+    });
 
     return Wrap(
       runSpacing: spacing,
       spacing: spacing,
-      children: [
-        tag,
-        tag,
-        tag,
-        tag,
-        tag,
-        tag,
+      children: tagWidgets,
+    );
+  }
+
+  Widget actionRow(final WpPost post) {
+    const double iconSize = 18.0;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (isClicked) {
+            return Icon(
+              FontAwesomeIcons.comment,
+              color: isClicked ? Colors.deepPurpleAccent : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+        LikeButton(
+          likeCount: 999,
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.retweet,
+              color: isClicked ? Colors.deepOrange : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
+        LikeButton(
+          likeCount: 999,
+          size: iconSize,
+        ),
+        LikeButton(
+          likeCount: 999,
+          onTap: (bool isLiked) {
+            mProvider.share(post);
+            return Future.value(true);
+          },
+          likeBuilder: (bool isClicked) {
+            return Icon(
+              FontAwesomeIcons.share,
+              color: isClicked ? Colors.blue : Colors.grey,
+              size: iconSize,
+            );
+          },
+        ),
       ],
     );
   }

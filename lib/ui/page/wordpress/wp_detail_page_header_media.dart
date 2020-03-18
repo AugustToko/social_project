@@ -105,6 +105,7 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
 
                           return playerWidget;
                         case "img":
+                          print("----------------------------------");
                           String imageUrl = node.attributes["data-original"];
                           return imageUrl == null
                               ? null
@@ -133,7 +134,7 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
                       return null;
                     }
                   },
-//                  showImages: true,
+                  showImages: true,
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 )
               ],

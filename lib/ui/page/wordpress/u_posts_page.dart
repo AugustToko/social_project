@@ -101,13 +101,6 @@ class _WordPressPageState extends State<PostsPage> {
                         // 内容文本
                         var content = item.content.rendered;
 
-                        // 修复图片
-                        if (WordPressRep.wpSource == WpSource.WeiRan) {
-                          content = content.replaceAll(
-                              "weiran-1254802562.file.myqcloud.com/static/weiran_index/wp-content/uploads/",
-                              "static.weiran.org.cn/img/");
-                        }
-
                         content = content.replaceAll("[java]", "<code>");
                         content = content.replaceAll("[/java]", "</code>");
 

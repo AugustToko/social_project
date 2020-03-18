@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/rep/wp_rep.dart';
+import 'package:shared/util/net_util.dart';
 import 'package:shared/util/shared_prefs.dart';
+import 'package:shared/util/urls.dart';
 import 'package:social_project/misc/shared_prefs_key.dart';
+import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class SplashPage extends StatefulWidget {
@@ -20,9 +24,12 @@ class _SplashPageState extends State<SplashPage> {
     var isFirst =
         SharedPreferenceUtil.getBool(SharedPrefsKeys.IS_FIRST_ENTER_APP);
 
-    // 如果第一次进入APP，则跳转引导页，否则进入主页
-    isFirst.then((val) {
-      Future.delayed(Duration(seconds: 0), () {
+    NetTools.getWpCategories(WordPressRep.getWpLink(WpSource.BlogGeek))
+        .then((val) {
+      if (val.list.length == 0) return;
+      WordPressConfigCenter.wpCategories = val;
+
+      isFirst.then((val) {
         Navigator.pushReplacementNamed(
             context, val == null || val ? UIData.gooeyEdge : UIData.homeRoute);
       });
