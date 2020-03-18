@@ -1,12 +1,13 @@
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/login_sys/cache_center.dart';
-import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
+/// Drawer
 class CommonDrawer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -16,16 +17,6 @@ class CommonDrawer extends StatefulWidget {
 
 /// 显示用户账户的 Drawer
 class _CommonDrawerState extends State<CommonDrawer> {
-  WpUser _wpUser = WpUser.defaultUser;
-
-  @override
-  void initState() {
-    super.initState();
-    if (WpCacheCenter.tokenCache != null) {
-      _wpUser = WpCacheCenter.getUser(WpCacheCenter.tokenCache.userId);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -46,47 +37,50 @@ class _CommonDrawerState extends State<CommonDrawer> {
 //              ),
 //            ),
             ListView(
-              padding: EdgeInsets.zero,
               children: <Widget>[
                 SizedBox(
-                  height: ScreenUtil().setWidth(80),
+                  height: ScreenUtil().setWidth(40),
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                  child: Row(
-                    children: <Widget>[
-                      FlutterLogo(
-                        size: 35,
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(40),
-                      ),
-                      Text(
-                        UIData.appName + "  Step By Step.",
-                        style: TextStyle(
-                            fontSize: ScreenUtil().setSp(45),
-                            color: Theme.of(context).textTheme.subtitle.color,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
+                ExtendedImage.asset(
+                  "assets/images/logo.jpg",
+                  height: 80,
                 ),
-                Divider(),
+//                Padding(
+//                  padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+//                  child: Row(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    crossAxisAlignment: CrossAxisAlignment.center,
+//                    children: <Widget>[
+//                      Text(
+//                        UIData.appNameFull,
+//                        style: TextStyle(
+//                            fontSize: ScreenUtil().setSp(45),
+//                            color: Theme.of(context).textTheme.subtitle.color,
+//                            fontWeight: FontWeight.bold),
+//                      )
+//                    ],
+//                  ),
+//                ),
                 ClipRect(
                   child: WpCacheCenter.tokenCache == null
                       ? Container()
-                      : ListTile(
-                          leading: Icon(Icons.exit_to_app),
-                          title: Text('登出'),
-                          onTap: () {
-                            DialogUtil.showLogoutDialog(context, () {
-                              WpCacheCenter.tokenCache = null;
-                              _wpUser = WpUser.defaultUser;
-                              setState(() {});
-                            });
-                          },
+                      : Column(
+                          children: <Widget>[
+                            Divider(),
+                            ListTile(
+                              leading: Icon(Icons.exit_to_app),
+                              title: Text('登出'),
+                              onTap: () {
+                                DialogUtil.showLogoutDialog(context, () {
+                                  WpCacheCenter.tokenCache = null;
+                                  setState(() {});
+                                });
+                              },
+                            )
+                          ],
                         ),
                 ),
+                Divider(),
                 ClipRect(
                   child: ListTile(
                     leading: Icon(Icons.settings),

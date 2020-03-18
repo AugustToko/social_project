@@ -195,11 +195,27 @@ class _WpPageState extends State<WpDetailPageHeaderMedia> {
         ],
         flexibleSpace: needHeaderMedia
             ? FlexibleSpaceBar(
-                background: ExtendedImage.network(
-                  widget.content.jetpackFeaturedMediaUrl,
-                  cache: true,
-                  clearMemoryCacheIfFailed: true,
-                  fit: BoxFit.cover,
+                background: Stack(
+                  children: <Widget>[
+                    ExtendedImage.network(
+                      widget.content.jetpackFeaturedMediaUrl,
+                      cache: true,
+                      clearMemoryCacheIfFailed: true,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Theme.of(context).backgroundColor.withOpacity(0.8),
+                            Theme.of(context).backgroundColor.withOpacity(0),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               )
             : null,

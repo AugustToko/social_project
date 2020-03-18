@@ -20,9 +20,7 @@ class LoginPageProvider extends BaseProvide {
   var passwordController = TextEditingController();
 
   var _rememberPassword = false;
-
   bool get rememberPassword => _rememberPassword;
-
   set rememberPassword(bool val) {
     _rememberPassword = val;
     notifyListeners();

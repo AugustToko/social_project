@@ -1,6 +1,7 @@
 import 'package:dartin/dartin.dart';
 import 'package:shared/mvvm/helper/shared_preferences.dart';
 import 'package:shared/mvvm/model/repository.dart';
+import 'package:social_project/rebuild/viewmodel/editor_page_provider.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
@@ -10,6 +11,7 @@ import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 /// 定义ViewModel的构造方式
 final viewModelModule = Module([
   factory<LoginPageProvider>(({params}) => LoginPageProvider(get())),
+  factory<EditorPageProvider>(({params}) => EditorPageProvider()),
   factory<ProfileCoolApkPageProvider>(
       ({params}) => ProfileCoolApkPageProvider()),
   factory<WordPressPageProvider>(({params}) => WordPressPageProvider()),

@@ -7,12 +7,10 @@ import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
-import 'package:social_project/ui/page/sample/profile_one_page.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
-import 'package:social_project/ui/page/wordpress/send_page.dart';
+import 'package:social_project/rebuild/view/page/editor.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
-import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
 
 // TODO: 清理
 class UIData {
@@ -35,13 +33,13 @@ class UIData {
   @Deprecated("Use LoginPage.loginPage")
   static const String loginPage = LoginPage.loginPage;
 
-  /// [SendPage]
+  /// [EditorPage]
   static const String sendPage = "/sendPage";
 
   /// [SettingsOnePage]
   static const String settingsPage = "/settings";
 
-  /// [WpDetailPage]
+  /// [WpDetailPageHeaderMedia]
   static const String wpPostDetail = "/wpDetail";
 
   /// [PostsPage]
@@ -69,6 +67,7 @@ class UIData {
   // TODO: 项目名称
   //strings
   static const String appName = "零昀";
+  static const String appNameFull = "零昀 Step by step";
 
   // 开发者名称
   static const String developerName = "Crypto Studio";

@@ -22,8 +22,6 @@ class WordPressPageProvider extends BaseProvide {
   WordPressRep listSourceRepository =
       WordPressRep(WordPressRep.getWpLink(WordPressRep.wpSource));
 
-  // if you can't know image size before build,
-  // you have to handle copy when image is loaded.
   bool knowImageSize = true;
   DateTime dateTimeNow = DateTime.now();
 

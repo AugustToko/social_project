@@ -12,6 +12,7 @@ import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:video_player/video_player.dart';
 
 /// 用于显示 WordPress 文章
+@Deprecated("使用 WpDetailPageHeaderMedia")
 class WpDetailPage extends StatefulWidget {
   WpDetailPage(this.content);
 

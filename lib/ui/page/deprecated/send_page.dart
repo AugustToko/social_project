@@ -11,6 +11,7 @@ import 'package:shared/util/theme_util.dart';
 
 /// 编辑文章、回复文章
 /// TODO: 待完善
+@Deprecated("废弃，请使用 EditorPage")
 class SendPage extends StatefulWidget {
   SendPage({Key key, this.title}) : super(key: key);
 

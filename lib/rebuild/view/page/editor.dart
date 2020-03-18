@@ -8,69 +8,87 @@ import 'package:oktoast/oktoast.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/model/wordpress/send/send_post_data.dart';
+import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
 import 'package:shared/ui/loading_dialog.dart';
 import 'package:social_project/model/editor/editor_data.dart';
+import 'package:social_project/rebuild/viewmodel/editor_page_provider.dart';
 import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:zefyr/zefyr.dart';
+import 'package:provider/provider.dart';
 
 import '../../../env.dart';
 
-class EditorPage extends StatefulWidget {
-  final BouncingScrollPhysics editorP = BouncingScrollPhysics();
-  final BouncingScrollPhysics parentP = BouncingScrollPhysics();
-
-  final FocusNode focusNode = FocusNode(canRequestFocus: true);
-
-  final TextEditingController titleController = TextEditingController();
-
-  final int lineHeight = 42;
+class EditorPage extends PageProvideNode<EditorPageProvider> {
+  static const String editorPage = "/editorPage";
 
   /// 预加载数据
   final EditorData editorData;
 
-  EditorPage({Key key, this.editorData}) : super(key: key);
+  EditorPage({this.editorData});
 
   @override
-  EditorPageState createState() {
+  Widget buildContent(final BuildContext context) {
+    return _EditorPageContent(
+      provide: mProvider,
+      editorData: editorData,
+    );
+  }
+}
+
+class _EditorPageContent extends StatefulWidget {
+  final BouncingScrollPhysics editorP = BouncingScrollPhysics();
+  final BouncingScrollPhysics parentP = BouncingScrollPhysics();
+  final EditorData editorData;
+  final FocusNode focusNode = FocusNode(canRequestFocus: true);
+  final TextEditingController titleController = TextEditingController();
+
+  final int lineHeight = 42;
+
+  final EditorPageProvider provide;
+
+  _EditorPageContent({this.provide, this.editorData});
+
+  @override
+  State<StatefulWidget> createState() {
     return EditorPageState();
   }
 }
 
-class EditorPageState extends State<EditorPage> {
-  File headerImage;
-  int height = 300;
+class EditorPageState extends State<_EditorPageContent>
+    with TickerProviderStateMixin<_EditorPageContent>
+    implements Presenter {
+  EditorPageProvider mProvide;
 
-  ZefyrController controller;
+  static const String ACTION_SEND = "ACTION_SEND";
 
   @override
   void initState() {
     super.initState();
-    // Here we must load the document and pass it to Zefyr controller.
+    mProvide = widget.provide;
     final document = _loadDocument();
-    controller = ZefyrController(document);
-    controller.addListener(() {
-      setState(() {
-        height =
-            (controller.document.toPlainText().split('\n').length).round() *
-                widget.lineHeight;
-      });
+
+    mProvide.controller = ZefyrController(document);
+    mProvide.controller.addListener(() {
+      mProvide.height =
+          (mProvide.controller.document.toPlainText().split('\n').length)
+                  .round() *
+              widget.lineHeight;
     });
   }
 
   @override
   void dispose() {
-    controller.dispose();
     widget.titleController.dispose();
+    mProvide.disposeControllers();
+    mProvide.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Note that the editor requires special `ZefyrScaffold` widget to be
-    // one of its parents.
     return WillPopScope(
         child: Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
@@ -83,33 +101,7 @@ class EditorPageState extends State<EditorPage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(width: 1.5, color: Colors.blue)),
-                  onPressed: () {
-                    if (widget.titleController.text == null ||
-                        widget.titleController.text == "") {
-                      showErrorToast(context, "标题不可为空!");
-                    } else {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (c) {
-                          return LoadingDialog(
-                            text: "正在发送文章...",
-                          );
-                        },
-                      );
-                      NetTools.sendPost(
-                              WpCacheCenter.tokenCache.token,
-                              SendPost(widget.titleController.text,
-                                  controller.document.toPlainText(), true))
-                          .then((post) {
-                        if (post != null) {
-                          Navigator.pop(context);
-                        }
-                      }).whenComplete((){
-                        Navigator.pop(context, NavState.SendWpPostDone);
-                      });
-                    }
-                  },
+                  onPressed: () => onClick(ACTION_SEND),
                   child: Text(
                     "发表",
                     style: TextStyle(
@@ -135,7 +127,7 @@ class EditorPageState extends State<EditorPage> {
                         child: Container(
                           height: ThemeUtil.headerImageHeight,
                           width: double.infinity,
-                          child: headerImage == null
+                          child: mProvide.headerImage == null
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +140,7 @@ class EditorPageState extends State<EditorPage> {
                                   ],
                                 )
                               : Image.file(
-                                  headerImage,
+                                  mProvide.headerImage,
                                   fit: BoxFit.cover,
                                 ),
                         ),
@@ -157,7 +149,7 @@ class EditorPageState extends State<EditorPage> {
                         ImagePicker.pickImage(source: ImageSource.gallery)
                             .then((file) {
                           setState(() {
-                            headerImage = file;
+                            mProvide.headerImage = file;
                           });
                         });
                       },
@@ -193,21 +185,7 @@ class EditorPageState extends State<EditorPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: height.roundToDouble() < 300
-                        ? 300
-                        : height.roundToDouble(),
-                    child: ZefyrScaffold(
-                      child: ZefyrEditor(
-                        mode: ZefyrMode.edit,
-                        autofocus: false,
-                        physics: NeverScrollableScrollPhysics(),
-                        controller: controller,
-                        focusNode: widget.focusNode,
-                        imageDelegate: MyAppZefyrImageDelegate(),
-                      ),
-                    ),
-                  )
+                  buildEditor()
                 ],
               ),
             ),
@@ -215,13 +193,34 @@ class EditorPageState extends State<EditorPage> {
         ),
         onWillPop: () {
           return DialogUtil.showExitEditorDialog(
-              context, controller.document.length > 1, () {
+              context, mProvide.controller.document.length > 1, () {
             _saveDocument(context);
           });
         });
   }
 
-  /// Loads the document to be edited in Zefyr.
+  Consumer<EditorPageProvider> buildEditor() {
+    return Consumer<EditorPageProvider>(
+      builder: (context, value, child) {
+        return Container(
+          height: mProvide.height.roundToDouble() < 300
+              ? 300
+              : mProvide.height.roundToDouble(),
+          child: ZefyrScaffold(
+            child: ZefyrEditor(
+              mode: ZefyrMode.edit,
+              autofocus: false,
+              physics: NeverScrollableScrollPhysics(),
+              controller: mProvide.controller,
+              focusNode: widget.focusNode,
+              imageDelegate: MyAppZefyrImageDelegate(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   NotusDocument _loadDocument() {
     // 进行预加载数据
     if (widget.editorData != null) {
@@ -230,18 +229,17 @@ class EditorPageState extends State<EditorPage> {
       return NotusDocument.fromDelta(delta);
     }
 
-    // For simplicity we hardcode a simple document with one line of text
-    // saying "Zefyr Quick Start".
-    // (Note that delta must always end with newline.)
+    // 如果没有预载，进行默认数据填充
     final Delta delta = Delta()..insert("输入点什么吧 (*^_^*)\n");
+    widget.titleController.text = "文章标题";
     return NotusDocument.fromDelta(delta);
   }
 
   void _saveDocument(BuildContext context) {
     // 解码 NotusDocument, 再编码为 Json
-    print(jsonEncode(controller.document));
-    var data =
-        EditorData.fromJson(json.decode(jsonEncode(controller.document))[0]);
+    print(jsonEncode(mProvide.controller.document));
+    var data = EditorData.fromJson(
+        json.decode(jsonEncode(mProvide.controller.document))[0]);
     data.title = widget.titleController.text ?? "";
     final contents = json.encode(data);
 
@@ -258,6 +256,41 @@ class EditorPageState extends State<EditorPage> {
         Navigator.of(context).pop(true);
       });
     });
+  }
+
+  @override
+  void onClick(final String action) {
+    switch (action) {
+      case ACTION_SEND:
+        {
+          if (widget.titleController.text == null ||
+              widget.titleController.text == "") {
+            showErrorToast(context, "标题不可为空!");
+          } else {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (c) {
+                return LoadingDialog(
+                  text: "正在发送文章...",
+                );
+              },
+            );
+            NetTools.sendPost(
+                    WpCacheCenter.tokenCache.token,
+                    SendPost(widget.titleController.text,
+                        mProvide.controller.document.toPlainText(), true))
+                .then((post) {
+              if (post != null) {
+                Navigator.pop(context);
+              }
+            }).whenComplete(() {
+              Navigator.pop(context, NavState.SendWpPostDone);
+            });
+          }
+        }
+        break;
+    }
   }
 }
 

@@ -11,11 +11,10 @@ import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/photo_view.dart';
 import 'package:social_project/ui/page/topic_page.dart';
+import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
+import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:social_project/utils/uidata.dart';
-
-import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/common_drawer.dart';
-import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/user_header.dart';
 
 import '../../main.dart';
 
@@ -33,6 +32,7 @@ class ContentPage extends StatefulWidget {
 /// 当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
 class _TabBarPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
+
   ScrollController _scrollViewController;
 
   final TextEditingController _controller = TextEditingController();

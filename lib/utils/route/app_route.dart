@@ -11,9 +11,8 @@ import 'package:social_project/ui/page/main_page.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/timeline_page.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
-import 'package:social_project/ui/page/wordpress/editor.dart';
+import 'package:social_project/rebuild/view/page/editor.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
-import 'package:social_project/ui/page/wordpress/wp_detail_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_detail_page_header_media.dart';
 
 import '../uidata.dart';
@@ -104,7 +103,6 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
       return RouteResult(
         //TODO：编辑页面待完善
         widget: EditorPage(editorData: arguments == null ? null : arguments["editorData"],),
-//        widget: SendPage(),
         showStatusBar: true,
         routeName: UIData.sendPage,
       );
