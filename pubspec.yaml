@@ -25,8 +25,8 @@ dependencies:
   chewie: ^0.9.8+1
   video_player: ^0.10.5
   audioplayers: ^0.13.5
-  extended_image: ^0.6.8
-  like_button: ^0.1.9
+  extended_image: ^0.7.1
+  like_button: ^0.2.0
   #  loading_more_list: ^1.0.4
   extended_text: any
   url_launcher: ^5.0.2
@@ -46,6 +46,7 @@ dependencies:
   flutter_banner_swiper: ^0.1.4
   #  get_it: ^3.1.0
   flutter_screenutil: ^1.0.2
+  xml: ^3.5.0
 
 dev_dependencies:
   flutter_test:

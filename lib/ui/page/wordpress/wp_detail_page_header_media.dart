@@ -26,12 +26,12 @@ class WpDetailPageHeaderMedia extends StatefulWidget {
   final WpPost content;
 
   @override
-  _WpPageState createState() {
-    return _WpPageState();
+  _WpPostsPageState createState() {
+    return _WpPostsPageState();
   }
 }
 
-class _WpPageState extends State<WpDetailPageHeaderMedia> {
+class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
   final List<ChangeNotifier> needDispose = [];
 
   @override

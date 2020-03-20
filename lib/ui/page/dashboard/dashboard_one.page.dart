@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared/login_sys/cache_center.dart';
@@ -17,39 +18,14 @@ class GuidePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-//                  new IconButton(
-//                    icon: new Icon(
-//                      defaultTargetPlatform == TargetPlatform.android
-//                          ? Icons.arrow_back
-//                          : Icons.arrow_back_ios,
-//                      color: Colors.white,
-//                    ),
-//                    onPressed: () => Navigator.canPop(context)
-//                        ? Navigator.pop(context)
-//                        : null,
-//                  ),
                   ProfileTile(
                     title: "Hi, " +
                         (WpCacheCenter.tokenCache == null
                             ? "User"
                             : WpCacheCenter.tokenCache.userDisplayName),
-                    subtitle: "欢迎来到 Social Project",
+                    subtitle: "欢迎来到 ${UIData.appNameFull}",
                     textColor: Colors.white,
                   ),
-//                  new IconButton(
-//                    icon: new Icon(
-//                      Icons.more_vert,
-//                      color: Colors.white,
-//                    ),
-//                    onPressed: () {
-//                      print("hi");
-//                    },
-//                  )
-                ],
-              ),
             ],
           ),
         ),
@@ -110,117 +86,114 @@ class GuidePage extends StatelessWidget {
         ),
       );
 
-  Widget actionMenuCard() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Card(
-          elevation: 2.0,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  DashboardMenuRow(
-                    firstIcon: FontAwesomeIcons.solidUser,
-                    firstLabel: "Friends",
-                    firstIconCircleColor: Colors.blue,
-                    secondIcon: FontAwesomeIcons.userFriends,
-                    secondLabel: "Groups",
-                    secondIconCircleColor: Colors.orange,
-                    thirdIcon: FontAwesomeIcons.mapMarkerAlt,
-                    thirdLabel: "Nearby",
-                    thirdIconCircleColor: Colors.purple,
-                    fourthIcon: FontAwesomeIcons.locationArrow,
-                    fourthLabel: "Moment",
-                    fourthIconCircleColor: Colors.indigo,
-                  ),
-                  DashboardMenuRow(
-                    firstIcon: FontAwesomeIcons.images,
-                    firstLabel: "Albums",
-                    firstIconCircleColor: Colors.red,
-                    secondIcon: FontAwesomeIcons.solidHeart,
-                    secondLabel: "Likes",
-                    secondIconCircleColor: Colors.teal,
-                    thirdIcon: FontAwesomeIcons.solidNewspaper,
-                    thirdLabel: "Articles",
-                    thirdIconCircleColor: Colors.lime,
-                    fourthIcon: FontAwesomeIcons.solidCommentDots,
-                    fourthLabel: "Reviews",
-                    fourthIconCircleColor: Colors.amber,
-                  ),
-                  DashboardMenuRow(
-                    firstIcon: FontAwesomeIcons.footballBall,
-                    firstLabel: "Sports",
-                    firstIconCircleColor: Colors.cyan,
-                    secondIcon: FontAwesomeIcons.solidStar,
-                    secondLabel: "Fav",
-                    secondIconCircleColor: Colors.redAccent,
-                    thirdIcon: FontAwesomeIcons.blogger,
-                    thirdLabel: "Blogs",
-                    thirdIconCircleColor: Colors.pink,
-                    fourthIcon: FontAwesomeIcons.wallet,
-                    fourthLabel: "Wallet",
-                    fourthIconCircleColor: Colors.brown,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
+//  Widget actionMenuCard() => Padding(
+//        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//        child: Card(
+//          elevation: 2.0,
+//          child: Padding(
+//            padding: const EdgeInsets.all(8.0),
+//            child: Center(
+//              child: Column(
+//                mainAxisAlignment: MainAxisAlignment.start,
+//                children: <Widget>[
+//                  DashboardMenuRow(
+//                    firstIcon: FontAwesomeIcons.solidUser,
+//                    firstLabel: "Friends",
+//                    firstIconCircleColor: Colors.blue,
+//                    secondIcon: FontAwesomeIcons.userFriends,
+//                    secondLabel: "Groups",
+//                    secondIconCircleColor: Colors.orange,
+//                    thirdIcon: FontAwesomeIcons.mapMarkerAlt,
+//                    thirdLabel: "Nearby",
+//                    thirdIconCircleColor: Colors.purple,
+//                    fourthIcon: FontAwesomeIcons.locationArrow,
+//                    fourthLabel: "Moment",
+//                    fourthIconCircleColor: Colors.indigo,
+//                  ),
+//                  DashboardMenuRow(
+//                    firstIcon: FontAwesomeIcons.images,
+//                    firstLabel: "Albums",
+//                    firstIconCircleColor: Colors.red,
+//                    secondIcon: FontAwesomeIcons.solidHeart,
+//                    secondLabel: "Likes",
+//                    secondIconCircleColor: Colors.teal,
+//                    thirdIcon: FontAwesomeIcons.solidNewspaper,
+//                    thirdLabel: "Articles",
+//                    thirdIconCircleColor: Colors.lime,
+//                    fourthIcon: FontAwesomeIcons.solidCommentDots,
+//                    fourthLabel: "Reviews",
+//                    fourthIconCircleColor: Colors.amber,
+//                  ),
+//                  DashboardMenuRow(
+//                    firstIcon: FontAwesomeIcons.footballBall,
+//                    firstLabel: "Sports",
+//                    firstIconCircleColor: Colors.cyan,
+//                    secondIcon: FontAwesomeIcons.solidStar,
+//                    secondLabel: "Fav",
+//                    secondIconCircleColor: Colors.redAccent,
+//                    thirdIcon: FontAwesomeIcons.blogger,
+//                    thirdLabel: "Blogs",
+//                    thirdIconCircleColor: Colors.pink,
+//                    fourthIcon: FontAwesomeIcons.wallet,
+//                    fourthLabel: "Wallet",
+//                    fourthIconCircleColor: Colors.brown,
+//                  ),
+//                ],
+//              ),
+//            ),
+//          ),
+//        ),
+//      );
 
-  Widget balanceCard() => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 2.0,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "Balance",
-                      style: TextStyle(fontFamily: UIData.ralewayFont),
-                    ),
-                    Material(
-                      color: Colors.black,
-                      shape: StadiumBorder(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "500 Points",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: UIData.ralewayFont),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Text(
-                  "₹ 1000",
-                  style: TextStyle(
-                      fontFamily: UIData.ralewayFont,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.green,
-                      fontSize: 25.0),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+//  Widget balanceCard() => Padding(
+//        padding: const EdgeInsets.all(8.0),
+//        child: Card(
+//          elevation: 2.0,
+//          child: Padding(
+//            padding: const EdgeInsets.all(20.0),
+//            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              children: <Widget>[
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                  children: <Widget>[
+//                    Text(
+//                      "Balance",
+//                      style: TextStyle(fontFamily: UIData.ralewayFont),
+//                    ),
+//                    Material(
+//                      color: Colors.black,
+//                      shape: StadiumBorder(),
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(8.0),
+//                        child: Text(
+//                          "500 Points",
+//                          style: TextStyle(
+//                              color: Colors.white,
+//                              fontFamily: UIData.ralewayFont),
+//                        ),
+//                      ),
+//                    )
+//                  ],
+//                ),
+//                Text(
+//                  "₹ 1000",
+//                  style: TextStyle(
+//                      fontFamily: UIData.ralewayFont,
+//                      fontWeight: FontWeight.w700,
+//                      color: Colors.green,
+//                      fontSize: 25.0),
+//                ),
+//              ],
+//            ),
+//          ),
+//        ),
+//      );
 
   Widget allCards(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: <Widget>[
             appBarColumn(context),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
             searchCard(context),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,

@@ -28,39 +28,16 @@ class WordPressPageProvider extends BaseProvide {
   @override
   void init(BuildContext context) {
     NetTools.getLingYunBanner().then((data) {
-      banners = data;
+      if (data == null) {
+        banners = [];
+      } else {
+        banners = data;
+      }
     });
   }
 
   void share(final WpPost post) {
     Share.share("This is a test action by LingYun");
-  }
-
-  String fixPostData(final String data) {
-    var content = data;
-
-    content = content.replaceAll("[java]", "<code>");
-    content = content.replaceAll("[/java]", "</code>");
-
-    content = content.replaceAll("[xml]", "<code>");
-    content = content.replaceAll("[/xml]", "</code>");
-
-    return content;
-  }
-
-  String trimContent(final String content) {
-    // 裁剪内容
-    // TODO: 裁剪规范，如何使 card 大小适中
-    var contentSmall =
-        content.substring(0, content.length < 1500 ? content.length : 1500);
-
-    contentSmall += "<h2>......</h2>";
-
-    return contentSmall;
-  }
-
-  void cardLongPressed(final BuildContext context, final WpPost item) {
-    BottomSheetUtil.showPostSheetShow(context, item);
   }
 
   Future<bool> onRefresh() {

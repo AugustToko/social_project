@@ -72,9 +72,8 @@ class _WpUserHeaderState extends State<WpUserHeader> {
           _wpUser = user;
         });
       } else {
-        Navigator.pop(context);
         clickable = false;
-        showErrorToast(context, "未找到相关 WpUser.");
+//        showErrorToast(context, "未找到相关 WpUser.");
       }
     });
   }
@@ -94,6 +93,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
     );
 
     var myWidget = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[stack],
     );
 
@@ -104,7 +104,6 @@ class _WpUserHeaderState extends State<WpUserHeader> {
           child: InkWell(
             onTap: () async {
               if (WpCacheCenter.tokenCache == null && widget.needLogin) {
-                debugPrint("GotoLogin...");
                 Navigator.pushNamed(context, widget.loginRouteName)
                     .then((result) {
                   if (result == NavState.LoginDone) {

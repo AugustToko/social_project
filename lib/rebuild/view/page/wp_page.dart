@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +12,15 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/model/wordpress/wp_category.dart';
 import 'package:shared/mvvm/view/base.dart';
+import 'package:shared/ui/widget/loading_more_list_widget/list_config.dart';
+import 'package:shared/ui/widget/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
+import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
-import 'package:shared/util/tost.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
-import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
-import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
+import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 import 'package:social_project/utils/route/app_route.dart';
-import 'package:html/dom.dart' as dom;
 
 /// TODO: 写完文章后自动刷新
 class WordPressPage extends PageProvideNode<WordPressPageProvider> {
@@ -38,12 +37,12 @@ class _WordPressPageContent extends StatefulWidget {
   _WordPressPageContent(this.provider);
 
   @override
-  _WordPressPageContentState createState() {
-    return _WordPressPageContentState();
+  WordPressPageContentState createState() {
+    return WordPressPageContentState();
   }
 }
 
-class _WordPressPageContentState extends State<_WordPressPageContent>
+class WordPressPageContentState extends State<_WordPressPageContent>
     implements Presenter {
   WordPressPageProvider mProvider;
 
@@ -63,9 +62,94 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
     super.dispose();
   }
 
+  static Widget buildIndicator(int len) {
+    return len > 0
+        ? Padding(
+            padding: EdgeInsets.fromLTRB(
+              0,
+              10,
+              0,
+              ThemeUtil.navBarHeight + ScreenUtil().setWidth(20),
+            ),
+            child: Text(
+              "—————— 做人也是要有底线的哦 ——————",
+              textAlign: TextAlign.center,
+            ),
+          )
+        : null;
+  }
+
+  static String trimContent(final String content) {
+    // 裁剪内容
+    // TODO: 裁剪规范，如何使 card 大小适中
+    var contentSmall =
+        content.substring(0, content.length < 1500 ? content.length : 1500);
+
+    contentSmall += "<h2>......</h2>";
+
+    return contentSmall;
+  }
+
+  static String fixPostData(final String data) {
+    var content = data;
+
+    content = content.replaceAll("[java]", "<code>");
+    content = content.replaceAll("[/java]", "</code>");
+
+    content = content.replaceAll("[xml]", "<code>");
+    content = content.replaceAll("[/xml]", "</code>");
+
+    return content;
+  }
+
+  /// 主体卡片
+  static Widget buildCard(final context, final item, final index) {
+    final double margin = ScreenUtil().setWidth(22);
+    String title = item.title.rendered;
+    if (title == null || title == "") {
+      return Container();
+    }
+
+    // 内容文本
+    var content = fixPostData(item.content.rendered);
+    var contentSmall = trimContent(content);
+
+    var card = ThemeUtil.materialPostCard(
+        Column(
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            buildTagsWidget(item, context),
+            Html(
+              data: contentSmall,
+              showImages: false,
+            ),
+            WpPicGridView(
+              item: item,
+            ),
+//                                Padding(
+//                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+//                                  child: actionRow(item),
+//                                ),
+          ],
+        ),
+        item,
+        margin, onCardClicked: () {
+      goToWpPostDetail(context, item);
+    }, onLongPressed: () {
+      BottomSheetUtil.showPostSheetShow(context, item);
+    });
+
+    return card;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double margin = ScreenUtil().setWidth(22);
     final Widget result = Material(
       color: Colors.transparent,
       child: Column(
@@ -79,7 +163,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
               child: LoadingMoreCustomScrollView(
                 showGlowLeading: true,
                 showGlowTrailing: true,
-                physics: BouncingScrollPhysics(),
+                physics: ClampingScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
                     child: re.PullToRefreshContainer((info) {
@@ -89,80 +173,12 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
                   LyLoadingMoreSliverList(
                     LySliverListConfig<WpPost>(
                       indicatorBuilder: (p, q) {
-                        return mProvider.listSourceRepository.length > 0
-                            ? Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                  0,
-                                  10,
-                                  0,
-                                  ThemeUtil.navBarHeight +
-                                      ScreenUtil().setWidth(20),
-                                ),
-                                child: Text(
-                                  "—————— 做人也是要有底线的哦 ——————",
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : null;
+                        return buildIndicator(
+                            mProvider.listSourceRepository.length);
                       },
-                      collectGarbage: (List<int> indexes) {
-                        ///collectGarbage
-                        indexes.forEach((index) {
-//                          final item = listSourceRepository[index];
-//                          if (item.hasImage) {
-//                            item.images.forEach((image) {
-//                              image.clearCache();
-//                            });
-//                          }
-                        });
-                      },
-                      itemBuilder: (context, item, index) {
-                        String title = item.title.rendered;
-                        if (title == null || title == "") {
-                          title = "Image$index";
-                        }
-
-                        // 内容文本
-                        var content =
-                            mProvider.fixPostData(item.content.rendered);
-                        var contentSmall = mProvider.trimContent(content);
-
-                        var card = ThemeUtil.materialPostCard(
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  title,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                buildTagsWidget(item, context),
-                                Html(
-                                  customRender: (node, children) {
-                                    if (node is dom.Element) {
-                                      print("----------------------------------");
-                                      print(node.localName);
-                                      return null;
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  data: contentSmall,
-                                ),
-//                                Padding(
-//                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-//                                  child: actionRow(item),
-//                                ),
-                              ],
-                            ),
-                            item,
-                            margin, onCardClicked: () {
-                          goToWpPostDetail(context, item);
-                        }, onLongPressed: () {
-                          mProvider.cardLongPressed(context, item);
-                        });
-
+                      collectGarbage: (List<int> indexes) {},
+                      itemBuilder: (ctx, item, index) {
+                        var card = buildCard(ctx, item, index);
                         if (index == 0) {
                           return Column(
                             children: <Widget>[buildBannerSwipe(), card],
@@ -210,7 +226,7 @@ class _WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 标签
-  Widget buildTagsWidget(final WpPost item, final BuildContext context) {
+  static Widget buildTagsWidget(final WpPost item, final BuildContext context) {
     final fontSize = 12.0;
     final tags = <WpCategory>[];
     var spacing = ScreenUtil().setWidth(10.0);

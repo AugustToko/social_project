@@ -8,14 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
-import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/rep/wp_rep_argments_posts.dart';
+import 'package:shared/ui/widget/loading_more_list_widget/list_config.dart';
+import 'package:shared/ui/widget/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/pic_swiper.dart';
-import 'package:social_project/ui/widgets/loading_more_list_widget/list_config.dart';
-import 'package:social_project/ui/widgets/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:social_project/utils/route/app_route.dart';
 
 /// 通用文章展示页面（列表）
@@ -81,119 +81,16 @@ class _WordPressPageState extends State<PostsPage> {
                   LyLoadingMoreSliverList(
                     LySliverListConfig<WpPost>(
                       indicatorBuilder: (p, q) {
-                        return listSourceRepository.length > 0
-                            ? Text(
-                                "—————— 做人也是要有底线的哦 ——————",
-                                textAlign: TextAlign.center,
-                              )
-                            : null;
+                        return WordPressPageContentState.buildIndicator(
+                            listSourceRepository.length);
                       },
                       collectGarbage: (List<int> indexes) {
                         ///TODO: collectGarbage
                         indexes.forEach((index) {});
                       },
                       itemBuilder: (context, item, index) {
-                        String title = item.title.rendered;
-                        if (title == null || title == "") {
-                          title = "Image$index";
-                        }
-
-                        // 内容文本
-                        var content = item.content.rendered;
-
-                        content = content.replaceAll("[java]", "<code>");
-                        content = content.replaceAll("[/java]", "</code>");
-
-                        content = content.replaceAll("[xml]", "<code>");
-                        content = content.replaceAll("[/xml]", "</code>");
-
-                        // 裁剪内容
-                        // TODO: 裁剪规范，如何使 card 大小适中
-                        var contentSmall = content.substring(
-                            0, content.length < 1050 ? content.length : 1050);
-
-                        contentSmall += "<h2>......</h2>";
-                        return ThemeUtil.materialPostCard(
-                            InkWell(
-                              onTap: () {
-                                goToWpPostDetail(context, item);
-                              },
-                              onLongPress: () {
-                                BottomSheetUtil.showPostSheetShow(
-                                    context, item);
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          title,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        Html(
-                                          data: contentSmall,
-                                          showImages: true,
-                                          useRichText: false,
-                                          linkStyle: TextStyle(),
-                                          customRender: (node, children) {
-                                            if (node is dom.Element) {
-                                              switch (node.localName) {
-                                                case "video":
-                                                  return Text("[Video Here]");
-                                                case "img":
-                                                  String imageUrl =
-                                                      node.attributes[
-                                                          "data-original"];
-                                                  return imageUrl == null
-                                                      ? null
-                                                      : Image.network(imageUrl);
-                                                default:
-                                                  return null;
-                                              }
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          onImageTap: (url) {
-                                            Navigator.pushNamed(context,
-                                                "fluttercandies://picswiper",
-                                                arguments: {
-                                                  "index": 0,
-                                                  "pics": [PicSwiperItem(url)],
-                                                });
-                                          },
-                                          onImageError: (p1, p2) {
-                                            print(
-                                                "Image Error---------------start-----------------");
-                                            print(p1);
-                                            print(
-                                                "-----===-------=======------====-----");
-                                            print(p2);
-                                            print(
-                                                "Image Error----------------end----------------");
-                                          },
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(20, 0, 20, 0),
-//                                      child: actionRow(item),
-                                        )
-                                      ],
-                                    ),
-                                    padding: EdgeInsets.only(
-                                      left: margin,
-                                      right: margin,
-                                      bottom: margin,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            item,
-                            margin);
+                        return WordPressPageContentState.buildCard(
+                            context, item, index);
                       },
                       sourceList: listSourceRepository,
                     ),
@@ -241,66 +138,4 @@ class _WordPressPageState extends State<PostsPage> {
       dateTimeNow = DateTime.now();
     });
   }
-
-//  avatar(int userId) {
-//    var widget = Stack(
-//      children: <Widget>[
-//        CircleAvatar(
-//            radius: 25.0,
-//            backgroundImage: NetworkImage(
-//              "",
-//            )),
-//        Positioned.fill(
-//          child: Material(
-//            color: Colors.transparent,
-//            child: InkWell(
-//              onTap: () {
-//                Navigator.pushNamed(context, UIData.profile);
-//              },
-//              customBorder: CircleBorder(),
-//            ),
-//          ),
-//        ),
-//      ],
-//    );
-//
-//    NetTools.getWpUserInfo(NetTools.weiranSite, userId).then((user){
-//      print("avatar: " + user.avatarUrls.s96);
-//      widget.children.removeAt(0);
-//      widget.children.insert(0, CircleAvatar(
-//          radius: 25.0,
-//          backgroundImage: NetworkImage(
-//            user.avatarUrls.s96,
-//          )));
-//    });
-//
-//    return widget;
-//
-//
-////                                    InkWell(
-////                                      onTap: () {
-////                                        Navigator.pushNamed(
-////                                            context, UIData.profile);
-////                                      },
-////                                      child: ExtendedImage.network(
-////                                        item.avatarUrl,
-////                                        width: 40.0,
-////                                        height: 40.0,
-////                                        shape: BoxShape.circle,
-////                                        //enableLoadState: false,
-////                                        border: Border.all(
-////                                            color: Colors.grey.withOpacity(0.4),
-////                                            width: 1.0),
-////                                        loadStateChanged: (state) {
-////                                          if (state.extendedImageLoadState ==
-////                                              LoadState.completed) {
-////                                            return null;
-////                                          }
-////                                          return Image.asset(
-////                                            "assets/avatar.jpg",
-////                                          );
-////                                        },
-////                                      ),
-////                                    ),
-//  }
 }

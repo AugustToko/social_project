@@ -23,6 +23,7 @@ import 'package:social_project/utils/uidata.dart';
 import 'env.dart';
 
 void main() async {
+
   GlobalSettings.profileRouteName = ProfileCoolApkPage.profile;
   GlobalSettings.loginRouteName = LoginPage.loginPage;
 
