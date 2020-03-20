@@ -22,9 +22,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   #  shared_preferences: ^0.5.6
-  chewie: ^0.9.8+1
-  video_player: ^0.10.5
-  audioplayers: ^0.13.5
+  chewie: ^0.9.10
+  video_player: ^0.10.8+1
+#  audioplayers: ^0.14.1
+  audioplayerui: ^0.0.7
   extended_image: ^0.7.1
   like_button: ^0.2.0
   #  loading_more_list: ^1.0.4

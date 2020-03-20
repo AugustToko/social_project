@@ -44,12 +44,19 @@ packages:
     source: hosted
     version: "2.4.0"
   audioplayers:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: audioplayers
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.13.7"
+  audioplayerui:
+    dependency: "direct main"
+    description:
+      name: audioplayerui
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.7"
   boolean_selector:
     dependency: transitive
     description:
@@ -70,7 +77,7 @@ packages:
       name: chewie
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.9.8+1"
+    version: "0.9.10"
   collection:
     dependency: transitive
     description:
@@ -532,13 +539,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.21.0"
-  screen:
-    dependency: transitive
-    description:
-      name: screen
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.5"
   share:
     dependency: transitive
     description:
@@ -712,6 +712,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.2+1"
+  wakelock:
+    dependency: transitive
+    description:
+      name: wakelock
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.4"
   watcher:
     dependency: transitive
     description:
@@ -756,4 +763,4 @@ packages:
     version: "0.10.0"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.12.13+hotfix.8 <2.0.0"

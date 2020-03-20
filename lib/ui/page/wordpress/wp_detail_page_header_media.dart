@@ -1,3 +1,4 @@
+import 'package:audioplayerui/audioplayerui.dart';
 import 'package:chewie/chewie.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +33,18 @@ class WpDetailPageHeaderMedia extends StatefulWidget {
 
 class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
   final List<ChangeNotifier> needDispose = [];
+
+  AudioPlayerController audioPlayerController;
+
+  @override
+  void dispose() {
+    needDispose.forEach((item) {
+      item?.dispose();
+    });
+    if (audioPlayerController != null)
+      audioPlayerController.audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +102,12 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
                             videoPlayerController: videoPlayerController,
                             aspectRatio: 3 / 2,
                             autoPlay: true,
-                            looping: true,
+                            looping: false,
                             allowFullScreen: true,
                             isLive: false,
                             allowMuting: true,
+                            allowedScreenSleep: false,
+                            autoInitialize: true,
                           );
 
                           needDispose.add(videoPlayerController);
@@ -104,7 +119,6 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
 
                           return playerWidget;
                         case "img":
-                          print("----------------------------------");
                           String imageUrl = node.attributes["data-original"];
                           return imageUrl == null
                               ? null
@@ -126,6 +140,28 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
                                     showErrorToast(context, "正在建设...");
                                   },
                                 );
+                        case "audio":
+                          audioPlayerController = AudioPlayerController();
+                          debugPrint(
+                              "-------------- case audio ------------------");
+                          var title = "-";
+                          if (node.parent.localName == "figure") {
+                            var e = node.nextElementSibling;
+                            if (e != null && e.localName == "figcaption") {
+                              title = e.text;
+                            }
+                          }
+                          debugPrint(node.nextElementSibling.text);
+                          var src = node.attributes["src"];
+                          return AudioPlayerView(
+                              audioPlayerController: audioPlayerController,
+                              trackUrl: src,
+                              isLocal: false,
+                              trackTitle: title,
+//                              trackSubtitle: "--",
+                              simpleDesign: true,
+//                              imageUrl: src.replaceAll('.mp3', '-mp3') + "-image.jpg"
+                          );
                         default:
                           return null;
                       }
@@ -146,7 +182,7 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
 
   List<Widget> _sliverBuilder(
       final BuildContext context, final bool innerBoxIsScrolled) {
-    String mediaUrl = null;
+    String mediaUrl;
 
     if (widget.content is WpPost &&
         widget.content.jetpackFeaturedMediaUrl != null &&
@@ -235,13 +271,5 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
             : null,
       )
     ];
-  }
-
-  @override
-  void dispose() {
-    needDispose.forEach((item) {
-      item?.dispose();
-    });
-    super.dispose();
   }
 }
