@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:share/share.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
-import 'package:social_project/ui/page/photo_view.dart';
+import 'package:social_project/ui/page/mainpages/subpages/photo_view.dart';
 
 /// For [PhotoViewDemo]
 class ItemBuilder {

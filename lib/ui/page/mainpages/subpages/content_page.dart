@@ -9,14 +9,14 @@ import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
-import 'package:social_project/ui/page/photo_view.dart';
+import 'package:social_project/ui/page/mainpages/subpages/photo_view.dart';
 import 'package:social_project/ui/page/topic_page.dart';
 import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:social_project/utils/uidata.dart';
 
-import '../../main.dart';
+import '../../../../main.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {

@@ -84,7 +84,8 @@ class ProfileCoolApkPageProvider extends BaseProvide {
 //                  Html(data: post.content.rendered)
                 ],
               ),
-              post,
+              post.author,
+              post.date,
               margin, onCardClicked: () {
             goToWpPostDetail(context, post);
           }, onLongPressed: () {

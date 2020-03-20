@@ -19,22 +19,35 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   @override
-  Widget build(BuildContext context) {
-    // 是否第一次进入APP
-    var isFirst =
-        SharedPreferenceUtil.getBool(SharedPrefsKeys.IS_FIRST_ENTER_APP);
+  void initState() {
+    super.initState();
+    WidgetsBinding widgetsBinding = WidgetsBinding.instance;
+    widgetsBinding.addPostFrameCallback((callback) async {
+      // 是否第一次进入APP
+      var isFirst =
+          SharedPreferenceUtil.getBool(SharedPrefsKeys.IS_FIRST_ENTER_APP);
 
-    NetTools.getWpCategories(WordPressRep.getWpLink(WpSource.BlogGeek))
-        .then((val) {
-      if (val.list.length == 0) return;
-      WordPressConfigCenter.wpCategories = val;
+      var wpCategories = await NetTools.getWpCategories(
+          WordPressRep.getWpLink(WpSource.BlogGeek));
+      if (wpCategories.list.length != 0) {
+        WordPressConfigCenter.wpCategories = wpCategories;
+      }
+
+      var wpPages = await NetTools.getPages();
+      if (wpPages.pageList.length != 0) {
+        WordPressConfigCenter.pages = wpPages;
+//        NetTools.checkPageImages(WordPressConfigCenter.pages);
+      }
 
       isFirst.then((val) {
         Navigator.pushReplacementNamed(
             context, val == null || val ? UIData.gooeyEdge : UIData.homeRoute);
       });
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(

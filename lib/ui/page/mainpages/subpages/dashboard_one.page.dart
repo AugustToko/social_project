@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
+import 'package:shared/util/bottom_sheet.dart';
+import 'package:shared/util/theme_util.dart';
+import 'package:social_project/misc/wordpress_config_center.dart';
+import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/widgets/login_background.dart';
+import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
+import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
-import 'dashboard_menu_row.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class GuidePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -18,14 +24,14 @@ class GuidePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 18.0),
           child: Column(
             children: <Widget>[
-                  ProfileTile(
-                    title: "Hi, " +
-                        (WpCacheCenter.tokenCache == null
-                            ? "User"
-                            : WpCacheCenter.tokenCache.userDisplayName),
-                    subtitle: "欢迎来到 ${UIData.appNameFull}",
-                    textColor: Colors.white,
-                  ),
+              ProfileTile(
+                title: "Hi, " +
+                    (WpCacheCenter.tokenCache == null
+                        ? "User"
+                        : WpCacheCenter.tokenCache.userDisplayName),
+                subtitle: "欢迎来到 ${UIData.appNameFull}",
+                textColor: Colors.white,
+              ),
             ],
           ),
         ),
@@ -190,22 +196,72 @@ class GuidePage extends StatelessWidget {
 //        ),
 //      );
 
-  Widget allCards(BuildContext context) => SingleChildScrollView(
-        child: Column(
+  /// 主体卡片
+  static Widget buildCard(final context, final WpPage item) {
+    final double margin = ScreenUtil().setWidth(22);
+    String title = item.title.rendered;
+    if (title == null || title.isEmpty) {
+      return Container();
+    }
+
+    // 内容文本
+    var content = WordPressPageContentState.fixPostData(item.content.rendered);
+    var contentSmall = WordPressPageContentState.trimContent(content);
+
+    var card = ThemeUtil.materialPostCard(
+        Column(
           children: <Widget>[
-            appBarColumn(context),
-            searchCard(context),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
+            Text(
+              title,
+              style: TextStyle(fontSize: 20),
             ),
-//            actionMenuCard(),
-//            SizedBox(
-//              height: deviceSize.height * 0.01,
-//            ),
-//            balanceCard(),
+            SizedBox(
+              height: 10,
+            ),
+//            buildTagsWidget(item, context),
+            Html(
+              data: contentSmall,
+              showImages: false,
+            ),
+            WpPicGridView(
+              item: ImagePack(item.imageUrls),
+            ),
+//                                Padding(
+//                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+//                                  child: actionRow(item),
+//                                ),
           ],
         ),
-      );
+        item.author,
+        item.date,
+        margin, onCardClicked: () {
+      goToWpPostDetail(context, item);
+    }, onLongPressed: () {
+      BottomSheetUtil.showPostSheetShow(context, item);
+    });
+
+    return card;
+  }
+
+  Widget allCards(BuildContext context) {
+    var widgets = <Widget>[];
+    widgets.addAll([
+      appBarColumn(context),
+      searchCard(context),
+    ]);
+    WordPressConfigCenter.pages.pageList.forEach((pageData) {
+      widgets.add(buildCard(context, pageData));
+    });
+    widgets.add(SizedBox(
+      height: ScreenUtil().setHeight(200),
+    ));
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        children: widgets,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

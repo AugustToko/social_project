@@ -8,9 +8,15 @@ import 'crop_image2.dart';
 
 const int maxPicGridViewCount = 9;
 
+class ImagePack {
+  List<String> imageUrls;
+
+  ImagePack(this.imageUrls);
+}
+
 /// Grid view to show picture
 class WpPicGridView extends StatelessWidget {
-  final WpPost item;
+  final ImagePack item;
 
   WpPicGridView({
     @required this.item,
@@ -18,10 +24,6 @@ class WpPicGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (item.content.rendered == null || item.content.rendered.isEmpty) {
-      return Container();
-    }
-
     Widget widget = LayoutBuilder(builder: (ctx, b) {
       final double margin = ScreenUtil().setWidth(22);
       var size = b.maxWidth;
@@ -41,8 +43,7 @@ class WpPicGridView extends StatelessWidget {
                 arguments: {
                   "index": 0,
                   "pics": item.imageUrls
-                      .map<PicSwiperItem>(
-                          (f) => PicSwiperItem(f, des: f))
+                      .map<PicSwiperItem>((f) => PicSwiperItem(f, des: f))
                       .toList(),
                 });
           },

@@ -103,7 +103,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 主体卡片
-  static Widget buildCard(final context, final item, final index) {
+  static Widget buildCard(final context, final WpPost item, final index) {
     final double margin = ScreenUtil().setWidth(22);
     String title = item.title.rendered;
     if (title == null || title == "") {
@@ -130,7 +130,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
               showImages: false,
             ),
             WpPicGridView(
-              item: item,
+              item: ImagePack(item.imageUrls),
             ),
 //                                Padding(
 //                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -138,7 +138,8 @@ class WordPressPageContentState extends State<_WordPressPageContent>
 //                                ),
           ],
         ),
-        item,
+        item.author,
+        item.date,
         margin, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {

@@ -6,24 +6,23 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
-import 'package:shared/util/log.dart';
-import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
-import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:video_player/video_player.dart';
 
-import '../content_page.dart';
+import '../mainpages/subpages/content_page.dart';
 
 /// 用于显示 WordPress 文章
 class WpDetailPageHeaderMedia extends StatefulWidget {
-  WpDetailPageHeaderMedia(this.content);
+  // WpPost
+  // WpPage
+  final content;
 
-  final WpPost content;
+  WpDetailPageHeaderMedia(this.content);
 
   @override
   _WpPostsPageState createState() {
@@ -147,14 +146,27 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
 
   List<Widget> _sliverBuilder(
       final BuildContext context, final bool innerBoxIsScrolled) {
-    var needHeaderMedia = widget.content.jetpackFeaturedMediaUrl != null &&
-        widget.content.jetpackFeaturedMediaUrl != '';
+    String mediaUrl = null;
+
+    if (widget.content is WpPost &&
+        widget.content.jetpackFeaturedMediaUrl != null &&
+        widget.content.jetpackFeaturedMediaUrl != '') {
+      mediaUrl = widget.content.jetpackFeaturedMediaUrl;
+    }
+
+    if (widget.content is WpPage) {
+      WpPage page = widget.content;
+      if (page.imageUrls.length > 0) {
+        mediaUrl = page.imageUrls[0];
+      }
+    }
+
     return <Widget>[
       SliverAppBar(
         title: Text(widget.content.title.rendered),
         backgroundColor: Theme.of(context).backgroundColor,
         elevation: 0,
-        expandedHeight: needHeaderMedia ? 200.0 : 0,
+        expandedHeight: mediaUrl != null ? 200.0 : 0,
         pinned: true,
         brightness: Brightness.dark,
         // TODO: WpPageDetail Menu 功能
@@ -194,12 +206,13 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
             },
           ),
         ],
-        flexibleSpace: needHeaderMedia
+        flexibleSpace: mediaUrl != null
             ? FlexibleSpaceBar(
                 background: Stack(
                   children: <Widget>[
                     ExtendedImage.network(
-                      widget.content.jetpackFeaturedMediaUrl,
+                      mediaUrl,
+                      width: double.infinity,
                       cache: true,
                       clearMemoryCacheIfFailed: true,
                       fit: BoxFit.cover,

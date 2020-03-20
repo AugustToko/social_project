@@ -14,7 +14,7 @@ import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 ///  create by zmtzawqlp on 2019/4/4
 ///
 class WpCropImage extends StatelessWidget {
-  final WpPost postItem;
+  final ImagePack postItem;
   final int index;
 
   WpCropImage({

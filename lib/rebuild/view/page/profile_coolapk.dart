@@ -13,7 +13,7 @@ import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/user_header.dart';
 
-import '../../../ui/page/content_page.dart';
+import '../../../ui/page/mainpages/subpages/content_page.dart';
 
 class ProfileCoolApkPage extends PageProvideNode<ProfileCoolApkPageProvider> {
   final int wpUserId;
