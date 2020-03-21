@@ -14,6 +14,7 @@ import 'package:social_project/ui/page/topic_page.dart';
 import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
+import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../../../../main.dart';
@@ -32,7 +33,6 @@ class ContentPage extends StatefulWidget {
 /// 当有继承，扩展，以及类本身实现同样的功能时，方法调用的优先级是扩展类，函数本身，和父类，第二个扩展类，优先级高于第一个扩展类
 class _TabBarPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
-
   ScrollController _scrollViewController;
 
   final TextEditingController _controller = TextEditingController();
@@ -93,19 +93,15 @@ class _TabBarPageState extends State<ContentPage>
         padding: EdgeInsets.fromLTRB(0, 0, 0, ThemeUtil.navBarHeight),
         child: FloatingActionButton(
           onPressed: () async {
-            await Navigator.pushNamed(
-              context,
-              WpCacheCenter.tokenCache == null
-                  ? LoginPage.loginPage
-                  : UIData.sendPage,
-            ).then((result) {
-              if (result != NavState.SendWpPostDone) return;
-              switch (result) {
-                case NavState.SendWpPostDone:
-                  showSuccessToast(context, "发表成功!");
-                  break;
-              }
-            });
+            var page = WpCacheCenter.tokenCache == null
+                ? LoginPage.loginPage
+                : UIData.sendPage;
+            if (page == UIData.sendPage &&
+                !canISentPost(WpCacheCenter.tokenCache.userCaps)) {
+              showErrorToast(context, "无权限!");
+              return;
+            }
+            Navigator.pushNamed(context, page);
           },
           backgroundColor: Colors.white,
           child: CustomPaint(
@@ -117,7 +113,8 @@ class _TabBarPageState extends State<ContentPage>
     );
   }
 
-  List<Widget> _sliverBuilder(final BuildContext context, final bool innerBoxIsScrolled) {
+  List<Widget> _sliverBuilder(
+      final BuildContext context, final bool innerBoxIsScrolled) {
     return <Widget>[
       SliverAppBar(
         centerTitle: true,

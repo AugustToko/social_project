@@ -65,6 +65,8 @@ class EditorPageState extends State<_EditorPageContent>
 
   static const String ACTION_SEND = "ACTION_SEND";
 
+  var openComment = true;
+
   @override
   void initState() {
     super.initState();
@@ -148,9 +150,19 @@ class EditorPageState extends State<_EditorPageContent>
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
+                  Divider(),
+                  CheckboxListTile(
+                    value: openComment,
+                    onChanged: (newValue) {
+                      setState(() {
+                        openComment = newValue;
+                      });
+                    },
+                    title: Text('开启评论'),
+                    secondary: Icon(Icons.comment),
+                    selected: true,
                   ),
+                  Divider(),
                   buildEditor()
                 ],
               ),
@@ -308,14 +320,16 @@ class EditorPageState extends State<_EditorPageContent>
             NetTools.sendPost(
                     WpCacheCenter.tokenCache.token,
                     SendPost(widget.titleController.text,
-                        mProvide.controller.document.toPlainText(), true,
+                        mProvide.controller.document.toPlainText(),
+                        allowComment: openComment,
                         featuredMedia: mediaData == null ? -1 : mediaData.id))
                 .then((post) {
               if (post != null) {
                 Navigator.pop(context);
               }
             }).whenComplete(() {
-              Navigator.pop(context, NavState.SendWpPostDone);
+              Navigator.pop(context, true);
+              showSuccessToast(context, "文章发表成功！");
             });
           }
         }

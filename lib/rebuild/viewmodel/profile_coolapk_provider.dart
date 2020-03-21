@@ -10,6 +10,7 @@ import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
+import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
@@ -63,35 +64,23 @@ class ProfileCoolApkPageProvider extends BaseProvide {
       }
     });
 
+    /// TODO: 使用 LoadMoreListView
     NetTools.getAllPosts(wpUserId).then((wpPostSource) {
       WpCacheCenter.putPosts(wpUserId, wpPostSource);
       source = wpPostSource;
       return wpPostSource;
     }).then((wpSource) {
+      if (wpSource.feedList.length == 0) {
+        notifyListeners();
+        return;
+      }
       wpSource.feedList.reversed
           .skip(wpSource.feedList.length - 5)
           .toList()
           .reversed
           .forEach(
         (post) {
-          posts.add(ThemeUtil.materialPostCard(
-              Column(
-                children: <Widget>[
-                  Text(
-                    post.title.rendered,
-                    style: TextStyle(fontSize: 20),
-                  ),
-//                  Html(data: post.content.rendered)
-                ],
-              ),
-              post.author,
-              post.date,
-              margin,
-              context, onCardClicked: () {
-            goToWpPostDetail(context, post);
-          }, onLongPressed: () {
-            BottomSheetUtil.showPostSheetShow(context, post);
-          }, canIconClick: false));
+          posts.add(WordPressPageContentState.buildCard(context, post, 0));
         },
       );
       notifyListeners();

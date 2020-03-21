@@ -249,6 +249,7 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
                     ExtendedImage.network(
                       mediaUrl,
                       width: double.infinity,
+                      height: double.infinity,
                       cache: true,
                       clearMemoryCacheIfFailed: true,
                       fit: BoxFit.cover,
