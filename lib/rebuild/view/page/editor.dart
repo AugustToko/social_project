@@ -8,6 +8,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/model/wordpress/send/send_post_data.dart';
+import 'package:shared/model/wordpress/wp_media_data.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
@@ -119,42 +120,7 @@ class EditorPageState extends State<_EditorPageContent>
               padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
               child: Column(
                 children: <Widget>[
-                  Card(
-                    color: Theme.of(context).backgroundColor.withOpacity(0.5),
-                    child: InkWell(
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Container(
-                          height: ThemeUtil.headerImageHeight,
-                          width: double.infinity,
-                          child: mProvide.headerImage == null
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "添加特色图片",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text("（请注意图片于文章的适应性）"),
-                                  ],
-                                )
-                              : Image.file(
-                                  mProvide.headerImage,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                      onTap: () {
-                        ImagePicker.pickImage(source: ImageSource.gallery)
-                            .then((file) {
-                          setState(() {
-                            mProvide.headerImage = file;
-                          });
-                        });
-                      },
-                    ),
-                  ),
+                  buildHeaderImage(),
                   SizedBox(
                     height: 20,
                   ),
@@ -197,6 +163,48 @@ class EditorPageState extends State<_EditorPageContent>
             _saveDocument(context);
           });
         });
+  }
+
+  Consumer<EditorPageProvider> buildHeaderImage() {
+    return Consumer<EditorPageProvider>(
+      builder: (context, value, child) {
+        return Card(
+          color: Theme.of(context).backgroundColor.withOpacity(0.5),
+          child: InkWell(
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Container(
+                height: ThemeUtil.headerImageHeight,
+                width: double.infinity,
+                child: mProvide.headerImage == null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "添加特色图片",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text("（请注意图片于文章的适应性）"),
+                        ],
+                      )
+                    : Image.file(
+                        mProvide.headerImage,
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+            onTap: () {
+              ImagePicker.pickImage(source: ImageSource.gallery).then((file) {
+                mProvide.headerImage = file;
+                print("---------------- pickup file -----------------------");
+                debugPrint(file.path);
+              });
+            },
+          ),
+        );
+      },
+    );
   }
 
   Consumer<EditorPageProvider> buildEditor() {
@@ -259,7 +267,7 @@ class EditorPageState extends State<_EditorPageContent>
   }
 
   @override
-  void onClick(final String action) {
+  Future<void> onClick(final String action) async {
     switch (action) {
       case ACTION_SEND:
         {
@@ -267,6 +275,26 @@ class EditorPageState extends State<_EditorPageContent>
               widget.titleController.text == "") {
             showErrorToast(context, "标题不可为空!");
           } else {
+            WpMediaUploaded mediaData;
+            if (mProvide.headerImage != null) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (c) {
+                  return LoadingDialog(
+                    text: "正在上传媒体文件...",
+                  );
+                },
+              );
+
+              mediaData = await NetTools.uploadImage(
+                  WpCacheCenter.tokenCache.token,
+                  mProvide.headerImage.path,
+                  "test.png");
+
+              Navigator.pop(context);
+            }
+
             showDialog(
               context: context,
               barrierDismissible: false,
@@ -276,10 +304,12 @@ class EditorPageState extends State<_EditorPageContent>
                 );
               },
             );
+
             NetTools.sendPost(
                     WpCacheCenter.tokenCache.token,
                     SendPost(widget.titleController.text,
-                        mProvide.controller.document.toPlainText(), true))
+                        mProvide.controller.document.toPlainText(), true,
+                        featuredMedia: mediaData == null ? -1 : mediaData.id))
                 .then((post) {
               if (post != null) {
                 Navigator.pop(context);

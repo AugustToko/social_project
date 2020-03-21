@@ -49,15 +49,15 @@ class App extends StatelessWidget {
     backgroundColor: Colors.white,
     appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.white),
     textTheme: TextTheme(
-      title: ThemeUtil.textLight,
-      body1: ThemeUtil.textLight,
-      subhead: ThemeUtil.textLight,
+      title: ThemeUtil.textOnLight,
+      body1: ThemeUtil.textOnLight,
+      subhead: ThemeUtil.textOnLight,
       // 用于 Drawer 中选项文字
-      body2: ThemeUtil.textLight,
+      body2: ThemeUtil.textOnLight,
       subtitle: ThemeUtil.subtitle,
-      button: ThemeUtil.textLight,
+      button: ThemeUtil.textOnLight,
       // for [AboutListTile]
-      headline: ThemeUtil.textLight,
+      headline: ThemeUtil.textOnLight,
     ),
     tabBarTheme: TabBarTheme(
         labelColor: Color(0xff01b87d),
@@ -87,14 +87,14 @@ class App extends StatelessWidget {
       backgroundColor: Colors.grey.shade900,
       appBarTheme: AppBarTheme(elevation: 0.0, color: Colors.grey.shade900),
       textTheme: TextTheme(
-        title: ThemeUtil.textDark,
-        subhead: ThemeUtil.textDark,
-        body1: ThemeUtil.textDark,
-        body2: ThemeUtil.textDark,
+        title: ThemeUtil.textOnDark,
+        subhead: ThemeUtil.textOnDark,
+        body1: ThemeUtil.textOnDark,
+        body2: ThemeUtil.textOnDark,
         subtitle: ThemeUtil.subtitle,
-        button: ThemeUtil.textDark,
+        button: ThemeUtil.textOnDark,
         // for [AboutListTile]
-        headline: ThemeUtil.textDark,
+        headline: ThemeUtil.textOnDark,
       ),
       cardTheme: CardTheme(color: Colors.grey.shade900),
 //    canvasColor: Colors.grey.shade900,

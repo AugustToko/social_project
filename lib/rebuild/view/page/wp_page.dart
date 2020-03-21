@@ -82,12 +82,15 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   static String trimContent(final String content) {
     // 裁剪内容
     // TODO: 裁剪规范，如何使 card 大小适中
-    var contentSmall =
-        content.substring(0, content.length < 1500 ? content.length : 1500);
+    var data;
+    if (content.length > 1500) {
+      data = content.substring(0, 1500);
+      data += "<h1>......</h1>";
+    } else {
+      data = content;
+    }
 
-    contentSmall += "<h2>......</h2>";
-
-    return contentSmall;
+    return data;
   }
 
   static String fixPostData(final String data) {
@@ -103,7 +106,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 主体卡片
-  static Widget buildCard(final context, final WpPost item, final index) {
+  static Widget buildCard(final BuildContext context, final WpPost item, final index) {
     final double margin = ScreenUtil().setWidth(22);
     String title = item.title.rendered;
     if (title == null || title == "") {
@@ -129,9 +132,11 @@ class WordPressPageContentState extends State<_WordPressPageContent>
               data: contentSmall,
               showImages: false,
             ),
-            WpPicGridView(
-              item: ImagePack(item.imageUrls),
-            ),
+            item.imageUrls.length > 0
+                ? WpPicGridView(
+                    item: ImagePack(item.imageUrls),
+                  )
+                : Container(),
 //                                Padding(
 //                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
 //                                  child: actionRow(item),
@@ -140,7 +145,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
         ),
         item.author,
         item.date,
-        margin, onCardClicked: () {
+        margin, context, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {
       BottomSheetUtil.showPostSheetShow(context, item);

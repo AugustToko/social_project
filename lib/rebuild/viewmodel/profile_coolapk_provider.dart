@@ -58,7 +58,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
       if (user == null) {
         Navigator.of(context).pop();
         showErrorToast(context, "获取用户失败!");
-      } else{
+      } else {
         wpUser = user;
       }
     });
@@ -86,7 +86,8 @@ class ProfileCoolApkPageProvider extends BaseProvide {
               ),
               post.author,
               post.date,
-              margin, onCardClicked: () {
+              margin,
+              context, onCardClicked: () {
             goToWpPostDetail(context, post);
           }, onLongPressed: () {
             BottomSheetUtil.showPostSheetShow(context, post);

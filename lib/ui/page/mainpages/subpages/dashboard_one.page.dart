@@ -234,7 +234,7 @@ class GuidePage extends StatelessWidget {
         ),
         item.author,
         item.date,
-        margin, onCardClicked: () {
+        margin, context, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {
       BottomSheetUtil.showPostSheetShow(context, item);

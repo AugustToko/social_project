@@ -5,7 +5,14 @@ import 'package:shared/mvvm/view/base.dart';
 import 'package:zefyr/zefyr.dart';
 
 class EditorPageProvider extends BaseProvide {
-  File headerImage;
+  File _headerImage;
+
+  File get headerImage => _headerImage;
+
+  set headerImage(final File file){
+    _headerImage = file;
+    notifyListeners();
+  }
 
   int _height = 300;
 
