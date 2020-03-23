@@ -8,6 +8,7 @@ import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
+import 'package:shared/util/urls.dart';
 import 'package:shared/util/web_pages.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -195,7 +196,7 @@ class LoginPageContentPageState extends State<_LoginPageContent>
                     elevation: 0,
                     onPressed: () {
                       FlutterWebBrowser.openWebPage(
-                          url: WordPressRep.blogGeekLostPwd,
+                          url: BLOG_GEEK_REST_PWD,
                           androidToolbarColor: Theme.of(context).primaryColor);
 //                      launch(WordPressRep.blogGeekLostPwd);
                     },

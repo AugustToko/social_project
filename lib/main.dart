@@ -121,11 +121,10 @@ class App extends StatelessWidget {
         theme: themeData,
         // 暗色主题
         darkTheme: darkThemeData,
-//        supportedLocales: [
-//          const Locale("en", "US"),
-//          const Locale("hi", "IN"),
-//          const Locale("hi", "IN"),
-//        ],
+        supportedLocales: [
+          const Locale("en", "US"),
+          const Locale("zh", "CN"),
+        ],
         builder: (context, widget) {
           ScreenUtil.init(context,
               width: 1080, height: 1920, allowFontScaling: true);
