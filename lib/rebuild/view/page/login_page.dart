@@ -4,7 +4,6 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/mvvm/view/base.dart';
-import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
@@ -14,6 +13,7 @@ import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
+
   static const String loginPage = "/loginPage";
 
   @override

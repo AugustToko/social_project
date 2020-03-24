@@ -55,7 +55,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     _posts.clear();
 
     // 更新 _wpUser
-    getWpUser(wpUserId).then((user) {
+    NetTools.getWpUser(wpUserId).then((user) {
       if (user == null) {
         Navigator.of(context).pop();
         showErrorToast(context, "获取用户失败!");

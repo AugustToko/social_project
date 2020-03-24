@@ -13,7 +13,7 @@ import 'package:shared/util/theme_util.dart';
 import 'package:shared/config/global_settings.dart';
 import 'package:social_project/rebuild/app_module.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/route/app_route.dart';

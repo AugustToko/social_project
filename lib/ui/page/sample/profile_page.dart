@@ -10,7 +10,7 @@
 //import 'package:shared/util/log.dart';
 //import 'package:shared/util/net_util.dart';
 //import 'package:social_project/rebuild/view/page/login_page.dart';
-//import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+//import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 //import 'package:social_project/utils/route/app_route.dart';
 //import 'package:social_project/utils/uidata.dart';
 //

@@ -11,7 +11,7 @@ import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:video_player/video_player.dart';
 

@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared/util/alert_dialog_util.dart';
 import 'package:social_project/model/editor/editor_data.dart';
-import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../../../env.dart';

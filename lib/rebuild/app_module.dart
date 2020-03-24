@@ -1,5 +1,5 @@
 import 'package:dartin/dartin.dart';
-import 'package:shared/mvvm/helper/shared_preferences.dart';
+import 'package:shared/util/shared_preferences.dart';
 import 'package:shared/mvvm/model/repository.dart';
 import 'package:social_project/rebuild/viewmodel/editor_page_provider.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';

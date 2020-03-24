@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared/ui/page/settings_page.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/mainpages/subpages/timeline_page.dart';

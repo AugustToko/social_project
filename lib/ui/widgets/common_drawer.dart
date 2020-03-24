@@ -1,11 +1,9 @@
-import 'dart:ui';
-
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/util/alert_dialog_util.dart';
 import 'package:social_project/ui/page/debug_page.dart';
-import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 import 'package:social_project/utils/uidata.dart';
 
 /// Drawer
@@ -97,7 +95,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                     leading: Icon(Icons.settings),
                     title: Text('Debug'),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (ctx){
+                      Navigator.push(context, MaterialPageRoute(builder: (ctx) {
                         return DebugPage();
                       }));
                     },

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/shared_prefs.dart';
-import 'package:shared/util/urls.dart';
 import 'package:social_project/misc/shared_prefs_key.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/utils/uidata.dart';
@@ -36,7 +35,6 @@ class _SplashPageState extends State<SplashPage> {
       var wpPages = await NetTools.getPages();
       if (wpPages.pageList.length != 0) {
         WordPressConfigCenter.pages = wpPages;
-//        NetTools.checkPageImages(WordPressConfigCenter.pages);
       }
 
       isFirst.then((val) {
@@ -53,13 +51,36 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              '${UIData.appName}',
-              style: TextStyle(fontSize: 30),
+            Padding(
+              padding: EdgeInsets.only(right: 10, left: 10, top: 10),
+              child: newLogo(context),
             ),
+            SizedBox(
+              height: 150,
+            )
           ],
         ),
       ),
+    );
+  }
+
+  static Widget newLogo(final BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            left: 20,
+            right: 20,
+          ),
+          child: Image.asset(
+            "assets/images/logo-alpha.png",
+            color: Theme.of(context).accentColor,
+            height: 100,
+          ),
+        ),
+        Text(" - Ling Yun Social Project - "),
+      ],
     );
   }
 }

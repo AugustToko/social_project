@@ -23,7 +23,7 @@ import 'package:social_project/misc/my_extended_text_selection_controls.dart';
 import 'package:social_project/misc/photo_view_page_item_builder.dart';
 import 'package:social_project/model/tuchong/tu_chong_repository.dart';
 import 'package:social_project/model/tuchong/tu_chong_source.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/widgets/pic_grid_view.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';

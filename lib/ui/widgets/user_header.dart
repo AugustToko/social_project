@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
-import 'package:shared/util/tost.dart';
 
 /// 根据 wp 所给 userId 获取 user 头像、用户名
 class WpUserHeader extends StatefulWidget {
@@ -66,7 +64,7 @@ class _WpUserHeaderState extends State<WpUserHeader> {
       clickable = widget.clickable;
     }
 
-    getWpUser(widget.userId).then((user) {
+    NetTools.getWpUser(widget.userId).then((user) {
       if (user != null) {
         setState(() {
           _wpUser = user;

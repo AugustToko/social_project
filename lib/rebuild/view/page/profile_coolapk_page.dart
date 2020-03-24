@@ -4,12 +4,12 @@ import 'package:shared/login_sys/cache_center.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
+import 'package:shared/util/alert_dialog_util.dart';
 import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/widgets/my_bar.dart';
-import 'package:social_project/utils/dialog/alert_dialog_util.dart';
 
 import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/user_header.dart';
 

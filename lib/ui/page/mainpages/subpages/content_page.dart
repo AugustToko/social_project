@@ -7,7 +7,7 @@ import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk.dart';
+import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/mainpages/subpages/photo_view.dart';
 import 'package:social_project/ui/page/topic_page.dart';
