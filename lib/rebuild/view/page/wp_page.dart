@@ -9,14 +9,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
-import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/model/wordpress/wp_category.dart';
+import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/list_config.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
+import 'package:shared/util/urls.dart';
+import 'package:shared/util/web_pages.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
@@ -106,7 +108,8 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   /// 主体卡片
-  static Widget buildCard(final BuildContext context, final WpPost item, final index) {
+  static Widget buildCard(final BuildContext context, final WpPost item,
+      final index) {
     final double margin = ScreenUtil().setWidth(22);
     String title = item.title.rendered;
     if (title == null || title == "") {
@@ -145,7 +148,8 @@ class WordPressPageContentState extends State<_WordPressPageContent>
         ),
         item.author,
         item.date,
-        margin, context, onCardClicked: () {
+        margin,
+        context, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {
       BottomSheetUtil.showPostSheetShow(context, item);
@@ -243,7 +247,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
       }
     });
 
-    Widget wpTag(String name) {
+    Widget wpTag(final WpCategory category) {
       return Stack(
         children: <Widget>[
           Container(
@@ -257,7 +261,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
               ),
             ),
             child: Text(
-              name,
+              category.name,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: fontSize),
             ),
@@ -267,7 +271,12 @@ class WordPressPageContentState extends State<_WordPressPageContent>
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  // TODO: 标签按下
+                  gotoUPostsPageByArg(context,
+                      '${BLOG_GEEK_URL}wp-json/wp/v2/posts?categories=${category
+                          .id}',
+                      appBar: AppBar(
+                        title: Text(category.name),
+                      ));
                 },
               ),
             ),
@@ -278,7 +287,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
 
     var tagWidgets = <Widget>[];
     tags.forEach((t) {
-      tagWidgets.add(wpTag(t.name));
+      tagWidgets.add(wpTag(t));
     });
 
     return Wrap(

@@ -1,17 +1,16 @@
 import 'package:flutter/widgets.dart';
-import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/ui/page/about_app.dart';
 import 'package:shared/ui/page/settings_page.dart';
 import 'package:shared/ui/page/web_page.dart';
+import 'package:social_project/rebuild/view/page/editor.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
 import 'package:social_project/ui/page/gooey_edge_page.dart';
 import 'package:social_project/ui/page/mainpages/main_page.dart';
-import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/mainpages/subpages/timeline_page.dart';
+import 'package:social_project/ui/page/pic_swiper.dart';
 import 'package:social_project/ui/page/wordpress/draft_box_page.dart';
-import 'package:social_project/rebuild/view/page/editor.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/page/wordpress/wp_detail_page_header_media.dart';
 
@@ -82,14 +81,14 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
         routeName: UIData.wpPostDetail,
       );
       break;
-    case UIData.argPostsPage:
+    case PostsPage.argPostsPage:
       return RouteResult(
         widget: PostsPage(
           arguments['url'],
           arguments['appBar'],
         ),
         showStatusBar: false,
-        routeName: UIData.argPostsPage,
+        routeName: PostsPage.argPostsPage,
       );
       break;
     case LoginPage.loginPage:

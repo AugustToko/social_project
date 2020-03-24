@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/util/urls.dart';
+import 'package:shared/util/web_pages.dart';
 
 class TopicPage extends StatefulWidget {
   TopicPage({Key key}) : super(key: key);
@@ -21,28 +23,52 @@ class _TopicPageState extends State<TopicPage> {
               title: Text("Android 开发"),
               subtitle: Text("Welcome to Android Dev"),
               trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                gotoUPostsPageByArg(context,
+                    '${BLOG_GEEK_URL}wp-json/wp/v2/posts?categories=10',
+                    appBar: AppBar(
+                      title: Text('Android 开发'),
+                    ));
+              },
             ),
             ListTile(
               leading: Icon(Icons.audiotrack),
               title: Text("音乐制作"),
               subtitle: Text("Welcome to Music Music production."),
               trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                gotoUPostsPageByArg(context,
+                    '${BLOG_GEEK_URL}wp-json/wp/v2/posts?categories=10',
+                    appBar: AppBar(
+                      title: Text('Android 开发'),
+                    ));
+              },
             ),
             ListTile(
               leading: Icon(Icons.personal_video),
               title: Text("视频制作"),
               subtitle: Text("Welcome to Video production。"),
               trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                gotoUPostsPageByArg(context,
+                    '${BLOG_GEEK_URL}wp-json/wp/v2/posts?categories=10',
+                    appBar: AppBar(
+                      title: Text('Android 开发'),
+                    ));
+              },
             ),
             ListTile(
               leading: Icon(Icons.format_paint),
               title: Text("绘画交流"),
               subtitle: Text("Welcome to Painting production。"),
               trailing: Icon(Icons.keyboard_arrow_right),
-              onTap: () {},
+              onTap: () {
+                gotoUPostsPageByArg(context,
+                    '${BLOG_GEEK_URL}wp-json/wp/v2/posts?categories=10',
+                    appBar: AppBar(
+                      title: Text('Android 开发'),
+                    ));
+              },
             ),
           ],
         ),
