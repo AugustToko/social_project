@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/ui/widget/about_tile.dart';
 import 'package:shared/ui/widget/widget_default.dart';

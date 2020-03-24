@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/urls.dart';
-import 'package:shared/util/web_pages.dart';
 
 class TopicPage extends StatefulWidget {
   TopicPage({Key key}) : super(key: key);

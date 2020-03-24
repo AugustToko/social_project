@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
-import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/alert_dialog_util.dart';

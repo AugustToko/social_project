@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
@@ -13,8 +14,6 @@ import 'package:social_project/ui/widgets/login_background.dart';
 import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
-
-import 'package:flutter_html/flutter_html.dart';
 
 class GuidePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();

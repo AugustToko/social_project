@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared/login_sys/cache_center.dart';
+import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
-import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/net_util.dart';
-import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
-import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
 
 /// ViewModel 层
@@ -55,7 +52,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     _posts.clear();
 
     // 更新 _wpUser
-    NetTools.getWpUser(wpUserId).then((user) {
+    NetTools.getAndSaveWpUser(wpUserId).then((user) {
       if (user == null) {
         Navigator.of(context).pop();
         showErrorToast(context, "获取用户失败!");

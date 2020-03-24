@@ -1,20 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:shared/login_sys/cache_center.dart';
+import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
+import 'package:shared/config/cache_center.dart';
+import 'package:shared/config/wp_cache.dart';
 import 'package:shared/rep/wp_rep.dart';
-import 'package:shared/util/net_util.dart';
+import 'package:shared/ui/widget/widget_default.dart';
+import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
+import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/mainpages/subpages/photo_view.dart';
 import 'package:social_project/ui/page/topic_page.dart';
+import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
-import 'package:social_project/ui/widgets/user_header.dart';
-import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/utils/uidata.dart';
 
 import '../../../../main.dart';
@@ -66,7 +69,6 @@ class _TabBarPageState extends State<ContentPage>
 
   @override
   Widget build(BuildContext context) {
-    var wpPage = WordPressPage();
     return Scaffold(
       drawer: CommonDrawer(),
       body: NestedScrollView(
@@ -78,7 +80,7 @@ class _TabBarPageState extends State<ContentPage>
             Expanded(
               child: TabBarView(
                 children: <Widget>[
-                  wpPage,
+                  WordPressPage(),
                   PhotoViewDemo(),
 //                  SampleHomePage(),
                   TopicPage(),
@@ -117,88 +119,124 @@ class _TabBarPageState extends State<ContentPage>
       final BuildContext context, final bool innerBoxIsScrolled) {
     return <Widget>[
       SliverAppBar(
-        centerTitle: true,
         leading: Container(),
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
         expandedHeight: 70,
         flexibleSpace: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Container(
-              height: 60,
-              child: Card(
-                margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                elevation: 2.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Theme.of(context)
-                              .textTheme
-                              .title
-                              .color
-                              .withOpacity(0.7),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                10,
+                0,
+                10,
+                0,
+              ),
+              child: Container(
+                height: 65,
+                child: Card(
+                  elevation: 4.0,
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 10,
                         ),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          autofocus: false,
-                          focusNode: FocusNode(canRequestFocus: true),
-                          keyboardAppearance: App.isDarkMode(context)
-                              ? Brightness.dark
-                              : Brightness.light,
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "查找信息",
-                            hintStyle: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.subtitle.color),
+                        IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Theme
+                                .of(context)
+                                .textTheme
+                                .title
+                                .color
+                                .withOpacity(0.7),
                           ),
-                          onSubmitted: (par1) {
-                            return Navigator.pushNamed(
-                                context, UIData.argPostsPage,
-                                arguments: {
-                                  'url': WordPressRep.getWpLink(
-                                          WordPressRep.wpSource) +
-                                      "/wp-json/wp/v2/posts?search=${_controller.text}",
-                                  'appBar': AppBar(
-                                    title: Text(_controller.text + ' 的搜索结果'),
-                                    backgroundColor:
-                                        Theme.of(context).backgroundColor,
-                                    elevation: 5,
-                                  )
-                                });
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
                           },
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      WpUserHeader(
-                        radius: 20,
-                        showUserName: false,
-                        needLogin: true,
-                        userId: WpCacheCenter.tokenCache == null
-                            ? -1
-                            : WpCacheCenter.tokenCache.userId,
-                        loginRouteName: LoginPage.loginPage,
-                        profileRouteName: ProfileCoolApkPage.profile,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            autofocus: false,
+                            focusNode: FocusNode(canRequestFocus: true),
+                            keyboardAppearance: App.isDarkMode(context)
+                                ? Brightness.dark
+                                : Brightness.light,
+                            controller: _controller,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "查找信息",
+                              hintStyle: TextStyle(
+                                  color: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .subtitle
+                                      .color),
+                            ),
+                            onSubmitted: (par1) {
+                              return Navigator.pushNamed(
+                                  context, PostsPage.argPostsPage,
+                                  arguments: {
+                                    'url': WordPressRep.getWpLink(
+                                        WordPressRep.wpSource) +
+                                        "/wp-json/wp/v2/posts?search=${_controller
+                                            .text}",
+                                    'appBar': AppBar(
+                                      title: Text(_controller.text + ' 的搜索结果'),
+                                      backgroundColor:
+                                      Theme
+                                          .of(context)
+                                          .backgroundColor,
+                                      elevation: 5,
+                                    )
+                                  });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Consumer<WpCacheModel>(
+                          builder: (ctx, WpCacheModel wpCacheModel, child) {
+                            return Stack(
+                              children: <Widget>[
+                                WpCacheCenter.tokenCache == null
+                                    ? WidgetDefault.defaultCircleAvatar(context,
+                                    size: 30)
+                                    : CircleAvatar(
+                                    radius: 15,
+                                    backgroundImage: NetworkImage(
+                                        wpCacheModel
+                                            .userCache.avatarUrls.s96)),
+                                Positioned.fill(
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {
+                                        if (WpCacheCenter.tokenCache == null)
+                                          goToLoginPage(context);
+                                        else
+                                          goToProfilePage(context,
+                                              WpCacheCenter.tokenCache.userId);
+                                      },
+                                      customBorder: CircleBorder(),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -206,6 +244,7 @@ class _TabBarPageState extends State<ContentPage>
           ],
         ),
         pinned: false,
+        floating: true,
       ),
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
@@ -214,7 +253,8 @@ class _TabBarPageState extends State<ContentPage>
             controller: _tabController,
           ),
         ),
-        pinned: true,
+        floating: true,
+        pinned: false,
       ),
     ];
   }

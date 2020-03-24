@@ -7,11 +7,12 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:html/dom.dart' as dom;
+import 'package:provider/provider.dart';
+import 'package:shared/config/wp_cache.dart';
 import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
+import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/tost.dart';
-import 'package:social_project/rebuild/view/page/login_page.dart';
-import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:video_player/video_player.dart';
 
@@ -62,13 +63,15 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    WpUserHeader(
-                        clickable: true,
-                        needLogin: false,
-                        showUserName: true,
-                        userId: widget.content.author,
-                        loginRouteName: LoginPage.loginPage,
-                        profileRouteName: ProfileCoolApkPage.profile),
+                    Consumer<WpCacheModel>(
+                        builder: (ctx, WpCacheModel wpCacheModel, child) =>
+                            WpUserHeader(
+                              showUserName: true,
+                              userId: widget.content.author,
+                              onClick: () {
+                                goToProfilePage(context, widget.content.author);
+                              },
+                            )),
                     SizedBox(
                       width: ScreenUtil().setWidth(30),
                     ),
@@ -154,12 +157,12 @@ class _WpPostsPageState extends State<WpDetailPageHeaderMedia> {
                           debugPrint(node.nextElementSibling.text);
                           var src = node.attributes["src"];
                           return AudioPlayerView(
-                              audioPlayerController: audioPlayerController,
-                              trackUrl: src,
-                              isLocal: false,
-                              trackTitle: title,
+                            audioPlayerController: audioPlayerController,
+                            trackUrl: src,
+                            isLocal: false,
+                            trackTitle: title,
 //                              trackSubtitle: "--",
-                              simpleDesign: true,
+                            simpleDesign: true,
 //                              imageUrl: src.replaceAll('.mp3', '-mp3') + "-image.jpg"
                           );
                         default:

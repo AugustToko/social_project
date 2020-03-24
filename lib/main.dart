@@ -10,6 +10,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/config/global_settings.dart';
+import 'package:shared/config/wp_cache.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/app_module.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
@@ -23,17 +24,27 @@ import 'package:social_project/utils/uidata.dart';
 
 import 'env.dart';
 
-void main() async {
+final wpCacheModel = WpCacheModel();
 
+void main() async {
   GlobalSettings.profileRouteName = ProfileCoolApkPage.profile;
   GlobalSettings.loginRouteName = LoginPage.loginPage;
   GlobalSettings.argPostsPageRouteName = PostsPage.argPostsPage;
 
   WidgetsFlutterBinding.ensureInitialized();
+
   // wait init
   await init();
+
   Provider.debugCheckInvalidValueType = null;
-  runApp(App());
+
+  runApp(Provider<void>.value(
+    value: null,
+    child: ChangeNotifierProvider.value(
+      value: wpCacheModel,
+      child: App(),
+    ),
+  ));
 }
 
 class App extends StatelessWidget {

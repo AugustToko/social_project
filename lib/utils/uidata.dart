@@ -45,7 +45,7 @@ class UIData {
   /// [PostsPage]
   /// See [PostsPage.argPostsPage]
   @Deprecated("Use PostsPage.argPostsPage")
-  static const String argPostsPage = "/argPostsPage";
+  static const String argPostsPage = PostsPage.argPostsPage;
 
   /// [DraftBoxPage]
   static const String draftBoxPage = "/draftBoxPage";
