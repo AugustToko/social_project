@@ -21,6 +21,7 @@ import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/urls.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
+import 'package:social_project/ui/widgets/label_below_icon.dart';
 import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 import 'package:social_project/utils/route/app_route.dart';
 
@@ -110,7 +111,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   /// 主体卡片
   static Widget buildCard(final BuildContext context, final WpPost item,
       final index) {
-    final double margin = ScreenUtil().setWidth(22);
+    final double margin = ScreenUtil().setWidth(24);
     String title = item.title.rendered;
     if (title == null || title == "") {
       return Container();
@@ -140,10 +141,13 @@ class WordPressPageContentState extends State<_WordPressPageContent>
                     item: ImagePack(item.imageUrls),
                   )
                 : Container(),
-//                                Padding(
-//                                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-//                                  child: actionRow(item),
-//                                ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: actionRow(item),
+            ),
           ],
         ),
         item.author,
@@ -297,7 +301,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
     );
   }
 
-  Widget actionRow(final WpPost post) {
+  static Widget actionRow(final WpPost post) {
     const double iconSize = 18.0;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,16 +316,16 @@ class WordPressPageContentState extends State<_WordPressPageContent>
             );
           },
         ),
-        LikeButton(
-          likeCount: 999,
-          likeBuilder: (bool isClicked) {
-            return Icon(
-              FontAwesomeIcons.retweet,
-              color: isClicked ? Colors.deepOrange : Colors.grey,
-              size: iconSize,
-            );
-          },
-        ),
+//        LikeButton(
+//          likeCount: 999,
+//          likeBuilder: (bool isClicked) {
+//            return Icon(
+//              FontAwesomeIcons.retweet,
+//              color: isClicked ? Colors.deepOrange : Colors.grey,
+//              size: iconSize,
+//            );
+//          },
+//        ),
         LikeButton(
           likeCount: 999,
           size: iconSize,
@@ -329,7 +333,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
         LikeButton(
           likeCount: 999,
           onTap: (bool isLiked) {
-            mProvider.share(post);
+//            mProvider.share(post);
             return Future.value(true);
           },
           likeBuilder: (bool isClicked) {
@@ -345,95 +349,147 @@ class WordPressPageContentState extends State<_WordPressPageContent>
   }
 
   Widget buildBannerSwipe() {
-    return BannerSwiper(
-      showIndicator: true,
-      //width  和 height 是图片的高宽比  不用传具体的高宽   必传
-      height: 100,
-      width: 48,
-      //轮播图数目 必传
-      length: mProvider.banners.length,
-      //轮播的item  widget 必传
-      getwidget: (index) {
-        var bannerData = mProvider.banners[index % mProvider.banners.length];
-        return GestureDetector(
-          onTap: () {
-            mProvider.onBannerPressed(bannerData);
-          },
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Material(
-              elevation: 1.5,
-              borderRadius: ThemeUtil.clipRRectBorderRadius,
-              color: Colors.transparent,
-              child: ClipRRect(
-                borderRadius: ThemeUtil.clipRRectBorderRadius,
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(
-                      bannerData.assetUrl,
-                      width: 400,
-                      fit: BoxFit.cover,
-                    ),
-                    Container(
-                      color: Colors.black.withOpacity(0.4),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            bannerData.title,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            bannerData.subTitle,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            bannerData.messageText,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          MaterialButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(
-                                    width: 1.5, color: Colors.white)),
-                            onPressed: () {
-                              mProvider.onBannerPressed(bannerData);
-                            },
-                            child: Text(
-                              "了解更多",
-                              style: TextStyle(
-                                color: Colors.white,
+    final double margin = ScreenUtil().setWidth(24);
+    const radius = BorderRadius.all(Radius.circular(12.0));
+    return Column(
+      children: <Widget>[
+        BannerSwiper(
+          showIndicator: true,
+          //width  和 height 是图片的高宽比  不用传具体的高宽   必传
+          height: 100,
+          width: 42,
+          //轮播图数目 必传
+          length: mProvider.banners.length,
+          //轮播的item  widget 必传
+          getwidget: (index) {
+            var bannerData =
+            mProvider.banners[index % mProvider.banners.length];
+            return GestureDetector(
+              onTap: () {
+                mProvider.onBannerPressed(bannerData);
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Material(
+                  elevation: 1.5,
+                  borderRadius: ThemeUtil.clipRRectBorderRadius,
+                  color: Colors.transparent,
+                  child: ClipRRect(
+                    borderRadius: ThemeUtil.clipRRectBorderRadius,
+                    child: Stack(
+                      children: <Widget>[
+                        Image.network(
+                          bannerData.assetUrl,
+                          width: 400,
+                          fit: BoxFit.cover,
+                        ),
+                        Container(
+                          color: Colors.black.withOpacity(0.4),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                bannerData.title,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                bannerData.subTitle,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+//                          SizedBox(
+//                            height: 8,
+//                          ),
+//                          Text(
+//                            bannerData.messageText,
+//                            style: TextStyle(color: Colors.white, fontSize: 15),
+//                          ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    side: BorderSide(
+                                        width: 1.5, color: Colors.white)),
+                                onPressed: () {
+                                  mProvider.onBannerPressed(bannerData);
+                                },
+                                child: Text(
+                                  "了解更多",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
+            );
+          },
+        ),
+        SizedBox(
+          height: ScreenUtil().setHeight(30),
+        ),
+        Card(
+          shape: const RoundedRectangleBorder(
+            borderRadius: radius,
+          ),
+          margin: EdgeInsets.fromLTRB(margin, 0, margin, 0),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                LabelBelowIcon(
+                  circleColor: Colors.redAccent,
+                  icon: FontAwesomeIcons.solidArrowAltCircleDown,
+                  label: "必看",
+                ),
+                LabelBelowIcon(
+                  circleColor: Colors.blueAccent,
+                  icon: FontAwesomeIcons.newspaper,
+                  label: "新闻",
+                ),
+                LabelBelowIcon(
+                  circleColor: Colors.yellow,
+                  icon: FontAwesomeIcons.user,
+                  label: "朋友",
+                ),
+                LabelBelowIcon(
+                  circleColor: Colors.greenAccent,
+                  icon: FontAwesomeIcons.hotdog,
+                  label: '热门',
+                ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+//        Padding(
+//          padding: EdgeInsets.symmetric(horizontal: 16),
+//          child: Row(
+//            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//            children: <Widget>[
+//              Text("最新文章", style: TextStyle(fontWeight: FontWeight.bold),),
+//              FlatButton(onPressed: () {}, child: Text("变更"))
+//            ],
+//          ),
+//        )
+      ],
     );
-  }
-
-  void onNewPostReleased() {
-    mProvider.onRefresh();
   }
 
   @override

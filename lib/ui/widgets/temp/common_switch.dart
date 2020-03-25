@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 class CommonSwitch extends StatelessWidget {
   final defValue;
@@ -11,12 +11,12 @@ class CommonSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return defaultTargetPlatform == TargetPlatform.android
         ? Switch(
-            value: defValue,
-            onChanged: (val) {},
-          )
+      value: defValue,
+      onChanged: (val) {},
+    )
         : CupertinoSwitch(
-            value: defValue,
-            onChanged: (val) {},
-          );
+      value: defValue,
+      onChanged: (val) {},
+    );
   }
 }

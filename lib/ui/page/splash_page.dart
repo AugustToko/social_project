@@ -14,6 +14,29 @@ class SplashPage extends StatefulWidget {
 
   @override
   _SplashPageState createState() => _SplashPageState();
+
+
+  static Widget newLogo(final BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            left: 20,
+            right: 20,
+          ),
+          child: Image.asset(
+            "assets/images/logo-alpha.png",
+            color: Theme
+                .of(context)
+                .accentColor,
+            height: 100,
+          ),
+        ),
+        Text(" - Ling Yun Social Project - "),
+      ],
+    );
+  }
 }
 
 class _SplashPageState extends State<SplashPage> {
@@ -47,13 +70,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme
+          .of(context)
+          .backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 10, left: 10, top: 10),
-              child: newLogo(context),
+              child: SplashPage.newLogo(context),
             ),
             SizedBox(
               height: 150,
@@ -64,23 +90,4 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
-  static Widget newLogo(final BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            top: 20,
-            left: 20,
-            right: 20,
-          ),
-          child: Image.asset(
-            "assets/images/logo-alpha.png",
-            color: Theme.of(context).accentColor,
-            height: 100,
-          ),
-        ),
-        Text(" - Ling Yun Social Project - "),
-      ],
-    );
-  }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/widgets/custom_float.dart';
 import 'package:social_project/utils/uidata.dart';
 
-import 'user_account_drawer.dart';
-import 'custom_float.dart';
+import '../user_account_drawer.dart';
 
 class CommonScaffold extends StatelessWidget {
   final appTitle;

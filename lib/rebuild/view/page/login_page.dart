@@ -11,6 +11,7 @@ import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/tost.dart';
 import 'package:shared/util/urls.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
+import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
@@ -85,12 +86,9 @@ class LoginPageContentPageState extends State<_LoginPageContent>
   loginHeader() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          FlutterLogo(
-            colors: Colors.green,
-            size: 80.0,
-          ),
+          SplashPage.newLogo(context),
           SizedBox(
-            height: 30.0,
+            height: 80.0,
           ),
           Text(
             "欢迎来到 ${UIData.appName}",
@@ -301,10 +299,12 @@ class LoginPageContentPageState extends State<_LoginPageContent>
     final s = mProvide.login().doOnListen(() {
       _controller.forward();
     }).doOnDone(() async {
-      final wpCacheModel = Provider.of<WpCacheModel>(context, listen: false);
-      var user = await NetTools.getAndSaveWpUser(
-          WpCacheCenter.tokenCache.userId);
-      wpCacheModel.userCache = user;
+      if (WpCacheCenter.tokenCache != null) {
+        final wpCacheModel = Provider.of<WpCacheModel>(context, listen: false);
+        var user = await NetTools.getAndSaveWpUser(
+            WpCacheCenter.tokenCache.userId);
+        wpCacheModel.userCache = user;
+      }
       _controller.reverse();
     }).listen((data) {
       if (WpCacheCenter.tokenCache != null) {

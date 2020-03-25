@@ -18,13 +18,17 @@ class CommonDrawer extends StatefulWidget {
 class _CommonDrawerState extends State<CommonDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        canvasColor: Theme.of(context).backgroundColor,
-      ),
-      child: Drawer(
-        child: Stack(
-          children: <Widget>[
+    return Container(
+      width: 260,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Theme
+              .of(context)
+              .backgroundColor,
+        ),
+        child: Drawer(
+          child: Stack(
+            children: <Widget>[
 //            ClipRect(
 //              child: BackdropFilter(
 //                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -35,15 +39,15 @@ class _CommonDrawerState extends State<CommonDrawer> {
 //                ),
 //              ),
 //            ),
-            ListView(
-              children: <Widget>[
-                SizedBox(
-                  height: ScreenUtil().setWidth(40),
-                ),
-                ExtendedImage.asset(
-                  "assets/images/logo.jpg",
-                  height: 80,
-                ),
+              ListView(
+                children: <Widget>[
+                  SizedBox(
+                    height: ScreenUtil().setWidth(40),
+                  ),
+                  ExtendedImage.asset(
+                    "assets/images/logo.jpg",
+                    height: 80,
+                  ),
 //                Padding(
 //                  padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
 //                  child: Row(
@@ -60,50 +64,52 @@ class _CommonDrawerState extends State<CommonDrawer> {
 //                    ],
 //                  ),
 //                ),
-                ClipRect(
-                  child: WpCacheCenter.tokenCache == null
-                      ? Container()
-                      : Column(
-                          children: <Widget>[
-                            Divider(),
-                            ListTile(
-                              leading: Icon(Icons.exit_to_app),
-                              title: Text('登出'),
-                              onTap: () {
-                                DialogUtil.showLogoutDialog(context, () {
-                                  WpCacheCenter.tokenCache = null;
-                                  setState(() {});
-                                });
-                              },
-                            )
-                          ],
-                        ),
-                ),
-                Divider(),
-                ClipRect(
-                  child: ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('设置'),
-                    onTap: () {
-                      Navigator.pushNamed(context, UIData.settingsPage);
-                    },
+                  ClipRect(
+                    child: WpCacheCenter.tokenCache == null
+                        ? Container()
+                        : Column(
+                      children: <Widget>[
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.exit_to_app),
+                          title: Text('登出'),
+                          onTap: () {
+                            DialogUtil.showLogoutDialog(context, () {
+                              WpCacheCenter.tokenCache = null;
+                              setState(() {});
+                            });
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Divider(),
-                ClipRect(
-                  child: ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Debug'),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (ctx) {
-                        return DebugPage();
-                      }));
-                    },
+                  Divider(),
+                  ClipRect(
+                    child: ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('设置'),
+                      onTap: () {
+                        Navigator.pushNamed(context, UIData.settingsPage);
+                      },
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  Divider(),
+                  ClipRect(
+                    child: ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Debug'),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (ctx) {
+                              return DebugPage();
+                            }));
+                      },
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

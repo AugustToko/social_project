@@ -121,6 +121,7 @@ class _TabBarPageState extends State<ContentPage>
       SliverAppBar(
         leading: Container(),
         backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
+        elevation: 0,
         expandedHeight: 70,
         flexibleSpace: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -244,7 +245,6 @@ class _TabBarPageState extends State<ContentPage>
           ],
         ),
         pinned: false,
-        floating: true,
       ),
       SliverPersistentHeader(
         delegate: _SliverAppBarDelegate(
@@ -253,8 +253,7 @@ class _TabBarPageState extends State<ContentPage>
             controller: _tabController,
           ),
         ),
-        floating: true,
-        pinned: false,
+        pinned: true,
       ),
     ];
   }
