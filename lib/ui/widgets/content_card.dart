@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:shared/misc/shared_prefs_key.dart';
 import 'package:shared/util/shared_prefs.dart';
 import 'package:social_project/main.dart';
-import 'package:social_project/misc/shared_prefs_key.dart';
 import 'package:social_project/utils/uidata.dart';
 
 class ContentCard extends StatefulWidget {

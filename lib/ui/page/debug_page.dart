@@ -23,10 +23,9 @@ class DebugPage extends StatelessWidget {
                     return dialog;
                   },
                 );
-
               },
               child: Text("Loading Dialog"),
-            )
+            ),
           ],
         ));
   }
