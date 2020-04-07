@@ -4,7 +4,7 @@ import 'package:share/share.dart';
 import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/rep/wp_rep.dart';
-import 'package:shared/util/alert_dialog_util.dart';
+import 'package:shared/util/dialog_util.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -30,6 +30,7 @@ void main() async {
   GlobalSettings.profileRouteName = ProfileCoolApkPage.profile;
   GlobalSettings.loginRouteName = LoginPage.loginPage;
   GlobalSettings.argPostsPageRouteName = PostsPage.argPostsPage;
+  GlobalSettings.appName = UIData.appName;
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -177,6 +178,8 @@ class App extends StatelessWidget {
   }
 
   /// 退出 APP
+  /// [Deprecated]
+  @Deprecated('Use goto_page')
   static Future<void> exitApp() async {
     await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }

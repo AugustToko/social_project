@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared/config/cache_center.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
-import 'package:shared/util/alert_dialog_util.dart';
+import 'package:shared/util/dialog_util.dart';
 import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';

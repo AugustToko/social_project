@@ -9,7 +9,7 @@ import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/theme_util.dart';
-import 'package:shared/util/tost.dart';
+import 'package:shared/util/toast.dart';
 import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';

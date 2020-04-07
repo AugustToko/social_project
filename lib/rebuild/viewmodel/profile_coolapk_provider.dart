@@ -7,7 +7,7 @@ import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/net_util.dart';
-import 'package:shared/util/tost.dart';
+import 'package:shared/util/toast.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/utils/uidata.dart';
 

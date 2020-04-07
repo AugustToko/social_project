@@ -5,7 +5,7 @@ import 'package:shared/config/cache_center.dart';
 import 'package:shared/model/wordpress/wp_user.dart';
 import 'package:shared/ui/widget/about_tile.dart';
 import 'package:shared/ui/widget/widget_default.dart';
-import 'package:shared/util/alert_dialog_util.dart';
+import 'package:shared/util/dialog_util.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';

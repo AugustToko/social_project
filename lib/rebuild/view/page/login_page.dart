@@ -8,7 +8,7 @@ import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
-import 'package:shared/util/tost.dart';
+import 'package:shared/util/toast.dart';
 import 'package:shared/util/urls.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/ui/page/splash_page.dart';

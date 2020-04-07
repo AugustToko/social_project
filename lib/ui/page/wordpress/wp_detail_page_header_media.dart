@@ -12,7 +12,7 @@ import 'package:shared/config/wp_cache.dart';
 import 'package:shared/model/wordpress/wp_page_data.dart';
 import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/util/goto_pages.dart';
-import 'package:shared/util/tost.dart';
+import 'package:shared/util/toast.dart';
 import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:video_player/video_player.dart';
 
