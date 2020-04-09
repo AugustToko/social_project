@@ -6,6 +6,8 @@ Social project.
 
 使用 Wordpress REST API 作为后端驱动， Flutter 作为前端开发。
 
+**本程序附带的 _shared 库, 正着手进行开源计划, 目前项目为半开源**
+
 ## TODO  
 
 ### 欢迎提交功能请求  
