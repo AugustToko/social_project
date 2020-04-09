@@ -8,8 +8,9 @@ Social project.
 
 ## TODO  
 
-### command line  
+### 欢迎提交功能请求  
 
+- [x] 搜索
 - [x] Wordpress 登录
 - [x] 发表纯文本文章
 - [x] 发表带有头图的纯文本文章
@@ -18,6 +19,7 @@ Social project.
 - [ ] 推送通知
 - [ ] 收藏文章
 - [ ] 用户私聊
+- [ ] 屏蔽文章
 
 
 
