@@ -1,3 +1,5 @@
+![Logo](./art/Logo-Landscape.png)
+
 # social_project
 
 一款基于 Wordpress 的 内容浏览 APP
