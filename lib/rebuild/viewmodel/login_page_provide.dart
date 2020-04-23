@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/model/wordpress/wp_login_result.dart';
-import 'package:shared/mvvm/model/repository.dart';
-import 'package:shared/mvvm/view/base.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/model/wp_login_result.dart';
+import 'package:wpmodel/mvvm/view/base.dart';
+import 'package:wpmodel/repository.dart';
 
 /// ViewModel 层
 /// 通过 [notifyListeners] 通知UI层更新

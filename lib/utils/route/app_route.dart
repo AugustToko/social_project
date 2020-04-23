@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:shared/ui/page/about_app.dart';
 import 'package:shared/ui/page/settings_page.dart';
 import 'package:shared/ui/page/web_page.dart';
-import 'package:social_project/rebuild/view/page/editor.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/page/comment_deatil_page.dart';
@@ -101,7 +100,8 @@ RouteResult getRouteResult({String name, Map<String, dynamic> arguments}) {
     case UIData.sendPage:
       return RouteResult(
         //TODO：编辑页面待完善
-        widget: EditorPage(editorData: arguments == null ? null : arguments["editorData"],),
+//        widget: EditorPage(editorData: arguments == null ? null : arguments["editorData"],),
+        widget: Container(),
         showStatusBar: true,
         routeName: UIData.sendPage,
       );

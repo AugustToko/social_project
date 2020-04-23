@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
 import 'package:shared/util/dialog_util.dart';
-import 'package:shared/util/wp_user_utils.dart';
 import 'package:social_project/rebuild/viewmodel/profile_coolapk_provider.dart';
+import 'package:social_project/ui/page/mainpages/subpages/content_page.dart';
 import 'package:social_project/ui/page/sample/content/home_page.dart';
 import 'package:social_project/ui/widgets/my_bar.dart';
-
-import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/ui/widgets/user_header.dart';
-
-import '../../../ui/page/mainpages/subpages/content_page.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/mvvm/view/base.dart';
+import 'package:wpmodel/ui/user_header.dart';
+import 'package:wpmodel/util/wp_user_utils.dart';
 
 class ProfileCoolApkPage extends PageProvideNode<ProfileCoolApkPageProvider> {
   final int wpUserId;
@@ -308,7 +306,8 @@ class _ProfileCoolApkState extends State<_ProfileCoolApk>
                               WpCacheCenter.tokenCache.userId ==
                                   mProvider.wpUser.id
                           ? Text(
-                              getWpUserCapText(WpCacheCenter.tokenCache.userCaps),
+                              getWpUserCapText(
+                                  WpCacheCenter.tokenCache.userCaps),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             )

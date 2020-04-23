@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/model/wordpress/wp_page_data.dart';
-import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/profile_tile.dart';
-import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
@@ -14,6 +10,10 @@ import 'package:social_project/ui/widgets/login_background.dart';
 import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 import 'package:social_project/utils/route/app_route.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/model/wp_page_data.dart';
+import 'package:wpmodel/rep/wp_rep.dart';
+import 'package:wpmodel/ui/wp_bottom_sheet.dart';
 
 class GuidePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -236,7 +236,7 @@ class GuidePage extends StatelessWidget {
         margin, context, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {
-      BottomSheetUtil.showPostSheetShow(context, item);
+      WpBottomSheetUtil.showPostSheetShow(context, item);
     });
 
     return card;

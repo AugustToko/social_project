@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/misc/shared_prefs_key.dart';
-import 'package:shared/rep/wp_rep.dart';
-import 'package:shared/util/net_util.dart';
 import 'package:shared/util/shared_prefs.dart';
 import 'package:social_project/misc/wordpress_config_center.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:wpmodel/rep/wp_rep.dart';
+import 'package:wpmodel/util/wp_net_utils.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key, this.title}) : super(key: key);
@@ -49,13 +49,13 @@ class _SplashPageState extends State<SplashPage> {
       var isFirst =
           SharedPreferenceUtil.getBool(SharedPrefsKeys.IS_FIRST_ENTER_APP);
 
-      var wpCategories = await NetTools.getWpCategories(
+      var wpCategories = await WpNetTools.getWpCategories(
           WordPressRep.getWpLink(WpSource.BlogGeek));
       if (wpCategories.list.length != 0) {
         WordPressConfigCenter.wpCategories = wpCategories;
       }
 
-      var wpPages = await NetTools.getPages();
+      var wpPages = await WpNetTools.getPages();
       if (wpPages.pageList.length != 0) {
         WordPressConfigCenter.pages = wpPages;
       }

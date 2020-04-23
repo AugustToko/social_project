@@ -3,14 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/config/wp_cache.dart';
-import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/ui/widget/widget_default.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/toast.dart';
-import 'package:shared/util/wp_user_utils.dart';
+import 'package:social_project/main.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/ui/page/mainpages/subpages/photo_view.dart';
@@ -19,8 +16,10 @@ import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/ui/widgets/common_drawer.dart';
 import 'package:social_project/ui/widgets/my_tabbar.dart';
 import 'package:social_project/utils/uidata.dart';
-
-import '../../../../main.dart';
+import 'package:social_project/wp_cache.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/rep/wp_rep.dart';
+import 'package:wpmodel/util/wp_user_utils.dart';
 
 /// 用于 [HomePage], 装载着数个 Page
 class ContentPage extends StatefulWidget {
@@ -147,8 +146,7 @@ class _TabBarPageState extends State<ContentPage>
                         IconButton(
                           icon: Icon(
                             Icons.menu,
-                            color: Theme
-                                .of(context)
+                            color: Theme.of(context)
                                 .textTheme
                                 .title
                                 .color
@@ -173,8 +171,7 @@ class _TabBarPageState extends State<ContentPage>
                               border: InputBorder.none,
                               hintText: "查找信息",
                               hintStyle: TextStyle(
-                                  color: Theme
-                                      .of(context)
+                                  color: Theme.of(context)
                                       .textTheme
                                       .subtitle
                                       .color),
@@ -184,15 +181,12 @@ class _TabBarPageState extends State<ContentPage>
                                   context, PostsPage.argPostsPage,
                                   arguments: {
                                     'url': WordPressRep.getWpLink(
-                                        WordPressRep.wpSource) +
-                                        "/wp-json/wp/v2/posts?search=${_controller
-                                            .text}",
+                                            WordPressRep.wpSource) +
+                                        "/wp-json/wp/v2/posts?search=${_controller.text}",
                                     'appBar': AppBar(
                                       title: Text(_controller.text + ' 的搜索结果'),
                                       backgroundColor:
-                                      Theme
-                                          .of(context)
-                                          .backgroundColor,
+                                          Theme.of(context).backgroundColor,
                                       elevation: 5,
                                     )
                                   });
@@ -203,17 +197,20 @@ class _TabBarPageState extends State<ContentPage>
                           width: 10,
                         ),
                         Consumer<WpCacheModel>(
-                          builder: (ctx, WpCacheModel wpCacheModel, child) {
+                          builder: (ctx, wpCacheModel, child) {
                             return Stack(
                               children: <Widget>[
-                                WpCacheCenter.tokenCache == null
+                                (WpCacheCenter.tokenCache == null ||
+                                        wpCacheModel.userCache == null ||
+                                        wpCacheModel.userCache.avatarUrls ==
+                                            null)
                                     ? WidgetDefault.defaultCircleAvatar(context,
-                                    size: 30)
+                                        size: 30)
                                     : CircleAvatar(
-                                    radius: 15,
-                                    backgroundImage: NetworkImage(
-                                        wpCacheModel
-                                            .userCache.avatarUrls.s96)),
+                                        radius: 15,
+                                        backgroundImage: NetworkImage(
+                                            wpCacheModel
+                                                .userCache.avatarUrls.s96)),
                                 Positioned.fill(
                                   child: Material(
                                     color: Colors.transparent,

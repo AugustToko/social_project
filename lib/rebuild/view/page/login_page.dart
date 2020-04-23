@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:provider/provider.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/config/wp_cache.dart';
-import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:shared/util/theme_util.dart';
@@ -13,6 +10,10 @@ import 'package:shared/util/urls.dart';
 import 'package:social_project/rebuild/viewmodel/login_page_provide.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/wp_cache.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/mvvm/view/base.dart';
+import 'package:wpmodel/util/wp_net_utils.dart';
 
 class LoginPage extends PageProvideNode<LoginPageProvider> {
   static const String loginPage = "/loginPage";
@@ -62,7 +63,6 @@ class LoginPageContentPageState extends State<_LoginPageContent>
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -301,8 +301,8 @@ class LoginPageContentPageState extends State<_LoginPageContent>
     }).doOnDone(() async {
       if (WpCacheCenter.tokenCache != null) {
         final wpCacheModel = Provider.of<WpCacheModel>(context, listen: false);
-        var user = await NetTools.getAndSaveWpUser(
-            WpCacheCenter.tokenCache.userId);
+        var user =
+            await WpNetTools.getAndSaveWpUser(WpCacheCenter.tokenCache.userId);
         wpCacheModel.userCache = user;
       }
       _controller.reverse();

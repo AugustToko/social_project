@@ -1,10 +1,11 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared/config/cache_center.dart';
 import 'package:shared/util/dialog_util.dart';
 import 'package:social_project/ui/page/debug_page.dart';
 import 'package:social_project/utils/uidata.dart';
+
+import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/wp_model/lib/config/cache_center.dart';
 
 /// Drawer
 class CommonDrawer extends StatefulWidget {

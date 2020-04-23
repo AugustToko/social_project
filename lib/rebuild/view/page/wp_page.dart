@@ -9,13 +9,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart'
     as re;
-import 'package:shared/model/wordpress/wp_category.dart';
-import 'package:shared/model/wordpress/wp_post_source.dart';
-import 'package:shared/mvvm/view/base.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/list_config.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
-import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:shared/util/urls.dart';
@@ -24,6 +20,10 @@ import 'package:social_project/rebuild/viewmodel/wordpress_page_provider.dart';
 import 'package:social_project/ui/widgets/label_below_icon.dart';
 import 'package:social_project/ui/widgets/wp_pic_grid_view.dart';
 import 'package:social_project/utils/route/app_route.dart';
+import 'package:wpmodel/model/wp_category.dart';
+import 'package:wpmodel/model/wp_post_source.dart';
+import 'package:wpmodel/mvvm/view/base.dart';
+import 'package:wpmodel/ui/wp_bottom_sheet.dart';
 
 /// TODO: 写完文章后自动刷新
 class WordPressPage extends PageProvideNode<WordPressPageProvider> {
@@ -156,7 +156,7 @@ class WordPressPageContentState extends State<_WordPressPageContent>
         context, onCardClicked: () {
       goToWpPostDetail(context, item);
     }, onLongPressed: () {
-      BottomSheetUtil.showPostSheetShow(context, item);
+      WpBottomSheetUtil.showPostSheetShow(context, item);
     });
 
     return card;

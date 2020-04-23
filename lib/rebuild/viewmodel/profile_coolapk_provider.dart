@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/model/wordpress/wp_post_source.dart';
-import 'package:shared/model/wordpress/wp_user.dart';
-import 'package:shared/mvvm/view/base.dart';
-import 'package:shared/rep/wp_rep.dart';
-import 'package:shared/util/net_util.dart';
 import 'package:shared/util/toast.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/model/wp_post_source.dart';
+import 'package:wpmodel/model/wp_user.dart';
+import 'package:wpmodel/mvvm/view/base.dart';
+import 'package:wpmodel/rep/wp_rep.dart';
+import 'package:wpmodel/util/wp_net_utils.dart';
 
 /// ViewModel 层
 /// 通过 [notifyListeners] 通知UI层更新
@@ -52,7 +52,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     _posts.clear();
 
     // 更新 _wpUser
-    NetTools.getAndSaveWpUser(wpUserId).then((user) {
+    WpNetTools.getAndSaveWpUser(wpUserId).then((user) {
       if (user == null) {
         Navigator.of(context).pop();
         showErrorToast(context, "获取用户失败!");
@@ -62,7 +62,7 @@ class ProfileCoolApkPageProvider extends BaseProvide {
     });
 
     /// TODO: 使用 LoadMoreListView
-    NetTools.getAllPosts(wpUserId).then((wpPostSource) {
+    WpNetTools.getAllPosts(wpUserId).then((wpPostSource) {
       WpCacheCenter.putPosts(wpUserId, wpPostSource);
       source = wpPostSource;
       return wpPostSource;

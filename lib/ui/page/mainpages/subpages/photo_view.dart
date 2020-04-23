@@ -16,7 +16,6 @@ import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
 import 'package:share/share.dart';
 import 'package:shared/model/menu.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
-import 'package:shared/util/bottom_sheet.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/logic/special_text/my_special_text_span_builder.dart';
 import 'package:social_project/misc/my_extended_text_selection_controls.dart';
@@ -27,6 +26,7 @@ import 'package:social_project/rebuild/view/page/profile_coolapk_page.dart';
 import 'package:social_project/ui/widgets/pic_grid_view.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wpmodel/ui/wp_bottom_sheet.dart';
 
 @FFRoute(
     name: "fluttercandies://photoview",
@@ -116,7 +116,7 @@ class _PhotoViewDemoState extends State<PhotoViewDemo> {
                             Navigator.pushNamed(context, UIData.commentDetail);
                           },
                           onLongPress: () {
-                            BottomSheetUtil.showSheetBottom(
+                            WpBottomSheetUtil.showSheetBottom(
                                 context,
                                 null,
                                 Menu(

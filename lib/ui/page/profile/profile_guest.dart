@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:share/share.dart';
-import 'package:shared/config/cache_center.dart';
-import 'package:shared/model/wordpress/wp_user.dart';
-import 'package:shared/rep/wp_rep.dart';
 import 'package:shared/util/dialog_util.dart';
 import 'package:shared/util/net_util.dart';
 import 'package:social_project/utils/uidata.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wpmodel/config/cache_center.dart';
+import 'package:wpmodel/model/wp_user.dart';
+import 'package:wpmodel/rep/wp_rep.dart';
 
 class ProfileContent extends StatefulWidget {
   final WpSource wpSource;

@@ -10,7 +10,6 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared/config/global_settings.dart';
-import 'package:shared/config/wp_cache.dart';
 import 'package:shared/util/theme_util.dart';
 import 'package:social_project/rebuild/app_module.dart';
 import 'package:social_project/rebuild/view/page/login_page.dart';
@@ -19,12 +18,12 @@ import 'package:social_project/ui/page/no_route.dart';
 import 'package:social_project/ui/page/splash_page.dart';
 import 'package:social_project/ui/page/wordpress/u_posts_page.dart';
 import 'package:social_project/utils/route/app_route.dart';
-import 'package:social_project/utils/route/example_route_helper.dart';
 import 'package:social_project/utils/uidata.dart';
+import 'package:social_project/wp_cache.dart';
 
 import 'env.dart';
 
-final wpCacheModel = WpCacheModel();
+final wpCache = WpCacheModel();
 
 void main() async {
   GlobalSettings.profileRouteName = ProfileCoolApkPage.profile;
@@ -39,13 +38,14 @@ void main() async {
 
   Provider.debugCheckInvalidValueType = null;
 
-  runApp(Provider<void>.value(
-    value: null,
-    child: ChangeNotifierProvider.value(
-      value: wpCacheModel,
+  runApp(Provider<WpCacheModel>.value(
+    value: WpCacheModel(),
+    child: ChangeNotifierProvider<WpCacheModel>.value(
+      value: wpCache,
       child: App(),
     ),
   ));
+//  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -153,15 +153,15 @@ class App extends StatelessWidget {
           var routeResult = getRouteResult(
               name: settings.name, arguments: settings.arguments);
 
-          if (routeResult.showStatusBar != null ||
-              routeResult.routeName != null) {
-            settings = FFRouteSettings(
-                arguments: settings.arguments,
-                name: settings.name,
-                isInitialRoute: settings.isInitialRoute,
-                routeName: routeResult.routeName,
-                showStatusBar: routeResult.showStatusBar);
-          }
+//          if (routeResult.showStatusBar != null ||
+//              routeResult.routeName != null) {
+//            settings = FFRouteSettings(
+//                arguments: settings.arguments,
+//                name: settings.name,
+//                isInitialRoute: settings.isInitialRoute,
+//                routeName: routeResult.routeName,
+//                showStatusBar: routeResult.showStatusBar);
+//          }
 
           var page = routeResult.widget ?? NoRoute();
 
@@ -178,8 +178,6 @@ class App extends StatelessWidget {
   }
 
   /// 退出 APP
-  /// [Deprecated]
-  @Deprecated('Use goto_page')
   static Future<void> exitApp() async {
     await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }

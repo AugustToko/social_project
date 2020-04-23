@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:social_project/ui/page/mainpages/subpages/content_page.dart';
 
 // This app is a stateful, it tracks the user's current choice.
 class BasicAppBarSample extends StatefulWidget {
@@ -62,13 +63,6 @@ class _BasicAppBarSampleState extends State<BasicAppBarSample> {
       ),
     );
   }
-}
-
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
 }
 
 const List<Choice> choices = const <Choice>[

@@ -8,13 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:provider/provider.dart';
-import 'package:shared/config/wp_cache.dart';
-import 'package:shared/model/wordpress/wp_page_data.dart';
-import 'package:shared/model/wordpress/wp_post_source.dart';
 import 'package:shared/util/goto_pages.dart';
 import 'package:shared/util/toast.dart';
-import 'package:social_project/ui/widgets/user_header.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wpmodel/model/wp_page_data.dart';
+import 'package:wpmodel/model/wp_post_source.dart';
+import 'package:wpmodel/ui/user_header.dart';
+
+import 'file:///C:/Users/chenlongcould/AndroidStudioProjects/social_project/lib/wp_cache.dart';
 
 import '../mainpages/subpages/content_page.dart';
 

@@ -4,17 +4,16 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
-import 'package:shared/model/wordpress/wp_post_source.dart';
-import 'package:shared/rep/wp_rep_argments_posts.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/list_config.dart';
 import 'package:shared/ui/widget/loading_more_list_widget/loading_more_sliver_list.dart';
 import 'package:shared/ui/widget/push_to_refresh_header.dart';
 import 'package:social_project/rebuild/view/page/wp_page.dart';
+import 'package:wpmodel/model/wp_post_source.dart';
+import 'package:wpmodel/rep/wp_rep_argments_posts.dart';
 
 /// 通用文章展示页面（列表）
 /// TODO: 进一步简化代码
 class PostsPage extends StatefulWidget {
-
   static const argPostsPage = '/argPostsPage';
 
   final String _url;
