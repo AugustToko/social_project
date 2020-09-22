@@ -2,6 +2,8 @@
 
 # social_project
 
+#### 代码较烂，等重构
+
 一款基于 Wordpress 的 内容浏览 APP
 
 Social project.
